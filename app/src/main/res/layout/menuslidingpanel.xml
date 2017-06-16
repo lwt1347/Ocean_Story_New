@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menuslidingpanel"
+    android:orientation="vertical"
+    android:layout_centerInParent="true"
+    android:layout_width="300dp"
+    android:layout_height="200dp"
+    android:background="#ffffffff"
+    android:visibility="visible"
+    >
+
+
+    <Button
+        android:text="계속하기"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="35dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="18dp"
+        android:id="@+id/button3"
+        android:onClick="onButtonContinue" />
+
+    <Button
+        android:text="다시하기"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/button3"
+        android:layout_alignEnd="@+id/button3"
+        android:id="@+id/button4"
+        android:onClick="onButtonResume" />
+</RelativeLayout>

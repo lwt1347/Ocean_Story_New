@@ -1,0 +1,1519 @@
+package com.example.user.ocean_story;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.NinePatch;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
+/**
+ * Created by USER on 2017-01-21.
+ * 게임의 모든 화면
+ */
+
+public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
+
+    /**
+     * GameMain 변수 지정
+     */
+
+    private int drag_Action_Move = 0;           //드래그 이벤트 너무 빨리 일어나지 않도록 변수
+    private int ground_Remove_Temp = -1;        //달팽이 삭제할 인덱스
+    private int tempInt = 0;                    //템프 변수
+
+    private int window_Width = 0;
+    private int window_Height = 0;
+    private int sound_Effect[] = new int[10];                        //효과음
+
+
+    //두점 사이의 거리를 구하기위한 변수
+    private int smallFishIndex      = 0;        //가장 가까운 물고기 인덱스
+    private double pointXBig        = 0;
+    private double pointXSmall      = 0;
+    private double pointYBig        = 0;
+    private double pointYSmall      = 0;
+    private double smallFishTemp    = 1500;     //가장 가까운 물고기 찾기 위한 변수
+    private double smallMathResult  = 0;        //가장 가까운 물고기 찾기 위한 변수
+    private boolean eraser_Fish = false;        //물고기를 지우기 허가가 떨어졌을때
+
+    private int touch_Check = 0;                    //물고기는 터치가 되어야 히트를한다.
+
+    private int Score = 0;                          //점수
+
+    private Game_Thread game_thread;                    //스레드 돌릴 클래스 선언
+//    private Game_Element_Thread game_element_thread;    //게임 요소 생성[물고기, 함정 등]쓰레드 생성
+    private Main_Character main_Character;              //메인 캐릭터 생성
+    private boolean mRun = true;                        //run 함수 제어 //퍼즈 걸도록 mRun 컨트롤
+    private SurfaceHolder mSurfaceHolder;               //쓰레드 외부에서 SurfaceHolder를 얻기 위한 선언
+    private BitmapDrawable image = null;                //메모리 절약 기법
+    private Bitmap backGroundImg = null;                //배경이미지
+
+    //pause 이미지  -> 컨트롤 화면에서
+    //private Bitmap pause_img[] = new Bitmap[2];
+    //private Bitmap pause_View_img = null;   //퍼지 눌렀을때 뜨는 창
+    private NinePatch ninePatch;     //나인패치 적용방법 변수
+    /**
+     * 기본 물고기 이미지
+     */
+
+    private Bitmap fish_Touch_Default_Hp1_img[] = new Bitmap[4];    //Hp1 물고기
+    private Bitmap fish_Touch_Default_Hp2_img[] = new Bitmap[4];    //Hp2 물고기
+    private Bitmap fish_Touch_Default_Hp3_img[] = new Bitmap[4];    //Hp3 물고기
+    private Bitmap fish_Touch_Default_Hp4_img[] = new Bitmap[4];    //Hp4 물고기
+    private Bitmap fish_Touch_Default_Hp5_img[] = new Bitmap[4];    //Hp5 물고기
+
+    //드래그로 죽는 물고기 이미지
+    private Bitmap fish_Drag_Default_img[] = new Bitmap[4];         //드래그로 죽는 물고기 이미지
+
+    /**
+     * 해파리 이미지
+     */
+    private Bitmap fish_Trap_Jelly_img[] = new Bitmap[7];           //해파리 이미지
+
+    /**
+     * 성게 이미지
+     */
+    private Bitmap ground_Trap_Urchin_img[] = new Bitmap[5];
+
+    /**
+     * 달팽이 이미지
+     */
+    private Bitmap ground_Touch_Snail_Hp1_img[] = new Bitmap[4];    //Hp1 달팽이
+    private Bitmap ground_Touch_Snail_Hp2_img[] = new Bitmap[4];    //Hp2 달팽이
+    private Bitmap ground_Touch_Snail_Hp3_img[] = new Bitmap[4];    //Hp3 달팽이
+    private Bitmap ground_Touch_Snail_Hp4_img[] = new Bitmap[4];    //Hp4 달팽이
+    private Bitmap ground_Touch_Snail_Hp5_img[] = new Bitmap[4];    //Hp5 달팽이
+
+    /**
+     * 꽃게 이미지
+     */
+    private Bitmap ground_Drag_Crab_img[] = new Bitmap[4];          //꽃게 이미지
+
+
+
+
+    //메인 캐릭터 이미지
+    private Bitmap main_Character_img[] = new Bitmap[5];        //메인 캐릭터
+
+    //회전 물고기 비트맵 템프 변수
+    private Bitmap temp_Fish = null;
+
+    //바닥 생명체 비트맵 탬프 변수
+    private Bitmap temp_Ground = null;
+
+    /**
+     * 기본 터치 물고기 이펙트
+     */
+    private Bitmap effect_Orange_img[] = new Bitmap[5];     //오렌지
+    private Bitmap effect_Blue_img[] = new Bitmap[5];       //블루
+    private Bitmap effect_Yellow_img[] = new Bitmap[5];     //옐로우
+    private Bitmap effect_Green_img[] = new Bitmap[5];      //그린
+    private Bitmap effect_Black_img[] = new Bitmap[5];      //그린
+
+
+
+    /**
+     * 드래그 물고기 이펙트 팝
+     *  달팽이 이펙트
+     *  꽃게 이팩트
+     */
+    private Bitmap effect_Pop1_img[] = new Bitmap[5];
+    private Bitmap effect_Pop2_img[] = new Bitmap[5];
+    private Bitmap effect_Pop3_img[] = new Bitmap[5];
+    private Bitmap effect_Pop4_img[] = new Bitmap[5];
+    private Bitmap effect_Pop5_img[] = new Bitmap[5];
+    private Bitmap effect_Pop6_img[] = new Bitmap[5];
+
+    /**
+     * 백그라운드 이펙트 동적인 화면 구성하기 위한 이미지
+     */
+    private Bitmap effect_Background_One_1_img[] = new Bitmap[8];
+    private Bitmap effect_Background_Two_1_img[] = new Bitmap[8];
+
+    //퍼지 이미지 변경
+    //boolean pause_Push = false;
+
+    //물기고 생성
+    private ArrayList<Fish_Default_Body> fish_List = new ArrayList<Fish_Default_Body>();            //물고기를 넣을 어레이 리스트
+    private ArrayList<Ground_Default_Body> ground_List = new ArrayList<Ground_Default_Body>();      //물고기를 넣을 어레이 리스트
+
+    private ArrayList<Float> effect_Fish_Draw_X = new ArrayList<Float>();                           //지워지는 물고기 위치에 이펙트 넣어야한다. //circly_X_Draw - > effect_Fish_Draw_X
+    private ArrayList<Float> effect_Fish_Draw_Y = new ArrayList<Float>();
+
+    private ArrayList<Float> effect_Ground_Draw_X = new ArrayList<Float>();                         //지워지는 달팽이 위치에 이펙트 넣어햐 한다. //effect_X_Pop2 - > effect_Ground_Draw_X
+    private ArrayList<Float> effect_Ground_Draw_Y = new ArrayList<Float>();
+
+    private ArrayList<Integer> effect_TempRandom_Temp = new ArrayList<Integer>();                   //이펙트 효과를 위한 랜덤 리스트
+
+
+
+    private Draw_Image draw = new Draw_Image();
+    private Paint paint = new Paint();                 //점수
+    private Paint paint_Temp = new Paint();            //점수 테두리
+
+    private Paint paint_Best = new Paint();                 //점수
+    private Paint paint_Temp_Best = new Paint();            //점수 테두리
+
+
+    private Canvas canvas;
+    Thread background_Effect;                           //배경화면 쓰레드
+
+    private Fish_Touch_Default fish_Touch_Default;      //기본 물고기 생성
+    private Fish_Drag_Default fish_Drag_Default;        //드래그 물고기 생성
+    private Fish_Trap_Jellyfish fish_Trap_Jellyfish;    //해파리 생성
+    private Ground_Touch_Snail ground_Touch_Snail;      //달팽이 생성
+    private Ground_Drag_Crab ground_Drag_Crab;          //꽃게 생성
+    private Ground_Trap_Urchin ground_trap_urchin;      //성게 생성
+
+    private Background_Effect_One background_Effect_One;    //배경화면 1번 움직임
+    private Background_Effect_Two background_Effect_Two;    //배경화면 1번 움직임
+
+
+    private Bitmap effect_Temp;                         //어떤 이펙트를 넣을것인가 랜덤 변수
+    private Random random = new Random();
+
+    private Context _context;                           //화면 얻어오기
+    private Display display;                            //디스플레이 넓이 구하기
+
+    private String tempStr = "";
+
+    private SoundPool soundPool = new SoundPool(10, AudioManager.STREAM_ALARM, 0); //사운드 앞에 1은 하나만 가져다 놓겠다는 뜻. 나중에 추가 요망
+    private MediaPlayer background_Sound;
+
+
+
+    //Thread default_Fish_Effect;   //이펙트 쓰레드, 부하 때문에 삭제
+    int rand_Effect;    //이펙트 쓰레드 대체
+
+    Timer mTimer; //게임요소 추가 타이머
+
+    //********************************************************************************************//
+
+
+
+
+    /**
+     * 기본 생성자
+     */
+    public GameMain(Context context, AttributeSet attrs){
+        super(context,attrs);   //커스텀 뷰 사용 -> attrs.xml 에 등록 해야함
+
+        _context = context;
+        mSurfaceHolder = getHolder();
+        mSurfaceHolder.addCallback(this);
+        game_thread = new Game_Thread(/*mSurfaceHolder*/);      //그림이 그려지고, 게임 동작하는곳
+
+        //게임 요소 추가 할 타이머 [물고기, 함정 등] 1초후에 실행해서 5초마다 반복
+        mTimer = new Timer();
+        mTimer.schedule(fish_Maker_1, 1000, 5000);
+
+
+
+        //메인캐릭터 생성
+        main_Character = new Main_Character();
+
+        //소리 로드
+        sound_Effect[0] = soundPool.load(_context, R.raw.fish_default_sound_1, 1);      //팝1
+        sound_Effect[1] = soundPool.load(_context, R.raw.fish_default_sound_2, 1);      //팝2
+        sound_Effect[2] = soundPool.load(_context, R.raw.drag_sound_1, 1);      //드래그1
+        sound_Effect[3] = soundPool.load(_context, R.raw.drag_sound_2, 1);      //드래그2
+
+
+        /**
+         *  배경음악 사운드풀로 안되서
+         */
+        background_Sound = MediaPlayer.create(_context, R.raw.background_music_1);
+        background_Sound.setLooping(true);
+        background_Sound.setVolume(1f,1f);
+        background_Sound.start();
+
+    }
+
+    /**
+     * 다시시작
+     */
+    public void re_Start(){
+
+        //스테이지  = 1, 속도 = 1
+        fish_List.clear();
+      ground_List.clear();
+         Score = 0;
+
+    }
+
+    //게임 상태 컨트롤
+    public void m_Run_False(){
+        mRun = false;
+    }
+    public void m_Run_True(){
+        mRun = true;
+    }
+
+
+    //********************************************************************************************//
+
+    /**
+     *  내부 클래스
+     *  게임 요소 추가 할 스레드 [물고기, 바닥 생명체 등.]
+     */
+
+
+    /**
+     * 타이머를 통한 물고기 생성
+     * 게임 요소 생성[물고기, 함정 등]쓰레드 생성
+     */
+
+    TimerTask fish_Maker_1 = new TimerTask(){
+        public synchronized void run() {
+            try {
+
+                add_Fish_Touch_Default();           //기본 물고기 추가
+                add_Fish_Touch_Default();           //기본 물고기 추가
+                add_Fish_Touch_Default();           //기본 물고기 추가
+
+                add_Fish_Drag_Default();            //드래그 물고기 추가
+
+                add_Fish_JellyFish();               //해파리 추가
+
+
+                add_Ground_Snail();                 //달팽이 추가
+                add_Ground_Crab();                  //꽃게 추가
+
+//                add_Ground_Urchin();                //성게추가
+
+                //Thread.sleep(1000);
+            } catch (Exception e) {
+
+                e.printStackTrace();
+            }
+        }
+    };
+
+
+
+
+    //********************************************************************************************//
+
+
+    /**
+     *  이너 클래스
+     *  내부 클래스 게임 스레드
+     *  더블 버퍼링 및 게임 그리기
+     */
+
+    class Game_Thread extends Thread{
+
+        /**
+         *  Game_Thread 기본 생성자, 이미지 초기화
+         */
+        public Game_Thread(/*SurfaceHolder surfaceHolder*/) { //더블 버퍼링 같은것,
+
+            backGroundImg = Init_Background_Image(_context, 0); //배경
+
+
+            //pause_View_img = BitmapFactory.decodeResource(getResources(), R.drawable.pause_view);    //나인패치 적용방법
+            //ninePatch = new NinePatch(pause_View_img, pause_View_img.getNinePatchChunk(), "");       //나인패치 적용방법
+
+
+            //게임 요소 추가 할 쓰레드 [물고기, 함정 등]
+            backGroundImg = Init_Background_Image(_context, 0); //배경
+            DisplayMetrics dm = _context.getApplicationContext().getResources().getDisplayMetrics();
+            backGroundImg = Bitmap.createScaledBitmap(backGroundImg, dm.widthPixels, dm.heightPixels, false);
+
+
+
+
+            //퍼즈 이미지
+            //pause_img[0] = Init_Pause_Image(_context, 0);
+            //pause_img[1] = Init_Pause_Image(_context, 1);
+
+            for(int i = 0; i < 4; i++) {
+                fish_Touch_Default_Hp1_img[i] = Init_Fish_Touch_Default_Hp1_Image(_context, i); //캐릭터 이미지 추가 hp = 1
+                fish_Touch_Default_Hp2_img[i] = Init_Fish_Touch_Default_Hp2_Image(_context, i); //캐릭터 이미지 추가
+                fish_Touch_Default_Hp3_img[i] = Init_Fish_Touch_Default_Hp3_Image(_context, i); //캐릭터 이미지 추가
+                fish_Touch_Default_Hp4_img[i] = Init_Fish_Touch_Default_Hp4_Image(_context, i); //캐릭터 이미지 추가
+                fish_Touch_Default_Hp5_img[i] = Init_Fish_Touch_Default_Hp5_Image(_context, i); //캐릭터 이미지 추가 hp = 5
+
+                ground_Touch_Snail_Hp1_img[i] = Init_Ground_Touch_Snail_Hp1_Image(_context, i);  //달팽이 이미지
+                ground_Touch_Snail_Hp2_img[i] = Init_Ground_Touch_Snail_Hp2_Image(_context, i);  //달팽이 이미지
+                ground_Touch_Snail_Hp3_img[i] = Init_Ground_Touch_Snail_Hp3_Image(_context, i);  //달팽이 이미지
+                ground_Touch_Snail_Hp4_img[i] = Init_Ground_Touch_Snail_Hp4_Image(_context, i);  //달팽이 이미지
+                ground_Touch_Snail_Hp5_img[i] = Init_Ground_Touch_Snail_Hp5_Image(_context, i);  //달팽이 이미지
+
+                fish_Drag_Default_img[i] = Init_Fish_Drag_Default_Image(_context, i);            //드래그 물고기
+
+                ground_Drag_Crab_img[i] = Init_Ground_Drag_Crab_Image(_context, i);              //꽃게 이미지
+
+            }
+
+            for(int i=0; i<7; i++){
+                fish_Trap_Jelly_img[i] = Init_Fish_Trap_Jellyfish(_context, i);                 //해파리 이미지
+            }
+
+
+
+            for(int i = 0; i < 5; i++){
+                main_Character_img[i] = Init_Main_Character_Image(_context, i); //메인 캐릭터
+
+
+            }
+            for(int i=0; i<5; i++){
+
+                effect_Orange_img[i] = Init_Effect_Orange_Image(_context, i); //이펙트
+                effect_Blue_img[i]   = Init_Effect_Blue_Image(_context, i);
+                effect_Yellow_img[i] = Init_Effect_Yellow_Image(_context, i);
+                effect_Green_img[i]  = Init_Effect_Green_Image(_context, i);
+                effect_Black_img[i] = Init_Effect_Black_Image(_context, i);
+
+                effect_Pop1_img[i] = Init_Effect_Pop1_Image(_context, i);
+                effect_Pop2_img[i] = Init_Effect_Pop2_Image(_context, i);
+                effect_Pop3_img[i] = Init_Effect_Pop3_Image(_context, i);
+                effect_Pop4_img[i] = Init_Effect_Pop4_Image(_context, i);
+                effect_Pop5_img[i] = Init_Effect_Pop5_Image(_context, i);
+                effect_Pop6_img[i] = Init_Effect_Pop6_Image(_context, i);
+
+                ground_Trap_Urchin_img[i] = Init_Ground_Trap_Urchin_Image(_context, i);              //성게 이미지
+            }
+            for(int i=0; i<8; i++){
+                effect_Background_One_1_img[i] = Init_Background_Effect_Background_One_1_Image(_context, i);    //배경 이펙트
+                effect_Background_Two_1_img[i] = Init_Background_Effect_Background_Two_1_Image(_context, i);    //배경 이펙트
+            }
+
+
+
+
+        }
+
+
+        /**
+         *  이미지 초기화 기법 함수
+         */
+
+        //배경이미지
+        public Bitmap Init_Background_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.background);
+            return image.getBitmap();
+        }
+        //배경 이펙트
+        public Bitmap Init_Background_Effect_Background_One_1_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_background_one_1 + num);
+            return image.getBitmap();
+        }
+        public Bitmap Init_Background_Effect_Background_Two_1_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_background_two_1 + num);
+            return image.getBitmap();
+        }
+
+
+        //물고기 hp1 이미지
+        public Bitmap Init_Fish_Touch_Default_Hp1_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.fish_hp1_1 + num); //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+        //물고기 hp2 이미지
+        public Bitmap Init_Fish_Touch_Default_Hp2_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.fish_hp2_1 + num); //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+        //물고기 hp3 이미지
+        public Bitmap Init_Fish_Touch_Default_Hp3_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.fish_hp3_1 + num); //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+        //물고기 hp4 이미지
+        public Bitmap Init_Fish_Touch_Default_Hp4_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.fish_hp4_1 + num); //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+        //물고기 hp5 이미지
+        public Bitmap Init_Fish_Touch_Default_Hp5_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.fish_hp5_1 + num); //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+        //드래그로 잡는 물고기 이미지
+        public Bitmap Init_Fish_Drag_Default_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.fish_shake1_1 + num); //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+
+        //해파리 이미지
+        public Bitmap Init_Fish_Trap_Jellyfish(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.fish_jellyfish_1 + num); //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+
+
+
+        //달팽이 이미지
+        public Bitmap Init_Ground_Touch_Snail_Hp1_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.ground_snail_hp1_1 + num); //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+        public Bitmap Init_Ground_Touch_Snail_Hp2_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.ground_snail_hp2_1 + num); //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+        public Bitmap Init_Ground_Touch_Snail_Hp3_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.ground_snail_hp3_1 + num); //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+        public Bitmap Init_Ground_Touch_Snail_Hp4_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.ground_snail_hp4_1 + num); //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+        public Bitmap Init_Ground_Touch_Snail_Hp5_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.ground_snail_hp5_1 + num); //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+        //꽃게 이미지
+        public Bitmap Init_Ground_Drag_Crab_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.ground_crab_1 + num);     //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+        /**
+         * 성게이미지
+         */
+        public Bitmap Init_Ground_Trap_Urchin_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.ground_urchin_1 + num);     //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+
+
+
+
+
+        //퍼즈 이미지
+        /*public Bitmap Init_Pause_Image(Context context, int num){
+                image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.pause_1 + num); //인트형이라 + 1하면 그림 변경됨
+                return image.getBitmap();
+        }*/
+
+
+
+
+        //메인 캐릭터 이미지
+        public Bitmap Init_Main_Character_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.character_octopus_10); //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+
+
+
+
+
+        //이펙트 효과
+        public Bitmap Init_Effect_Orange_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_orange_1 + num);
+            return image.getBitmap();
+        }
+        public Bitmap Init_Effect_Blue_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_blue_1 + num);
+            return image.getBitmap();
+        }
+        public Bitmap Init_Effect_Yellow_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_yellow_1 + num);
+            return image.getBitmap();
+        }
+        public Bitmap Init_Effect_Green_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_green_1 + num);
+            return image.getBitmap();
+        }
+        public Bitmap Init_Effect_Pop1_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_pop1_1 + num);
+            return image.getBitmap();
+        }
+        public Bitmap Init_Effect_Pop2_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_pop2_1 + num);
+            return image.getBitmap();
+        }
+        public Bitmap Init_Effect_Pop3_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_pop3_1 + num);
+            return image.getBitmap();
+        }
+        public Bitmap Init_Effect_Pop4_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_pop4_1 + num);
+            return image.getBitmap();
+        }
+        public Bitmap Init_Effect_Pop5_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_pop5_1 + num);
+            return image.getBitmap();
+        }
+        public Bitmap Init_Effect_Pop6_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_pop6_1 + num);
+            return image.getBitmap();
+        }
+        public Bitmap Init_Effect_Black_Image(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_black_1 + num);
+            return image.getBitmap();
+        }
+
+
+
+    /**
+     *  그리기 함수
+     */
+
+    public void doDraw(Canvas canvas) {
+
+
+
+        /**
+         *  배경이미지
+         */
+        draw.draw_Bmp(canvas, backGroundImg, 0, 0);
+
+
+
+        /**
+         * 그라운드 그리기 (달팽이) 가장 아랫부분에 깔려야 하기 때문에 가장 위쪽에서 그림
+         */
+        for(int i=0; i<ground_List.size(); i++) {
+
+            //달팽이 움직임
+            if (ground_List.get(i) instanceof Ground_Touch_Snail) {
+
+                if (ground_List.get(i).get_Ground_Hp() == 5) {
+                    draw.draw_Bmp(canvas, ground_Touch_Snail_Hp5_img[((Ground_Touch_Snail) ground_List.get(i)).get_Draw_Ground_Status()], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                } else if (ground_List.get(i).get_Ground_Hp() == 4) {
+                    draw.draw_Bmp(canvas, ground_Touch_Snail_Hp4_img[((Ground_Touch_Snail) ground_List.get(i)).get_Draw_Ground_Status()], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                } else if (ground_List.get(i).get_Ground_Hp() == 3) {
+                    draw.draw_Bmp(canvas, ground_Touch_Snail_Hp3_img[((Ground_Touch_Snail) ground_List.get(i)).get_Draw_Ground_Status()], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                } else if (ground_List.get(i).get_Ground_Hp() == 2) {
+                    draw.draw_Bmp(canvas, ground_Touch_Snail_Hp2_img[((Ground_Touch_Snail) ground_List.get(i)).get_Draw_Ground_Status()], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                } else if (ground_List.get(i).get_Ground_Hp() == 1) {
+                    draw.draw_Bmp(canvas, ground_Touch_Snail_Hp1_img[((Ground_Touch_Snail) ground_List.get(i)).get_Draw_Ground_Status()], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                }
+            }
+            //꽃게 움직임
+            if(ground_List.get(i) instanceof Ground_Drag_Crab){
+                    draw.draw_Bmp(canvas, ground_Drag_Crab_img[((Ground_Drag_Crab) ground_List.get(i)).get_Draw_Ground_Status()], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+            }
+
+            //성게 움직임
+            if(ground_List.get(i) instanceof Ground_Trap_Urchin){
+
+                    draw.draw_Bmp(canvas,
+                            draw.rotate_Image(ground_Trap_Urchin_img[ground_List.get(i).get_Draw_Ground_Status()], ((Ground_Trap_Urchin) ground_List.get(i)).get_Urchin_Angle()),
+                            ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+
+            }
+
+        }
+
+
+
+
+        /**
+         * 물고기 그리기
+         */
+        for(int i=0; i<fish_List.size(); i++){
+            if(fish_List.get(i) instanceof Fish_Touch_Default) {
+                /**
+                 *  이미지 회전
+                 */
+                if(fish_List.get(i).get_Fish_Hp() == 1) {
+                    temp_Fish = draw.rotate_Image(fish_Touch_Default_Hp1_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                }else if(fish_List.get(i).get_Fish_Hp() == 2){
+                    temp_Fish = draw.rotate_Image(fish_Touch_Default_Hp2_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                }else if(fish_List.get(i).get_Fish_Hp() == 3){
+                    temp_Fish = draw.rotate_Image(fish_Touch_Default_Hp3_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                }else if(fish_List.get(i).get_Fish_Hp() == 4){
+                    temp_Fish = draw.rotate_Image(fish_Touch_Default_Hp4_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                }else if(fish_List.get(i).get_Fish_Hp() == 5){
+                    temp_Fish = draw.rotate_Image(fish_Touch_Default_Hp5_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                }
+                draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
+
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                /**
+                 * 드래그로 죽이는 물고기
+                 */
+            }else if(fish_List.get(i) instanceof  Fish_Drag_Default){
+                temp_Fish = draw.rotate_Image(fish_Drag_Default_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
+
+                /**
+                 *  해파리 그리기
+                 */
+            }else if(fish_List.get(i) instanceof Fish_Trap_Jellyfish){
+                temp_Fish = draw.rotate_Image(fish_Trap_Jelly_img[fish_List.get(i).get_Draw_Fish_Status()], 90-fish_List.get(i).get_Fish_Angle());
+                draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
+            }
+
+        }
+
+
+        /**
+         * 물고기 터치 이팩트
+         */
+        if(default_Fish_Hit_Flag){
+            draw.draw_Bmp(canvas, effect_Temp, fish_List.get(smallFishIndex).get_Fish_Point_X() - 15, fish_List.get(smallFishIndex).get_Fish_Point_Y());
+            default_Fish_Hit_Flag = false;
+        }
+        if(drag_Fish_Hit_Flag){
+            /**
+             * 드래그 물고기 터치 이벤트
+             */
+            draw.draw_Bmp(canvas, effect_Pop1_img[random.nextInt(5)],
+                    fish_List.get(smallFishIndex).get_Fish_Point_X() + random.nextInt(fish_Drag_Default_img[0].getWidth() - 25),
+                    fish_List.get(smallFishIndex).get_Fish_Point_Y() + random.nextInt(fish_Drag_Default_img[0].getHeight()) - 35);
+            drag_Fish_Hit_Flag = false;
+        }
+
+        /**
+         * 그라운드 터리 이팩트
+         */
+        if(snail_Ground_Hit_Flag){
+            /**
+             * 달팽이 터치 이벤트
+             */
+            draw.draw_Bmp(canvas, effect_Temp,
+                    ground_List.get(ground_Remove_Temp).get_Ground_Point_X() - 35,
+                    ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() - 35);
+            snail_Ground_Hit_Flag = false;
+
+        }
+        if(crap_Ground_Hit_Flag){
+            /**
+             * 꽃게 터치 이벤트.
+             */
+            draw.draw_Bmp(canvas, effect_Temp,
+                    ground_List.get(ground_Remove_Temp).get_Ground_Point_X() + random.nextInt(ground_Drag_Crab_img[0].getWidth())-35 ,
+                    ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() + random.nextInt(ground_Drag_Crab_img[0].getHeight())-35);
+            crap_Ground_Hit_Flag = false;
+        }
+        if(seaurchin_Ground_Hit_Flag){
+            /**
+             * 성게 터치 이벤트
+             */
+            draw.draw_Bmp(canvas, effect_Temp,
+                    ground_List.get(ground_Remove_Temp).get_Ground_Point_X() + random.nextInt(ground_Touch_Snail_Hp1_img[0].getWidth()) - 35,
+                    ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() + random.nextInt(ground_Touch_Snail_Hp1_img[0].getHeight()) - 35);
+
+            seaurchin_Ground_Hit_Flag = false;
+        }
+
+
+        /**
+         * 배경 이펙트
+         */
+        draw.draw_Bmp(canvas,
+                draw.rotate_Image(effect_Background_One_1_img[background_Effect_One.get_Draw_Background_Effect_Status()],background_Effect_One.get_Background_Angle())
+                , background_Effect_One.get_Background_Point_X(), background_Effect_One.get_Background_Point_Y());
+
+        draw.draw_Bmp(canvas, effect_Background_Two_1_img[background_Effect_Two.get_Draw_Background_Effect_Status()], main_Character.get_Main_Character_Point_X(),main_Character.get_Main_Character_Point_Y());
+
+
+
+        paint.setTextSize(50);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(4);
+        paint.setColor(Color.BLACK);
+
+    /*
+        //퍼지 그리기
+        if(!pause_Push) { //안눌렸을때
+            draw.draw_Bmp(canvas, pause_img[0], window_Width - 100, 10);
+        }else { //눌렸을때
+            draw.draw_Bmp(canvas, pause_img[1], window_Width - 100, 10);
+            //퍼지 뷰
+            //ninePatch.draw(canvas, new Rect(100,200, window_Width - 100, window_Height/2 + 100), paint);           //나인패치 적용방법
+            //draw.draw_Bmp(canvas, pause_View_img, window_Width/2 - 100, window_Height/2 - 100); //나인패치 적용방법
+            Intent intent = new Intent(_context, Menu_Sliding_Panel.class);
+            //intent.putExtra("a", mRun);
+            _context.startActivity(intent); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출
+            mRun = false; //화면 정지 일시정지 화면 출력
+        }
+    */
+
+
+
+        /**
+         *  점수 그리기
+         */
+
+        canvas.drawText(Score+"", 30, 50, paint);
+
+        paint_Temp.setTextSize(50);
+        paint_Temp.setColor(Color.YELLOW);
+        canvas.drawText(Score+"", 30, 50, paint_Temp);
+
+        paint_Best.setTextSize(25);
+        paint_Best.setStyle(Paint.Style.STROKE);
+        paint_Best.setStrokeWidth(3);
+        paint_Best.setColor(Color.BLACK);
+        canvas.drawText("Best ", 30, 80, paint_Best);
+
+
+        draw_Main_Character_Default();  //메인 캐릭터 기본 이미지
+    }
+
+
+
+
+        /**
+     * 게임이 동작하는 구간
+     */
+    public void run() {
+        while(true)
+        while (mRun) {
+            //퍼즈 걸도록 mRun 컨트롤
+
+                //canvas = null;
+                try {
+                    canvas = mSurfaceHolder.lockCanvas(null);
+                    synchronized (mSurfaceHolder) {
+
+                        /**
+                         * 그림 그리기 구간
+                         */
+                        doDraw(canvas);
+                        sleep(20);
+
+
+                        //물고기 및 그라운드 생명체 체력 0 인것 삭제
+                        delete_Fish();
+                        delete_Ground();
+
+
+                        //물고기 움직임을 하나의 쓰레드로 작동한다.
+                        fish_Move();
+
+                        //그라운드 움직임을 하나의 쓰레드로 작동합니다.
+                        ground_Move();
+
+
+
+                        //문어 공격 스피드에 따라서 터치 이벤트 제어
+                        if (main_Character.get_Attack_Cool_time() != 0) {
+                            main_Character.set_Attack_Cool_Time();
+                        }
+
+                    }
+
+                } catch (Exception e) {
+
+                } finally {
+                    if (canvas != null) {
+                        mSurfaceHolder.unlockCanvasAndPost(canvas);
+                    }
+                }
+
+        }
+    }
+    }
+
+    /**
+     * 게임 동작 함수
+     */
+
+    /**
+     * 물고기 추가하기
+     */
+    public void add_Fish_Touch_Default(){
+
+        fish_Touch_Default = new Fish_Touch_Default(window_Width, 5);       //기본 fish_touch_default 물고기 생성
+        fish_List.add(fish_Touch_Default);                                  //물고기 리스트에 추가
+
+
+        //fish_Shake.startFishMove();
+    }
+
+    /**
+     * 해파리 추가
+     */
+    public void add_Fish_JellyFish(){
+
+        fish_Trap_Jellyfish = new Fish_Trap_Jellyfish(window_Width, window_Height, 1);                //화면 좌우축 둘중 한군대만 생성 hp = 1
+        fish_List.add(fish_Trap_Jellyfish);
+
+    }
+
+
+    /**
+     *  드래그 물고기 추가하기
+     */
+    public void add_Fish_Drag_Default(){
+        fish_Drag_Default = new Fish_Drag_Default(window_Width, 30);       //드래그로 잡는 fish_Touch_Default 물고기생성
+        fish_List.add(fish_Drag_Default);
+    }
+
+
+    /**
+     * 그라운드 생성구간 (달팽이)
+     */
+    public void add_Ground_Snail(){
+
+        ground_Touch_Snail = new Ground_Touch_Snail(window_Width,
+                ground_Touch_Snail_Hp1_img[0].getWidth(),
+                ground_Touch_Snail_Hp1_img[0].getHeight(), 5);
+
+        ground_List.add(ground_Touch_Snail); //달팽이 생성
+
+    }
+
+    /**
+     * 꽃게 추가
+     */
+    public void add_Ground_Crab(){
+        ground_Drag_Crab = new Ground_Drag_Crab(window_Width,
+                ground_Drag_Crab_img[0].getWidth(),
+                ground_Drag_Crab_img[0].getHeight(), 30);
+
+        ground_List.add(ground_Drag_Crab); //꽃게
+    }
+
+    /**
+     * 성게 추가
+     */
+    public void add_Ground_Urchin(){
+        ground_trap_urchin = new Ground_Trap_Urchin(
+                window_Width,
+                ground_Trap_Urchin_img[0].getWidth(),
+                ground_Trap_Urchin_img[0].getHeight(),
+                window_Height,  //성게는 y 축도 랜덤으로 생성한다.
+                1);
+        ground_List.add(ground_trap_urchin);//성게
+    }
+
+
+
+    /**
+     * 물고기 움직임 -> 물고기 각 쓰레드를 주게 되면 부하가 심하대 따라서 한 함수로 모든 물고기를 제어한다.
+     */
+
+    public void fish_Move(){
+        for(int i=0; i<fish_List.size(); i++){
+            fish_List.get(i).fish_Object_Move();
+        }
+    }
+
+
+    /**
+     * 그라운드 움직임
+     */
+
+    public void ground_Move(){
+        for(int i=0; i<ground_List.size(); i++){
+
+
+            if(ground_List.get(i) instanceof Ground_Touch_Snail) {      //달팽이 무빙 함수 이용
+                ((Ground_Touch_Snail) ground_List.get(i)).ground_Object_Move();
+            }else if(ground_List.get(i) instanceof Ground_Drag_Crab){   //꽃게 무빙 함수
+                ((Ground_Drag_Crab) ground_List.get(i)).ground_Object_Move();
+            }else if(ground_List.get(i) instanceof Ground_Trap_Urchin){
+                ((Ground_Trap_Urchin) ground_List.get(i)).ground_Object_Move();
+            }
+
+
+
+
+        }
+    }
+
+
+    /**
+     * 물고기 삭제
+     */
+    public void delete_Fish_Select(int fish_Number){
+            //물고기 피가 0 이면 피 검사후에 피가 0 이면
+            if(fish_List.get(fish_Number).get_Fish_Hp() == 0){
+                fish_List.remove(fish_Number);
+            }
+
+    }
+    public void delete_Fish(){
+        for(int i=0; i<fish_List.size();i++){
+
+            //물고기가 y축 으로 넘어가면 삭제
+            if(fish_List.get(i).get_Fish_Point_Y() >= getHeight() - 30
+                    || fish_List.get(i).get_Fish_Point_X() < -30                  //X축으로 0 보다 작으면 삭제
+                    || fish_List.get(i).get_Fish_Point_X() > getWidth() + 30){       //X축으로 화면 보다 크면 삭제
+                fish_List.remove(i);
+                break;
+            }
+
+        }
+    }
+
+
+    /**
+     *  바닥 생명체 삭제
+     */
+    public void delete_Ground_Select(int ground_Number){
+            if(ground_List.get(ground_Number).get_Ground_Hp() == 0){
+                ground_List.remove(ground_Number);
+            }
+    }
+
+    public void delete_Ground(){
+        for(int i=0; i<ground_List.size(); i++){
+
+            //물고기가 y축 으로 넘어가면 삭제
+            if(ground_List.get(i).get_Ground_Point_Y() >= getHeight() - 30){
+                ground_List.remove(i);
+                break;
+            }
+        }
+    }
+
+
+
+
+
+    /**
+     * 그라운드 생명체 대미지 넣기 (달팽이)
+     */
+
+    public boolean ground_Hit_Chose(float x, float y, int ground_Class){     //그라운드 객체의 종류 알아오기
+
+        ground_Remove_Temp = -1;                    //달팽이 없을때를 기준 터치하는 곳의 달팽이 인덱스를 집어 넣는다.
+        for(int i=0; i<ground_List.size(); i++){    // +- 45 는 판정을 좋게 하기 위해 추가
+
+            if(        x >= ground_List.get(i).get_Ground_Point_X() - 45
+                    && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + 45
+                    && y >= ground_List.get(i).get_Ground_Point_Y() - 45
+                    && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + 45){
+
+                ground_Remove_Temp = i;
+                break;
+
+            }
+
+        }
+
+        //선택된 달팽이가 존재 한다면. && 달팽이라면
+        if(ground_Remove_Temp >= 0 && ground_List.get(ground_Remove_Temp).get_Ground_Class() == 1 && ground_Class == ground_List.get(ground_Remove_Temp).get_Ground_Class()) {
+            //Log.d("aaaa", ground_Class + "a" + ground_List.get(ground_Remove_Temp).get_Ground_Class());
+            //if(ground_List.get(ground_Remove_Temp).get_Ground_Hp() != 1) //달팽이 피가 1일때 클릭당하면 아무 이펙트 없음 이유는 굳이 이 루틴 하나 때문에 많은 코드를 넣기 불편함과 동시에 부하
+/*
+            effect_Ground_Draw_X.add(ground_List.get(ground_Remove_Temp).get_Ground_Point_X());
+            effect_Ground_Draw_Y.add(ground_List.get(ground_Remove_Temp).get_Ground_Point_Y());
+            new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tempInt = random.nextInt(4);
+
+                        for (int i = 2; i < 5; i++) {
+                            try {
+                                Thread.sleep(15);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        for (int j = 0; j < effect_Pop2_img.length - 1; j++) {
+                            try {
+                                //Thread.sleep(15);
+                                //if(ground_Remove_Temp < 0){
+                                //   break;
+                                //}
+                                //팝 이펙트 random.nextInt(6)
+                                if (tempInt == 0) {
+                                    effect_Temp = effect_Pop2_img[i];
+                                } else if (tempInt == 1) {
+                                    effect_Temp = effect_Pop3_img[i];
+                                } else if (tempInt == 2) {
+                                    effect_Temp = effect_Pop4_img[i];
+                                } else {
+                                    effect_Temp = effect_Pop5_img[i];
+                                }
+
+                                draw.draw_Bmp(canvas, effect_Temp,
+                                        effect_Ground_Draw_X.get(j) + random.nextInt(ground_Touch_Snail_Hp1_img[0].getWidth()) - 35,
+                                        effect_Ground_Draw_Y.get(j) + random.nextInt(ground_Touch_Snail_Hp1_img[0].getHeight()) - 35);
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+                        effect_Ground_Draw_X.clear();
+                        effect_Ground_Draw_Y.clear();
+                    }
+                }).start();
+*/
+            rand_Effect = random.nextInt(4);
+            if (rand_Effect == 0) {
+                effect_Temp = effect_Pop2_img[4];
+            } else if (rand_Effect == 1) {
+                effect_Temp = effect_Pop3_img[4];
+            } else if (rand_Effect == 2) {
+                effect_Temp = effect_Pop4_img[4];
+            } else {
+                effect_Temp = effect_Pop5_img[4];
+            }
+
+
+            snail_Ground_Hit_Flag = true;   //달팽이 터치 이벤트 doDraw에서 발생
+
+
+
+            //클릭된 달팽이의체력을 깍는다.
+            ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
+            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
+            soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 1, 1, 1.0F);   //달팽이 기본 팝 사운드
+            return true;
+
+            //선택된 꽃게가 있다면.
+        }else if(ground_Remove_Temp >= 0 && ground_List.get(ground_Remove_Temp).get_Ground_Class() == 2 && ground_Class == ground_List.get(ground_Remove_Temp).get_Ground_Class()){
+            tempInt = random.nextInt(5);
+
+
+            effect_Temp = effect_Pop1_img[tempInt];
+
+
+
+            crap_Ground_Hit_Flag = true; //꽃게 터치 이벤트 doDraw에서 발생
+
+
+
+            //드래그된 꽃게의 체력을 깍는다.
+            ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
+            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
+            soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 1, 1, 1.0F);   //드래그 사운드
+            Score++;            //점수 추가
+            return true;
+        }else if(ground_Remove_Temp >= 0 && ground_List.get(ground_Remove_Temp).get_Ground_Class() == 10
+                && ground_Class == ground_List.get(ground_Remove_Temp).get_Ground_Class()){ //성게를 클릭했다면 hp 감소
+
+/*
+            effect_Ground_Draw_X.add(ground_List.get(ground_Remove_Temp).get_Ground_Point_X());
+            effect_Ground_Draw_Y.add(ground_List.get(ground_Remove_Temp).get_Ground_Point_Y());
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    tempInt = random.nextInt(4);
+
+                    for (int i = 2; i < 5; i++) {
+                        try {
+                            Thread.sleep(15);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        for (int j = 0; j < effect_Black_img.length - 1; j++) {
+                            try {
+
+                                effect_Temp = effect_Black_img[i];
+
+                                draw.draw_Bmp(canvas, effect_Temp,
+                                        effect_Ground_Draw_X.get(j) + random.nextInt(ground_Touch_Snail_Hp1_img[0].getWidth()) - 35,
+                                        effect_Ground_Draw_Y.get(j) + random.nextInt(ground_Touch_Snail_Hp1_img[0].getHeight()) - 35);
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+                    effect_Ground_Draw_X.clear();
+                    effect_Ground_Draw_Y.clear();
+                }
+            }).start();
+*/
+            effect_Temp = effect_Black_img[4];
+
+
+            seaurchin_Ground_Hit_Flag = true;   //성게 터치 이벤트는 doDraw 에서
+
+
+            ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();  //성게 삭제,
+            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
+
+            //메인 캐릭터 hp 감소 루틴 추가 해야함
+            soundPool.play(sound_Effect[random.nextInt(2)], 0.01F, 0.01F, 1, 1, 1.0F);   //물고기 기본 팝 사운드
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+    /**
+     * 물고기 히트
+     */
+    public boolean fish_Hit_Chose(int fish_Class){
+
+        //물고기 삭제 1번 먼저
+        if(fish_List.size() != 0) {         //물고기가 존재할때 눌러짐
+            eraser_Fish = false;            //물고기 지우기 허가하기
+
+
+            /**
+             * 가장 가까운 물고기를 찾는다.
+             */
+            for(int i=0; i<fish_List.size(); i++){
+
+                //전달받은 물고기 인자가 아닐때 생깜
+                if(fish_List.get(i).get_Fish_Class() != fish_Class){
+                    continue;
+                }
+
+                //대각선 길이를 통해 가장 가까운 거리를 찾는다.
+                smallMathResult = pythagoras(fish_List.get(i).get_Fish_Point_X() , fish_List.get(i).get_Fish_Point_Y());
+
+                if(smallMathResult < smallFishTemp){
+                    smallFishTemp = smallMathResult;
+                    smallFishIndex = i;                     //for 문안에서 가장 가까운 물고기를 찾는다.
+                    eraser_Fish = true;
+                }
+
+            }
+            smallFishTemp = 1500; //제일 가까운 물고기 찾기위한 템프변수
+
+            if(eraser_Fish){
+
+
+                if(fish_Class == 1){        //전달 받은 인자가 기본 물고기 일때.
+
+
+
+/*              //부하와 메모리 관리가 안되서 멈춘다.
+                effect_Fish_Draw_X.add(fish_List.get(smallFishIndex).get_Fish_Point_X());       //터치된 자리에 이펙트 4단계를 거쳐야 함으로
+                effect_Fish_Draw_Y.add(fish_List.get(smallFishIndex).get_Fish_Point_Y());
+                effect_TempRandom_Temp.add(random.nextInt(4));
+                    default_Fish_Effect = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 2; i < 5; i++) {
+                            try {
+                                Thread.sleep(10);
+                                for (int j = 0; j < effect_Fish_Draw_X.size(); j++) {
+                                    //랜덤 이팩트
+                                    if (effect_TempRandom_Temp.get(0) == 0) {
+                                        effect_Temp = effect_Orange_img[i];
+                                    } else if (effect_TempRandom_Temp.get(0) == 1) {
+                                        effect_Temp = effect_Blue_img[i];
+                                    } else if (effect_TempRandom_Temp.get(0) == 2) {
+                                        effect_Temp = effect_Yellow_img[i];
+                                    } else {
+                                        effect_Temp = effect_Green_img[i];
+                                    }
+                                    draw.draw_Bmp(canvas, effect_Temp,
+                                            effect_Fish_Draw_X.get(j) - 15
+                                            , effect_Fish_Draw_Y.get(j));
+                                    effect_Fish_Draw_X.clear();
+                                    effect_Fish_Draw_Y.clear();
+                                    effect_TempRandom_Temp.clear();
+                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+                        default_Fish_Effect.start();
+*/
+
+                    rand_Effect = random.nextInt(4);
+                    //랜덤 이팩트
+                    if (rand_Effect == 0) {
+                        effect_Temp = effect_Orange_img[4];
+                    } else if (rand_Effect == 1) {
+                        effect_Temp = effect_Blue_img[4];
+                    } else if (rand_Effect == 2) {
+                        effect_Temp = effect_Yellow_img[4];
+                    } else {
+                        effect_Temp = effect_Green_img[4];
+                    }
+
+//                    draw.draw_Bmp(canvas, effect_Temp, fish_List.get(smallFishIndex).get_Fish_Point_X() - 15, fish_List.get(smallFishIndex).get_Fish_Point_Y());
+
+
+                    Log.d("fishListSize", "" + fish_List.size());
+
+                    soundPool.play(sound_Effect[random.nextInt(2)], 0.01F, 0.01F, 1, 1, 1.0F);   //물고기 기본 팝 사운드
+                    default_Fish_Hit_Flag = true;   //그림은 드로우에서
+
+                }
+
+
+
+                if(fish_List.get(smallFishIndex).get_Fish_Hp() > 0) {        //드래그 속도까 빨라서 0밑으로내려감 방지
+                    fish_List.get(smallFishIndex).set_Hp_Minus();            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
+                    delete_Fish_Select(smallFishIndex);     //피가0이 된 물고기 삭제.
+                    Score++;                                                 //점수 증가
+
+
+                    if(fish_Class == 2) {
+                        //드래그시 공격당한다는 느낌 주기 위해
+
+
+                        drag_Fish_Hit_Flag = true;  //그림은 드로우에서
+                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 1, 1, 1.0F);   //드래그 사운드
+                    }
+                    return true;
+                }
+            }else {
+                Log.i("발 터짐",window_Width + " ");
+            }
+        }else {
+        }
+        return false;
+    }
+
+
+    /**
+     * 터치 이벤트시 발생하면 draw 에서 그리기 위한 flag 변수들
+     */
+    private boolean default_Fish_Hit_Flag = false;//기본물고기
+    private boolean drag_Fish_Hit_Flag = false;;//드래그물고기
+    private boolean jellyfish_Fish_Hit_Flag = false;;//해파리는 아직 이벤트 없음
+
+    private boolean snail_Ground_Hit_Flag = false;;//달팽이
+    private boolean crap_Ground_Hit_Flag = false;;//꽃게
+    private boolean seaurchin_Ground_Hit_Flag = false;;//성게
+
+
+
+
+    /**
+     * 피타 고라스 함수 정의, 핸드폰 최하단 좌표 400, 1000 이랑 비교
+     * 가장 가까운 물고기를 찾기 위해서
+     */
+    public double pythagoras(double x, double y){
+
+        //피타고라스 정의 사용하기 위해 큰 x,y 값 도출
+        if(400 >= x){
+            pointXBig = 400;
+            pointXSmall = x;
+        }else if(400 <= x){
+            pointXBig = x;
+            pointXSmall = 400;
+        }
+
+
+        if(1000 >= y){
+            pointYBig = 1000;
+            pointYSmall = y;
+        }else if(1000 <= y){
+            pointYBig = y;
+            pointYSmall = 1000;
+        }
+
+        return Math.sqrt(Math.pow((pointXBig - pointXSmall), 2) + Math.pow((pointYBig - pointYSmall), 2));
+    }
+
+
+    //********************************************************************************************//
+
+    /**
+     * 메인 캐릭터 그리기
+     */
+    public void draw_Main_Character_Touch(){ //공격할때 -> 터치 이벤트 일때, 드래그일때(x)
+
+
+/*
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+                for (int i = 0; i < 5; i++) {
+                    try {
+                        Thread.sleep(15);
+
+                        draw.draw_Bmp(canvas, main_Character_img[i], main_Character.get_Main_Character_Point_X(),main_Character.get_Main_Character_Point_Y());
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }).start();
+*/
+
+    }
+    public void draw_Main_Character_Default(){  //가만히 있을때
+        draw.draw_Bmp(canvas, main_Character_img[0], main_Character.get_Main_Character_Point_X(),main_Character.get_Main_Character_Point_Y());
+    }
+
+
+    /**
+     * 터치 이벤트
+     */
+    @Override
+    public synchronized boolean onTouchEvent(MotionEvent event) {
+
+
+
+        if(event.getAction() == MotionEvent.ACTION_DOWN){           //손가락이 눌렸을때.
+            touch_Check = 0;   //터치 체크 상태가 5이하 일때 터치라 판정.
+
+
+
+
+        } else if(event.getAction() == MotionEvent.ACTION_UP){      //때졌을때.
+
+            draw_Main_Character_Touch();    //메인캐릭터 그리기
+
+            if(touch_Check <= 5){
+                //퍼즈 컨트롤
+                //if(pause_Effect(event.getX(), event.getY())){
+
+                if(ground_Hit_Chose(event.getX(), event.getY(), 1)){ //달팽이 삭제
+                        //달팽이 터치 팝 이벤트
+
+
+                }else if(ground_Hit_Chose(event.getX(), event.getY(), 10)){ //성게 삭제
+
+                }
+                else {
+                    //문어 공격 속도로 제어한다. 쿨타임 효과
+                    if (main_Character.get_Attack_Cool_time() == 0) {
+                        if(!fish_Hit_Chose(1)){      //기본 물고기 터치 확인 == 1
+                            //기본 물고기가 존재하지 않을때
+                            fish_Hit_Chose(10);         //해파리 타격 메인 캐릭터 Hp 감소 해야한다.
+
+
+
+                        }else {
+
+                        }
+                        main_Character.set_Attack_Cool_Time();
+                    }
+                }
+            }
+
+
+        } else if(event.getAction() == MotionEvent.ACTION_MOVE){    //드래그 중일때
+            touch_Check++;
+            drag_Action_Move++;
+            if(drag_Action_Move > 2) {
+
+                if(ground_Hit_Chose(event.getX(), event.getY(), 2)){    //꽃게 삭제
+
+                }else {
+                    fish_Hit_Chose(2);                                  //드래그 물고기
+                }
+
+                drag_Action_Move = 0;
+            }
+
+
+        }
+
+
+        return true;
+
+    }
+
+
+    /**
+     * 퍼즈 이벤트 게임 정지
+     *
+    public boolean pause_Effect(float x, float y){
+
+        //window_Width - 100, 10
+        //퍼지 이미지의 위치
+        if(x >= window_Width - 100
+                && x <= window_Width - 100 + pause_img[0].getWidth()
+                && y >= 10
+                && y <= 10 + + pause_img[0].getHeight()){
+            pause_Push = true;
+            //mRun = false;  //일시정지 화면 띄워야 함. -> 이미지가변경 되야 하기 때문에 이미지 변경후 멈춤으로 진행
+
+
+            return true;
+        }
+        return false;
+
+
+    }*/
+
+
+
+
+
+    //********************************************************************************************//
+
+    /**
+     * 오버라이드 된것 시작과 동시에 구성, 교체
+     * @param holder
+     */
+
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        //Log.i("[뷰]", "구성");
+
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        //Log.i("[뷰]", "교체");
+        window_Width = width; //화면의 크기
+        window_Height = height;
+
+        //배경 화면 동적 움직임 생성
+        background_Effect_One = new Background_Effect_One(window_Width, window_Height);
+        background_Effect = new Thread(background_Effect_One);
+        background_Effect.start();                   //쓰레드 작동 방법
+
+        background_Effect_Two = new Background_Effect_Two(window_Width, window_Height);
+        background_Effect = new Thread(background_Effect_Two);
+        background_Effect.start();
+
+        if(game_thread.getState() == Thread.State.TERMINATED) {
+            game_thread = new Game_Thread(/*holder*/);  //쓰레드가 홈버튼을 누름으로 인해 파괴 된다면 다시 생성
+            game_thread.start(); //게임
+
+        }else {
+            game_thread.start();
+            //gameMainThread.start();
+        }
+
+//        if(game_element_thread.getState() == Thread.State.TERMINATED) {
+//            game_element_thread = new Game_Element_Thread();  //쓰레드가 홈버튼을 누름으로 인해 파괴 된다면 다시 생성
+//            game_element_thread.start(); //게임
+//
+//        }else {
+//            game_element_thread.start();
+//            //gameMainThread.start();
+//        }
+
+        mRun = true;
+
+    }
+
+
+    @Override
+    public synchronized void surfaceDestroyed(SurfaceHolder holder) {
+        //Log.i("[뷰]", "파괴");
+
+        try{
+//            game_thread.join(); //쓰레드 종료 -> 타이머로 대체함
+//            game_element_thread.join();
+            //gameMainThread.join();
+
+//            타이머 파괴
+            fish_Maker_1.cancel();
+        }catch (Exception e){
+
+        }
+
+
+
+    }
+
+    //********************************************************************************************//
+}
+
+
+
+
