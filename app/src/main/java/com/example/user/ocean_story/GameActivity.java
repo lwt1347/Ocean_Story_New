@@ -20,6 +20,8 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
+
+
         //인텐트 받는 작업을 수행하고
 
         //게임메인 뷰를 켠다. 게임이 동작하는 구간.

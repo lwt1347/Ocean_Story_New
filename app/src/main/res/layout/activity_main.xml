@@ -8,17 +8,17 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/background_start"
     tools:context="com.example.user.ocean_story.MainActivity">
 
     <Button
-        android:text="Gamge_Start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="38dp"
         android:id="@+id/button"
-        android:onClick="onButtonGame_StartClicked" />
+        android:layout_width="300dip"
+        android:layout_height="100dip"
+        android:background="@drawable/play_button"
+        android:onClick="onButtonGame_StartClicked"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

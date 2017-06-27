@@ -22,7 +22,6 @@ public class Ground_Trap_Urchin extends Ground_Default_Body {
         ground_Point_Y = 50 + (float)Math.random() * (y_Point-100);       //성게는 y 축도 랜덤으로 생성한다.
 
 
-
         ground_Class = 10;           //성게 10번
         angle = 1 + (float)Math.random() * 359;
     }
@@ -31,7 +30,7 @@ public class Ground_Trap_Urchin extends Ground_Default_Body {
     public void ground_Object_Move() {
         //성게는 움직이지 않고 시간이 흐르면 삭제 되야한다.
         live_Time++;
-        if(live_Time > 100){
+        if(live_Time > 200){
             hp = 0;
         }
 

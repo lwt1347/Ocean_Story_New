@@ -22,6 +22,8 @@ public class menu_Sliding_Panel extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);     //->팝업창에서 제목 타이틀 없앤다
         setContentView(R.layout.menuslidingpanel);      //일시정지 눌렀을때 뜨는 xml 화면
 
+
+
         //Intent intent = getIntent();
        /// String s = intent.getStringExtra("a");
        // Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT ).show();

@@ -22,9 +22,9 @@ public class Main_Character {
      *  기본 생성자
      */
 
-    Main_Character(){
-        main_Character_Point_X = 300;           //기본위치 임의로 정해놓은 상태
-        main_Character_Point_Y = 700;
+    Main_Character(float x, float y){
+        main_Character_Point_X = (x / 2) - 120;           //기본위치 임의로 정해놓은 상태
+        main_Character_Point_Y = (y - 350);
     }
 
     //********************************************************************************************//
