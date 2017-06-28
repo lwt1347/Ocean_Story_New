@@ -58,9 +58,11 @@ public class GameActivity extends AppCompatActivity {
 
         //퍼지 버튼 눌렀을때 이미지 변경
         button_Pause.setBackgroundResource(R.drawable.pause_2);
-
-        Toast.makeText(getApplicationContext(),"a",Toast.LENGTH_SHORT).show();
     }
+
+
+
+
 
     /**
      * 값 받아오기 메뉴창에서 계속하기 = 1, 다시하기 = 2
@@ -72,6 +74,8 @@ public class GameActivity extends AppCompatActivity {
         //퍼지 버튼 원상태
         button_Pause.setBackgroundResource(R.drawable.pause_1);
 
+        Toast.makeText(getApplicationContext(),"a",Toast.LENGTH_SHORT).show();
+
         int key = data.getIntExtra("key",0);
         if(key == 1){
             gameMain.m_Run_True(); //게임 재게
@@ -82,5 +86,9 @@ public class GameActivity extends AppCompatActivity {
         }
 
     }
+
+
+
+
 
 }

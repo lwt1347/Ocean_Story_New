@@ -5,52 +5,40 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
-public class menu_Sliding_Panel extends Activity {
+public class explain_Panel extends Activity {
 
 
     //일시정지 눌렀을때 뜨는 화면
     // android:theme="@android:style/Theme.Dialog" - > 다이얼로그 형식으로 띄우게된다.
 
-    //인텐트 객체
-    Intent intent;
-
+    GameMain gameMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);     //->팝업창에서 제목 타이틀 없앤다
-        setContentView(R.layout.menuslidingpanel);      //일시정지 눌렀을때 뜨는 xml 화면
+        setContentView(R.layout.fish_default_explain_tap);      //일시정지 눌렀을때 뜨는 xml 화면
 
-
-//        android:background="@drawable/menu_background"
-
-        //Intent intent = getIntent();
-       /// String s = intent.getStringExtra("a");
-       // Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT ).show();
-
-        //intent = new Intent(getApplicationContext(), GameMain.class);   //인텐트 객체 할당
+        gameMain = (GameMain)findViewById(R.id.GameMainView);
+        Toast.makeText(getApplicationContext(), "계속하기", Toast.LENGTH_SHORT ).show();
     }
 
     //계속하기 버튼
     public void onButtonContinue(View v){
         //Toast.makeText(getApplicationContext(), "계속하기", Toast.LENGTH_SHORT ).show();
 
-        /**
-         * 인텐트를 통해 명령을 전달한다. 1 = 계속하기, 2 = 다시하기
-         */
+
+        gameMain.m_Run_True();
+        Intent intent;
         intent = new Intent(getApplicationContext(), GameActivity.class);
         intent.putExtra("key",1);
         setResult(0, intent);
         finish();   //액티비티 종료
     }
-    //다시하기 버튼
-    public void onButtonResume(View v){
-        intent = new Intent(getApplicationContext(), GameActivity.class);
-        intent.putExtra("key",2);
-        setResult(0, intent);
-        finish();   //액티비티 종료
-    }
+
+
 
 
 }

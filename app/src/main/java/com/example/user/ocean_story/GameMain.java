@@ -1,7 +1,9 @@
 package com.example.user.ocean_story;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.NinePatch;
@@ -86,6 +88,9 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     //pause 이미지  -> 컨트롤 화면에서
     //private Bitmap pause_img[] = new Bitmap[2];
     //private Bitmap pause_View_img = null;   //퍼지 눌렀을때 뜨는 창
+
+    private Bitmap nine_Patch_Hp = null;   //hp
+
     private NinePatch ninePatch;     //나인패치 적용방법 변수
     /**
      * 기본 물고기 이미지
@@ -127,8 +132,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
 
-    //메인 캐릭터 이미지
-    private Bitmap main_Character_img[] = new Bitmap[5];        //메인 캐릭터
+    //메인 캐릭터 이미지 [문어]
+    private Bitmap main_Character_Octopus[] = new Bitmap[2];        //메인 캐릭터
+    //메인 캐릭터 이미지 [곰팡이]
+    private Bitmap main_Character_Amoeba[] = new Bitmap[2];        //메인 캐릭터
+
+
 
     //회전 물고기 비트맵 템프 변수
     private Bitmap temp_Fish = null;
@@ -144,6 +153,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private Bitmap effect_Yellow_img[] = new Bitmap[5];     //옐로우
     private Bitmap effect_Green_img[] = new Bitmap[5];      //그린
     private Bitmap effect_Black_img[] = new Bitmap[5];      //그린
+
+    /**
+     * 나인패치 HP바 표현
+     */
+    private Bitmap nine_Patch_Image[] = new Bitmap[15];
+
 
 
 
@@ -241,6 +256,14 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         //게임 요소 추가 할 타이머 [물고기, 함정 등] 1초후에 실행해서 5초마다 반복
         mTimer = new Timer();
         mTimer.schedule(fish_Maker_1, 1000, 5000);
+
+
+
+//        Intent intent = new Intent(_context, explain_Panel.class);
+//        _context.startActivity(intent); //-> 기본 물고기 설명
+////        if(){ //물고기 설명창 뜨면 게임 일시정지
+//            m_Run_False();
+////        }
 
 
 
@@ -350,6 +373,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             //ninePatch = new NinePatch(pause_View_img, pause_View_img.getNinePatchChunk(), "");       //나인패치 적용방법
 
 
+
+
             //게임 요소 추가 할 쓰레드 [물고기, 함정 등]
             backGroundImg = Init_Background_Image(_context, 0); //배경
             DisplayMetrics dm = _context.getApplicationContext().getResources().getDisplayMetrics();
@@ -387,11 +412,14 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
 
-            for(int i = 0; i < 5; i++){
-                main_Character_img[i] = Init_Main_Character_Image(_context, i); //메인 캐릭터
+//            for(int i = 0; i < 5; i++){
+//                main_Character_img[i] = Init_Main_Character_Image(_context, i); //메인 캐릭터
+//            }
+            //메인 캐릭터 업로딩
+            Init_Main_Character_Image(_context);
 
 
-            }
+
             for(int i=0; i<5; i++){
 
                 effect_Orange_img[i] = Init_Effect_Orange_Image(_context, i); //이펙트
@@ -413,7 +441,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                 effect_Background_One_1_img[i] = Init_Background_Effect_Background_One_1_Image(_context, i);    //배경 이펙트
                 effect_Background_Two_1_img[i] = Init_Background_Effect_Background_Two_1_Image(_context, i);    //배경 이펙트
             }
-
 
 
 
@@ -527,9 +554,17 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
         //메인 캐릭터 이미지
-        public Bitmap Init_Main_Character_Image(Context context, int num){
+        public void Init_Main_Character_Image(Context context){
             image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.character_octopus_10); //인트형이라 + 1하면 그림 변경됨
-            return image.getBitmap();
+
+            main_Character_Octopus[0] = image.getBitmap();
+
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.character_amoeba_1);
+            main_Character_Amoeba[0] = image.getBitmap();
+
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.character_amoeba_2);
+            main_Character_Amoeba[1] = image.getBitmap();
+
         }
 
 
@@ -595,36 +630,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         draw.draw_Bmp(canvas, backGroundImg, 0, 0);
 
 
-        /**
-         *  점수 그리기
-         */
-
-        score_Text_Size = window_Width / 10;
-
-
-        paint_Temp.setTextSize(score_Text_Size);
-        paint_Temp.setColor(Color.YELLOW);
-        canvas.drawText(Score+"", 30, score_Text_Size, paint_Temp);
-
-        //점수 배경
-        paint.setTextSize(score_Text_Size);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(3);
-        paint.setColor(Color.BLACK);
-        canvas.drawText(Score+"", 30, score_Text_Size, paint);
-
-        //베스트 점수
-        paint_Best.setTextSize(score_Text_Size-(score_Text_Size/2));
-        paint_Best.setStyle(Paint.Style.STROKE);
-        paint_Best.setStrokeWidth(3);
-        paint_Best.setColor(Color.BLACK);
-        canvas.drawText("Best ", 30, score_Text_Size+(score_Text_Size/2), paint_Best);
 
 
 
-
-        draw_Main_Character_Default();  //메인 캐릭터 기본 이미지
-
+        draw_Main_Character_Draw();  //메인 캐릭터 기본 이미지
+        main_Character.character_Move();    //메인 캐릭터 움직임 효과
 
 
 
@@ -754,7 +764,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                     ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() + random.nextInt(ground_Touch_Snail_Hp1_img[0].getHeight()) - 35);
 
             seaurchin_Ground_Hit_Flag = false;
-
+            ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();  //성게 삭제,
             delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
 
         }
@@ -768,6 +778,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                 , background_Effect_One.get_Background_Point_X(), background_Effect_One.get_Background_Point_Y());
 
         draw.draw_Bmp(canvas, effect_Background_Two_1_img[background_Effect_Two.get_Draw_Background_Effect_Status()], main_Character.get_Main_Character_Point_X(),main_Character.get_Main_Character_Point_Y());
+
 
 
 
@@ -787,6 +798,88 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             mRun = false; //화면 정지 일시정지 화면 출력
         }
     */
+
+
+        /**
+         *  점수 그리기
+         */
+        score_Text_Size = window_Width / 15;
+
+
+        paint_Temp.setTextSize(score_Text_Size);
+        paint_Temp.setColor(Color.YELLOW);
+        canvas.drawText(Score+"", 30, window_Height/6, paint_Temp);
+
+        //나인패치 적용한 hp 그리기
+
+        if(main_Character.get_Max_Hp() == 1){
+
+            if(main_Character.get_Hp() == 0){
+                nine_Patch_Hp = BitmapFactory.decodeResource(getResources(), R.drawable.hp_1);
+            }else if(main_Character.get_Hp() == 1){
+                nine_Patch_Hp = BitmapFactory.decodeResource(getResources(), R.drawable.hp_2);
+            }
+
+        }else if(main_Character.get_Max_Hp() == 2){
+
+            if(main_Character.get_Hp() == 0){
+                nine_Patch_Hp = BitmapFactory.decodeResource(getResources(), R.drawable.hp_3);
+            }else if(main_Character.get_Hp() == 1){
+                nine_Patch_Hp = BitmapFactory.decodeResource(getResources(), R.drawable.hp_4);
+            }else if(main_Character.get_Hp() == 2){
+                nine_Patch_Hp = BitmapFactory.decodeResource(getResources(), R.drawable.hp_5);
+            }
+
+        }else if(main_Character.get_Max_Hp() == 3){
+
+            if(main_Character.get_Hp() == 0){
+                nine_Patch_Hp = BitmapFactory.decodeResource(getResources(), R.drawable.hp_6);
+            }else if(main_Character.get_Hp() == 1){
+                nine_Patch_Hp = BitmapFactory.decodeResource(getResources(), R.drawable.hp_7);
+            }else if(main_Character.get_Hp() == 2){
+                nine_Patch_Hp = BitmapFactory.decodeResource(getResources(), R.drawable.hp_8);
+            }else if(main_Character.get_Hp() == 3){
+                nine_Patch_Hp = BitmapFactory.decodeResource(getResources(), R.drawable.hp_9);
+            }
+
+        }else if(main_Character.get_Max_Hp() == 4){
+
+            if(main_Character.get_Hp() == 0){
+                nine_Patch_Hp = BitmapFactory.decodeResource(getResources(), R.drawable.hp_10);
+            }else if(main_Character.get_Hp() == 1){
+                nine_Patch_Hp = BitmapFactory.decodeResource(getResources(), R.drawable.hp_11);
+            }else if(main_Character.get_Hp() == 2){
+                nine_Patch_Hp = BitmapFactory.decodeResource(getResources(), R.drawable.hp_12);
+            }else if(main_Character.get_Hp() == 3){
+                nine_Patch_Hp = BitmapFactory.decodeResource(getResources(), R.drawable.hp_13);
+            }else if(main_Character.get_Hp() == 4){
+                nine_Patch_Hp = BitmapFactory.decodeResource(getResources(), R.drawable.hp_14);
+            }
+
+        }
+
+
+
+        draw.draw_Bmp(canvas, nine_Patch_Hp, 20, 1); //나인패치 적용방법
+
+
+
+
+
+
+        //점수 배경
+        paint.setTextSize(score_Text_Size);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(2);
+        paint.setColor(Color.BLACK);
+        canvas.drawText(Score+"", 30, window_Height/6, paint);
+
+        //베스트 점수
+        paint_Best.setTextSize(score_Text_Size-(score_Text_Size/2));
+        paint_Best.setStyle(Paint.Style.STROKE);
+        paint_Best.setStrokeWidth(2);
+        paint_Best.setColor(Color.BLACK);
+        canvas.drawText("Best ", 30, window_Height/6+(score_Text_Size/2), paint_Best);
 
 
 
@@ -829,6 +922,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                      */
                     doDraw(canvas);
 
+                    /**
+                     * 스테이지 업하기
+                     */
+
+                    stage_Up(Score);
 
 
 
@@ -855,6 +953,27 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         }
     }
     }
+
+    /**
+     * 스테이지 올리기
+     */
+    public void stage_Up(int score) {
+            if(score == 0){ //물고기 설명창 뜨면 게임 일시정지
+
+                Intent intent = new Intent(_context, explain_Panel.class);
+                _context.startActivity(intent); //-> 기본 물고기 설명Int
+
+
+                m_Run_False();
+
+                Score++;
+
+        }
+    }
+
+
+
+
 
     /**
      * 게임 동작 함수
@@ -989,6 +1108,10 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                     || fish_List.get(i).get_Fish_Point_X() < -30                  //X축으로 0 보다 작으면 삭제
                     || fish_List.get(i).get_Fish_Point_X() > getWidth() + 30){       //X축으로 화면 보다 크면 삭제
                 fish_List.remove(i);
+
+                //물고기가 y축으로 넘어가면 hp 감소
+                main_Character.set_Hp_Minus();
+
                 break;
             }
 
@@ -1018,6 +1141,9 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             //물고기가 y축 으로 넘어가면 삭제
             if(ground_List.get(i).get_Ground_Point_Y() >= getHeight() - 30){
                 ground_List.remove(i);
+
+                //그라운드 생명체 y축 넘어가면 hp 감소
+                main_Character.set_Hp_Minus();
                 break;
             }
         }
@@ -1149,7 +1275,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             seaurchin_Ground_Hit_Flag = true;   //성게 터치 이벤트는 doDraw 에서
 
 
-            ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();  //성게 삭제,
+//            ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();  //성게 삭제,
 //            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
 
 
@@ -1320,8 +1446,30 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 */
 
     }
-    public void draw_Main_Character_Default(){  //가만히 있을때
-        draw.draw_Bmp(canvas, main_Character_img[0], main_Character.get_Main_Character_Point_X(),main_Character.get_Main_Character_Point_Y());
+    public void draw_Main_Character_Draw(){  //가만히 있을때
+
+
+        if(main_Character instanceof Main_Character_Amoeba){
+
+            //곰팡이 공격상태
+            if(main_Character.get_Attack_State()){
+                draw.draw_Bmp(canvas, main_Character_Amoeba[1], main_Character.get_Main_Character_Point_X(),main_Character.get_Main_Character_Point_Y());
+
+
+
+
+
+
+            }else { //곰팡이 기본상태
+                draw.draw_Bmp(canvas, main_Character_Amoeba[0], main_Character.get_Main_Character_Point_X(),main_Character.get_Main_Character_Point_Y());
+
+            }
+
+
+        }
+
+
+
     }
 
 
@@ -1341,7 +1489,10 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
         } else if(event.getAction() == MotionEvent.ACTION_UP){      //때졌을때.
 
-            draw_Main_Character_Touch();    //메인캐릭터 그리기
+
+//            draw_Main_Character_Touch();    //메인캐릭터 그리기
+            main_Character.set_Attack_State_True(); //메인캐릭터 공격
+
 
             if(touch_Check <= 5){
                 //퍼즈 컨트롤
@@ -1453,8 +1604,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
         //메인캐릭터 생성 x,y 좌표를 알기 위해 이곳에
-        main_Character = new Main_Character(window_Width, window_Height);
-
+//        main_Character = new Main_Character(window_Width, window_Height);
+        main_Character = new Main_Character_Amoeba(window_Width, window_Height);
 
 
         if(game_thread.getState() == Thread.State.TERMINATED) {

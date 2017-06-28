@@ -22,7 +22,14 @@
 
         <activity
             android:name=".menu_Sliding_Panel"
-            android:theme="@android:style/Theme.Dialog" />
+            android:theme="@android:style/Theme.Dialog"
+            />
+
+        <activity
+            android:name=".explain_Panel"
+            android:theme="@android:style/Theme.Dialog"
+            />
+
     </application>
 
 </manifest>
