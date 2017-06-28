@@ -18,7 +18,22 @@ public class Fish_Touch_Default extends Fish_Default_Body {
     Fish_Touch_Default(int window_Width, int hp) {
         super(window_Width, hp);
         fish_Class = 1;
+        first_Test_Object = false;
     }
+
+    /**
+     * 가장 처음 생성된 물고기인가?
+     */
+    boolean first_Test_Object;
+    public void set_First_Test_Object(){
+        fish_Point_X = 200;
+        fish_Point_Y = 100;
+        first_Test_Object = true;
+    }
+    public boolean get_Fisrt_Test_Object(){
+        return first_Test_Object;
+    }
+
 
 
 }

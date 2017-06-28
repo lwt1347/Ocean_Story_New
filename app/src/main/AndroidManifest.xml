@@ -25,11 +25,6 @@
             android:theme="@android:style/Theme.Dialog"
             />
 
-        <activity
-            android:name=".explain_Panel"
-            android:theme="@android:style/Theme.Dialog"
-            />
-
     </application>
 
 </manifest>

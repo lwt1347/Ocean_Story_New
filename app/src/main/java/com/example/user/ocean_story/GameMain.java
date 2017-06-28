@@ -15,6 +15,7 @@ import android.media.SoundPool;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -104,6 +105,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
     //드래그로 죽는 물고기 이미지
     private Bitmap fish_Drag_Default_img[] = new Bitmap[4];         //드래그로 죽는 물고기 이미지
+
+    /**
+     * 기본 물고기 설명 이미지
+     */
+    private Bitmap explain_Default_Fish[] = new Bitmap[5];
+
 
     /**
      * 해파리 이미지
@@ -411,6 +418,13 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             }
 
 
+            /**
+             * 물고기 설명창
+             */
+            for(int i=0; i<5; i++){
+                explain_Default_Fish[i] = Init_Explain_Fish_Default(_context, i);
+            }
+
 
 //            for(int i = 0; i < 5; i++){
 //                main_Character_img[i] = Init_Main_Character_Image(_context, i); //메인 캐릭터
@@ -504,6 +518,13 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             return image.getBitmap();
         }
 
+        /**
+         * 물고기 설명창
+         * */
+        public Bitmap Init_Explain_Fish_Default(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.default_fish_explain_1 + num); //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
 
 
         //달팽이 이미지
@@ -676,12 +697,32 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
 
-
         /**
          * 물고기 그리기
          */
         for(int i=0; i<fish_List.size(); i++){
             if(fish_List.get(i) instanceof Fish_Touch_Default) {
+
+                /**
+                 * 물고기 설명 그림
+                 */
+                if(((Fish_Touch_Default) fish_List.get(i)).get_Fisrt_Test_Object()){ //첫 번째 물고기일때
+
+
+
+                    draw.draw_Bmp(canvas, explain_Default_Fish[fish_List.get(i).get_Draw_Fish_Status()],
+                            fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(55, _context),
+                            fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(20, _context));
+
+                    // 남은 hp 그리기
+                    paint_Temp.setTextSize(convertPixelsToDp(15, _context));
+                    paint_Temp.setColor(Color.RED);
+                    paint_Temp.setStrokeWidth(4);
+                    canvas.drawText(""+ fish_List.get(i).get_Fish_Hp(), fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(15, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(47, _context), paint_Temp);
+
+                }
+
+
                 /**
                  *  이미지 회전
                  */
@@ -717,6 +758,9 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             }
 
         }
+
+
+
 
 
         /**
@@ -887,6 +931,13 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     }
 
 
+        /**
+         * dpi 구하기
+         * */
+      public int convertPixelsToDp(float px, Context context) {
+        int value = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, context.getResources().getDisplayMetrics());
+        return value;
+       }
 
 
         /**
@@ -922,11 +973,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                      */
                     doDraw(canvas);
 
-                    /**
-                     * 스테이지 업하기
-                     */
 
-                    stage_Up(Score);
 
 
 
@@ -954,23 +1001,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     }
     }
 
-    /**
-     * 스테이지 올리기
-     */
-    public void stage_Up(int score) {
-            if(score == 0){ //물고기 설명창 뜨면 게임 일시정지
-
-                Intent intent = new Intent(_context, explain_Panel.class);
-                _context.startActivity(intent); //-> 기본 물고기 설명Int
-
-
-                m_Run_False();
-
-                Score++;
-
-        }
-    }
-
 
 
 
@@ -979,12 +1009,21 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
      * 게임 동작 함수
      */
 
+    boolean first_Fist = true;
     /**
      * 물고기 추가하기
      */
     public void add_Fish_Touch_Default(){
 
         fish_Touch_Default = new Fish_Touch_Default(window_Width, 5);       //기본 fish_touch_default 물고기 생성
+
+        //처음 시작할 때 물고기 추가
+        if(first_Fist) {
+            fish_Touch_Default.set_First_Test_Object();
+            first_Fist = false;
+        }
+
+
         fish_List.add(fish_Touch_Default);                                  //물고기 리스트에 추가
 
 
