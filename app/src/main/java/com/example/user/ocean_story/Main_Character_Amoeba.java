@@ -13,7 +13,7 @@ public class Main_Character_Amoeba extends Main_Character {
      */
     Main_Character_Amoeba(float x, float y) {
         super(x, y);
-        this.set_Max_Hp(4);
+        this.set_Max_Hp(1);
     }
 
 //곰팡이 생성

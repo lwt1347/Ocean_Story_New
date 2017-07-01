@@ -16,7 +16,7 @@ public class Main_Character {
     private float main_Character_Point_X;       //메인 캐릭터 위치 포인터
     private float main_Character_Point_Y;
 
-    private int main_Character_Hp = 4;
+    private int main_Character_Hp = 1;
     private int main_Character_Max_Hp = 1;
     private boolean attack_State = false;   //공격중인가?
 
@@ -76,6 +76,58 @@ public class Main_Character {
         return attack_State;
     }
 
+    /**
+     * 메인 캐릭터 1~6 가지 모션중 점수 획득하면 0 -> 2 -> 4로 승금한다.
+     * 이떄 1, 3 ,5 컨트롤할 변수
+     */
+    private int main_Character_Mode_Status = 0;
+    //점수에 따라서 모드 변경
+    public void Set_Main_Character_Mode_Status(){
+        if(main_Character_Mode_Status < 4) {
+            main_Character_Mode_Status += 2;
+        }
+    }
+    public int get_Main_Character_Mode_Status(){
+        return main_Character_Mode_Status;
+    }
+    public void set_Main_Character_Mode_Status_Init(){
+        main_Character_Mode_Status = 0;
+    }
+
+    /**
+     * 경험치
+     */
+    int experience = 0;
+    public void set_Character_Experience(){
+        revolution_Character = true;
+        experience++;
+    }
+    public void set_Character_Experience_Init(){
+        experience = 0;
+    }
+    public boolean set_Character_Revolution(int up_Score){
+        if(up_Score == experience){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    private boolean revolution_Character = true;   //진화가 한 번만 이루어지도록
+    public boolean set_Character_Upgrade(){
+
+        if(revolution_Character) {
+            revolution_Character = false;
+            if (50 == experience) {
+                return true;
+            } else if (100 == experience) {
+                return true;
+            } else if (150 == experience) {
+                return true;
+            }
+        }
+        return false;
+
+    }
 
 
     public float get_Main_Character_Point_X(){
@@ -119,6 +171,7 @@ public class Main_Character {
     public void set_Hp_Init(){
         main_Character_Hp = main_Character_Max_Hp;
     }
+
 
 
 

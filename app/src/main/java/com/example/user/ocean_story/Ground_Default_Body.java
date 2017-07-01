@@ -40,13 +40,34 @@ public class Ground_Default_Body {
         this.window_Width = window_Width;       //생성될 위치 및 벽을 못 넘도록 하기 위해 사용
         ground_Point_X = 30 + (float)Math.random() * (window_Width-100);         //생성될 위치
 
-
+        //처음 생성된 객체인가.
+        first_Test_Object = false;
 
     }
 
 
     //********************************************************************************************//
 
+
+    /**
+     * 가장 처음 생성된 바닥 생물인가?
+     */
+    private boolean first_Test_Object;
+    //성게 생성
+    public void set_First_Test_Object(int x_Point, int y_Point){
+        ground_Point_X = x_Point;
+        ground_Point_Y = y_Point;
+        first_Test_Object = true;
+    }
+    //움직이는 바닥 생명체
+    public void set_First_Test_Object(int x_Point){
+        ground_Point_X = x_Point;
+        ground_Point_Y = 100;
+        first_Test_Object = true;
+    }
+    public boolean get_First_Test_Object(){
+        return first_Test_Object;
+    }
 
 
     /**

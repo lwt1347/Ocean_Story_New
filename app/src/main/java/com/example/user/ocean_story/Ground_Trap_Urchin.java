@@ -13,13 +13,18 @@ public class Ground_Trap_Urchin extends Ground_Default_Body {
      * @param height
      * @param hp
      */
+    //성게는 나와서 일정 시간이 흐르면 어택모드로 들어간다.
+    boolean attack_Mode = false;
+
     int live_Time = 0;  //성게가 존재할 시간.
     float angle = 0;    //성게 각도
+
+
 
     Ground_Trap_Urchin(float window_Width, int width, int height, float y_Point, int hp) {
         super(window_Width, width, height, hp);
 
-        ground_Point_Y = 50 + (float)Math.random() * (y_Point-100);       //성게는 y 축도 랜덤으로 생성한다.
+        ground_Point_Y = 50 + (float)Math.random() * (y_Point-150);       //성게는 y 축도 랜덤으로 생성한다.
 
 
         ground_Class = 10;           //성게 10번
@@ -30,8 +35,13 @@ public class Ground_Trap_Urchin extends Ground_Default_Body {
     public void ground_Object_Move() {
         //성게는 움직이지 않고 시간이 흐르면 삭제 되야한다.
         live_Time++;
-        if(live_Time > 200){
+        if(live_Time > 300){
             hp = 0;
+        }
+
+        //150이 흐른 후에 어택모드로 들어간다.
+        if(live_Time == 150){
+            attack_Mode = true;
         }
 
         ground_Draw_Status++;
@@ -39,7 +49,26 @@ public class Ground_Trap_Urchin extends Ground_Default_Body {
             ground_Draw_Status = 0;
         }
     }
-    public float get_Urchin_Angle(){
+
+    /**
+     * 성게 변태 시간 반환
+     */
+    public int get_Live_Time(){
+        return live_Time;
+    }
+
+
+    /**
+     * 성게 터치시 어택모드인지 아닌지 판별
+     */
+    public boolean get_Urchin_Attack_Mode(){
+        return attack_Mode;
+    }
+
+
+
+    public float get_Urchin_Angle()
+    {
         return angle;
     }
 }
