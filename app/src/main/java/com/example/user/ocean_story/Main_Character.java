@@ -99,35 +99,47 @@ public class Main_Character {
      */
     int experience = 0;
     public void set_Character_Experience(){
-        revolution_Character = true;
         experience++;
+        upgrade_Experience++;
+        revolution_Character = true;
     }
-    public void set_Character_Experience_Init(){
-        experience = 0;
-    }
+
     public boolean set_Character_Revolution(int up_Score){
-        if(up_Score == experience){
+        if(up_Score <= experience){
+            experience = 0;
             return true;
         }else {
             return false;
         }
     }
     private boolean revolution_Character = true;   //진화가 한 번만 이루어지도록
-    public boolean set_Character_Upgrade(){
 
-        if(revolution_Character) {
-            revolution_Character = false;
-            if (50 == experience) {
-                return true;
-            } else if (100 == experience) {
-                return true;
-            } else if (150 == experience) {
-                return true;
-            }
+    /**
+     * 모양 변화
+     */
+    int upgrade_Experience = 0;
+
+    public boolean set_Character_Upgrade(int up_Score){
+        if(up_Score <= upgrade_Experience){
+            upgrade_Experience = 0;
+            return true;
+        }else {
+            return false;
         }
-        return false;
-
     }
+//        if(revolution_Character) {
+//            revolution_Character = false;
+//            if (150 <= experience) {
+//                return true;
+//            } else if (100 <= experience) {
+//                return true;
+//            } else if (50 <= experience) {
+//                return true;
+//            }
+//        }
+//        return false;
+//
+//    }
 
 
     public float get_Main_Character_Point_X(){
