@@ -60,6 +60,15 @@ public class GameActivity extends AppCompatActivity {
         button_Pause.setBackgroundResource(R.drawable.pause_2);
     }
 
+    /**
+     * 상어 친구 부르기
+     */
+    public void onButtonFriendSharkCall(View view){
+
+        Toast.makeText(getApplicationContext(),"상어 친구 호출",Toast.LENGTH_SHORT).show();
+        gameMain.shark_Friend_Call();
+    }
+
 
 
 

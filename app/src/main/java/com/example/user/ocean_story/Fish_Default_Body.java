@@ -152,6 +152,9 @@ public class Fish_Default_Body {
     public void set_Hp_Minus(){
         hp--;
     }
+    public void set_Hp_Minus(int damage){
+        hp = hp - damage;
+    }
 
     /**
      * 물고기 패턴 변경

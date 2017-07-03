@@ -11,20 +11,59 @@
     <com.example.user.ocean_story.GameMain
     android:id="@+id/GameMainView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 
     <Button
-        android:layout_width="30dp"
-        android:layout_height="30dp"
         android:id="@+id/pause_Button"
-        android:onClick="onButtonPause"
-        android:background="@drawable/pause_1"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:background="@drawable/pause_1"
+        android:onClick="onButtonPause" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignLeft="@+id/pause_Button"
+        android:layout_alignStart="@+id/pause_Button"
+        android:layout_below="@+id/pause_Button"
+        android:background="@drawable/option_button" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@drawable/dictionary_button"
+        android:layout_below="@+id/button2"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_alignStart="@+id/button2" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@drawable/rank_button"
+        android:layout_below="@+id/button5"
+        android:layout_alignLeft="@+id/button5"
+        android:layout_alignStart="@+id/button5" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@drawable/friend_shark_button"
+        android:onClick="onButtonFriendSharkCall"
+        android:layout_below="@+id/button6"
+        android:layout_alignLeft="@+id/button6"
+        android:layout_alignStart="@+id/button6" />
 
 
 </RelativeLayout>

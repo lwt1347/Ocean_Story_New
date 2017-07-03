@@ -114,7 +114,9 @@ public class Ground_Default_Body {
     public void set_Ground_Hp_Minus(){
         hp--;                           //체력깍기
     }
-
+    public void set_Ground_Hp_Minus(int damage){
+        hp = hp-damage;                           //체력깍기
+    }
 
     public void ground_Object_Move(){               //오버라이드 인터페이스
 

@@ -241,7 +241,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private Bitmap effect_Background_Shark_img[] = new Bitmap[5];
     //먹물 [오징어 사냥 시 발생]
     private Bitmap effect_Background_Squid_Ink_img[] = new Bitmap[8];
-
+    //상어 친구 부르기
+    private Bitmap effect_Background_Friend_Shark_img[] = new Bitmap[8];
 
 
     //퍼지 이미지 변경
@@ -624,6 +625,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                 effect_background_Seaanemone_img[i] = Init_Background_Effect_Background_Seaanemone_Image(_context, i);    //배경 이펙트
                 effect_background_Rock[i] = Init_Background_Effect_Background_Rock_Image(_context, i);    //배경 이펙트
                 effect_Background_Squid_Ink_img[i] = Init_Background_Effect_Background_Squid_Ink_Image(_context, i);    //오징어 이펙트
+                effect_Background_Friend_Shark_img[i] = Init_Background_Effect_Background_Friend_Shark_Image(_context, i);    //상어 친구 부르기 이펙트
             }
             for(int i=0; i<5; i++){
                 effect_Background_Shark_img[i] = Init_Background_Effect_Background_Shark_Image(_context, i);    //배경 이펙트
@@ -673,6 +675,13 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_squid_ink_1 + num);
             return image.getBitmap();
         }
+        public Bitmap Init_Background_Effect_Background_Friend_Shark_Image (Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_friend_shark_1 + num);
+            return image.getBitmap();
+        }
+
+
+
 
         //물고기 hp1 이미지
         public Bitmap Init_Fish_Touch_Default_Hp1_Image(Context context, int num){
@@ -1424,12 +1433,44 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         canvas.drawText("Best ", 30, convertPixelsToDp(80, _context)+(score_Text_Size/2), paint_Best);
 
 
+        /**
+         * 상어친구 호출하면 여기서 그린다.
+         */
+        if(shark_Friend_Call_Flag){
+            background_Effect_Friend_Shark_Call.Background_Effect_Move_Pattern();
+            draw.draw_Bmp(canvas, effect_Background_Friend_Shark_img[background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status()],
+                    window_Width/2 - convertPixelsToDp((effect_Background_Friend_Shark_img[0].getWidth()/4), _context),
+                    window_Height/2 - convertPixelsToDp((effect_Background_Friend_Shark_img[0].getHeight()/4), _context));
+            if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 7){
+
+                //모든 물고기 및 그라운드 생명체 hp - 100 해야된다.
+
+                for(int i=0; i<fish_List.size(); i++){
+                    fish_List.get(i).set_Hp_Minus(100);
+                }
+                for(int i=fish_List.size()-1; i>=0; i--){
+                    delete_Fish_Select(i);
+                }
+
+
+                for(int i=0; i<ground_List.size(); i++){
+                    ground_List.get(i).set_Ground_Hp_Minus(100);
+                }
+
+                for(int i=ground_List.size()-1; i>=0; i--){
+                   delete_Ground_Select(i);
+                }
 
 
 
 
+                shark_Friend_Call_Flag = false;     //상어 이펙트 그린후 사라져야한다.
+            }
+        }
 
     }
+
+
 
 
         /**
@@ -1495,6 +1536,20 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         }
     }
     }
+
+
+
+    /**
+     * 상어친구 호출 루틴 - background_Effect_Two 와 동작 방법 똑같기 때문에 그림만 그려준다.
+     */
+    private boolean shark_Friend_Call_Flag = false;
+    Background_Effect_Two background_Effect_Friend_Shark_Call;
+    public void shark_Friend_Call(){
+        background_Effect_Friend_Shark_Call = new Background_Effect_Two(window_Width, window_Height);
+        shark_Friend_Call_Flag = true;
+    }
+
+
 
 
     /**
@@ -1691,7 +1746,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
      */
     public void delete_Fish_Select(int fish_Number){
             //물고기 피가 0 이면 피 검사후에 피가 0 이면
-            if(fish_List.get(fish_Number).get_Fish_Hp() == 0){
+            if(fish_List.get(fish_Number).get_Fish_Hp() <= 0){
 
                 //오징어를 죽였으면 먹물을 생성한다.
                 if(fish_List.get(fish_Number) instanceof Fish_Touch_Squid){
@@ -1730,7 +1785,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
      *  바닥 생명체 삭제
      */
     public void delete_Ground_Select(int ground_Number){
-            if(ground_List.get(ground_Number).get_Ground_Hp() == 0){
+            if(ground_List.get(ground_Number).get_Ground_Hp() <= 0){
                 ground_List.remove(ground_Number);
             }
     }
