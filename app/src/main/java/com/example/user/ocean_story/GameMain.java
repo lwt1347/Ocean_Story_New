@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.NinePatch;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -21,6 +22,7 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -33,6 +35,8 @@ import java.util.TimerTask;
  */
 
 public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
+
+
 
     /**
      * GameMain 변수 지정
@@ -75,6 +79,10 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private boolean seaurchin_Ground_Hit_Flag = false;;//성게
 
 
+    //진화 사운드 한번만
+    private boolean revolution_Flag = false;
+    private boolean revolution_Flag_Confirm = false;
+
 
 
 
@@ -86,6 +94,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private SurfaceHolder mSurfaceHolder;               //쓰레드 외부에서 SurfaceHolder를 얻기 위한 선언
     private BitmapDrawable image = null;                //메모리 절약 기법
     private Bitmap backGroundImg = null;                //배경이미지
+    private Bitmap backGroundImg_black = null;                //배경이미지
 
     //pause 이미지  -> 컨트롤 화면에서
     //private Bitmap pause_img[] = new Bitmap[2];
@@ -196,6 +205,24 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
     //바닥 생명체 비트맵 탬프 변수
     private Bitmap temp_Ground = null;
+
+    /**
+     * 등장 창
+     */
+    private Bitmap explain_Window_Revoluition = null;
+
+
+    //꽃게 등장
+    private Bitmap explain_Window_Origin_Crab = null;
+    private Bitmap explain_Window_Origin_Fish = null;
+    private Bitmap explain_Window_Origin_Squid = null;
+    private Bitmap explain_Window_Origin_Trilbite = null;
+
+
+
+
+
+
 
     /**
      * 기본 터치 물고기 이펙트
@@ -317,8 +344,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     //********************************************************************************************//
 
 
-
-
     /**
      * 기본 생성자
      */
@@ -335,6 +360,10 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         mTimer.schedule(fish_Maker_1, 1000, 5000);
 
 
+        /**
+         * 게임 내에 필요한 버튼 객체 생성
+         */
+        button_Create_method();
 
 //        Intent intent = new Intent(_context, explain_Panel.class);
 //        _context.startActivity(intent); //-> 기본 물고기 설명
@@ -347,11 +376,21 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 //        //메인캐릭터 생성
 //        main_Character = new Main_Character(window_Width, window_Height);
 
+
+
         //소리 로드
         sound_Effect[0] = soundPool.load(_context, R.raw.fish_default_sound_1, 1);      //팝1
         sound_Effect[1] = soundPool.load(_context, R.raw.fish_default_sound_2, 1);      //팝2
         sound_Effect[2] = soundPool.load(_context, R.raw.drag_sound_1, 1);      //드래그1
         sound_Effect[3] = soundPool.load(_context, R.raw.drag_sound_2, 1);      //드래그2
+
+        //소리 상어 친구 부르기
+        sound_Effect[4] = soundPool.load(_context, R.raw.friend_shark_roar, 1);
+        sound_Effect[5] = soundPool.load(_context, R.raw.friend_shark_effect_1, 1);
+        sound_Effect[6] = soundPool.load(_context, R.raw.friend_shark_effect_2, 1);
+        sound_Effect[7] = soundPool.load(_context, R.raw.friend_shark_effect_3, 1);
+
+        sound_Effect[8] = soundPool.load(_context, R.raw.effect_window_sound, 1);   //설명창 등장 사운드
 
 
         /**
@@ -394,6 +433,38 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         background_Effect_Two.Background_Effect_Move_Pattern();
         background_Effect_Shark.Background_Effect_Move_Pattern();
     }
+
+
+
+    /**
+     * 버튼 객체 생성
+     */
+    public void button_Create_method(){
+
+        confirm_Button_1 = new GraphicButton(new Rect(window_Width / 2 - convertPixelsToDp(50, _context),
+                window_Height / 2 + convertPixelsToDp(145, _context),
+                window_Width / 2 - convertPixelsToDp(50, _context) + convertPixelsToDp(105, _context),
+                window_Height / 2 + convertPixelsToDp(145, _context) + convertPixelsToDp(40, _context)));
+
+        confirm_Button_card_1 = new GraphicButton(new Rect(window_Width / 2 - convertPixelsToDp(75, _context),
+                window_Height / 2 - convertPixelsToDp(50, _context),
+                window_Width / 2 - convertPixelsToDp(75, _context) + convertPixelsToDp(50, _context),
+                window_Height / 2 - convertPixelsToDp(50, _context) + convertPixelsToDp(70, _context)));
+
+        confirm_Button_card_2 = new GraphicButton(new Rect(window_Width / 2 - convertPixelsToDp(22, _context),
+                window_Height / 2 - convertPixelsToDp(50, _context),
+                window_Width / 2 - convertPixelsToDp(22, _context) + convertPixelsToDp(50, _context),
+                window_Height / 2 - convertPixelsToDp(50, _context) + convertPixelsToDp(70, _context)));
+
+        confirm_Button_card_3 = new GraphicButton(new Rect(window_Width / 2 + convertPixelsToDp(31, _context),
+                window_Height / 2 - convertPixelsToDp(50, _context),
+                window_Width / 2 + convertPixelsToDp(31, _context) + convertPixelsToDp(50, _context),
+                window_Height / 2 - convertPixelsToDp(50, _context) + convertPixelsToDp(70, _context)));
+
+    }
+
+
+
 
     /**
      * 다시시작 및 시작 처음에 초기화
@@ -470,23 +541,31 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         public void run() {
             try {
 
-                add_Fish_Touch_Default();           //기본 물고기 추가
-                add_Fish_Touch_Default();           //기본 물고기 추가
-                add_Fish_Touch_Default();           //기본 물고기 추가
 
-                add_Fish_Touch_Squid();//오징어 추가
+                //게임 동작 중에만 추가한다.
+                if(mRun) {
 
 
-                add_Fish_Drag_Default();            //드래그 물고기 추가
 
-                add_Fish_JellyFish();               //해파리 추가
+                    add_Fish_Touch_Default();           //기본 물고기 추가
+                    add_Fish_Touch_Default();           //기본 물고기 추가
+                    add_Fish_Touch_Default();           //기본 물고기 추가
+
+                    add_Fish_Touch_Squid();//오징어 추가
 
 
-                add_Ground_Snail();                 //달팽이 추가
-                add_Ground_Crab();                  //꽃게 추가
+                    add_Fish_Drag_Default();            //드래그 물고기 추가
 
-                add_Ground_Urchin();                //성게추가
+                    add_Fish_JellyFish();               //해파리 추가
 
+
+                    add_Ground_Snail();                 //달팽이 추가
+                    add_Ground_Crab();                  //꽃게 추가
+
+                    add_Ground_Urchin();                //성게추가
+
+
+                }
                 //Thread.sleep(1000);
             } catch (Exception e) {
 
@@ -514,7 +593,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
          */
         public Game_Thread(/*SurfaceHolder surfaceHolder*/) { //더블 버퍼링 같은것,
 
-            backGroundImg = Init_Background_Image(_context, 0); //배경
+
 
 
             //pause_View_img = BitmapFactory.decodeResource(getResources(), R.drawable.pause_view);    //나인패치 적용방법
@@ -524,12 +603,15 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
             //게임 요소 추가 할 쓰레드 [물고기, 함정 등]
-            backGroundImg = Init_Background_Image(_context, 0); //배경
+            Init_Background_Image(_context); //배경
             DisplayMetrics dm = _context.getApplicationContext().getResources().getDisplayMetrics();
             backGroundImg = Bitmap.createScaledBitmap(backGroundImg, dm.widthPixels, dm.heightPixels, false);
+            backGroundImg_black = Bitmap.createScaledBitmap(backGroundImg_black, dm.widthPixels, dm.heightPixels, false); //배경 화면 어둡게
 
-
-
+            /**
+             * 등장 창 초기화
+             */
+            Init_Explain_Window_Image(_context);
 
             //퍼즈 이미지
             //pause_img[0] = Init_Pause_Image(_context, 0);
@@ -641,9 +723,14 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
          */
 
         //배경이미지
-        public Bitmap Init_Background_Image(Context context, int num){
+        public void Init_Background_Image(Context context){
             image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.background);
-            return image.getBitmap();
+            backGroundImg = image.getBitmap();
+
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.background_1);
+            backGroundImg_black = image.getBitmap();
+
+
         }
         //배경 이펙트
         public Bitmap Init_Background_Effect_Background_One_1_Image(Context context, int num){
@@ -678,6 +765,26 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         public Bitmap Init_Background_Effect_Background_Friend_Shark_Image (Context context, int num){
             image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.effect_friend_shark_1 + num);
             return image.getBitmap();
+        }
+
+        /**
+         * 등장 창 초기화
+         */
+        public void Init_Explain_Window_Image(Context context){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.explain_window_origincrab);
+            explain_Window_Origin_Crab = image.getBitmap();
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.explain_window_revolrution);
+            explain_Window_Revoluition = image.getBitmap();
+
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.explain_window_originfish);
+            explain_Window_Origin_Fish = image.getBitmap();
+
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.explain_window_originsquid);
+            explain_Window_Origin_Squid = image.getBitmap();
+
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.explain_window_origintrilobite);
+            explain_Window_Origin_Trilbite = image.getBitmap();
+
         }
 
 
@@ -783,6 +890,9 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             image = (BitmapDrawable) context.getResources().getDrawable(R.drawable.explain_crab_1 + num); //인트형이라 + 1하면 그림 변경됨
             return image.getBitmap();
         }
+
+
+
 
 
         //달팽이 이미지
@@ -926,6 +1036,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         }
 
         private int score_Text_Size; //기기마다 점수크기가 달라서
+
+
+
+
+
+
     /**
      *  그리기 함수
      */
@@ -938,6 +1054,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
          *  배경이미지
          */
         draw.draw_Bmp(canvas, backGroundImg, 0, 0);
+
+
 
         /**
          * 배경 이펙트
@@ -1433,14 +1551,122 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         canvas.drawText("Best ", 30, convertPixelsToDp(80, _context)+(score_Text_Size/2), paint_Best);
 
 
+    /*
+    등장 설명창, 진화 할 때 컨트롤
+     */
+
+    if(!mRun) {
+
+        draw.draw_Bmp(canvas, backGroundImg_black, 0, 0);
+
+
+        if(revolution_Flag) {
+
+
+            draw.draw_Bmp(canvas, explain_Window_Revoluition,
+                    window_Width / 2 - convertPixelsToDp(120, _context),
+                    window_Height / 2 - convertPixelsToDp(220, _context));
+
+            button_Create_method();
+
+            Bitmap upimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.explain_window_revolrution_card_1);
+            Bitmap downimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.explain_window_revolrution_card_1);
+
+            confirm_Button_card_1.setImages(upimage, downimage);
+            confirm_Button_card_1.draw(canvas);
+
+            upimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.explain_window_revolrution_card_1);
+            downimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.explain_window_revolrution_card_1);
+
+
+            confirm_Button_card_2.setImages(upimage, downimage);
+            confirm_Button_card_2.draw(canvas);
+
+            upimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.explain_window_revolrution_card_2);
+            downimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.explain_window_revolrution_card_2);
+
+            confirm_Button_card_3.setImages(upimage, downimage);
+            confirm_Button_card_3.draw(canvas);
+
+            revolution_Flag = false;
+        }
+
+    }
+
+
+
+        if(revolution_Flag_Confirm){
+
+            Bitmap upimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.confirm_button_1);
+            Bitmap downimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.confirm_button_2);
+
+            draw.draw_Bmp(canvas, backGroundImg_black, 0, 0);
+
+            if(main_Character instanceof Main_Character_Origin_Crab) {
+                //꽃게로 진화하면
+                draw.draw_Bmp(canvas, explain_Window_Origin_Crab,
+                        window_Width / 2 - convertPixelsToDp(120, _context),
+                        window_Height / 2 - convertPixelsToDp(220, _context));
+//            revolution_Flag_Confirm = false;
+
+
+
+            }else if(main_Character instanceof Main_Character_Origin_Fish){
+                draw.draw_Bmp(canvas, explain_Window_Origin_Fish,
+                        window_Width / 2 - convertPixelsToDp(120, _context),
+                        window_Height / 2 - convertPixelsToDp(220, _context));
+
+            }else if(main_Character instanceof Main_Character_Origin_Squid){
+
+
+                draw.draw_Bmp(canvas, explain_Window_Origin_Squid,
+                        window_Width / 2 - convertPixelsToDp(120, _context),
+                        window_Height / 2 - convertPixelsToDp(220, _context));
+            }
+
+            soundPool.play(sound_Effect[8], 1F, 1F, 1, 1, 1.0F);
+            confirm_Button_1.setImages(upimage, downimage);
+            confirm_Button_1.draw(canvas);
+
+            m_Run_False();
+
+
+
+        }
+
+
+
+//
+
+
+
         /**
          * 상어친구 호출하면 여기서 그린다.
          */
         if(shark_Friend_Call_Flag){
+
+
+
+
+
+
+
             background_Effect_Friend_Shark_Call.Background_Effect_Move_Pattern();
             draw.draw_Bmp(canvas, effect_Background_Friend_Shark_img[background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status()],
-                    window_Width/2 - convertPixelsToDp((effect_Background_Friend_Shark_img[0].getWidth()/4), _context),
-                    window_Height/2 - convertPixelsToDp((effect_Background_Friend_Shark_img[0].getHeight()/4), _context));
+                    window_Width/2 - convertPixelsToDp(340, _context),
+                    window_Height/2 - convertPixelsToDp(380, _context));
+
+            if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 0){
+                soundPool.play(sound_Effect[4], 0.2F, 0.2F, 1, 1, 1.0F);
+            }else if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 4){
+//                soundPool.play(sound_Effect[5], 0.5F, 0.5F, 1, 1, 1.0F);
+            }else if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 6){
+//                soundPool.play(sound_Effect[6], 0.5F, 0.5F, 1, 1, 1.0F);
+            }else if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 7){
+                soundPool.play(sound_Effect[7], 0.5F, 0.5F, 1, 1, 1.0F);
+            }
+
+
             if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 7){
 
                 //모든 물고기 및 그라운드 생명체 hp - 100 해야된다.
@@ -1469,8 +1695,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         }
 
     }
-
-
 
 
         /**
@@ -1900,7 +2124,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             snail_Ground_Hit_Flag = true;   //달팽이 터치 이벤트 doDraw에서 발생
 
 
-
+            Score++;
             //클릭된 달팽이의체력을 깍는다.
             ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
             delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
@@ -2113,6 +2337,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     public void draw_Main_Character_Draw(){  //가만히 있을때
 
 
+        if(main_Character.set_Character_Revolution(5)){
+            //진화 경험치
+            revolution_Flag = true;
+
+        }
 
 
         //가장 처음 아메바 그리기
@@ -2121,12 +2350,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             main_Character_Draw(Score, main_Character_Amoeba);
 
             //진화 #인자에 진화할 점수 넣어줘야한다.
-            if(main_Character.set_Character_Revolution(150)){
-                main_Character = new Main_Character_Origin_Crab(window_Width, window_Height);
-                main_Character.set_Main_Character_Mode_Status_Init();
-                main_Character.set_Hp_Init();
-
-            }
+//            if(main_Character.set_Character_Revolution(50)){
+//                main_Character = new Main_Character_Origin_Crab(window_Width, window_Height);
+//                main_Character.set_Main_Character_Mode_Status_Init();
+//                main_Character.set_Hp_Init();
+//            }
 
         }else if(main_Character instanceof Main_Character_Origin_Crab){
             //꽃게 오리진
@@ -2134,27 +2362,32 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
             //진화 #인자에 진화할 점수 넣어줘야한다. [물고기]
-            if(main_Character.set_Character_Revolution(150)){
-                main_Character = new Main_Character_Origin_Fish(window_Width, window_Height);
-                main_Character.set_Main_Character_Mode_Status_Init();
-                main_Character.set_Hp_Init();
-
-            }
+//            if(main_Character.set_Character_Revolution(150)){
+//                main_Character = new Main_Character_Origin_Fish(window_Width, window_Height);
+//                main_Character.set_Main_Character_Mode_Status_Init();
+//                main_Character.set_Hp_Init();
+//
+//            }
 
         }else if(main_Character instanceof Main_Character_Origin_Fish){
             main_Character_Draw(Score, main_Character_Orijin_Fish);
 
             //진화 #인자에 진화할 점수 넣어줘야한다. [오징어]
-            if(main_Character.set_Character_Revolution(150)){
-                main_Character = new Main_Character_Origin_Squid(window_Width, window_Height);
-                main_Character.set_Main_Character_Mode_Status_Init();
-                main_Character.set_Hp_Init();
-
-            }
+//            if(main_Character.set_Character_Revolution(150)){
+//                main_Character = new Main_Character_Origin_Squid(window_Width, window_Height);
+//                main_Character.set_Main_Character_Mode_Status_Init();
+//                main_Character.set_Hp_Init();
+//
+//            }
         }else if(main_Character instanceof Main_Character_Origin_Squid){
             main_Character_Draw(Score, main_Character_Orijin_Squid);
         }
 
+
+        //진화할때
+        if(revolution_Flag){
+            m_Run_False();
+        }
 
 
 
@@ -2182,6 +2415,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     }
 
 
+    GraphicButton confirm_Button_1; //메인 캐릭터 진화시 뜨는 확인창
+
+    GraphicButton confirm_Button_card_1; //메인 캐릭터 진화시 뜨는 확인창
+    GraphicButton confirm_Button_card_2; //메인 캐릭터 진화시 뜨는 확인창
+    GraphicButton confirm_Button_card_3; //메인 캐릭터 진화시 뜨는 확인창
 
     /**
      * 터치 이벤트
@@ -2191,66 +2429,145 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
 
-        if(event.getAction() == MotionEvent.ACTION_DOWN){           //손가락이 눌렸을때.
-            touch_Check = 0;   //터치 체크 상태가 5이하 일때 터치라 판정.
+        if(!mRun) {
+
+            int touchx = (int)event.getX();
+            int touchy = (int)event.getY();
+
+            switch (event.getAction()) {
+//                case MotionEvent.ACTION_CANCEL:
+//                    confirm_Button.setPress(false);    //버튼 상태 초기화
+//                    break;
+
+                case MotionEvent.ACTION_UP:
+
+                    confirm_Button_1.setPress(false);    //버튼 상태 초기화
 
 
 
+                    if (confirm_Button_1.touch(touchx, touchy)) { //버튼 클릭 행동    //확인
+                        //확인 버튼
+//                  Score = 1000;
+                    m_Run_True();   //게임 재게
+                    revolution_Flag_Confirm = false; //변신창 확인 누르먄 재시작
 
-        } else if(event.getAction() == MotionEvent.ACTION_UP){      //때졌을때.
+                    }else if(confirm_Button_card_1.touch(touchx, touchy) || confirm_Button_card_2.touch(touchx, touchy)){
+                        //진화창 버튼
+//                        m_Run_True();   //게임 재게
+
+                        //꽃게로 진화하면
+//                        draw.draw_Bmp(canvas, explain_Window_Origin_Crab,
+//                                window_Width / 2 - convertPixelsToDp(120, _context),
+//                                window_Height / 2 - convertPixelsToDp(220, _context));
+//
+//                        soundPool.play(sound_Effect[8], 1F, 1F, 1, 1, 1.0F);
+//
+//                        Bitmap upimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.confirm_button_1);
+//                        Bitmap downimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.confirm_button_2);
+//
+//                        confirm_Button_1.setImages(upimage, downimage);
+//                        confirm_Button_1.draw(canvas);
+
+
+
+                        //진화 성공시
+                        int rand_Temp = random.nextInt(100);
+                        if(rand_Temp < 30) {
+                            main_Character = new Main_Character_Origin_Crab(window_Width, window_Height);
+
+                        }else if(rand_Temp < 60){
+                            main_Character = new Main_Character_Origin_Fish(window_Width, window_Height);
+
+                        }else {
+                            main_Character = new Main_Character_Origin_Squid(window_Width, window_Height);
+
+                        }
+
+                        main_Character.set_Main_Character_Mode_Status_Init();
+                        main_Character.set_Hp_Init();
+
+                        m_Run_True();   //게임 재게
+                        revolution_Flag_Confirm = true;
+
+                        //카드 선택시
+
+
+//                        }
+
+                    }else if(confirm_Button_card_3.touch(touchx, touchy)){
+                        //광고 눌렀을때
+
+                    }
+
+                    break;
+//                case MotionEvent.ACTION_MOVE: //버튼 상태 변경
+//
+//                    confirm_Button.setPress(confirm_Button.touch(touchx, touchy));
+//                    break;
+//                case MotionEvent.ACTION_DOWN: //버튼 상태 변경
+//                    confirm_Button.setPress(confirm_Button.touch(touchx, touchy));
+            }
+        }else { //진화 창 떳을떄 확인 버튼
+
+
+            //게임 터치 이벤트
+
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {           //손가락이 눌렸을때.
+                touch_Check = 0;   //터치 체크 상태가 5이하 일때 터치라 판정.
+
+
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {      //때졌을때.
 
 
 //            draw_Main_Character_Touch();    //메인캐릭터 그리기
-            main_Character.set_Attack_State_True(); //메인캐릭터 공격
+                main_Character.set_Attack_State_True(); //메인캐릭터 공격
 
 
-            if(touch_Check <= 5){
-                //퍼즈 컨트롤
-                //if(pause_Effect(event.getX(), event.getY())){
+                if (touch_Check <= 5) {
+                    //퍼즈 컨트롤
+                    //if(pause_Effect(event.getX(), event.getY())){
 
-                if(ground_Hit_Chose(event.getX(), event.getY(), 1)){ //달팽이 삭제
+                    if (ground_Hit_Chose(event.getX(), event.getY(), 1)) { //달팽이 삭제
                         //달팽이 터치 팝 이벤트
 
 
-                }else if(ground_Hit_Chose(event.getX(), event.getY(), 10)){ //성게 삭제
+                    } else if (ground_Hit_Chose(event.getX(), event.getY(), 10)) { //성게 삭제
 
-                }
-                else {
-                    //문어 공격 속도로 제어한다. 쿨타임 효과
-                    if (main_Character.get_Attack_Cool_time() == 0) {
+                    } else {
+                        //문어 공격 속도로 제어한다. 쿨타임 효과
+                        if (main_Character.get_Attack_Cool_time() == 0) {
 
-                        if(!fish_Hit_Chose(1)){      //기본 물고기 터치 확인 == 1
-                            //기본 물고기가 존재하지 않을때
-                            fish_Hit_Chose(10);         //해파리 타격 메인 캐릭터 Hp 감소 해야한다.
-
+                            if (!fish_Hit_Chose(1)) {      //기본 물고기 터치 확인 == 1
+                                //기본 물고기가 존재하지 않을때
+                                fish_Hit_Chose(10);         //해파리 타격 메인 캐릭터 Hp 감소 해야한다.
 
 
-                        }else {
+                            } else {
 
+                            }
+                            main_Character.set_Attack_Cool_Time();
                         }
-                        main_Character.set_Attack_Cool_Time();
                     }
                 }
-            }
 
 
-        } else if(event.getAction() == MotionEvent.ACTION_MOVE){    //드래그 중일때
-            touch_Check++;
-            drag_Action_Move++;
-            if(drag_Action_Move > 2) {
+            } else if (event.getAction() == MotionEvent.ACTION_MOVE) {    //드래그 중일때
+                touch_Check++;
+                drag_Action_Move++;
+                if (drag_Action_Move > 2) {
 
-                if(ground_Hit_Chose(event.getX(), event.getY(), 2)){    //꽃게 삭제
+                    if (ground_Hit_Chose(event.getX(), event.getY(), 2)) {    //꽃게 삭제
 
-                }else {
-                    fish_Hit_Chose(2);                                  //드래그 물고기
+                    } else {
+                        fish_Hit_Chose(2);                                  //드래그 물고기
+                    }
+
+                    drag_Action_Move = 0;
                 }
 
-                drag_Action_Move = 0;
+
             }
-
-
         }
-
 
         return true;
 
@@ -2356,3 +2673,63 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//버튼 오픈 소스 활용
+
+class GraphicButton {
+    public static final int IMAGE_UP = 0;
+    public static final int IMAGE_DOWN = 1;
+
+    private Bitmap[] mImage;
+    private Rect mRect;
+
+    public int mImageNum;
+
+    public GraphicButton(Rect rect) {
+
+        mRect = rect;
+        mImage = new Bitmap[2];
+        mImageNum = IMAGE_UP;
+
+    }
+
+
+    public void setImages(Bitmap upimage, Bitmap downimage) {
+
+//이미지를 눌린 상태 및 아닌 상태 두가지로 저장한다
+
+        mImage[IMAGE_UP] = upimage;
+        mImage[IMAGE_DOWN] = downimage;
+
+    }
+
+
+    public boolean touch(int tx, int ty) {
+
+//이미지 좌표와 터치 좌표를 비교한다
+
+        Rect rect = mRect;
+
+        if((rect.left < tx && rect.right > tx) && (rect.top < ty && rect.bottom > ty))
+            return true;
+
+        return false;
+
+    }
+
+
+    public void setPress(boolean press) {
+//버튼의 이미지를 변경하여 눌린 상태 및 아닌 상태를 표시한다
+        mImageNum = press ? IMAGE_DOWN : IMAGE_UP;
+    }
+
+    public void draw(Canvas canvas) {
+//이미지 번호대로 이미지를 출력한다
+        int imagenum = mImageNum;
+        if(mImage[imagenum] != null)
+            canvas.drawBitmap(mImage[imagenum], null, mRect, null);
+    }
+
+}
+//********************************************************************************************//

@@ -106,6 +106,7 @@ public class Main_Character {
 
     public boolean set_Character_Revolution(int up_Score){
         if(up_Score <= experience){
+
             experience = 0;
             return true;
         }else {
