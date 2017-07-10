@@ -156,6 +156,10 @@ public class Fish_Default_Body {
         hp = hp - damage;
     }
 
+
+
+
+
     /**
      * 물고기 패턴 변경
      */

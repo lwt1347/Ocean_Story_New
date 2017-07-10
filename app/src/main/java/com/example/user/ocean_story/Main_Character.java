@@ -20,6 +20,7 @@ public class Main_Character {
     private int main_Character_Max_Hp = 1;
     private boolean attack_State = false;   //공격중인가?
 
+    private int tear = 0;   //캐릭터의 티어를 결정한다.
 
     //********************************************************************************************//
 
@@ -58,6 +59,9 @@ public class Main_Character {
         return main_Character_Max_Hp;
     }
 
+    public int get_Tear(){
+        return tear;
+    }
     /**
      * 캐릭터가 공격중인가 아닌가.
      */
@@ -156,8 +160,8 @@ public class Main_Character {
      * 동작 함수, 설정
      */
 
-    public void set_Damage_Up(){
-        damage++;
+    public void set_Damage(int param_Damage){
+        damage = param_Damage;
     }
 
     public void set_Attack_Speed(){
@@ -186,6 +190,12 @@ public class Main_Character {
     }
 
 
+    /**
+     * 티어 증가
+     */
+    public void set_Tear(int paramTear){
+        tear = paramTear;
+    }
 
 
     //터치후 쿨타임 돌기
@@ -216,5 +226,38 @@ public class Main_Character {
 
 
     //********************************************************************************************//
+
+
+    /**
+     * 티어당 진화 할 점수
+     */
+    public int get_Revolrution_Step(){
+        if(tear == 0){
+            return 30;
+        }else if(tear == 1){
+            return 40;
+        }else if(tear == 2){
+            return 50;
+        }else if(tear == 3){
+            return 60;
+        }else if(tear == 4){
+            return 70;
+        }else if(tear == 5){
+            return 80;
+        }else if(tear == 6){
+            return 90;
+        }else if(tear == 7){
+            return 100;
+        }else if(tear == 8){
+            return 110;
+        }else if(tear == 9){
+            return 120;
+        }else if(tear == 10){
+            return 130;
+        }
+
+        return 5000000;
+    }
+
 
 }

@@ -29,7 +29,7 @@
         android:onClick="onButtonPause" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/option_Button"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_alignLeft="@+id/pause_Button"
@@ -38,32 +38,32 @@
         android:background="@drawable/option_button" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/dictionary_Button"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:background="@drawable/dictionary_button"
-        android:layout_below="@+id/button2"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2" />
+        android:layout_below="@+id/option_Button"
+        android:layout_alignLeft="@+id/option_Button"
+        android:layout_alignStart="@+id/option_Button" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/ranking_Button"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:background="@drawable/rank_button"
-        android:layout_below="@+id/button5"
-        android:layout_alignLeft="@+id/button5"
-        android:layout_alignStart="@+id/button5" />
+        android:layout_below="@+id/dictionary_Button"
+        android:layout_alignLeft="@+id/dictionary_Button"
+        android:layout_alignStart="@+id/dictionary_Button" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/call_FriendShark_Button"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:background="@drawable/friend_shark_button"
         android:onClick="onButtonFriendSharkCall"
-        android:layout_below="@+id/button6"
-        android:layout_alignLeft="@+id/button6"
-        android:layout_alignStart="@+id/button6" />
+        android:layout_below="@+id/ranking_Button"
+        android:layout_alignLeft="@+id/ranking_Button"
+        android:layout_alignStart="@+id/ranking_Button" />
 
 
 </RelativeLayout>

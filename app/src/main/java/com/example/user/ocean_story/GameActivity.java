@@ -50,14 +50,18 @@ public class GameActivity extends AppCompatActivity {
      * 퍼지 버튼
      */
     public void onButtonPause(View view){
-        gameMain.m_Run_False();
 
-        Intent intent = new Intent(this, menu_Sliding_Panel.class);
-        //intent.putExtra("a", mRun);
-        startActivityForResult(intent, 0); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출
 
-        //퍼지 버튼 눌렀을때 이미지 변경
-        button_Pause.setBackgroundResource(R.drawable.pause_2);
+        //게임 진화창이 떴을때 눌리면 안된다.
+        if(gameMain.get_m_Run()) {
+            gameMain.m_Run_False();
+            Intent intent = new Intent(this, menu_Sliding_Panel.class);
+            //intent.putExtra("a", mRun);
+            startActivityForResult(intent, 0); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출
+
+            //퍼지 버튼 눌렀을때 이미지 변경
+            button_Pause.setBackgroundResource(R.drawable.pause_2);
+        }
     }
 
     /**
@@ -65,8 +69,12 @@ public class GameActivity extends AppCompatActivity {
      */
     public void onButtonFriendSharkCall(View view){
 
-        Toast.makeText(getApplicationContext(),"상어 친구 호출",Toast.LENGTH_SHORT).show();
-        gameMain.shark_Friend_Call();
+        //게임 진화창이 떴을때 눌리면 안된다.
+        if(gameMain.get_m_Run()) {
+            Toast.makeText(getApplicationContext(), "상어 친구 호출", Toast.LENGTH_SHORT).show();
+            gameMain.shark_Friend_Call();
+        }
+
     }
 
 
@@ -78,21 +86,20 @@ public class GameActivity extends AppCompatActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        //게임 진화창이 떴을때 눌리면 안된다.
 
-        //퍼지 버튼 원상태
-        button_Pause.setBackgroundResource(R.drawable.pause_1);
+            super.onActivityResult(requestCode, resultCode, data);
 
-        Toast.makeText(getApplicationContext(),"a",Toast.LENGTH_SHORT).show();
-
-        int key = data.getIntExtra("key",0);
-        if(key == 1){
-            gameMain.m_Run_True(); //게임 재게
-        }
-        else if(key == 2){  //다시 시작
-            gameMain.m_Run_True();
-            gameMain.re_Start();
-        }
+            //퍼지 버튼 원상태
+            button_Pause.setBackgroundResource(R.drawable.pause_1);
+            Toast.makeText(getApplicationContext(), "a", Toast.LENGTH_SHORT).show();
+            int key = data.getIntExtra("key", 0);
+            if (key == 1) {
+                gameMain.m_Run_True(); //게임 재게
+            } else if (key == 2) {  //다시 시작
+                gameMain.m_Run_True();
+                gameMain.re_Start();
+            }
 
     }
 
