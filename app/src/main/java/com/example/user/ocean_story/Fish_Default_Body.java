@@ -132,8 +132,6 @@ public class Fish_Default_Body {
         }
 
 
-
-
         //왼쪽 오른쪽을 넘어가면 방향 반대로
         if(fish_Point_X <= 30 || fish_Point_X >= window_Width - 150){
             angle_X_Speed = angle_X_Speed*-1;
@@ -145,6 +143,14 @@ public class Fish_Default_Body {
             fish_Draw_Status = 0;
         }
     }
+
+    /**
+     * 물고기 속도 조절
+     */
+    public void set_Fish_Speed(int param_Speed){
+        fish_Speed = param_Speed;
+    }
+
 
     /**
      * 물고기 Hp 감소

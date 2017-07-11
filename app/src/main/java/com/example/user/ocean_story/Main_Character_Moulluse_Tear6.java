@@ -3,7 +3,7 @@ package com.example.user.ocean_story;
 /**
  * Created by Lee on 2017-07-02.
  */
-
+//레이저문어
 public class Main_Character_Moulluse_Tear6 extends Main_Character  {
     /**
      * 기본 생성자

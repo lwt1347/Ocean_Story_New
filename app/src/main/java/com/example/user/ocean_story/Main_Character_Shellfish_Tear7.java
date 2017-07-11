@@ -4,7 +4,7 @@ package com.example.user.ocean_story;
  * Created by Lee on 2017-07-01.
  */
 
-//꽃게 생성
+//새우튀김 생성
 public class Main_Character_Shellfish_Tear7 extends Main_Character {
 
     /**

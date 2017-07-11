@@ -65,9 +65,20 @@ public class Ground_Default_Body {
         ground_Point_Y = 100;
         first_Test_Object = true;
     }
+
+    /**
+     * 물고기 속도 조절
+     */
+    public void set_Ground_Speed(int param_Speed){
+        speed = param_Speed;
+    }
+
+
     public boolean get_First_Test_Object(){
         return first_Test_Object;
     }
+
+
 
 
     /**
