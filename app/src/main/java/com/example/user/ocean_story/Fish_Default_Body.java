@@ -40,8 +40,8 @@ public class Fish_Default_Body {
 
         // 물고기 생성 좌표
         fish_Point_X = (float)(30 + Math.random() * (window_Width -100));        // x축 = 10 ~ 윈도우 널이 - 100 사이에서 생성
-        fish_Point_Y = (float) Math.random() * 30 - 30;
-
+//        fish_Point_Y = (float) Math.random() * 30 - 30;
+        fish_Point_Y = -100;
 
         //처음 생성되는 물고기
         first_Test_Object = false;
@@ -178,6 +178,13 @@ public class Fish_Default_Body {
 
     }
 
+
+    /**
+     * 물고기가 공격중인가?
+     */
+    public boolean get_Attack_Mode(){
+        return false;
+    }
 
 
     //********************************************************************************************//
