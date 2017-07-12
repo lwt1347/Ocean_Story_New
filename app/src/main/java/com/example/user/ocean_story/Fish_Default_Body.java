@@ -1,5 +1,7 @@
 package com.example.user.ocean_story;
 
+import java.util.Random;
+
 /**
  * Created by USER on 2017-01-21.
  */
@@ -22,6 +24,7 @@ public class Fish_Default_Body {
     protected float fish_Speed = 1;              // 물고기 y축 스피드
     protected float fish_Point_X;                // 물고기 생성될 좌표
     protected float fish_Point_Y;
+    private float _Fish_Speed;
 
     //********************************************************************************************//
 
@@ -192,9 +195,25 @@ public class Fish_Default_Body {
         return false;
     }
 
+    public float get_Fish_Speed() {
+        return fish_Speed;
+    }
+
 
     //********************************************************************************************//
 
+
+    /**
+     * 속도가 0일때 슬로우 이팩트 어떤 것으로 표현 할지
+     */
+    Random random = new Random();
+    protected int effect_Slow_Status = 1;
+    public void set_Slow_Effect(){
+        effect_Slow_Status = random.nextInt(3) + 1;
+    }
+    public int get_Slow_Effect(){
+        return effect_Slow_Status;
+    }
 
 
 }

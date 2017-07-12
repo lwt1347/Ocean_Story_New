@@ -19,3 +19,32 @@ public class Main_Character_Shellfish_Tear4 extends Main_Character {
         set_Damage(5);
     }
 }
+
+//집게발 스킬
+class Skill_Crab_Claws extends Skill_Body{
+
+    boolean live_Skill = false;
+
+    Skill_Crab_Claws(float x, float y) {
+        super(x, y);
+    }
+
+
+
+    public int get_Skill_Status(){
+        return skill_Status / 3;
+    }
+
+    public void set_Skill_Move(){
+        skill_Status++;
+        if(skill_Status == 12){
+            skill_Status = 0;
+            live_Skill = true;
+        }
+    }
+    //true 가 반환되면 객체 삭제
+    public boolean get_Live(){
+        return live_Skill;
+    }
+
+}
