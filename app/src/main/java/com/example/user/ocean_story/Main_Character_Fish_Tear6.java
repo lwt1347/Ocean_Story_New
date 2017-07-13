@@ -4,6 +4,8 @@ package com.example.user.ocean_story;
  * Created by Lee on 2017-07-02.
  */
 
+
+//가오리
 class Main_Character_Fish_Tear6 extends Main_Character {
 
     public Main_Character_Fish_Tear6(float x, float y) {
@@ -12,3 +14,4 @@ class Main_Character_Fish_Tear6 extends Main_Character {
         set_Damage(7);
     }
 }
+

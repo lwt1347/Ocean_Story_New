@@ -34,4 +34,10 @@ public class Skill_Body {
 
     }
 
+    boolean live_Skill = false;
+    //true 가 반환되면 객체 삭제
+    public boolean get_Live(){
+        return live_Skill;
+    }
+
 }

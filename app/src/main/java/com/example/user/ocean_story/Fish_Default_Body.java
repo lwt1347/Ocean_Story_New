@@ -26,6 +26,7 @@ public class Fish_Default_Body {
     protected float fish_Point_Y;
     private float _Fish_Speed;
 
+    private boolean status_Poison = false;              //중독상태 인지 아닌지 반환한다.
     //********************************************************************************************//
 
     /**
@@ -109,6 +110,45 @@ public class Fish_Default_Body {
         return fish_Class;
     }
 
+    /**
+     * 중독 hp 감소
+     */
+    int poison_Timer = 0;
+    int poison_Status = 1;
+    public void set_Status_Poison_AttacK(){
+        //확률적으로 독이 풀린다.
+        if(Math.random() < 0.005){
+            status_Poison = false;
+        }
+
+        //hp 깍는 주기
+        poison_Timer++;
+        if(poison_Timer >= 15){
+            hp--;
+            poison_Timer = 0;
+        }
+
+        //포이즌 이팩트 그리기
+        if(poison_Timer%2 == 0){
+            poison_Status++;
+        }
+        if(poison_Status > 7){
+            poison_Status = 1;
+        }
+
+    }
+    public int get_Status_Poison_AttacK(){
+        return poison_Status;
+    }
+
+
+/**
+ * 중독 상태 반환
+ */
+
+    public boolean get_Status_Poison(){
+        return status_Poison;
+    }
 
     //********************************************************************************************//
 
@@ -165,6 +205,12 @@ public class Fish_Default_Body {
         hp = hp - damage;
     }
 
+    /**
+     * 중독
+     */
+    public void set_Status_Poison(){
+        status_Poison = true;
+    }
 
 
 
@@ -214,6 +260,8 @@ public class Fish_Default_Body {
     public int get_Slow_Effect(){
         return effect_Slow_Status;
     }
+
+
 
 
 }
