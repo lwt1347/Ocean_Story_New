@@ -165,7 +165,10 @@ public class Ground_Default_Body {
         return status_Poison;
     }
 
-
+    ///일반 인가, 보스인가, 중보스인가.
+    public int get_Class_Num(){
+        return 0;
+    }
 
 
 
