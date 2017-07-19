@@ -12,3 +12,40 @@ class Main_Character_Fish_Tear2 extends Main_Character {
         set_Damage(3);
     }
 }
+
+class Skill_Thorn  extends Skill_Body{
+
+    Skill_Thorn(float x, float y) {
+        super(x, y);
+    }
+
+    private boolean skill_Status_Add_S = true;
+    public void set_Skill_Move(){
+
+            if(skill_Status_Add_S) {
+                skill_Status++;
+            }else{
+                skill_Status--;
+            }
+
+            if(skill_Status > 2){
+                skill_Status_Add_S = false;
+            }
+
+            if(skill_Status == -1){
+                live_Skill = true;
+            }
+
+    }
+    //스킬 상태가져오기
+    public int get_Skill_Status(){
+        return skill_Status;
+    }
+
+    boolean live_Skill = false;
+    //true 가 반환되면 객체 삭제
+    public boolean get_Live(){
+        return live_Skill;
+    }
+
+}

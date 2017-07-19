@@ -13,8 +13,8 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="300dip"
-        android:layout_height="100dip"
+        android:layout_width="150dip"
+        android:layout_height="50dip"
         android:background="@drawable/play_button"
         android:onClick="onButtonGame_StartClicked"
         android:layout_centerVertical="true"

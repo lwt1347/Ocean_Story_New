@@ -29,8 +29,8 @@ public class Main_Character {
      */
 
     Main_Character(float x, float y){
-        main_Character_Point_X = (x / 2) - 120;           //기본위치 임의로 정해놓은 상태
-        main_Character_Point_Y = (y - 350);
+        main_Character_Point_X = x;//(x / 2) - 120;           //기본위치 임의로 정해놓은 상태
+        main_Character_Point_Y = y;//(y - 350);
     }
 
     //********************************************************************************************//

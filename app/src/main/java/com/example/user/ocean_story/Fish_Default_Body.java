@@ -25,6 +25,8 @@ public class Fish_Default_Body {
     protected float fish_Point_X;                // 물고기 생성될 좌표
     protected float fish_Point_Y;
     private float _Fish_Speed;
+    private int poison_Damage = 1;      //독대미지
+
 
     private boolean status_Poison = false;              //중독상태 인지 아닌지 반환한다.
     //********************************************************************************************//
@@ -124,7 +126,7 @@ public class Fish_Default_Body {
         //hp 깍는 주기
         poison_Timer++;
         if(poison_Timer >= 15){
-            hp--;
+            hp -= poison_Damage;
             poison_Timer = 0;
         }
 
@@ -147,6 +149,7 @@ public class Fish_Default_Body {
  */
 
     public boolean get_Status_Poison(){
+
         return status_Poison;
     }
 
@@ -208,7 +211,8 @@ public class Fish_Default_Body {
     /**
      * 중독
      */
-    public void set_Status_Poison(){
+    public void set_Status_Poison(int param_Poison_Damage){
+        poison_Damage = param_Poison_Damage;
         status_Poison = true;
     }
 
@@ -262,8 +266,10 @@ public class Fish_Default_Body {
     }
 
 
-
-
+    //기본인가, 중보스인가, 보스인가.
+    public int get_Class_Num() {
+        return 0;
+    }
 }
 
 

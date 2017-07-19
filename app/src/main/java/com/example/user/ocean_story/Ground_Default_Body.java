@@ -25,6 +25,8 @@ public class Ground_Default_Body {
     protected float ground_Point_Y;
 
     private boolean status_Poison = false;              //중독상태 인지 아닌지 반환한다.
+
+    private int poison_Damage = 1;      //독대미지
     //********************************************************************************************//
 
 
@@ -55,6 +57,9 @@ public class Ground_Default_Body {
      * 가장 처음 생성된 바닥 생물인가?
      */
     private boolean first_Test_Object;
+
+
+
     //성게 생성
     public void set_First_Test_Object(int x_Point, int y_Point){
         ground_Point_X = x_Point;
@@ -134,7 +139,7 @@ public class Ground_Default_Body {
         //hp 깍는 주기
         poison_Timer++;
         if(poison_Timer >= 15){
-            hp--;
+            hp-= poison_Damage;
             poison_Timer = 0;
         }
 
@@ -185,7 +190,9 @@ public class Ground_Default_Body {
     /**
      * 중독
      */
-    public void set_Status_Poison(){
+
+    public void set_Status_Poison(int param_Poison_Damage){
+        poison_Damage = param_Poison_Damage;
         status_Poison = true;
     }
 
@@ -204,6 +211,8 @@ public class Ground_Default_Body {
     public int get_Slow_Effect(){
         return effect_Slow_Status;
     }
+
+
 
 }
 
