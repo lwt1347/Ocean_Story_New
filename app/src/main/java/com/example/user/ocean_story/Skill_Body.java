@@ -30,8 +30,14 @@ public class Skill_Body {
     public int get_Skill_Status(){
         return skill_Status;
     }
-    public void set_Skill_Move(){
 
+    int live_time = 0;
+    public void set_Skill_Move(){
+        live_time++;
+        if(live_time == 3){
+            live_Skill = true;
+        }
+        skill_Status++;
     }
 
     boolean live_Skill = false;

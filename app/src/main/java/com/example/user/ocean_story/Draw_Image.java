@@ -32,6 +32,8 @@ public class Draw_Image {
         return Bitmap.createBitmap(src, 0, 0, src.getWidth(),src.getHeight(), matrix, true);
     }
 
+
+
     //이미지 자르기
     public  void draw_Piece(Canvas cvs, Bitmap bitmap, Rect show, Rect point, Paint p){
         cvs.drawBitmap(bitmap, show,point, p); //show = 원본 이미지에서 조각낼 부분/ point = 조각이 그려질 위치

@@ -29,12 +29,29 @@ public class Background_Effect_Squid_Ink extends Background_Effect_Control {
         }
     }
 
+
+    boolean pattern_Flag = true;
+
+
     public void Background_Effect_Move_Pattern(){
 
-        bg_Effect_Draw_Status++;
-        if(bg_Effect_Draw_Status > 15){
-            bg_Effect_Draw_Status = 0;
+        if(bg_Effect_Draw_Status == 8){
+            pattern_Flag = false;
+        }else if(bg_Effect_Draw_Status == 0){
+            pattern_Flag = true;
         }
+
+        if(pattern_Flag){
+            bg_Effect_Draw_Status++;
+        }else {
+            bg_Effect_Draw_Status--;
+        }
+
+
+//        bg_Effect_Draw_Status++;
+//        if(bg_Effect_Draw_Status > 15){
+//            bg_Effect_Draw_Status = 0;
+//        }
 
     }
 

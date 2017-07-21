@@ -30,7 +30,6 @@ class Skill_Crab_Claws extends Skill_Body{
     }
 
 
-
     public int get_Skill_Status(){
         return skill_Status / 3;
     }
