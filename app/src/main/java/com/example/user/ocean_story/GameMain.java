@@ -61,7 +61,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private double pointXSmall      = 0;
     private double pointYBig        = 0;
     private double pointYSmall      = 0;
-    private double smallFishTemp    = 0;     //가장 가까운 물고기 찾기 위한 변수
+    private double smallFishTemp    = -30;     //가장 가까운 물고기 찾기 위한 변수
     private double smallMathResult  = 0;        //가장 가까운 물고기 찾기 위한 변수
     private boolean eraser_Fish = false;        //물고기를 지우기 허가가 떨어졌을때
 
@@ -329,6 +329,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private Bitmap skill_Poison3_img[] = new Bitmap[4];
     private Bitmap skill_earthquake_img[] = new Bitmap[4];
     private Bitmap skill_Teeth_mine_img[] = new Bitmap[3];
+    private Bitmap skill_Sea_Snake_img[] = new Bitmap[3];
     private Bitmap skill_Slow_Cloud_img;
     private Bitmap skill_Boom_Poison_img[] = new Bitmap[4];
 
@@ -484,6 +485,10 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     //독 폭탄
     Skill_Boom_Poison skill_Boom_Poison;
     ArrayList<Skill_Boom_Poison> skill_Boom_Poison_List = new ArrayList<Skill_Boom_Poison>();
+
+    //바다뱀 소환
+    Skill_Sea_Snake skill_Sea_Snake;
+    ArrayList<Skill_Sea_Snake> skill_Sea_Snake_List = new ArrayList<Skill_Sea_Snake>();
 
     /**
      * 기본 생성자
@@ -659,11 +664,11 @@ private void button_Create_method_Init(){
         land_Mark_Class = 1;
 
         //메인 캐릭터를 만들고 이미지를 초기화 한다.
-        main_Character = new Main_Character_Moulluse_Tear8(0, 0);
+        main_Character = new Main_Character_Fish_Tear9(0, 0);
 
         Init_Main_Character_Image(_context, main_Character);
 
-        main_Character = new Main_Character_Moulluse_Tear8((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context));
+        main_Character = new Main_Character_Fish_Tear9((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context));
 
 
 
@@ -1584,6 +1589,15 @@ private void button_Create_method_Init(){
             skill_Teeth_mine_img[1] = image.getBitmap();
             image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.skill_teeth_mine_3);
             skill_Teeth_mine_img[2] = image.getBitmap();
+
+
+            //바다뱀 소환
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.skill_sea_snake_1);
+            skill_Sea_Snake_img[0] = image.getBitmap();
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.skill_sea_snake_2);
+            skill_Sea_Snake_img[1] = image.getBitmap();
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.skill_sea_snake_3);
+            skill_Sea_Snake_img[2] = image.getBitmap();
 
 
             //이속 느려지는 구름 생성
@@ -3035,6 +3049,37 @@ private void button_Create_method_Init(){
             if(skill_Teeth_Mine_List.get(i).get_Delete_Attack()){
                 skill_Teeth_Mine_List.remove(i);
             }
+
+        }
+
+
+
+        //바다뱀 소환
+        for(int i=0; i<skill_Sea_Snake_List.size(); i++){
+
+            draw.draw_Bmp(canvas, skill_Sea_Snake_img[0], skill_Sea_Snake_List.get(i).get_X_Point(), skill_Sea_Snake_List.get(i).get_Y_Point());
+            skill_Sea_Snake_List.get(i).set_Skill_Move(convertPixelsToDp(60, _context));
+
+            for(int j=0; j<fish_List.size(); j++){
+                if((skill_Sea_Snake_List.get(i).get_X_Point() < fish_List.get(j).get_Fish_Point_X()) && (skill_Sea_Snake_List.get(i).get_X_Point() + skill_Sea_Snake_img[0].getWidth()) > fish_List.get(j).get_Fish_Point_X()){
+                    if((skill_Sea_Snake_List.get(i).get_Y_Point() <  fish_List.get(j).get_Fish_Point_Y()) && (skill_Sea_Snake_List.get(i).get_Y_Point() + skill_Sea_Snake_img[0].getHeight()) > fish_List.get(j).get_Fish_Point_Y()){
+                        fish_List.get(j).set_Hp_Minus(5);
+                    }
+                }
+            }
+            for(int j=0; j<ground_List.size(); j++){
+                if((skill_Sea_Snake_List.get(i).get_X_Point() < ground_List.get(j).get_Ground_Point_X()) && (skill_Sea_Snake_List.get(i).get_X_Point() + skill_Sea_Snake_img[0].getWidth()) > ground_List.get(j).get_Ground_Point_X()){
+                    if((skill_Sea_Snake_List.get(i).get_Y_Point() <  ground_List.get(j).get_Ground_Point_Y()) && (skill_Sea_Snake_List.get(i).get_Y_Point() + skill_Sea_Snake_img[0].getHeight()) > ground_List.get(j).get_Ground_Point_Y()){
+                        ground_List.get(j).set_Ground_Hp_Minus(5);
+                    }
+                }
+            }
+
+
+            if(skill_Sea_Snake_List.get(i).get_Live()){
+                skill_Sea_Snake_List.remove(i);
+            }
+
 
         }
 
@@ -4549,6 +4594,12 @@ private void button_Create_method_Init(){
                                                         skill_Boom_Poison = new Skill_Boom_Poison(ground_List.get(ground_Remove_Temp).get_Ground_Point_X() - (skill_Boom_Poison_img[0].getWidth()/2) , ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() - convertPixelsToDp(150, _context));
                                                         skill_Boom_Poison_List.add(skill_Boom_Poison);
 
+                                                    }else if(main_Character instanceof Main_Character_Fish_Tear9){
+
+                                                        //바다뱀 소환
+                                                        skill_Sea_Snake = new Skill_Sea_Snake(window_Width-200, ground_List.get(ground_Remove_Temp).get_Ground_Point_Y());
+                                                        skill_Sea_Snake_List.add(skill_Sea_Snake);
+
                                                     }
 
 
@@ -4697,6 +4748,12 @@ private void button_Create_method_Init(){
                                                     //독 폭탄
                                                     skill_Boom_Poison = new Skill_Boom_Poison(ground_List.get(ground_Remove_Temp).get_Ground_Point_X() - (skill_Boom_Poison_img[0].getWidth()/2) , ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() - convertPixelsToDp(150, _context));
                                                     skill_Boom_Poison_List.add(skill_Boom_Poison);
+
+                                                }else if(main_Character instanceof Main_Character_Fish_Tear9){
+
+                                                    //바다뱀 소환
+                                                    skill_Sea_Snake = new Skill_Sea_Snake(window_Width-200, ground_List.get(ground_Remove_Temp).get_Ground_Point_Y());
+                                                    skill_Sea_Snake_List.add(skill_Sea_Snake);
 
                                                 }
                 }
@@ -4904,7 +4961,7 @@ private void button_Create_method_Init(){
                 }
 
             }
-            smallFishTemp = 0; //제일 가까운 물고기 찾기위한 템프변수
+            smallFishTemp = -30; //제일 가까운 물고기 찾기위한 템프변수
 
             if(eraser_Fish){
 
@@ -4988,6 +5045,12 @@ private void button_Create_method_Init(){
                                             //독 폭탄
                                             skill_Boom_Poison = new Skill_Boom_Poison(fish_List.get(smallFishIndex).get_Fish_Point_X() - (skill_Boom_Poison_img[0].getWidth()/2) , fish_List.get(smallFishIndex).get_Fish_Point_Y() - convertPixelsToDp(150, _context));
                                             skill_Boom_Poison_List.add(skill_Boom_Poison);
+
+                                        }else if(main_Character instanceof Main_Character_Fish_Tear9){
+
+                                            //바다뱀 소환
+                                            skill_Sea_Snake = new Skill_Sea_Snake(window_Width-200, fish_List.get(smallFishIndex).get_Fish_Point_Y());
+                                            skill_Sea_Snake_List.add(skill_Sea_Snake);
 
                                         }
 

@@ -46,6 +46,10 @@ public class GameActivity extends AppCompatActivity {
         */
     }
 
+
+
+
+
     /**
      * 퍼지 버튼
      */
