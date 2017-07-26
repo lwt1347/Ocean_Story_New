@@ -12,21 +12,22 @@
 
 
     <Button
-        android:background="@drawable/button_continue_game"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@drawable/button_continue"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
         android:id="@+id/button3"
         android:onClick="onButtonContinue"
-        android:layout_marginTop="139dp"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:background="@drawable/button_restart_game"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@drawable/button_restart"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
         android:id="@+id/button4"
         android:onClick="onButtonResume"
+        android:layout_marginTop="15dp"
         android:layout_below="@+id/button3"
         android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

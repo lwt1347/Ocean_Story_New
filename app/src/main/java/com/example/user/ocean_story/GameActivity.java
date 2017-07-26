@@ -3,6 +3,7 @@ package com.example.user.ocean_story;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -58,14 +59,21 @@ public class GameActivity extends AppCompatActivity {
 
         //게임 진화창이 떴을때 눌리면 안된다.
         if(gameMain.get_m_Run()) {
-            gameMain.m_Run_False();
+        Log.e("e", "ee");
+
+
             Intent intent = new Intent(this, menu_Sliding_Panel.class);
             //intent.putExtra("a", mRun);
             startActivityForResult(intent, 0); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출
 
             //퍼지 버튼 눌렀을때 이미지 변경
             button_Pause.setBackgroundResource(R.drawable.pause_2);
+
+            gameMain.m_Run_False(true);
+
         }
+
+
     }
 
     /**
@@ -82,9 +90,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
-
-
-
     /**
      * 값 받아오기 메뉴창에서 계속하기 = 1, 다시하기 = 2
      */
@@ -94,16 +99,33 @@ public class GameActivity extends AppCompatActivity {
 
             super.onActivityResult(requestCode, resultCode, data);
 
+        try{
+            Log.e("e", "eee");
+            int key = data.getIntExtra("key", 0);
+
+
+
             //퍼지 버튼 원상태
             button_Pause.setBackgroundResource(R.drawable.pause_1);
             Toast.makeText(getApplicationContext(), "a", Toast.LENGTH_SHORT).show();
-            int key = data.getIntExtra("key", 0);
+
+
+
+
             if (key == 1) {
                 gameMain.m_Run_True(); //게임 재게
             } else if (key == 2) {  //다시 시작
                 gameMain.m_Run_True();
                 gameMain.re_Start();
             }
+
+        }catch (Exception e){
+            gameMain.m_Run_False(true);
+            Intent intent = new Intent(this, menu_Sliding_Panel.class);
+            startActivityForResult(intent, 0); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출
+
+        }
+
 
     }
 

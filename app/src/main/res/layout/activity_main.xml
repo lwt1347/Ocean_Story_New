@@ -9,15 +9,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/background_start"
     tools:context="com.example.user.ocean_story.MainActivity">
 
     <Button
         android:id="@+id/button"
         android:layout_width="150dip"
         android:layout_height="50dip"
-        android:background="@drawable/play_button"
+        android:background="@drawable/button_play_state"
         android:onClick="onButtonGame_StartClicked"
+
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 

@@ -19,8 +19,8 @@ public class Ground_Drag_Crab extends Ground_Default_Body{
      * @param height
      * @param hp
      */
-    Ground_Drag_Crab(float window_Width, int width, int height, int hp) {
-        super(window_Width, width, height, hp);
+    Ground_Drag_Crab(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size) {
+        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size);
 
         //꽃게 생성될때 방향
         if(Math.random() < 0.5){

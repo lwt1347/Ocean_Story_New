@@ -14,3 +14,26 @@ public class Main_Character_Moulluse_Tear9 extends Main_Character  {
         set_Damage(10);
     }
 }
+
+class Skill_Wall extends Skill_Body{
+
+    Skill_Wall(float x, float y) {
+        super(x, y);
+    }
+
+
+    int live_time = 0;
+    public void set_Skill_Move(){
+        if(skill_Status < 3) {
+            skill_Status++;
+        }
+        live_time++;
+
+        if(live_time >= 100){
+            live_Skill = true;
+        }
+
+    }
+
+
+}

@@ -19,8 +19,8 @@ public class Fish_Trap_Jellyfish extends Fish_Default_Body {
      * @param window_Width
      * @param hp
      */
-    Fish_Trap_Jellyfish(int window_Width, int window_Height, int hp) {
-        super(window_Width, hp);
+    Fish_Trap_Jellyfish(int window_Width, int window_Height, int hp, int param_Width_Size, int param_Height_Size) {
+        super(window_Width, hp, param_Width_Size, param_Height_Size);
         angle = 30 + (int)Math.random() * 40;
         angle_Temp = angle;
         fish_Class = 10; //클래그

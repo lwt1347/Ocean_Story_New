@@ -19,3 +19,29 @@ public class Main_Character_Shellfish_Tear10 extends Main_Character {
         set_Damage(11);
     }
 }
+class Skill_Stomp extends Skill_Body{
+
+        boolean live_Skill = false;
+
+            Skill_Stomp(float x, float y) {
+                super(x, y);
+                }
+
+
+        public int get_Skill_Status(){
+                return skill_Status / 3;
+                }
+
+        public void set_Skill_Move(){
+                skill_Status++;
+                if(skill_Status == 12){
+                skill_Status = 0;
+                live_Skill = true;
+                }
+                }
+        //true 가 반환되면 객체 삭제
+        public boolean get_Live(){
+                return live_Skill;
+                }
+
+}

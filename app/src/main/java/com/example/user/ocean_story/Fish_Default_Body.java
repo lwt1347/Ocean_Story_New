@@ -36,7 +36,7 @@ public class Fish_Default_Body {
      * 윈도우 크기와 hp 를 받아와 물고기를 생성한다.
      */
 
-    Fish_Default_Body(int window_Width, int hp){
+    Fish_Default_Body(int window_Width, int hp, int param_Width_Size, int param_Height_Size){
 
         this.window_Width = window_Width;                                       //생성될 위치 및 벽을 못 넘도록 하기 위해 사용
         this.hp = hp;
@@ -51,6 +51,10 @@ public class Fish_Default_Body {
 
         //처음 생성되는 물고기
         first_Test_Object = false;
+
+        //물고기 이미지 사이즈
+        width_Size = param_Width_Size;
+        height_Size = param_Height_Size;
     }
 
     //********************************************************************************************//
@@ -153,7 +157,23 @@ public class Fish_Default_Body {
         return status_Poison;
     }
 
+
+    /**
+     * 물고기 이미지 크기 알아오기
+     */
+    int width_Size = 0;
+    int height_Size = 0;
+    public Integer get_Width_Size(){
+        return width_Size;
+    }
+    public Integer get_Height_Size(){
+        return height_Size;
+    }
+
+
     //********************************************************************************************//
+
+
 
 
     /**

@@ -22,12 +22,12 @@ public class Ground_Touch_Snail extends Ground_Default_Body {
      * @param width
      * @param height
      */
-    Ground_Touch_Snail(float window_Width, int width, int height, int hp) {
-        super(window_Width, width, height, hp);
+    Ground_Touch_Snail(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size) {
+        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size);
         ground_Class = 1;   //달팽이 = 1
     }
-    Ground_Touch_Snail(float window_Width, int width, int height, int hp, float X_Point, float y_Point) {
-        super(window_Width, width, height, hp);
+    Ground_Touch_Snail(float window_Width, int width, int height, int hp,  int param_Width_Size,int param_Height_Size, float X_Point, float y_Point) {
+        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size);
         ground_Class = 1;   //달팽이 = 1
         ground_Point_X = X_Point;
         ground_Point_Y = y_Point;

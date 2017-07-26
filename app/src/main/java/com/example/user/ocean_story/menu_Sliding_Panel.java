@@ -2,6 +2,8 @@ package com.example.user.ocean_story;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -22,7 +24,7 @@ public class menu_Sliding_Panel extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);     //->팝업창에서 제목 타이틀 없앤다
         setContentView(R.layout.menuslidingpanel);      //일시정지 눌렀을때 뜨는 xml 화면
 
-
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 //        android:background="@drawable/menu_background"
 
         //Intent intent = getIntent();
@@ -43,13 +45,19 @@ public class menu_Sliding_Panel extends Activity {
         intent.putExtra("key",1);
         setResult(0, intent);
         finish();   //액티비티 종료
+
+
     }
     //다시하기 버튼
     public void onButtonResume(View v){
+
+
         intent = new Intent(getApplicationContext(), GameActivity.class);
         intent.putExtra("key",2);
         setResult(0, intent);
         finish();   //액티비티 종료
+
+
     }
 
 

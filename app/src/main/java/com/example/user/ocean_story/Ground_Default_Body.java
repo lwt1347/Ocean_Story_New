@@ -34,7 +34,7 @@ public class Ground_Default_Body {
      * 기본 생성자
      */
 
-    Ground_Default_Body(float window_Width, int width, int height, int hp){
+    Ground_Default_Body(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size){
 
         //width height 를 이미지의 넓이를 파라미터로 가져온다.
         this.width = width;
@@ -47,6 +47,9 @@ public class Ground_Default_Body {
         //처음 생성된 객체인가.
         first_Test_Object = false;
 
+        //이미지 크기
+        width_Size = param_Width_Size;
+        height_Size = param_Height_Size;
     }
 
 
@@ -124,6 +127,24 @@ public class Ground_Default_Body {
     public float get_Ground_Speed(){
         return speed;
     }
+
+    /**
+     * 그라운드 이미지 크기 알아오기
+     */
+    int width_Size = 0;
+    int height_Size = 0;
+    public Integer get_Width_Size(){
+        return width_Size;
+    }
+    public Integer get_Height_Size(){
+        return height_Size;
+    }
+
+
+
+
+
+
 
     /**
      * 중독 hp 감소

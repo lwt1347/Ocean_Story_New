@@ -20,7 +20,7 @@ public class Land_Mark extends Ground_Default_Body {
      * @param hp
      */
     Land_Mark(float window_Width, int width, int height, int hp, float x, float y) {
-        super(window_Width, width, height, hp);
+        super(window_Width, width, height, hp, 0, 0);
         ground_Point_X = x;
         ground_Point_Y = y;
 

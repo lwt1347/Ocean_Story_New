@@ -19,3 +19,33 @@ public class Main_Character_Shellfish_Tear6 extends Main_Character {
         set_Damage(7);
     }
 }
+
+class Skill_Thorn2 extends Skill_Body{
+
+    Skill_Thorn2(float x, float y) {
+        super(x, y);
+    }
+
+    public void set_Skill_Move(int dpi_Add_Y){
+        y_Point -= dpi_Add_Y;
+
+        if(skill_Status < 3) {
+            skill_Status++;
+        }
+
+        if(skill_Status == 3){
+            skill_Status = 0;
+        }
+
+        if(-200 > y_Point){
+            live_Skill = true;
+        }
+
+    }
+
+    public void set_Live(){
+        live_Skill = true;
+    }
+
+
+}
