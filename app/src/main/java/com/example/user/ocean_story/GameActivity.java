@@ -100,7 +100,7 @@ public class GameActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
 
         try{
-            Log.e("e", "eee");
+            Log.e("GameActivity", "GameActivity_e");
             int key = data.getIntExtra("key", 0);
 
 

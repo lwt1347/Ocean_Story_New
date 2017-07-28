@@ -8,8 +8,8 @@ import java.util.Random;
 
 class Main_Character_Fish_Tear5 extends Main_Character {
 
-    public Main_Character_Fish_Tear5(float x, float y) {
-        super(x, y);
+    public Main_Character_Fish_Tear5(float x, float y, int window_Width_Size, int window_Height_Size) {
+        super(x, y, window_Width_Size, window_Height_Size);
         this.set_Max_Hp(6);
         set_Damage(6);
     }

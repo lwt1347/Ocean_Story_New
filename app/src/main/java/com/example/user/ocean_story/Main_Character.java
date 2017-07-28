@@ -1,5 +1,7 @@
 package com.example.user.ocean_story;
 
+import java.util.Random;
+
 /**
  * Created by USER on 2017-01-21.
  */
@@ -22,18 +24,26 @@ public class Main_Character {
 
     private int tear = 0;   //캐릭터의 티어를 결정한다.
 
+    private int window_W_Size;
+    private int window_H_Size;
+
     //********************************************************************************************//
+
 
     /**
      *  기본 생성자
      */
-
-    Main_Character(float x, float y){
+    Main_Character(float x, float y, int window_Width_Size, int window_Height_Size){
         main_Character_Point_X = x;//(x / 2) - 120;           //기본위치 임의로 정해놓은 상태
         main_Character_Point_Y = y;//(y - 350);
+        window_W_Size = window_Width_Size;
+        window_H_Size = window_Height_Size;
+
     }
 
     //********************************************************************************************//
+
+
 
     /**
      * 반환 [얻어오기]
@@ -85,8 +95,17 @@ public class Main_Character {
      * 이떄 1, 3 ,5 컨트롤할 변수
      */
     private int main_Character_Mode_Status = 0;
+
+    private int transform_Chra = 0;
+    private boolean transform_Chra_Flag = false;
+
+    public boolean get_Transform_Chra_Flag(){
+        return transform_Chra_Flag;
+    }
     //점수에 따라서 모드 변경
     public void Set_Main_Character_Mode_Status(){
+
+
         if(main_Character_Mode_Status < 4) {
             main_Character_Mode_Status += 2;
         }
@@ -210,9 +229,91 @@ public class Main_Character {
     /**
      * 움직임 이펙트
      */
+    Random random = new Random();
     private int character_Draw_Status = 0;
-    public void character_Move() {
+    boolean direct_Flag_X = true;
+    boolean direct_Flag_Stop_X = true;
 
+    boolean direct_Flag_Y = true;
+    boolean direct_Flag_Stop_Y = true;
+
+    public void character_Moving() {
+
+        transform_Chra++;
+
+        if(transform_Chra > 5){
+            transform_Chra_Flag = !transform_Chra_Flag;
+            transform_Chra = 0;
+        }
+
+
+        if(0 >= main_Character_Point_X){
+            direct_Flag_X = true;
+        }else if(main_Character_Point_X >= window_W_Size - 150){
+            direct_Flag_X = false;
+        }
+
+        if(random.nextFloat() < 0.01){
+            direct_Flag_Stop_X = false;
+            if(random.nextFloat() < 0.001){
+                direct_Flag_X = !direct_Flag_X;
+            }
+        }
+        if(random.nextFloat() < 0.01){
+            direct_Flag_Stop_X = true;
+            if(random.nextFloat() < 0.001){
+                direct_Flag_X = !direct_Flag_X;
+            }
+        }
+
+
+        if(direct_Flag_Stop_X) {
+            if (direct_Flag_X) {
+                main_Character_Point_X += 3 + random.nextInt(5);
+            } else {
+                main_Character_Point_X -= 3 + random.nextInt(5);
+            }
+        }
+
+
+        if(0 >= main_Character_Point_Y){
+            direct_Flag_Y = true;
+        }else if(main_Character_Point_Y >= window_H_Size - 150){
+            direct_Flag_Y = false;
+        }
+
+        if(random.nextFloat() < 0.01){
+            direct_Flag_Stop_Y = false;
+            if(random.nextFloat() < 0.001){
+                direct_Flag_Y = !direct_Flag_Y;
+            }
+        }
+        if(random.nextFloat() < 0.01){
+            direct_Flag_Stop_Y = true;
+            if(random.nextFloat() < 0.001){
+                direct_Flag_Y = !direct_Flag_Y;
+            }
+        }
+
+
+        if(direct_Flag_Stop_Y) {
+            if (direct_Flag_Y) {
+                main_Character_Point_Y += 1 + random.nextInt(2);
+            } else {
+                main_Character_Point_Y -= 1 + random.nextInt(2);
+            }
+        }
+
+    }
+
+    public boolean get_Direct_Status(){
+        return direct_Flag_X;
+    }
+
+    /**
+     * 캐릭터 움직임
+     */
+    public void character_Move(){
         character_Draw_Status++;
         if(character_Draw_Status > 7){
 
@@ -223,7 +324,6 @@ public class Main_Character {
             character_Draw_Status = 0;
         }
     }
-
 
     //********************************************************************************************//
 
