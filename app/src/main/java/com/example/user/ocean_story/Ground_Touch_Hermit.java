@@ -1,0 +1,113 @@
+package com.example.user.ocean_story;
+
+/**
+ * Created by USER on 2017-01-21.
+ * 소라개
+ */
+
+public class Ground_Touch_Hermit extends Ground_Default_Body {
+
+    /**
+     * Ground_Touch_Hermit 변수
+     */
+//기본인가, 중보스인가, 보스인가.
+    int class_Num = 0;
+    int pregnant_Time = 0;
+    boolean pregnant_Flag = false;
+
+    /**
+     * 기본 생성자
+     *
+     * @param window_Width
+     * @param width
+     * @param height
+     */
+    Ground_Touch_Hermit(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size) {
+        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size);
+        ground_Class = 1;   //달팽이 = 1
+    }
+    Ground_Touch_Hermit(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size, float X_Point, float y_Point) {
+        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size);
+        ground_Class = 1;   //달팽이 = 1
+        ground_Point_X = X_Point;
+        ground_Point_Y = y_Point;
+    }
+
+    //********************************************************************************************//
+
+    //기본인가, 중보스인가, 보스인가.
+    public void set_Class_NUm(int param_Class_Num){
+        //class_Num = 1 중간보스
+        //class_Num = 2 보스
+        class_Num = param_Class_Num;
+    }
+    //소라개 보스가 새끼 치고 초기화
+    public void set_Pragnant(){
+        pregnant_Flag = false;
+        pregnant_Time = 0;
+    }
+
+
+    /**
+     * 반환
+     */
+    public int get_Class_Num(){
+        return class_Num;
+    }
+
+    public boolean get_Pragnant_Flag(){
+        return pregnant_Flag;
+    }
+
+    //********************************************************************************************//
+
+    /**
+     * 소라개 움직이기
+     * 동작 함수, 설정
+     */
+    @Override
+    public void ground_Object_Move() {
+
+        if(class_Num == 1){ // 중간 보스 일때
+            pregnant_Time++;
+            if(pregnant_Time > 75){
+                pregnant_Flag = true;
+            }
+        }else if(class_Num == 2){   //보스 일떄
+            pregnant_Time++;
+            if(pregnant_Time > 150){
+                pregnant_Flag = true;
+            }
+        }
+
+        if(!get_Immortal_Mode()) {
+            ground_Point_Y += speed;
+            ground_Draw_Status++;
+            if(ground_Draw_Status > 3){
+                ground_Draw_Status = 0;
+            }
+        }else {
+            ground_Draw_Status = 5;
+        }
+        if(Math.random() < 0.01) {
+
+            //속도 변화 주기
+            speed = 2 + (float)Math.random() * 3;
+            immortal = false;
+        }
+
+
+
+
+    }
+
+    boolean immortal = false;
+    public void set_Immortal_Mode(){
+        immortal = true;
+    }
+    public boolean get_Immortal_Mode(){
+        return immortal;
+    }
+
+    //********************************************************************************************//
+}

@@ -59,6 +59,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    /**
+     * 어항가기
+     */
+    public void onButtonFishbowl(View view){
+
+    }
+    /**
+     * 상점 가기
+     */
+    public void onButtonStore(View view){
+
+    }
 
 
 }

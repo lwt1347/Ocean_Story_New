@@ -8,8 +8,8 @@ package com.example.user.ocean_story;
 //가오리
 class Main_Character_Fish_Tear6 extends Main_Character {
 
-    public Main_Character_Fish_Tear6(float x, float y, int window_Width_Size, int window_Height_Size) {
-        super(x, y,  window_Width_Size, window_Height_Size);
+    public Main_Character_Fish_Tear6(float x, float y, int window_Width_Size, int window_Height_Size,int w_Size, int h_Size) {
+        super(x, y,  window_Width_Size, window_Height_Size, w_Size, h_Size);
         this.set_Max_Hp(7);
         set_Damage(7);
     }

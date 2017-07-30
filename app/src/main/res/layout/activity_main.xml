@@ -15,11 +15,35 @@
         android:id="@+id/button"
         android:layout_width="150dip"
         android:layout_height="50dip"
+        android:layout_alignLeft="@+id/button_fish_bowl"
+        android:layout_alignStart="@+id/button_fish_bowl"
+
+        android:layout_below="@+id/button_fish_bowl"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_fishbowl_state"
+        android:onClick="onButtonFishbowl" />
+
+    <Button
+        android:id="@+id/button_fish_bowl"
+        android:layout_width="150dip"
+        android:layout_height="50dip"
         android:background="@drawable/button_play_state"
         android:onClick="onButtonGame_StartClicked"
 
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/button_store"
+        android:layout_width="150dip"
+        android:layout_height="50dip"
+        android:layout_alignLeft="@+id/button"
+        android:layout_alignStart="@+id/button"
+
+        android:layout_below="@+id/button"
+        android:layout_marginTop="21dp"
+        android:background="@drawable/button_store_state"
+        android:onClick="onButtonStore" />
 
 
 </RelativeLayout>

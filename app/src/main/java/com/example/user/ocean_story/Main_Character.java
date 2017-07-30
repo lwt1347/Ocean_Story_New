@@ -27,18 +27,24 @@ public class Main_Character {
     private int window_W_Size;
     private int window_H_Size;
 
+    int character_W_Size = 0;
+    int character_H_Size = 0;
+
+
     //********************************************************************************************//
 
 
     /**
      *  기본 생성자
      */
-    Main_Character(float x, float y, int window_Width_Size, int window_Height_Size){
+    Main_Character(float x, float y, int window_Width_Size, int window_Height_Size, int w_Size, int h_Size){
         main_Character_Point_X = x;//(x / 2) - 120;           //기본위치 임의로 정해놓은 상태
         main_Character_Point_Y = y;//(y - 350);
         window_W_Size = window_Width_Size;
         window_H_Size = window_Height_Size;
 
+        character_W_Size = w_Size;
+        character_H_Size = h_Size;
     }
 
     //********************************************************************************************//
@@ -72,6 +78,15 @@ public class Main_Character {
     public int get_Tear(){
         return tear;
     }
+
+    public int get_Weight_Size(){
+        return character_W_Size;
+    }
+    public int get_Height_Size(){
+        return character_H_Size;
+    }
+
+
     /**
      * 캐릭터가 공격중인가 아닌가.
      */
