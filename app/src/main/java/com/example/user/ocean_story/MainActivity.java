@@ -7,7 +7,9 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     /**
      * Game_Start 버튼 클릭 이벤트
      */
@@ -65,12 +69,47 @@ public class MainActivity extends AppCompatActivity {
     public void onButtonFishbowl(View view){
 
     }
+
     /**
      * 상점 가기
      */
     public void onButtonStore(View view){
+        Intent intent = new Intent(getApplicationContext(), Activity_Store.class);
+
+        //intent.putExtra("cha","aa");
+        startActivityForResult(intent, 1002);
+//        recycleView(findViewById(R.layout.activity_store));
+
+
+
+
 
     }
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
