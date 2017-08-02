@@ -3015,7 +3015,7 @@ private void button_Create_method_Init(){
 
 
                 paint_Temp.setColor(Color.YELLOW);
-            
+
 
             canvas.drawText(character_Damege+"", landMark_Damage_View_List.get(i).get_X_Point(),landMark_Damage_View_List.get(i).get_Y_Point(), paint_Temp);
 

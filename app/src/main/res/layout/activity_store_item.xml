@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1">
@@ -11,7 +11,7 @@
         android:layout_width="80dp"
         android:layout_height="65dp"
         android:layout_margin="10dp"
-        android:src="@drawable/store_item_structure_damage_1" />
+        android:src="@drawable/skill_stomp_1" />
 
     <LinearLayout
         android:layout_width="163dp"
