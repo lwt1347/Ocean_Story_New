@@ -20,22 +20,22 @@ public class Activity_Store_Item_View extends LinearLayout{
 
     TextView textView;
     TextView textView2;
+    TextView textView6;
+
 
     ImageView imageView;
-    Button button_Buy;
 
     public Activity_Store_Item_View(Context context) {
         super(context);
         init(context);
+        
 
-        Button button_buy = (Button)findViewById(R.id.button_buy);
-        button_buy.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Log.e("a", "aaaaa");
-            }
-        });
+    }
 
+
+
+    public TextView get_TextView_Button(){
+        return textView6;
     }
 
     public Activity_Store_Item_View(Context context, @Nullable AttributeSet attrs) {
@@ -48,9 +48,8 @@ public class Activity_Store_Item_View extends LinearLayout{
         inflater.inflate(R.layout.activity_store_item, this, true);
         textView = (TextView) findViewById(R.id.textView);
         textView2 = (TextView) findViewById(R.id.textView2);
-
         imageView = (ImageView)findViewById(R.id.imageView);
-        button_Buy = (Button)findViewById(R.id.button_buy);
+        textView6 = (TextView) findViewById(R.id.textView6);
 
     }
 
@@ -65,7 +64,7 @@ public class Activity_Store_Item_View extends LinearLayout{
     //이미지 뷰에 이미지 설정
     public void setImage(int resid, int resid2, int resid3){
         imageView.setImageResource(resid);
-        button_Buy.setBackgroundResource(resid2);
+        textView6.setBackgroundResource(resid2);
         textView.setBackgroundResource(resid3);
     }
 

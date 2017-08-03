@@ -62,7 +62,7 @@ public class Activity_Store extends Activity {
     int mt8;
     int mt9;
     int mt10;
-    int info [] = new int[35];
+    int info [] = new int[50];
     ListView listView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,46 +80,46 @@ public class Activity_Store extends Activity {
 //        adapter.addItem(new Activity_Store_Item("dragdamage", "드래그 대미지 증가"));
 //        adapter.addItem(new Activity_Store_Item("score", "점수"));
 //        adapter.addItem(new Activity_Store_Item("money", "돈"));
-        adapter.addItem(new Activity_Store_Item("ruby", "1000", R.drawable.store_ruby, R.drawable.store_buy_button_1, R.drawable.store_ruby_text));
-//        adapter.addItem(new Activity_Store_Item("structure_damage", "1000", R.drawable.store_structure_damage, R.drawable.store_buy_button_1, R.drawable.store_structure_damage_text));
-//        adapter.addItem(new Activity_Store_Item("drag_damage", "1000", R.drawable.store_drag_damage, R.drawable.store_buy_button_1, R.drawable.store_drag_damage_text));
-//        adapter.addItem(new Activity_Store_Item("urchin_resistance", "1000", R.drawable.store_urchin_resistance, R.drawable.store_buy_button_1, R.drawable.store_urchin_resistance_text));
-//        adapter.addItem(new Activity_Store_Item("lightning_resistance", "1000", R.drawable.store_lightning_resistance, R.drawable.store_buy_button_1, R.drawable.store_lightning_resistance_text));
-//        adapter.addItem(new Activity_Store_Item("crocodile_resistance", "1000", R.drawable.store_crocodile_resistance, R.drawable.store_buy_button_1, R.drawable.store_crocodile_resistance_text));
-//
-//
-//
-////        adapter.addItem(new Activity_Store_Item("ft1", "물고기1"));
-//        adapter.addItem(new Activity_Store_Item("ft2", "물고기2", R.drawable.skill_thorn_3, R.drawable.store_probability_button_1, R.drawable.store_fish_tear2_text));
-//
-//        adapter.addItem(new Activity_Store_Item("ft3", "물고기3",  R.drawable.skill_teeth_mine_1, R.drawable.store_probability_button_1, R.drawable.store_fish_tear3_text));
-//        adapter.addItem(new Activity_Store_Item("ft4", "물고기4",  R.drawable.skill_earthquake_4, R.drawable.store_probability_button_1, R.drawable.store_fish_tear4_text));
-//        adapter.addItem(new Activity_Store_Item("ft5", "물고기5",  R.drawable.skill_teeth_mine2_1, R.drawable.store_probability_button_1, R.drawable.store_fish_tear5_text));
-//        adapter.addItem(new Activity_Store_Item("ft6", "물고기6",  R.drawable.effect_poison_1, R.drawable.store_probability_button_1, R.drawable.store_fish_tear6_text));
-//        adapter.addItem(new Activity_Store_Item("ft7", "물고기7",  R.drawable.skill_lightning_1, R.drawable.store_probability_button_1, R.drawable.store_fish_tear7_text));
-//        adapter.addItem(new Activity_Store_Item("ft8", "물고기8",  R.drawable.skill_lightning1_1, R.drawable.store_probability_button_1, R.drawable.store_fish_tear8_text));
-//        adapter.addItem(new Activity_Store_Item("ft9", "물고기9",  R.drawable.skill_sea_snake_1, R.drawable.store_probability_button_1, R.drawable.store_fish_tear9_text));
-//        adapter.addItem(new Activity_Store_Item("ft10", "물고기10",  R.drawable.skill_thorn_4, R.drawable.store_probability_button_1, R.drawable.store_fish_tear10_text));
-////        adapter.addItem(new Activity_Store_Item("st1", "꽃게1",  R.drawable.store_probability_button_1, R.drawable.store_probability_button_1, R.drawable.store_shellfish_tear2_text));
-//        adapter.addItem(new Activity_Store_Item("st2", "꽃게2",  R.drawable.effect_slow_1, R.drawable.store_probability_button_1, R.drawable.store_shellfish_tear2_text));
-////        adapter.addItem(new Activity_Store_Item("st3", "꽃게3",  R.drawable.store_probability_button_1, R.drawable.store_probability_button_1, R.drawable.store_shellfish_tear3_text));
-//        adapter.addItem(new Activity_Store_Item("st4", "꽃게4",  R.drawable.skill_crab_1, R.drawable.store_probability_button_1, R.drawable.store_shellfish_tear4_text));
-//        adapter.addItem(new Activity_Store_Item("st5", "꽃게5",  R.drawable.skill_soycrab_1, R.drawable.store_probability_button_1, R.drawable.store_shellfish_tear5_text));
-//        adapter.addItem(new Activity_Store_Item("st6", "꽃게6",  R.drawable.skill_thorn2_1, R.drawable.store_probability_button_1, R.drawable.store_shellfish_tear6_text));
-//        adapter.addItem(new Activity_Store_Item("st7", "꽃게7",  R.drawable.skill_fry_1, R.drawable.store_probability_button_1, R.drawable.store_shellfish_tear7_text));
-//        adapter.addItem(new Activity_Store_Item("st8", "꽃게8",  R.drawable.skill_crab_1, R.drawable.store_probability_button_1, R.drawable.store_shellfish_tear8_text));
-//        adapter.addItem(new Activity_Store_Item("st9", "꽃게9",  R.drawable.skill_wave_1, R.drawable.store_probability_button_1, R.drawable.store_shellfish_tear9_text));
-//        adapter.addItem(new Activity_Store_Item("st10", "꽃게10",  R.drawable.skill_stomp_1, R.drawable.store_probability_button_1, R.drawable.store_shellfish_tear10_text));
-////        adapter.addItem(new Activity_Store_Item("mt1", "오징어1",  R.drawable.store_probability_button_1, R.drawable.store_probability_button_1, R.drawable.store_moulluse_tear3_text));
-////        adapter.addItem(new Activity_Store_Item("mt2", "오징어2",  R.drawable.store_probability_button_1, R.drawable.store_probability_button_1, R.drawable.store_fish_tear2_text));
-//        adapter.addItem(new Activity_Store_Item("mt3", "오징어3",  R.drawable.skill_slow_cloud_1, R.drawable.store_probability_button_1, R.drawable.store_moulluse_tear3_text));
-//        adapter.addItem(new Activity_Store_Item("mt4", "오징어4",  R.drawable.skill_butter_1, R.drawable.store_probability_button_1, R.drawable.store_moulluse_tear4_text));
-//        adapter.addItem(new Activity_Store_Item("mt5", "오징어5",  R.drawable.skill_fork_1, R.drawable.store_probability_button_1, R.drawable.store_moulluse_tear5_text));
-//        adapter.addItem(new Activity_Store_Item("mt6", "오징어6",  R.drawable.skill_laser_1, R.drawable.store_probability_button_1, R.drawable.store_moulluse_tear6_text));
-//        adapter.addItem(new Activity_Store_Item("mt7", "오징어7",  R.drawable.effect_poison_1, R.drawable.store_probability_button_1, R.drawable.store_moulluse_tear7_text));
-//        adapter.addItem(new Activity_Store_Item("mt8", "오징어8",  R.drawable.skill_boom_poison_1, R.drawable.store_probability_button_1, R.drawable.store_moulluse_tear8_text));
-//        adapter.addItem(new Activity_Store_Item("mt9", "오징어9",  R.drawable.skill_wall_3, R.drawable.store_probability_button_1, R.drawable.store_moulluse_tear9_text));
-//        adapter.addItem(new Activity_Store_Item("mt10", "오징어10",  R.drawable.skill_posion_cloud1_1, R.drawable.store_probability_button_1, R.drawable.store_moulluse_tear10_text));
+        adapter.addItem(new Activity_Store_Item("ruby", "1000", R.drawable.store_ruby, R.drawable.button_store_buy, R.drawable.store_ruby_text));
+        adapter.addItem(new Activity_Store_Item("structure_damage", "Lv: " + info[0] + ", 가격 : " + info[0] * 500 , R.drawable.store_structure_damage, R.drawable.button_store_buy, R.drawable.store_structure_damage_text));
+        adapter.addItem(new Activity_Store_Item("drag_damage", "Lv: " + info[3] + ", 가격 : " + info[3] * 500, R.drawable.store_drag_damage, R.drawable.button_store_buy, R.drawable.store_drag_damage_text));
+        adapter.addItem(new Activity_Store_Item("urchin_resistance", "Lv: " + info[4] + ", 가격 : " + info[4] * 500, R.drawable.store_urchin_resistance, R.drawable.button_store_buy, R.drawable.store_urchin_resistance_text));
+        adapter.addItem(new Activity_Store_Item("lightning_resistance", "Lv: " + info[5] + ", 가격 : " + info[5] * 500, R.drawable.store_lightning_resistance, R.drawable.button_store_buy, R.drawable.store_lightning_resistance_text));
+        adapter.addItem(new Activity_Store_Item("crocodile_resistance", "Lv: " + info[6] + ", 가격 : " + info[6] * 500, R.drawable.store_crocodile_resistance, R.drawable.button_store_buy, R.drawable.store_crocodile_resistance_text));
+
+
+
+//        adapter.addItem(new Activity_Store_Item("ft1", "물고기1"));
+        adapter.addItem(new Activity_Store_Item("ft2", "Lv: " + info[8] + ", 가격 : " + info[8] * 200, R.drawable.skill_thorn_3, R.drawable.button_store_probability, R.drawable.store_fish_tear2_text));
+
+        adapter.addItem(new Activity_Store_Item("ft3", "Lv: " + info[9] + ", 가격 : " + info[9] * 300,  R.drawable.skill_teeth_mine_1, R.drawable.button_store_probability, R.drawable.store_fish_tear3_text));
+        adapter.addItem(new Activity_Store_Item("ft4", "Lv: " + info[10] + ", 가격 : " + info[10] * 400,  R.drawable.skill_earthquake_4, R.drawable.button_store_probability, R.drawable.store_fish_tear4_text));
+        adapter.addItem(new Activity_Store_Item("ft5", "Lv: " + info[11] + ", 가격 : " + info[11] * 500,  R.drawable.skill_teeth_mine2_1, R.drawable.button_store_probability, R.drawable.store_fish_tear5_text));
+        adapter.addItem(new Activity_Store_Item("ft6", "Lv: " + info[12] + ", 가격 : " + info[12] * 600,  R.drawable.effect_poison_1, R.drawable.button_store_probability, R.drawable.store_fish_tear6_text));
+        adapter.addItem(new Activity_Store_Item("ft7", "Lv: " + info[13] + ", 가격 : " + info[13] * 700,  R.drawable.skill_lightning_1, R.drawable.button_store_probability, R.drawable.store_fish_tear7_text));
+        adapter.addItem(new Activity_Store_Item("ft8", "Lv: " + info[14] + ", 가격 : " + info[14] * 800,  R.drawable.skill_lightning1_1, R.drawable.button_store_probability, R.drawable.store_fish_tear8_text));
+        adapter.addItem(new Activity_Store_Item("ft9", "Lv: " + info[15] + ", 가격 : " + info[15] * 900,  R.drawable.skill_sea_snake_1, R.drawable.button_store_probability, R.drawable.store_fish_tear9_text));
+        adapter.addItem(new Activity_Store_Item("ft10", "Lv: " + info[16] + ", 가격 : " + info[16] * 1000,  R.drawable.skill_thorn_4, R.drawable.button_store_probability, R.drawable.store_fish_tear10_text));
+//        adapter.addItem(new Activity_Store_Item("st1", "꽃게1",  R.drawable.store_probability_button_1, R.drawable.store_probability_button_1, R.drawable.store_shellfish_tear2_text));
+        adapter.addItem(new Activity_Store_Item("st2", "Lv: " + info[18] + ", 가격 : " + info[18] * 200,  R.drawable.effect_slow_1, R.drawable.button_store_probability, R.drawable.store_shellfish_tear2_text));
+//        adapter.addItem(new Activity_Store_Item("st3", "꽃게3",  R.drawable.store_probability_button_1, R.drawable.store_probability_button_1, R.drawable.store_shellfish_tear3_text));
+        adapter.addItem(new Activity_Store_Item("st4", "Lv: " + info[20] + ", 가격 : " + info[20] * 400,  R.drawable.skill_crab_1, R.drawable.button_store_probability, R.drawable.store_shellfish_tear4_text));
+        adapter.addItem(new Activity_Store_Item("st5", "Lv: " + info[21] + ", 가격 : " + info[21] * 500,  R.drawable.skill_soycrab_1, R.drawable.button_store_probability, R.drawable.store_shellfish_tear5_text));
+        adapter.addItem(new Activity_Store_Item("st6", "Lv: " + info[22] + ", 가격 : " + info[22] * 600,  R.drawable.skill_thorn2_1, R.drawable.button_store_probability, R.drawable.store_shellfish_tear6_text));
+        adapter.addItem(new Activity_Store_Item("st7", "Lv: " + info[23] + ", 가격 : " + info[23] * 700,  R.drawable.skill_fry_1, R.drawable.button_store_probability, R.drawable.store_shellfish_tear7_text));
+        adapter.addItem(new Activity_Store_Item("st8", "Lv: " + info[24] + ", 가격 : " + info[24] * 800,  R.drawable.skill_crab_1, R.drawable.button_store_probability, R.drawable.store_shellfish_tear8_text));
+        adapter.addItem(new Activity_Store_Item("st9", "Lv: " + info[25] + ", 가격 : " + info[25] * 900,  R.drawable.skill_wave_1, R.drawable.button_store_probability, R.drawable.store_shellfish_tear9_text));
+        adapter.addItem(new Activity_Store_Item("st10", "Lv: " + info[26] + ", 가격 : " + info[26] * 1000,  R.drawable.skill_stomp_1, R.drawable.button_store_probability, R.drawable.store_shellfish_tear10_text));
+//        adapter.addItem(new Activity_Store_Item("mt1", "오징어1",  R.drawable.store_probability_button_1, R.drawable.store_probability_button_1, R.drawable.store_moulluse_tear3_text));
+//        adapter.addItem(new Activity_Store_Item("mt2", "오징어2",  R.drawable.store_probability_button_1, R.drawable.store_probability_button_1, R.drawable.store_fish_tear2_text));
+        adapter.addItem(new Activity_Store_Item("mt3", "Lv: " + info[29] + ", 가격 : " + info[29] * 300,  R.drawable.skill_slow_cloud_1, R.drawable.button_store_probability, R.drawable.store_moulluse_tear3_text));
+        adapter.addItem(new Activity_Store_Item("mt4", "Lv: " + info[30] + ", 가격 : " + info[30] * 400,  R.drawable.skill_butter_1, R.drawable.button_store_probability, R.drawable.store_moulluse_tear4_text));
+        adapter.addItem(new Activity_Store_Item("mt5", "Lv: " + info[31] + ", 가격 : " + info[31] * 500,  R.drawable.skill_fork_1, R.drawable.button_store_probability, R.drawable.store_moulluse_tear5_text));
+        adapter.addItem(new Activity_Store_Item("mt6", "Lv: " + info[32] + ", 가격 : " + info[32] * 600,  R.drawable.skill_laser_1, R.drawable.button_store_probability, R.drawable.store_moulluse_tear6_text));
+        adapter.addItem(new Activity_Store_Item("mt7", "Lv: " + info[33] + ", 가격 : " + info[33] * 700,  R.drawable.effect_poison_1, R.drawable.button_store_probability, R.drawable.store_moulluse_tear7_text));
+        adapter.addItem(new Activity_Store_Item("mt8", "Lv: " + info[34] + ", 가격 : " + info[34] * 800,  R.drawable.skill_boom_poison_1, R.drawable.button_store_probability, R.drawable.store_moulluse_tear8_text));
+        adapter.addItem(new Activity_Store_Item("mt9", "Lv: " + info[35] + ", 가격 : " + info[35] * 900,  R.drawable.skill_wall_3, R.drawable.button_store_probability, R.drawable.store_moulluse_tear9_text));
+        adapter.addItem(new Activity_Store_Item("mt10", "Lv: " + info[36] + ", 가격 : " + info[36] * 1000,  R.drawable.skill_posion_cloud1_1, R.drawable.button_store_probability, R.drawable.store_moulluse_tear10_text));
 
 
 
@@ -134,60 +134,12 @@ public class Activity_Store extends Activity {
 
 
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Log.e("a","1121");
-
-               Activity_Store_Item item =  (Activity_Store_Item)adapter.getItem(position);
-
-//                Toast.makeText(getApplicationContext(), "" + item.getName(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(), "" + item.getName(), Toast.LENGTH_SHORT).show();
-
-                if(item.getName() == "ruby"){
-
-                }else if(item.getName() == "1000"){
-                }else if(item.getName() == "urchin_resistance"){
-                }else if(item.getName() == "lightning_resistance"){
-                }else if(item.getName() == "crocodile_resistance"){
-                }else if(item.getName() == "ft1"){
-                }else if(item.getName() == "ft2"){
-                }else if(item.getName() == "ft3"){
-                }else if(item.getName() == "ft4"){
-                }else if(item.getName() == "ft5"){
-                }else if(item.getName() == "ft6"){
-                }else if(item.getName() == "ft7"){
-                }else if(item.getName() == "ft8"){
-                }else if(item.getName() == "ft9"){
-                }else if(item.getName() == "ft10"){
-                }else if(item.getName() == "st1"){
-                }else if(item.getName() == "st2"){
-                }else if(item.getName() == "st3"){
-                }else if(item.getName() == "st4"){
-                }else if(item.getName() == "st5"){
-                }else if(item.getName() == "st6"){
-                }else if(item.getName() == "st7"){
-                }else if(item.getName() == "st8"){
-                }else if(item.getName() == "st9"){
-                }else if(item.getName() == "st10"){
-                }else if(item.getName() == "mt1"){
-                }else if(item.getName() == "mt2"){
-                }else if(item.getName() == "mt3"){
-                }else if(item.getName() == "mt4"){
-                }else if(item.getName() == "mt5"){
-                }else if(item.getName() == "mt6"){
-                }else if(item.getName() == "mt7"){
-                }else if(item.getName() == "mt8"){
-                }else if(item.getName() == "mt9"){
-                }else if(item.getName() == "mt10"){
-
-                }
-
-
-
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//            }
+//        });
 
 
 
@@ -254,7 +206,7 @@ public class Activity_Store extends Activity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
 
 
@@ -270,6 +222,59 @@ public class Activity_Store extends Activity {
 
                 view.setName(item.getName());
                 view.setCost(item.getCost());
+
+                view.get_TextView_Button().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Activity_Store_Item item =  (Activity_Store_Item)adapter.getItem(position);
+                 if(item.getName() == "ruby"){
+                     Toast.makeText(getApplicationContext(), "" + item.getName(), Toast.LENGTH_SHORT).show();
+
+                }else if(item.getName() == "structure_damage"){
+                     Toast.makeText(getApplicationContext(), "" + item.getName(), Toast.LENGTH_SHORT).show();
+                }else if(item.getName() == "urchin_resistance"){
+                     Toast.makeText(getApplicationContext(), "" + item.getName(), Toast.LENGTH_SHORT).show();
+                }else if(item.getName() == "lightning_resistance"){
+                     Toast.makeText(getApplicationContext(), "" + item.getName(), Toast.LENGTH_SHORT).show();
+                }else if(item.getName() == "crocodile_resistance"){
+                     Toast.makeText(getApplicationContext(), "" + item.getName(), Toast.LENGTH_SHORT).show();
+                }else if(item.getName() == "ft1"){
+                }else if(item.getName() == "ft2"){
+                }else if(item.getName() == "ft3"){
+                }else if(item.getName() == "ft4"){
+                }else if(item.getName() == "ft5"){
+                }else if(item.getName() == "ft6"){
+                }else if(item.getName() == "ft7"){
+                }else if(item.getName() == "ft8"){
+                }else if(item.getName() == "ft9"){
+                }else if(item.getName() == "ft10"){
+                }else if(item.getName() == "st1"){
+                }else if(item.getName() == "st2"){
+                }else if(item.getName() == "st3"){
+                }else if(item.getName() == "st4"){
+                }else if(item.getName() == "st5"){
+                }else if(item.getName() == "st6"){
+                }else if(item.getName() == "st7"){
+                }else if(item.getName() == "st8"){
+                }else if(item.getName() == "st9"){
+                }else if(item.getName() == "st10"){
+                }else if(item.getName() == "mt1"){
+                }else if(item.getName() == "mt2"){
+                }else if(item.getName() == "mt3"){
+                }else if(item.getName() == "mt4"){
+                }else if(item.getName() == "mt5"){
+                }else if(item.getName() == "mt6"){
+                }else if(item.getName() == "mt7"){
+                }else if(item.getName() == "mt8"){
+                }else if(item.getName() == "mt9"){
+                }else if(item.getName() == "mt10"){
+
+                }
+
+                    }
+                });
+
 
 //                if(){
 //                    recycleView(findViewById(R.id.activity_main));
