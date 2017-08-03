@@ -1,6 +1,8 @@
 package com.example.user.ocean_story;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
@@ -17,41 +19,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    int structuredamage;
-    int dragdamage;
-    int score;
-    int money;
-    int ruby;
-    int ft1;
-    int ft2;
-    int ft3;
-    int ft4;
-    int ft5;
-    int ft6;
-    int ft7;
-    int ft8;
-    int ft9;
-    int ft10;
-    int st1;
-    int st2;
-    int st3;
-    int st4;
-    int st5;
-    int st6;
-    int st7;
-    int st8;
-    int st9;
-    int st10;
-    int mt1;
-    int mt2;
-    int mt3;
-    int mt4;
-    int mt5;
-    int mt6;
-    int mt7;
-    int mt8;
-    int mt9;
-    int mt10;
 
     int info[] = new int[35];
 
@@ -70,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    int dbset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,15 +52,30 @@ public class MainActivity extends AppCompatActivity {
         layout.setBackgroundDrawable(new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.background_start)));
 
 
+        ///////////////////////////////////////////////////////////////////////
+        //데이터 베이스는 테이블을 최초 한번만 생성해야 하기 때문에 최초 한번의 정보를 가지고 만든다.
+        SharedPreferences dbSetFirst = getSharedPreferences("dbSetFirst", Activity.MODE_APPEND);
+        if(dbSetFirst != null){
+            dbset = dbSetFirst.getInt("dbSetFirst", -1);
+        }
+        dbset++;
+        ///값 저장
+        SharedPreferences.Editor editor = dbSetFirst.edit();
+        editor.putInt("dbSetFirst", dbset);
+        editor.commit();
+        ///////////////////////////////////
+
         //데이터 베이스 생성 및 오픈
         database = openOrCreateDatabase("oceanstory1", MODE_PRIVATE, null);
 
         if(database != null){
             //db 오픈 되있음.
-            selectData();
 
-        }else {
 
+        }
+
+        Log.e("aa","dbset = "+dbset);
+        if(dbset == 0) {
             //데이터 베이스 생성시에 한번만 실행해야 한다.
             String sql = "create table maincharacterinfo(_id integer PRIMARY KEY autoincrement, structuredamage integer, dragdamage integer, score integer, money integer, ruby integer, " +
                     "ft1 integer, ft2 integer, ft3 integer, ft4 integer, ft5 integer, ft6 integer, ft7 integer, ft8 integer, ft9 integer, ft10 integer, " +
@@ -101,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
             database.execSQL(sql);
             insertData(1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         }
+
+        selectData();
 
     }
 

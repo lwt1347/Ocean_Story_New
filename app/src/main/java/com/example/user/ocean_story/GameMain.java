@@ -8129,6 +8129,7 @@ public void skill_Ground_Attack(){
     public void surfaceDestroyed(SurfaceHolder holder) {
         //Log.i("[뷰]", "파괴");
 
+
         ///값 저장
         SharedPreferences pref = _context.getSharedPreferences("pref", Activity.MODE_APPEND);
         SharedPreferences.Editor editor = pref.edit();
