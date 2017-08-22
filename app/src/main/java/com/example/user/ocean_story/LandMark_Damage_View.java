@@ -10,6 +10,7 @@ public class LandMark_Damage_View {
     int point_y;
     int change_Time = 0;
     int live_Time = 0;
+    int damage = 0;
     boolean change_Flag = true;
     boolean live_Flag = false;
 
@@ -17,6 +18,14 @@ public class LandMark_Damage_View {
     LandMark_Damage_View(int x, int y){
         point_x = x;
         point_y = y;
+    }
+
+    public void set_Damage(int param_Pamage){
+        damage = param_Pamage;
+    }
+
+    public int get_Damage(){
+        return damage;
     }
 
     public void set_Text_Move(){

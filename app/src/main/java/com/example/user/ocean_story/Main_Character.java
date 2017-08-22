@@ -13,7 +13,7 @@ public class Main_Character {
      */
 
     private int damage = 1;                     //대미지 [업그레이드시 증가]
-    private int attack_Speed = 3;               //공격속도 [낮을수록 빨라진다.]
+    private int attack_Speed = 1;               //공격속도 [낮을수록 빨라진다.]
     private int attack_Coll_Time = 0;           //공격 쿨 타임
     private float main_Character_Point_X;       //메인 캐릭터 위치 포인터
     private float main_Character_Point_Y;

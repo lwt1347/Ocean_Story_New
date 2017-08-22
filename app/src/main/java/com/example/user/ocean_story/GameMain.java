@@ -84,6 +84,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private boolean seaurchin_Ground_Hit_Flag = false;;//성게
     private boolean land_Mark_Hit_Flag = false;//랜드마크
     private boolean hermit_Ground_Hit_Flag = false;//소라게
+    private boolean wave_Ground_Hit_Flag = false; //드래그 파도
 
 
     //진화 사운드 한번만
@@ -243,6 +244,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private Bitmap ground_Drag_Crab_img[] = new Bitmap[4];          //꽃게 이미지
 
     /**
+     * 드래그 파도 이미지
+     */
+    private Bitmap ground_Drag_Wave_img[] = new Bitmap[2];          //꽃게 이미지
+
+
+    /**
      * 악어 이미지
      */
     private Bitmap ground_Touch_Crocodile_img[] = new Bitmap[6];          //꽃게 이미지
@@ -350,6 +357,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private Bitmap effect_Pop5_img[] = new Bitmap[5];
     private Bitmap effect_Pop6_img[] = new Bitmap[5];
 
+    /**
+     * 파도 팦 이미지
+     */
+    private Bitmap effect_Wave_Pop_img;
+
 
     /**
      * 스킬 이미지
@@ -438,6 +450,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private Ground_Trap_Urchin ground_trap_urchin;      //성게 생성
     private Ground_Touch_Crocodile ground_Touch_Crocodile; //악어 생성
     private Ground_Touch_Hermit ground_Touch_Hermit;    //소라게 생성
+    private Ground_Drag_Wave ground_drag_wave;          //드래그 파도 생성
 
 
 
@@ -466,7 +479,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
     boolean revolution_Draw_Flag_Confirm = false; //진화 버튼이 활성화 되면 재생성을 멈추고 림을 그려준다.
 
-
+    boolean ground_Hit_Drag = false;    //바닥 생명체, 터치 인가, 드래그 인가 구별
     /**
      * 게임 동작 함수
      */
@@ -618,6 +631,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         sound_Effect[8] = soundPool.load(_context, R.raw.effect_window_sound, 1);   //설명창 등장 사운드
         sound_Effect[9] = soundPool.load(_context, R.raw.skill_crabb_sound, 1);     //꽃게 스킬 소리
         sound_Effect[10] = soundPool.load(_context, R.raw.skill_laser_sound, 1);     //레이저 스킬 소리
+
+        sound_Effect[11] = soundPool.load(_context, R.raw.effect_wave_pop, 1);     //파도 팝 소리
 
 
 
@@ -905,6 +920,12 @@ private void button_Create_method_Init(){
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.effect_poison_8);
             effect_Poison_img[7] = image.getBitmap();
 
+            /**
+             * 파도 팝 이미지
+             */
+            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.effect_pop_wave_1);
+            effect_Wave_Pop_img = image.getBitmap();
+
 
 
             /**
@@ -1025,7 +1046,10 @@ private void button_Create_method_Init(){
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.shadow_crocodile);
             shadow_img[6] = image.getBitmap();
 
-
+            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.ground_drag_wave_s);
+            ground_Drag_Wave_img[0] =  image.getBitmap();
+            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.ground_drag_wave);
+            ground_Drag_Wave_img[1] = image.getBitmap();
 
 
             //기본 물고기
@@ -1086,6 +1110,7 @@ private void button_Create_method_Init(){
                 ground_Drag_Crab_img[i] = Init_Ground_Drag_Crab_Image(_context, i);              //꽃게 이미지
                 ground_Drag_Clam_img[i] = Init_Ground_Drag_Clam_Image(_context, i);             //조개이미지
             }
+
 
 
 
@@ -2826,6 +2851,8 @@ private void button_Create_method_Init(){
 
     public synchronized void doDraw(Canvas canvas) {
 
+        try{
+
 
         if(revolution_Button_Activation ){
             m_Run_False();
@@ -2865,6 +2892,7 @@ private void button_Create_method_Init(){
 
                 if(land_Mark_Hit_Flag){
                     landMark_Damage_View = new LandMark_Damage_View(touchx,touchy);
+                    landMark_Damage_View.set_Damage(character_Damege);
                     landMark_Damage_View_List.add(landMark_Damage_View);
                 }
 
@@ -3008,7 +3036,7 @@ private void button_Create_method_Init(){
             paint_Temp.setStrokeWidth(5);
 
             paint_Temp.setColor(Color.BLACK);
-            canvas.drawText(character_Damege+"", landMark_Damage_View_List.get(i).get_X_Point(),landMark_Damage_View_List.get(i).get_Y_Point(), paint_Temp);
+            canvas.drawText(landMark_Damage_View_List.get(i).get_Damage()+"", landMark_Damage_View_List.get(i).get_X_Point(),landMark_Damage_View_List.get(i).get_Y_Point(), paint_Temp);
 
             paint_Temp.setStyle(Paint.Style.FILL);
             paint_Temp.setStrokeWidth(3);
@@ -3017,7 +3045,7 @@ private void button_Create_method_Init(){
                 paint_Temp.setColor(Color.YELLOW);
 
 
-            canvas.drawText(character_Damege+"", landMark_Damage_View_List.get(i).get_X_Point(),landMark_Damage_View_List.get(i).get_Y_Point(), paint_Temp);
+            canvas.drawText(landMark_Damage_View_List.get(i).get_Damage()+"", landMark_Damage_View_List.get(i).get_X_Point(),landMark_Damage_View_List.get(i).get_Y_Point(), paint_Temp);
 
 
 
@@ -3331,6 +3359,22 @@ private void button_Create_method_Init(){
 
 
                 }
+
+                else if(ground_List.get(i) instanceof Ground_Drag_Wave){ //드래그 파도 그리기
+                     draw.draw_Bmp(canvas, ground_Drag_Wave_img[1], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+
+//                     pop_Temp_img = effect_Pop_damage1_Image[tempInt];
+                     pop_Temp_img = effect_Wave_Pop_img;
+                     if(i == ground_Remove_Temp && wave_Ground_Hit_Flag){
+                         draw.draw_Bmp(canvas, pop_Temp_img,
+                                 ground_List.get(ground_Remove_Temp).get_Ground_Point_X() + random.nextInt(ground_Drag_Wave_img[1].getWidth())-35 ,
+                                 ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() + random.nextInt(ground_Drag_Wave_img[1].getHeight())-35);
+                         wave_Ground_Hit_Flag = false;
+                     }
+
+                 }
+
+
                 //꽃게 또는 조개
                 else if (ground_List.get(i) instanceof Ground_Drag_Crab) {
 
@@ -3353,7 +3397,7 @@ private void button_Create_method_Init(){
                     }
 
 
-                     draw.draw_Bmp(canvas, shadow_img[5],  ground_List.get(i).get_Ground_Point_X()  + convertPixelsToDp(4, _context), ground_List.get(i).get_Ground_Point_Y()  + convertPixelsToDp(19, _context) );
+                    draw.draw_Bmp(canvas, shadow_img[5],  ground_List.get(i).get_Ground_Point_X()  + convertPixelsToDp(4, _context), ground_List.get(i).get_Ground_Point_Y()  + convertPixelsToDp(19, _context) );
                     draw.draw_Bmp(canvas, ground_Drag_Crab_img[((Ground_Drag_Crab) ground_List.get(i)).get_Draw_Ground_Status()], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
 
                     /**
@@ -4616,6 +4660,7 @@ private void button_Create_method_Init(){
         for(int i=0; i<skill_Wave_List.size(); i++){
 
             draw.draw_Bmp(canvas, skill_Wave_img[skill_Wave_List.get(i).get_Skill_Status()], skill_Wave_List.get(i).get_X_Point(), skill_Wave_List.get(i).get_Y_Point());
+
             skill_Wave_List.get(i).set_Skill_Move(convertPixelsToDp(30, _context));
 
 
@@ -5714,6 +5759,13 @@ if(skill_Boom_Poison_List.get(i).get_Skill_Status() >= 3){
 
 
 
+        }catch (Exception e){
+
+            Log.e("그리기", "그리기");
+            Log.e("그리기", e.toString());
+            Log.e("그리기", e.getMessage());
+        }
+
     }
 
 
@@ -6208,6 +6260,22 @@ public void add_Fish_Touch_Marlin(){
     }
 
     /**
+     * 그라운드 웨이브 추가
+     */
+    public void add_Ground_Wave(){
+
+        float wave_X_Point = 30 + (float)Math.random() * (window_Width-100);         //생성될 위치
+
+        for(int i=0; i<20; i++) {
+            ground_drag_wave = new Ground_Drag_Wave(window_Width,
+                    ground_Drag_Wave_img[0].getWidth(),
+                    ground_Drag_Wave_img[0].getHeight() , 1, ground_Drag_Wave_img[1].getWidth(), ground_Drag_Wave_img[0].getHeight(), wave_X_Point, -convertPixelsToDp(i*15, _context));
+
+            ground_List.add(ground_drag_wave); //파도
+        }
+    }
+
+    /**
      * 악어 추가
      */
     public void add_Ground_Crocodile(){
@@ -6376,10 +6444,8 @@ public void add_Fish_Touch_Marlin(){
             }
             else if(ground_List.get(i) instanceof Ground_Drag_Crab){   //꽃게 무빙 함수
                 ((Ground_Drag_Crab) ground_List.get(i)).ground_Object_Move();
-
-
-
-
+            }else if(ground_List.get(i) instanceof Ground_Drag_Wave){   //파도 무빙 함수
+                ((Ground_Drag_Wave) ground_List.get(i)).ground_Object_Move();
             }else if(ground_List.get(i) instanceof Ground_Trap_Urchin){
                 ((Ground_Trap_Urchin) ground_List.get(i)).ground_Object_Move();
             }
@@ -6920,11 +6986,10 @@ public void skill_Ground_Attack(){
      * 그라운드 생명체 대미지 넣기 (달팽이)
      */
     private boolean ground_Hit_Check = false;
+    //ground_Hit_Drag = true 일때 드래그 몬스터
+    public boolean ground_Hit_Chose(float x, float y, boolean ground_Hit_Drag, int drag_Action_Move){     //그라운드 객체의 종류 알아오기
 
-    public boolean ground_Hit_Chose(float x, float y, Ground_Default_Body ground_Class){     //그라운드 객체의 종류 알아오기
-
-
-//       성능 개선을 위한 포문, 달팽이, 꽃게, 성게 등 각각의 포문을 돌려야 오류가 나지 않기 때문에.
+//        성능 개선을 위한 포문, 달팽이, 꽃게, 성게 등 각각의 포문을 돌려야 오류가 나지 않기 때문에.
         for(int i=0; i<ground_List.size(); i++){    // +- 45 는 판정을 좋게 하기 위해 추가
             //달팽이를 가장 먼저 찾는다.
 
@@ -6936,7 +7001,6 @@ public void skill_Ground_Attack(){
                 ground_Hit_Check = true;
 
                 break;
-
             }else {
                 ground_Hit_Check = false;
             }
@@ -6949,7 +7013,93 @@ public void skill_Ground_Attack(){
             ground_Remove_Temp = -1;                    //달팽이 없을때를 기준 터치하는 곳의 달팽이 인덱스를 집어 넣는다.
             for(int i=0; i<ground_List.size(); i++){    // +- 45 는 판정을 좋게 하기 위해 추가
                 //달팽이를 가장 먼저 찾는다.
-                if(ground_List.get(i) instanceof Ground_Touch_Snail){
+                if(ground_List.get(i) instanceof Ground_Touch_Snail && ground_Hit_Drag == false){
+                    if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
+                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
+                            && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
+                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()){
+                        ground_Remove_Temp = i;
+
+
+                        skill_Ground_Attack();
+
+                        rand_Effect = random.nextInt(4);
+                        if (rand_Effect == 0) {
+                            effect_Temp = effect_Pop2_img[4];
+                        } else if (rand_Effect == 1) {
+                            effect_Temp = effect_Pop3_img[4];
+                        } else if (rand_Effect == 2) {
+                            effect_Temp = effect_Pop4_img[4];
+                        } else {
+                            effect_Temp = effect_Pop5_img[4];
+                        }
+
+
+                        snail_Ground_Hit_Flag = true;   //달팽이 터치 이벤트 doDraw에서 발생
+
+
+                        Score++;
+                        //클릭된 달팽이의체력을 깍는다.
+                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
+
+
+
+
+                        //            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+
+                        return true;
+
+                    }
+                }
+
+                //선택된 소라게가 존재한다면.
+                if(ground_List.get(i) instanceof Ground_Touch_Hermit && ground_Hit_Drag == false){
+                    if(        x >= ground_List.get(i).get_Ground_Point_X()
+                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width()
+                            && y >= ground_List.get(i).get_Ground_Point_Y()
+                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height()){
+                        ground_Remove_Temp = i;
+
+
+                        skill_Ground_Attack();
+
+                        rand_Effect = random.nextInt(4);
+                        if (rand_Effect == 0) {
+                            effect_Temp = effect_Pop2_img[4];
+                        } else if (rand_Effect == 1) {
+                            effect_Temp = effect_Pop3_img[4];
+                        } else if (rand_Effect == 2) {
+                            effect_Temp = effect_Pop4_img[4];
+                        } else {
+                            effect_Temp = effect_Pop5_img[4];
+                        }
+
+
+                        hermit_Ground_Hit_Flag = true;   //달팽이 터치 이벤트 doDraw에서 발생
+
+
+                        Score++;
+                        //클릭된 달팽이의체력을 깍는다.
+                        if(!((Ground_Touch_Hermit)ground_List.get(ground_Remove_Temp)).get_Immortal_Mode()) {
+                            ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
+                        }
+                        ((Ground_Touch_Hermit)ground_List.get(ground_Remove_Temp)).set_Immortal_Mode();
+
+
+
+
+                        //            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        return true;
+
+
+                    }
+                }
+
+
+                //선택된 파도가 존재한다면.
+                if(ground_List.get(i) instanceof Ground_Drag_Wave && ground_Hit_Drag){
                     if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
                             && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
                             && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
@@ -6957,202 +7107,86 @@ public void skill_Ground_Attack(){
 
                         ground_Remove_Temp = i;
 
-                        break;
+
+                        tempInt = random.nextInt(5);
+                        wave_Ground_Hit_Flag = true; //꽃게 터치 이벤트 doDraw에서 발생
+
+                        //드래그된 파도의 체력을 깍는다.
+                        if(main_Character.get_Damage() > 1) {
+                            character_Damege = 1 + random.nextInt(main_Character.get_Damage());
+                        }
+
+                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
+                        soundPool.play(sound_Effect[11], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
+                        Score++;            //점수 추가
+                        main_Character.set_Character_Experience();  //경험치 추가
+                        return true;
 
                     }
                 }
-            }
-
-            //악어 찾기
 
 
-
-            //선택된 달팽이가 존재 한다면. && 달팽이라면
-            if(ground_Remove_Temp >= 0  && ground_Class instanceof Ground_Touch_Snail) {
-
-                skill_Ground_Attack();
-
-                rand_Effect = random.nextInt(4);
-                if (rand_Effect == 0) {
-                    effect_Temp = effect_Pop2_img[4];
-                } else if (rand_Effect == 1) {
-                    effect_Temp = effect_Pop3_img[4];
-                } else if (rand_Effect == 2) {
-                    effect_Temp = effect_Pop4_img[4];
-                } else {
-                    effect_Temp = effect_Pop5_img[4];
-                }
-
-
-                snail_Ground_Hit_Flag = true;   //달팽이 터치 이벤트 doDraw에서 발생
-
-
-                Score++;
-                //클릭된 달팽이의체력을 깍는다.
-                ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
-
-
-
-
-                //            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
-                soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-                return true;
-            }
-
-
-
-
-
-            //선택된 소라게가 있다면.
-            ground_Remove_Temp = -1;
-            for(int i=0; i<ground_List.size(); i++){    // +- 45 는 판정을 좋게 하기 위해 추가
                 //꽃게를찾는다.
-                if(ground_List.get(i) instanceof Ground_Touch_Hermit){
+                if(drag_Action_Move > 3 && ground_List.get(i) instanceof Ground_Drag_Crab && ground_Hit_Drag){
                     if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
                             && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
                             && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
                             && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()){
 
                         ground_Remove_Temp = i;
+                        skill_Ground_Attack();
 
-                        break;
+                        tempInt = random.nextInt(5);
+                        crap_Ground_Hit_Flag = true; //꽃게 터치 이벤트 doDraw에서 발생
+
+                        //드래그된 꽃게의 체력을 깍는다.
+                        if(main_Character.get_Damage() > 1) {
+                            character_Damege = 1 + random.nextInt(main_Character.get_Damage());
+                        }
+
+
+                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
+                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
+                        Score++;            //점수 추가
+                        main_Character.set_Character_Experience();  //경험치 추가
+                        return true;
 
                     }
                 }
-            }
-
-            //선택된 소라게가 존재 한다면. && 소라게 라면
-            if(ground_Remove_Temp >= 0  && ground_Class instanceof Ground_Touch_Snail) {
-
-                skill_Ground_Attack();
-
-                rand_Effect = random.nextInt(4);
-                if (rand_Effect == 0) {
-                    effect_Temp = effect_Pop2_img[4];
-                } else if (rand_Effect == 1) {
-                    effect_Temp = effect_Pop3_img[4];
-                } else if (rand_Effect == 2) {
-                    effect_Temp = effect_Pop4_img[4];
-                } else {
-                    effect_Temp = effect_Pop5_img[4];
-                }
 
 
-                hermit_Ground_Hit_Flag = true;   //달팽이 터치 이벤트 doDraw에서 발생
-
-
-                Score++;
-                //클릭된 달팽이의체력을 깍는다.
-                if(!((Ground_Touch_Hermit)ground_List.get(ground_Remove_Temp)).get_Immortal_Mode()) {
-                    ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
-                }
-                ((Ground_Touch_Hermit)ground_List.get(ground_Remove_Temp)).set_Immortal_Mode();
-
-
-
-
-                //            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
-                soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-                return true;
-            }
-
-
-
-
-
-
-
-            //선택된 꽃게가 있다면.
-            ground_Remove_Temp = -1;
-            for(int i=0; i<ground_List.size(); i++){    // +- 45 는 판정을 좋게 하기 위해 추가
-                //꽃게를찾는다.
-                if(ground_List.get(i) instanceof Ground_Drag_Crab){
-                    if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
-                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
-                            && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
-                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()){
+                //조게를찾는다.
+                if(drag_Action_Move > 3 && ground_List.get(i) instanceof Ground_Drag_Clam && ground_Hit_Drag){
+                    if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()/4
+                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()/4
+                            && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()/4
+                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()/4){
 
                         ground_Remove_Temp = i;
 
-                        break;
 
-                    }
-                }
-            }
+                        tempInt = random.nextInt(5);
+                        clam_Ground_Hit_Flag = true; //꽃게 터치 이벤트 doDraw에서 발생
 
-
-            /**
-             * 꽃게를 찾는다.
-             */
-            if(ground_Remove_Temp >= 0 && ground_Class instanceof Ground_Drag_Crab){
-
-                skill_Ground_Attack();
-
-                tempInt = random.nextInt(5);
-                crap_Ground_Hit_Flag = true; //꽃게 터치 이벤트 doDraw에서 발생
-
-                //드래그된 꽃게의 체력을 깍는다.
-                if(main_Character.get_Damage() > 1) {
-                    character_Damege = 1 + random.nextInt(main_Character.get_Damage());
-                }
+                        //드래그된 조게의 체력을 깍는다.
+                        if(main_Character.get_Damage() > 1) {
+                            character_Damege = 1 + random.nextInt(main_Character.get_Damage());
+                        }
 
 
-                ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
-                soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
-                Score++;            //점수 추가
-                main_Character.set_Character_Experience();  //경험치 추가
-                return true;
-
-            }
-
-
-            //선택된 조개가 있다면.
-            ground_Remove_Temp = -1;
-            for(int i=0; i<ground_List.size(); i++){    // +- 45 는 판정을 좋게 하기 위해 추가
-                //꽃게를찾는다.
-                if(ground_List.get(i) instanceof Ground_Drag_Clam){
-                    if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
-                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
-                            && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
-                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()){
-
-                        ground_Remove_Temp = i;
-
-                        break;
-
-                    }
-                }
-            }
-
-            /**
-             * 조게를 찾는다.
-             */
-            if(ground_Remove_Temp >= 0 && ground_Class instanceof Ground_Drag_Clam){
-
-                tempInt = random.nextInt(5);
-                clam_Ground_Hit_Flag = true; //꽃게 터치 이벤트 doDraw에서 발생
-
-                //드래그된 조게의 체력을 깍는다.
-                if(main_Character.get_Damage() > 1) {
-                    character_Damege = 1 + random.nextInt(main_Character.get_Damage());
-                }
-
-
-                ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
-                soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
-                Score++;            //점수 추가
+                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
+                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
+                        Score++;            //점수 추가
 //                main_Character.set_Character_Experience();  //경험치 추가
-                return true;
-
-            }
+                        return true;
 
 
+                    }
+                }
 
-            //선택된 악어가 있다면.
-            ground_Remove_Temp = -1;
-            for(int i=0; i<ground_List.size(); i++){
+
                 //악어를찾는다.
-                if(ground_List.get(i) instanceof Ground_Touch_Crocodile){
+                if(ground_List.get(i) instanceof Ground_Touch_Crocodile && ground_Hit_Drag == false){
                     if(        x >= ground_List.get(i).get_Ground_Point_X()
                             && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width()
                             && y >= ground_List.get(i).get_Ground_Point_Y()
@@ -7160,86 +7194,56 @@ public void skill_Ground_Attack(){
 
                         ground_Remove_Temp = i;
 
-                        break;
+
+                        //드래그된 조게의 체력을 깍는다.
+                        if(main_Character.get_Damage() > 1) {
+                            character_Damege = 1 + random.nextInt(main_Character.get_Damage());
+                        }
+
+                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
+
+                        return true;
+
 
                     }
                 }
-            }
-
-            /**
-             * 조게를 찾는다.
-             */
-            if(ground_Remove_Temp >= 0 && ground_Class instanceof Ground_Touch_Crocodile){
 
 
-
-                //드래그된 조게의 체력을 깍는다.
-                if(main_Character.get_Damage() > 1) {
-                    character_Damege = 1 + random.nextInt(main_Character.get_Damage());
-                }
-
-                ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
-
-                return true;
-
-            }
-
-
-
-            /**
-             * 랜드마크
-             */
-            //선택된 랜드마크 있다면.
-            ground_Remove_Temp = -1;
-            for(int i=0; i<ground_List.size(); i++){    // +- 45 는 판정을 좋게 하기 위해 추가
-                //꽃게를찾는다.
-                if(ground_List.get(i) instanceof Land_Mark){
+                //랜드마크를 찾는다.
+                if(drag_Action_Move > 3 && ground_List.get(i) instanceof Land_Mark && ground_Hit_Drag){
                     if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
                             && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
                             && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
                             && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()){
 
                         ground_Remove_Temp = i;
+                        tempInt = random.nextInt(5);
+                        land_Mark_Hit_Flag = true; //랜드마크 이펙트 doDraw에서 발생
 
-                        break;
-
-                    }
-                }
-            }
-
-            if(ground_Remove_Temp >= 0  && ground_Class instanceof Land_Mark){
-
-                tempInt = random.nextInt(5);
-                land_Mark_Hit_Flag = true; //꽃게 터치 이벤트 doDraw에서 발생
-
-                //드래그된 랜드마크의 체력을 깍는다.
-                if(main_Character.get_Damage() > 1) {
-                    character_Damege = 1 + random.nextInt(main_Character.get_Damage());
-                }
+                        //드래그된 랜드마크의 체력을 깍는다.
+                        if(main_Character.get_Damage() > 1) {
+                            character_Damege = 1 + random.nextInt(main_Character.get_Damage());
+                        }
 
 
-                ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
-                soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
-                Score++;            //점수 추가
+                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
+                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
+                        Score++;            //점수 추가
 //                main_Character.set_Character_Experience();  //경험치 추가
 
-                //랜드마크 삭제의 경우
-                if(ground_List.get(ground_Remove_Temp).get_Ground_Hp() <= 0){
+                        //랜드마크 삭제의 경우
+                        if(ground_List.get(ground_Remove_Temp).get_Ground_Hp() <= 0){
 //                    add_Boss_Fish_Touch_Default();
 //                    add_Ground_Boss(window_Width/2 , -30);
+                        }
+
+                        return true;
+
+                    }
                 }
 
-                return true;
-
-            }
-
-
-
-            //성게 선택
-            ground_Remove_Temp = -1;
-            for(int i=0; i<ground_List.size(); i++){
-
-                if(ground_List.get(i) instanceof Ground_Trap_Urchin){
+                //성게를 찾는다.
+                if(ground_List.get(i) instanceof Ground_Trap_Urchin && ground_Hit_Drag == false){
                     if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
                             && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
                             && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
@@ -7247,36 +7251,35 @@ public void skill_Ground_Attack(){
 
                         ground_Remove_Temp = i;
 
+                        Log.e("e","성게");
 
-                        break;
 
+                        effect_Temp = effect_Black_img[4];
+
+
+                        seaurchin_Ground_Hit_Flag = true;   //성게 터치 이벤트는 doDraw 에서
+                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();  //성게 삭제,
+
+                        //성게가 공격 모드 일때, 게딱지가 아닐때
+                        if(((Ground_Trap_Urchin)ground_List.get(ground_Remove_Temp)).get_Urchin_Attack_Mode() && !(main_Character instanceof Main_Character_Shellfish_Tear3)){
+                            //get_Urchin_Attack_Mode()
+                            main_Character.set_Hp_Minus();
+                        }
+
+
+                        //메인 캐릭터 hp 감소 루틴 추가 해야함
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.5F, 0.5F, 0, 0, 1.0F);   //물고기 기본 팝 사운드
+                        return true;
                     }
                 }
+
+
+
             }
 
-            if(ground_Remove_Temp >= 0 && ground_Class instanceof Ground_Trap_Urchin){ //성게를 클릭했다면 hp 감소
+            //악어 찾기
 
 
-                Log.e("e","성게");
-
-
-                effect_Temp = effect_Black_img[4];
-
-
-                seaurchin_Ground_Hit_Flag = true;   //성게 터치 이벤트는 doDraw 에서
-                ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();  //성게 삭제,
-
-                //성게가 공격 모드 일때, 게딱지가 아닐때
-                if(((Ground_Trap_Urchin)ground_List.get(ground_Remove_Temp)).get_Urchin_Attack_Mode() && !(main_Character instanceof Main_Character_Shellfish_Tear3)){
-                    //get_Urchin_Attack_Mode()
-                    main_Character.set_Hp_Minus();
-                }
-
-
-                //메인 캐릭터 hp 감소 루틴 추가 해야함
-                soundPool.play(sound_Effect[random.nextInt(2)], 0.5F, 0.5F, 0, 0, 1.0F);   //물고기 기본 팝 사운드
-                return true;
-            }
 
 
 
@@ -7284,6 +7287,402 @@ public void skill_Ground_Attack(){
 
 
         }
+
+
+////       성능 개선을 위한 포문, 달팽이, 꽃게, 성게 등 각각의 포문을 돌려야 오류가 나지 않기 때문에.
+//        for(int i=0; i<ground_List.size(); i++){    // +- 45 는 판정을 좋게 하기 위해 추가
+//            //달팽이를 가장 먼저 찾는다.
+//
+//            if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
+//                    && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
+//                    && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
+//                    && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()){
+//
+//                ground_Hit_Check = true;
+//
+//                break;
+//
+//            }else {
+//                ground_Hit_Check = false;
+//            }
+//
+//        }
+//
+//        //       성능 개선을 위한 포문, 달팽이, 꽃게, 성게 등 각각의 포문을 돌려야 오류가 나지 않기 때문에.
+//        if(ground_Hit_Check){
+//
+//            ground_Remove_Temp = -1;                    //달팽이 없을때를 기준 터치하는 곳의 달팽이 인덱스를 집어 넣는다.
+//            for(int i=0; i<ground_List.size(); i++){    // +- 45 는 판정을 좋게 하기 위해 추가
+//                //달팽이를 가장 먼저 찾는다.
+//                if(ground_List.get(i) instanceof Ground_Touch_Snail){
+//                    if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
+//                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
+//                            && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
+//                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()){
+//
+//                        ground_Remove_Temp = i;
+//
+//                        break;
+//
+//                    }
+//                }
+//            }
+//
+//            //악어 찾기
+//
+//
+//
+//            //선택된 달팽이가 존재 한다면. && 달팽이라면
+//            if(ground_Remove_Temp >= 0  && ground_Class instanceof Ground_Touch_Snail) {
+//
+//                skill_Ground_Attack();
+//
+//                rand_Effect = random.nextInt(4);
+//                if (rand_Effect == 0) {
+//                    effect_Temp = effect_Pop2_img[4];
+//                } else if (rand_Effect == 1) {
+//                    effect_Temp = effect_Pop3_img[4];
+//                } else if (rand_Effect == 2) {
+//                    effect_Temp = effect_Pop4_img[4];
+//                } else {
+//                    effect_Temp = effect_Pop5_img[4];
+//                }
+//
+//
+//                snail_Ground_Hit_Flag = true;   //달팽이 터치 이벤트 doDraw에서 발생
+//
+//
+//                Score++;
+//                //클릭된 달팽이의체력을 깍는다.
+//                ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
+//
+//
+//
+//
+//                //            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
+//                soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+//                return true;
+//            }
+//
+//
+//
+//
+//
+//            //선택된 소라게가 있다면.
+//            ground_Remove_Temp = -1;
+//            for(int i=0; i<ground_List.size(); i++){    // +- 45 는 판정을 좋게 하기 위해 추가
+//                //꽃게를찾는다.
+//                if(ground_List.get(i) instanceof Ground_Touch_Hermit){
+//                    if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
+//                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
+//                            && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
+//                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()){
+//
+//                        ground_Remove_Temp = i;
+//
+//                        break;
+//
+//                    }
+//                }
+//            }
+//
+//            //선택된 소라게가 존재 한다면. && 소라게 라면
+//            if(ground_Remove_Temp >= 0  && ground_Class instanceof Ground_Touch_Snail) {
+//
+//                skill_Ground_Attack();
+//
+//                rand_Effect = random.nextInt(4);
+//                if (rand_Effect == 0) {
+//                    effect_Temp = effect_Pop2_img[4];
+//                } else if (rand_Effect == 1) {
+//                    effect_Temp = effect_Pop3_img[4];
+//                } else if (rand_Effect == 2) {
+//                    effect_Temp = effect_Pop4_img[4];
+//                } else {
+//                    effect_Temp = effect_Pop5_img[4];
+//                }
+//
+//
+//                hermit_Ground_Hit_Flag = true;   //달팽이 터치 이벤트 doDraw에서 발생
+//
+//
+//                Score++;
+//                //클릭된 달팽이의체력을 깍는다.
+//                if(!((Ground_Touch_Hermit)ground_List.get(ground_Remove_Temp)).get_Immortal_Mode()) {
+//                    ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
+//                }
+//                ((Ground_Touch_Hermit)ground_List.get(ground_Remove_Temp)).set_Immortal_Mode();
+//
+//
+//
+//
+//                //            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
+//                soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+//                return true;
+//            }
+//
+//
+//
+//
+//            //선택된 파도가 있다면.
+//            ground_Remove_Temp = -1;
+//            for(int i=0; i<ground_List.size(); i++){    // +- 45 는 판정을 좋게 하기 위해 추가
+//                //꽃게를찾는다.
+//                if(ground_List.get(i) instanceof Ground_Drag_Wave){
+//                    if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
+//                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
+//                            && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
+//                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()){
+//
+//                        ground_Remove_Temp = i;
+//                        break;
+//                    }
+//                }
+//            }
+//
+//            /**
+//             * 파도를 찾는다.
+//             */
+//            if(ground_Remove_Temp >= 0 && ground_Class instanceof Ground_Drag_Wave){
+//
+//                tempInt = random.nextInt(5);
+//                wave_Ground_Hit_Flag = true; //꽃게 터치 이벤트 doDraw에서 발생
+//
+//                //드래그된 파도의 체력을 깍는다.
+//                if(main_Character.get_Damage() > 1) {
+//                    character_Damege = 1 + random.nextInt(main_Character.get_Damage());
+//                }
+//
+//                ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
+//                soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
+//                Score++;            //점수 추가
+//                main_Character.set_Character_Experience();  //경험치 추가
+//                return true;
+//            }
+//
+//
+//            //선택된 꽃게가 있다면.
+//            ground_Remove_Temp = -1;
+//            for(int i=0; i<ground_List.size(); i++){    // +- 45 는 판정을 좋게 하기 위해 추가
+//                //꽃게를찾는다.
+//                if(ground_List.get(i) instanceof Ground_Drag_Crab){
+//                    if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
+//                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
+//                            && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
+//                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()){
+//
+//                        ground_Remove_Temp = i;
+//
+//                        break;
+//
+//                    }
+//                }
+//            }
+//
+//
+//            /**
+//             * 꽃게를 찾는다.
+//             */
+//            if(ground_Remove_Temp >= 0 && ground_Class instanceof Ground_Drag_Crab){
+//
+//                skill_Ground_Attack();
+//
+//                tempInt = random.nextInt(5);
+//                crap_Ground_Hit_Flag = true; //꽃게 터치 이벤트 doDraw에서 발생
+//
+//                //드래그된 꽃게의 체력을 깍는다.
+//                if(main_Character.get_Damage() > 1) {
+//                    character_Damege = 1 + random.nextInt(main_Character.get_Damage());
+//                }
+//
+//
+//                ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
+//                soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
+//                Score++;            //점수 추가
+//                main_Character.set_Character_Experience();  //경험치 추가
+//                return true;
+//
+//            }
+//
+//
+//            //선택된 조개가 있다면.
+//            ground_Remove_Temp = -1;
+//            for(int i=0; i<ground_List.size(); i++){    // +- 45 는 판정을 좋게 하기 위해 추가
+//                //꽃게를찾는다.
+//                if(ground_List.get(i) instanceof Ground_Drag_Clam){
+//                    if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
+//                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
+//                            && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
+//                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()){
+//
+//                        ground_Remove_Temp = i;
+//
+//                        break;
+//
+//                    }
+//                }
+//            }
+//
+//            /**
+//             * 조게를 찾는다.
+//             */
+//            if(ground_Remove_Temp >= 0 && ground_Class instanceof Ground_Drag_Clam){
+//
+//                tempInt = random.nextInt(5);
+//                clam_Ground_Hit_Flag = true; //꽃게 터치 이벤트 doDraw에서 발생
+//
+//                //드래그된 조게의 체력을 깍는다.
+//                if(main_Character.get_Damage() > 1) {
+//                    character_Damege = 1 + random.nextInt(main_Character.get_Damage());
+//                }
+//
+//
+//                ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
+//                soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
+//                Score++;            //점수 추가
+////                main_Character.set_Character_Experience();  //경험치 추가
+//                return true;
+//
+//            }
+//
+//
+//
+//            //선택된 악어가 있다면.
+//            ground_Remove_Temp = -1;
+//            for(int i=0; i<ground_List.size(); i++){
+//                //악어를찾는다.
+//                if(ground_List.get(i) instanceof Ground_Touch_Crocodile){
+//                    if(        x >= ground_List.get(i).get_Ground_Point_X()
+//                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width()
+//                            && y >= ground_List.get(i).get_Ground_Point_Y()
+//                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height()){
+//
+//                        ground_Remove_Temp = i;
+//
+//                        break;
+//
+//                    }
+//                }
+//            }
+//
+//            /**
+//             * 조게를 찾는다.
+//             */
+//            if(ground_Remove_Temp >= 0 && ground_Class instanceof Ground_Touch_Crocodile){
+//
+//
+//
+//                //드래그된 조게의 체력을 깍는다.
+//                if(main_Character.get_Damage() > 1) {
+//                    character_Damege = 1 + random.nextInt(main_Character.get_Damage());
+//                }
+//
+//                ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
+//
+//                return true;
+//
+//            }
+//
+//
+//
+//            /**
+//             * 랜드마크
+//             */
+//            //선택된 랜드마크 있다면.
+//            ground_Remove_Temp = -1;
+//            for(int i=0; i<ground_List.size(); i++){    // +- 45 는 판정을 좋게 하기 위해 추가
+//                //꽃게를찾는다.
+//                if(ground_List.get(i) instanceof Land_Mark){
+//                    if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
+//                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
+//                            && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
+//                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()){
+//
+//                        ground_Remove_Temp = i;
+//
+//                        break;
+//
+//                    }
+//                }
+//            }
+//
+//            if(ground_Remove_Temp >= 0  && ground_Class instanceof Land_Mark){
+//
+//                tempInt = random.nextInt(5);
+//                land_Mark_Hit_Flag = true; //꽃게 터치 이벤트 doDraw에서 발생
+//
+//                //드래그된 랜드마크의 체력을 깍는다.
+//                if(main_Character.get_Damage() > 1) {
+//                    character_Damege = 1 + random.nextInt(main_Character.get_Damage());
+//                }
+//
+//
+//                ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
+//                soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
+//                Score++;            //점수 추가
+////                main_Character.set_Character_Experience();  //경험치 추가
+//
+//                //랜드마크 삭제의 경우
+//                if(ground_List.get(ground_Remove_Temp).get_Ground_Hp() <= 0){
+////                    add_Boss_Fish_Touch_Default();
+////                    add_Ground_Boss(window_Width/2 , -30);
+//                }
+//
+//                return true;
+//
+//            }
+//
+//
+//
+//            //성게 선택
+//            ground_Remove_Temp = -1;
+//            for(int i=0; i<ground_List.size(); i++){
+//
+//                if(ground_List.get(i) instanceof Ground_Trap_Urchin){
+//                    if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
+//                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
+//                            && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
+//                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()){
+//
+//                        ground_Remove_Temp = i;
+//
+//
+//                        break;
+//
+//                    }
+//                }
+//            }
+//
+//            if(ground_Remove_Temp >= 0 && ground_Class instanceof Ground_Trap_Urchin){ //성게를 클릭했다면 hp 감소
+//
+//
+//                Log.e("e","성게");
+//
+//
+//                effect_Temp = effect_Black_img[4];
+//
+//
+//                seaurchin_Ground_Hit_Flag = true;   //성게 터치 이벤트는 doDraw 에서
+//                ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();  //성게 삭제,
+//
+//                //성게가 공격 모드 일때, 게딱지가 아닐때
+//                if(((Ground_Trap_Urchin)ground_List.get(ground_Remove_Temp)).get_Urchin_Attack_Mode() && !(main_Character instanceof Main_Character_Shellfish_Tear3)){
+//                    //get_Urchin_Attack_Mode()
+//                    main_Character.set_Hp_Minus();
+//                }
+//
+//
+//                //메인 캐릭터 hp 감소 루틴 추가 해야함
+//                soundPool.play(sound_Effect[random.nextInt(2)], 0.5F, 0.5F, 0, 0, 1.0F);   //물고기 기본 팝 사운드
+//                return true;
+//            }
+//
+//
+//
+//
+//
+//
+//        }
         return false;
     }
 
@@ -7892,16 +8291,17 @@ public void skill_Ground_Attack(){
 
 
 
-                    if (ground_Hit_Chose(touchx, touchy, ground_trap_urchin)) { //성게 삭제
+                    if (ground_Hit_Chose(touchx, touchy, false, 0)) { //성게 삭제
                         //달팽이 터치 팝 이벤트
 
-
-                    } else if(ground_Hit_Chose(touchx, touchy, ground_Touch_Snail)){//달팽이 삭제
-
+//                    } else if(ground_Hit_Chose(touchx, touchy, ground_Touch_Snail, false)){//달팽이 삭제
+//
+//                    }
+//                    else if (ground_Hit_Chose(touchx, touchy, ground_Touch_Crocodile, false)) { //악어 삭제
+//
+//                    }
                     }
-                    else if (ground_Hit_Chose(touchx, touchy, ground_Touch_Crocodile)) { //악어 삭제
-
-                    } else {
+                    else {
                         //문어 공격 속도로 제어한다. 쿨타임 효과
                         if (main_Character.get_Attack_Cool_time() == 0) {
 
@@ -7938,21 +8338,32 @@ public void skill_Ground_Attack(){
 
                     touch_Check++;
                     drag_Action_Move++;
-                    if (drag_Action_Move > 3) {
 
-                        if (ground_Hit_Chose(touchx, touchy, ground_Drag_Crab)) {    //꽃게 삭제
+                    if(ground_Hit_Chose(touchx, touchy, true, drag_Action_Move)){
+                        // 그라운드
 
-                        }else if(ground_Hit_Chose(touchx, touchy, ground_Drag_Clam)){
-
-                        }
-                        else if(ground_Hit_Chose(touchx, touchy, land_Mark)){ //랜드마크 드래그
-
-                        }else {
+                    }else if(drag_Action_Move > 3) {
                             fish_Hit_Chose(2);                                  //드래그 물고기
-                        }
+                    }
 
+                    if(drag_Action_Move > 3){
                         drag_Action_Move = 0;
                     }
+
+//                    if (drag_Action_Move > 30 ) {
+//                        if (ground_Hit_Chose(touchx, touchy, ground_Drag_Crab, true)) {    //꽃게 삭제
+//
+//                        }else if(ground_Hit_Chose(touchx, touchy, ground_Drag_Clam, true)){ //조개 삭제
+//
+//                        }
+//                        else if(ground_Hit_Chose(touchx, touchy, land_Mark, true)){ //랜드마크 드래그
+//
+//                        }else {
+//                            fish_Hit_Chose(2);                                  //드래그 물고기
+//                        }
+//
+//                        drag_Action_Move = 0;
+//                    }
 
 
 
@@ -8052,34 +8463,34 @@ public void skill_Ground_Attack(){
                     //게임 동작 중에만 추가한다.
                     if(mRun) {
 
+                        add_Ground_Wave();
+
+                        add_Fish_Touch_Default();           //기본 물고기 추가
+                        add_Fish_Touch_Default();           //기본 물고기 추가
+                        add_Fish_Touch_Default();           //기본 물고기 추가
+
+                    add_Fish_Touch_Marlin();           //청새치
 
 
-//                        add_Fish_Touch_Default();           //기본 물고기 추가
-//                        add_Fish_Touch_Default();           //기본 물고기 추가
-//                        add_Fish_Touch_Default();           //기본 물고기 추가
-//
-//                    add_Fish_Touch_Marlin();           //청새치
+
+                    add_Fish_Touch_Squid();//오징어 추가
+                    add_Fish_Touch_Ell();   //전기뱀장어 추가
 
 
-//
-//                    add_Fish_Touch_Squid();//오징어 추가
-//                    add_Fish_Touch_Ell();   //전기뱀장어 추가
-//
-//
-//
-//                    add_Fish_Drag_Default();            //드래그 물고기 추가
 
-//                    add_Fish_JellyFish();               //해파리 추가
+                    add_Fish_Drag_Default();            //드래그 물고기 추가
 
-//
+                    add_Fish_JellyFish();               //해파리 추가
 
-//                    add_Ground_Snail();                 //달팽이 추가
-//                    add_Ground_Hermit();                //소라게 추가
+
+
+                    add_Ground_Snail();                 //달팽이 추가
+                    add_Ground_Hermit();                //소라게 추가
                     add_Ground_Crab();                  //꽃게 추가?
                     add_Ground_Crocodile();             //악어 추가
 
 //                    add_Boss_Fish_Touch_Default();            //물고기 보스
-                    add_Ground_Boss(window_Width/2 , -30);    //달팽이 보스
+//                    add_Ground_Boss(window_Width/2 , -30);    //달팽이 보스
 
 
 //                    add_Ground_Urchin();                //성게추가
@@ -8259,6 +8670,11 @@ public void skill_Ground_Attack(){
             fish_Drag_Default_img[i].recycle();            //드래그 물고기
             ground_Drag_Crab_img[i].recycle();              //꽃게 이미지
             ground_Drag_Clam_img[i].recycle();
+
+            if(i < 2){
+                ground_Drag_Wave_img[i].recycle();  //드래그 웨이브 이미지
+            }
+
         }
 
     }
