@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         //메모리 관리
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.activity_main);
         layout.setBackgroundDrawable(new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.background_start)));
+
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -200,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
         //intent.putExtra("cha","aa");
         startActivityForResult(intent, 1001);
-        recycleView(findViewById(R.id.activity_main));
+
 
 
 

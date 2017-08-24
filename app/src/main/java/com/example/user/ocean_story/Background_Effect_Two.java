@@ -37,6 +37,10 @@ public class Background_Effect_Two extends Background_Effect_Control{
         return bg_Effect_Draw_Status/4; //물고기 헤엄 이미지 2번씩 송출
     }
 
+    public int get_Draw_Background_Friend_Shark_Effect_Status(){
+        return bg_Effect_Draw_Status/8; //물고기 헤엄 이미지 2번씩 송출
+    }
+
 
 
     /**
