@@ -78,6 +78,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private boolean drag_Fish_Hit_Flag = false;;//드래그물고기
     private boolean drag_steelbream_Hit_Flag = false;//강철 참돔
     private boolean jellyfish_Fish_Hit_Flag = false;;//해파리는 아직 이벤트 없음
+    private boolean turtle_Fish_Hit_Flag = false; //방해 거북
 
     private boolean snail_Ground_Hit_Flag = false;;//달팽이
     private boolean starfish_Ground_Hit_Flag = false;;//불가사리
@@ -222,7 +223,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     /**
      * 해파리 이미지
      */
-    private Bitmap fish_Trap_Jelly_img[] = new Bitmap[7];           //해파리 이미지
+    private Bitmap fish_Trap_Jelly_img[] = new Bitmap[4];           //해파리 이미지
+
+    /**
+     * 방해 거북 이미지
+     */
+    private Bitmap fish_Turtle_img[] = new Bitmap[3];
 
     /**
      * 성게 이미지
@@ -464,6 +470,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private Fish_Drag_Default fish_Drag_Default;        //드래그 물고기 생성
     private Fish_Drag_steelbream fish_Drag_Steelbream;  //참돔 생성
     private Fish_Trap_Jellyfish fish_Trap_Jellyfish;    //해파리 생성
+    private Fish_Trap_Turtle fish_Trap_Turtle;          //방해 거북 생성
     private Fish_Touch_Squid fish_Touch_Squid;          //오징어 생성
     private Background_Effect_Squid_Ink fish_Touch_Squid_Ink;   //오징어 잡았을때 먹물 발사.
     private Fish_Touch_Ell fish_Touch_Ell;              //전기뱀장어 생성
@@ -1170,8 +1177,12 @@ private void button_Create_method_Init(){
 
 
             //해파리 이미지
-            for(int i=0; i<7; i++){
+            for(int i=0; i<4; i++){
                 fish_Trap_Jelly_img[i] = Init_Fish_Trap_Jellyfish(_context, i);
+            }
+            //방해거북 이미지
+            for(int i=0; i<3; i++){
+                fish_Turtle_img[i] =  Init_Fish_Turtle(_context, i);
             }
 
 
@@ -2649,6 +2660,12 @@ private void button_Create_method_Init(){
             return image.getBitmap();
         }
 
+        //방해거북 이미지
+        public Bitmap Init_Fish_Turtle(Context context, int num){
+            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.fish_turtle_1 + num); //인트형이라 + 1하면 그림 변경됨
+            return image.getBitmap();
+        }
+
         /**
          * 물고기 설명창
          * */
@@ -3670,9 +3687,25 @@ private void button_Create_method_Init(){
 
 
 
+            if(fish_List.get(i) instanceof Fish_Trap_Turtle){
+                /**
+                 *  방해거북 그리기
+                 */
+                temp_Fish = draw.rotate_Image(fish_Turtle_img[fish_List.get(i).get_Draw_Fish_Status()], 90 - fish_List.get(i).get_Fish_Angle());
+                draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
+
+                draw.draw_Bmp(canvas, temp_Shadow_img, fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(1, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(20, _context));
+
+                //이팩트 그리기
+                if(turtle_Fish_Hit_Flag){
+                    draw.draw_Bmp(canvas, fish_Turtle_img[0], fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
+                    turtle_Fish_Hit_Flag = false;
+                }
 
 
-            if (fish_List.get(i) instanceof Fish_Touch_Default) {
+            }
+
+            else if (fish_List.get(i) instanceof Fish_Touch_Default) {
 
                 /**
                  * 물고기 설명 그림
@@ -6346,6 +6379,14 @@ public void add_Fish_Touch_Marlin(){
 
     }
 
+    /**
+     * 방해 거북 추가
+     */
+    public void add_Fish_Turtle(){
+        fish_Trap_Turtle = new Fish_Trap_Turtle(window_Width, window_Height, 1000000, fish_Turtle_img[0].getWidth(),fish_Turtle_img[0].getHeight());
+        fish_List.add(fish_Trap_Turtle);
+    }
+
 
     /**
      * 그라운드 생성구간 (달팽이)
@@ -7279,10 +7320,10 @@ public void skill_Ground_Attack(){
 
                 //선택된 불가사리가 존재한다면.
                 if(ground_List.get(i) instanceof Ground_Touch_Starfish && ground_Hit_Drag == false){
-                    if(        x >= ground_List.get(i).get_Ground_Point_X()
-                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width()
-                            && y >= ground_List.get(i).get_Ground_Point_Y()
-                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height()){
+                    if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
+                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width() + ground_List.get(i).get_Width_Size()
+                            && y >= ground_List.get(i).get_Ground_Point_Y() - ground_List.get(i).get_Height_Size()
+                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()){
                         ground_Remove_Temp = i;
 
 
@@ -7319,10 +7360,10 @@ public void skill_Ground_Attack(){
 
                 //선택된 소라게가 존재한다면.
                 if(ground_List.get(i) instanceof Ground_Touch_Hermit && ground_Hit_Drag == false){
-                    if(        x >= ground_List.get(i).get_Ground_Point_X()
-                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width()
-                            && y >= ground_List.get(i).get_Ground_Point_Y()
-                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height()){
+                    if(        x >= ground_List.get(i).get_Ground_Point_X() - ground_List.get(i).get_Width_Size()
+                            && x <= ground_List.get(i).get_Ground_Point_X() + ground_List.get(i).get_GroundPoint_Width()  + ground_List.get(i).get_Width_Size()
+                            && y >= ground_List.get(i).get_Ground_Point_Y()  - ground_List.get(i).get_Height_Size()
+                            && y <= ground_List.get(i).get_Ground_Point_Y() + ground_List.get(i).get_GroundPoint_Height() + ground_List.get(i).get_Height_Size()){
                         ground_Remove_Temp = i;
 
 
@@ -7573,8 +7614,9 @@ public void skill_Ground_Attack(){
              */
             for(int i=fish_List.size() - 1; i>=0; i--){
 
-                //전달받은 물고기 인자가 아닐때 생깜
-                if(fish_List.get(i).get_Fish_Class() != fish_Class){
+
+                //전달받은 물고기 인자가 아닐때 생깜, 방해 거북이 아닐때
+                if(fish_List.get(i).get_Fish_Class() != fish_Class && fish_List.get(i).get_Fish_Class() != 3){
                     continue;
                 }
 
@@ -7599,7 +7641,7 @@ public void skill_Ground_Attack(){
 
 
 
-                if(fish_Class == 1){        //전달 받은 인자가 기본 물고기 일때.
+                if(fish_List.get(smallFishIndex).get_Fish_Class() == 1){        //전달 받은 인자가 기본 물고기 일때.
 
 
                     rand_Effect = random.nextInt(4);
@@ -7651,14 +7693,23 @@ public void skill_Ground_Attack(){
                             add_Fish_Drag_Default(fish_List.get(smallFishIndex).get_Fish_Point_X(), fish_List.get(smallFishIndex).get_Fish_Point_Y());
                         }
                     }else {
+
+                        //드래그 물고기 및 해파리 대미지 입힌다.
                         fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege);            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
+
+                        if(fish_List.get(smallFishIndex).get_Fish_Class() == 3){
+                            soundPool.play(sound_Effect[random.nextInt(2)], 0.5F, 0.5F, 0, 0, 1.0F);   //물고기 기본 팝 사운드
+                            turtle_Fish_Hit_Flag = true;
+                            return true;
+                        }
+
                     }
 
 
                     Score++;                                                 //점수 증가
                     main_Character.set_Character_Experience();  //경험치 추가
 
-                    if(fish_Class == 2) {
+                    if(fish_List.get(smallFishIndex).get_Fish_Class() == 2) {
 
                         //드래그시 공격당한다는 느낌 주기 위해
 
@@ -8387,9 +8438,9 @@ public void skill_Ground_Attack(){
                     //게임 동작 중에만 추가한다.
                     if(mRun) {
 
-                        add_Fish_Drag_Default();
-                        add_Fish_Drag_Steelbream();
-                        add_Ground_Starfish();
+//                        add_Fish_Drag_Default();
+//                        add_Fish_Drag_Steelbream();
+//                        add_Ground_Starfish();
 
                         if(day_Count < 5) {
                             //기본 물고기
@@ -8730,7 +8781,7 @@ public void skill_Ground_Attack(){
 
                         add_Fish_JellyFish();               //해파리 추가
 
-
+                        add_Fish_Turtle();          //방해거북 추가
 
 //                        add_Ground_Wave();
 //
@@ -8874,13 +8925,15 @@ public void skill_Ground_Attack(){
             ground_Touch_Hermit_Hp3_img[i].recycle();
             ground_Touch_Hermit_Hp4_img[i].recycle();
             ground_Touch_Hermit_Hp5_img[i].recycle();
+
+            fish_Turtle_img[i].recycle();   //방해거북
         }
         for(int i=0; i<8; i++){
             fish_Touch_Squid_img[i].recycle();
             fish_Touch_Ell_img[i].recycle();
             fish_Touch_Ell_Attack_img[i].recycle();
         }
-        for(int i=0; i<7; i++){
+        for(int i=0; i<4; i++){
             fish_Trap_Jelly_img[i].recycle();
             shadow_img[i].recycle();
         }

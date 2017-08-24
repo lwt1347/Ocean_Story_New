@@ -83,7 +83,7 @@ public class Ground_Touch_Starfish extends Ground_Default_Body {
 
         split_Time++;
 
-        if(split_Time > 150){
+        if(split_Time > 400){
 
             if(random.nextInt(100) > 20){
                 split_Flag = true;

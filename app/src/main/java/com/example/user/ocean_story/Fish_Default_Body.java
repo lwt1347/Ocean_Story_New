@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Created by USER on 2017-01-21.
  */
-//1 번 기본 물고기, 1번 오징어 ,2번 드래그 물고기,  10번 해파리
+//1 번 기본 물고기, 1번 오징어 ,2번 드래그 물고기,  10번 해파리, 3번 방해거북
 public class Fish_Default_Body {
 
     /**

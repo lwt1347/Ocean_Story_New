@@ -2,9 +2,10 @@ package com.example.user.ocean_story;
 
 /**
  * Created by USER on 2017-01-24.
+ * 방해 거북이
  */
 
-public class Fish_Trap_Jellyfish extends Fish_Default_Body {
+public class Fish_Trap_Turtle extends Fish_Default_Body {
     /**
      *  Fish_Trap_Jellyfish 변수
      */
@@ -19,11 +20,11 @@ public class Fish_Trap_Jellyfish extends Fish_Default_Body {
      * @param window_Width
      * @param hp
      */
-    Fish_Trap_Jellyfish(int window_Width, int window_Height, int hp, int param_Width_Size, int param_Height_Size) {
+    Fish_Trap_Turtle(int window_Width, int window_Height, int hp, int param_Width_Size, int param_Height_Size) {
         super(window_Width, hp, param_Width_Size, param_Height_Size);
         angle = 30 + (int)Math.random() * 40;
         angle_Temp = angle;
-        fish_Class = 10; //클래그
+        fish_Class = 3;
 
         if(Math.random() < 0.5) {       //왼쪽에서 오른쪽으로
             move_Point = true;
@@ -34,7 +35,7 @@ public class Fish_Trap_Jellyfish extends Fish_Default_Body {
             angle += 90;
         }
 
-        fish_Point_Y = 300 + (float)Math.random() * (window_Height - 500);
+        fish_Point_Y =  300 + (float)Math.random() * ((window_Height/2) - 300);
 
     }
 
@@ -64,7 +65,7 @@ public class Fish_Trap_Jellyfish extends Fish_Default_Body {
             fish_Draw_Status--;
         }
 
-        if(fish_Draw_Status > 6){
+        if(fish_Draw_Status > 8){
             change_Jelly_Status = false;
         }else if(fish_Draw_Status < 0){
             change_Jelly_Status = true;
@@ -75,7 +76,7 @@ public class Fish_Trap_Jellyfish extends Fish_Default_Body {
     //1234321
     public int get_Draw_Fish_Status()
     {
-        return fish_Draw_Status/2; //물고기 헤엄 이미지 2번씩 송출
+        return fish_Draw_Status/4; //물고기 헤엄 이미지 2번씩 송출
     }
 
     //********************************************************************************************//
