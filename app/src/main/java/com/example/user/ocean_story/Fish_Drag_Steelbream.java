@@ -5,7 +5,7 @@ package com.example.user.ocean_story;
  * 드래그로 잡는 물고기. 강철 참돔
  */
 
-public class Fish_Drag_steelbream extends Fish_Default_Body{
+public class Fish_Drag_Steelbream extends Fish_Default_Body{
 
     /**
      * 기본 생성자
@@ -14,10 +14,11 @@ public class Fish_Drag_steelbream extends Fish_Default_Body{
      * @param window_Width
      * @param hp
      */
-    Fish_Drag_steelbream(int window_Width, int hp, int param_Width_Size, int param_Height_Size) {
+    Fish_Drag_Steelbream(int window_Width, int hp, int param_Width_Size, int param_Height_Size) {
         super(window_Width, hp, param_Width_Size, param_Height_Size);
         fish_Class = 2;
     }
+
 
 
 
