@@ -1,5 +1,7 @@
 package com.example.user.ocean_story;
 
+import android.widget.TextView;
+
 /**
  * Created by Lee on 2017-07-31.
  */
@@ -7,20 +9,25 @@ package com.example.user.ocean_story;
 public class Activity_Store_Item {
 
     String name;
-    String cost;
+    double cost;
 
     int resId;
     int resId2;
     int resId3;
+    int lever;
 
 
-    public Activity_Store_Item(String name, String cost, int resId, int resId2, int resId3) {
+
+    public Activity_Store_Item(String name, int lever, double cost, int resId, int resId2, int resId3) {
         this.name = name;
         this.cost = cost;
+        this.lever = lever;
 
         this.resId = resId;
         this.resId2 = resId2;
         this.resId3 = resId3;
+
+
 
     }
 
@@ -33,13 +40,23 @@ public class Activity_Store_Item {
         this.name = name;
     }
 
-    public String getCost() {
+    public double getCost() {
         return cost;
     }
 
-    public void setCost(String cost) {
+    public void setCost(int cost) {
         this.cost = cost;
     }
+    public int getLever(){
+        return lever;
+    }
+    public void setLever(int lever){
+        this.lever = lever;
+    }
+    public void setLever(){
+        lever++;
+    }
+
 
     public int getResId() {
         return resId;
@@ -64,6 +81,7 @@ public class Activity_Store_Item {
     public void setResId3(int resId3) {
         this.resId3 = resId3;
     }
+
 
     @Override
     public String toString() {
