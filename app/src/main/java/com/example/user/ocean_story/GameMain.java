@@ -2,7 +2,9 @@ package com.example.user.ocean_story;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -32,6 +34,8 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by USER on 2017-01-21.
  * 게임의 모든 화면
@@ -53,6 +57,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private int sound_Effect[] = new int[50];                        //효과음
 
     private int character_Damege = 1; //드래그 대미지는 랜덤으로 들어간다.
+    private int character_Randmark_Damege_Temp; //드래그 대미지는 랜덤으로 들어간다.
+
 
 
     //두점 사이의 거리를 구하기위한 변수
@@ -399,6 +405,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private Bitmap effect_Pop_damage9_Image[] = new Bitmap[5];
     private Bitmap effect_Pop_damage10_Image[] = new Bitmap[5];
     private Bitmap pop_Temp_img;
+    private Bitmap gold_img;
 
     /**
      * 랜드마크 팝 이미지
@@ -543,7 +550,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private Bitmap effect_Temp;                         //어떤 이펙트를 넣을것인가 랜덤 변수
     private Random random = new Random();
 
-    private Context _context;                           //화면 얻어오기
+    public static Context _context;                           //화면 얻어오기
     private Display display;                            //디스플레이 넓이 구하기
 
     private String tempStr = "";
@@ -703,9 +710,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     /**
      * 기본 생성자
      */
+
+
     public GameMain(Context context, AttributeSet attrs){
 
         super(context,attrs);   //커스텀 뷰 사용 -> attrs.xml 에 등록 해야함
+
 
         _context = context;
         mSurfaceHolder = getHolder();
@@ -720,25 +730,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
 
-        //소리 로드
-        sound_Effect[0] = soundPool.load(_context, R.raw.fish_default_sound_1, 1);      //팝1
-        sound_Effect[1] = soundPool.load(_context, R.raw.fish_default_sound_2, 1);      //팝2
-        sound_Effect[2] = soundPool.load(_context, R.raw.drag_sound_1, 1);      //드래그1
-        sound_Effect[3] = soundPool.load(_context, R.raw.drag_sound_2, 1);      //드래그2
-
-        //소리 상어 친구 부르기
-        sound_Effect[4] = soundPool.load(_context, R.raw.friend_shark_roar, 1);
-        sound_Effect[5] = soundPool.load(_context, R.raw.friend_shark_effect_1, 1);
-        sound_Effect[6] = soundPool.load(_context, R.raw.friend_shark_effect_2, 1);
-        sound_Effect[7] = soundPool.load(_context, R.raw.friend_shark_effect_3, 1);
-
-        sound_Effect[8] = soundPool.load(_context, R.raw.effect_window_sound, 1);   //설명창 등장 사운드
-        sound_Effect[9] = soundPool.load(_context, R.raw.skill_crabb_sound, 1);     //꽃게 스킬 소리
-        sound_Effect[10] = soundPool.load(_context, R.raw.skill_laser_sound, 1);     //레이저 스킬 소리
-
-        sound_Effect[11] = soundPool.load(_context, R.raw.effect_wave_pop, 1);     //파도 팝 소리
-
-        sound_Effect[12] = soundPool.load(_context, R.raw.drag_steel, 1);     //강철 참돔 드래그 소리
 
 
 
@@ -835,7 +826,26 @@ private void button_Create_method_Init(){
     /**
      * 다시시작 및 시작 처음에 초기화
      */
+
+    private int ruby = 0;
+    private int money = 0;
+    private int character_Randmark_Damege= 0;
+    private int character_Drag_Damege= 0;
+    private int urchinresistance= 0;
+    private int lightningresistance= 0;
+    private int crocodileresistance= 0;
+    private int ft1 = 0;    private int ft2 = 0;    private int ft3 = 0;    private int ft4 = 0;    private int ft5 = 0;    private int ft6 = 0;    private int ft7 = 0;    private int ft8 = 0;    private int ft9 = 0;    private int ft10 = 0;
+    private int st1 = 0;    private int st2 = 0;    private int st3 = 0;    private int st4 = 0;    private int st5 = 0;    private int st6 = 0;    private int st7 = 0;    private int st8 = 0;    private int st9 = 0;    private int st10 = 0;
+    private int mt1 = 0;    private int mt2 = 0;    private int mt3 = 0;    private int mt4 = 0;    private int mt5 = 0;    private int mt6 = 0;    private int mt7 = 0;    private int mt8 = 0;    private int mt9 = 0;    private int mt10 = 0;
+
+    //값 전달
+    Intent intent_Item = new Intent();
+    int sent_Item[] = new int[36];
     public void re_Start(){
+
+        /**
+         *  money
+         */
 
 
 
@@ -856,6 +866,7 @@ private void button_Create_method_Init(){
                0));
         revolution_Draw_Flag_Confirm = false;
 
+        day_Count = 0;
 
 
         //스테이지  = 1, 속도 = 1
@@ -872,7 +883,7 @@ private void button_Create_method_Init(){
         first_Ell = true;
 
 
-        main_Character = new Main_Character_Shellfish_Tear1(0,0, window_Width, window_Height,0,0);
+        main_Character = new Main_Character_Plankton_1(0,0, window_Width, window_Height,0,0);
 
         //메인 캐릭터
         Init_Main_Character_Image(_context, main_Character);
@@ -960,8 +971,8 @@ private void button_Create_method_Init(){
         fish_Maker = timerTask_FishMaker();
         stage_Day = timerTask_Stage_Day();
 
-        mTimer.schedule(fish_Maker, 1000, 5000);
-        mTimer.schedule(stage_Day, 5000, 5000);
+        mTimer.schedule(fish_Maker, 1000, 8000);
+        mTimer.schedule(stage_Day, 8000, 8000);
 
 
 
@@ -1191,6 +1202,10 @@ private void button_Create_method_Init(){
             ground_Drag_Wave_img[0] =  image.getBitmap();
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.ground_drag_wave);
             ground_Drag_Wave_img[1] = image.getBitmap();
+
+            //골드
+            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.background_gold);
+            gold_img = image.getBitmap();
 
 
             //기본 물고기
@@ -3066,8 +3081,14 @@ private void button_Create_method_Init(){
 
         try{
 
+        sent_Item[0] = money;
+        sent_Item[1] = ruby;
 
-        if(revolution_Button_Activation ){
+        intent_Item.putExtra("item", sent_Item); //키 밸류       배열로 하나의 값만 보낸다.
+        ((Activity)_context).setResult(Activity.RESULT_OK, intent_Item);
+
+
+            if(revolution_Button_Activation ){
             m_Run_False();
             revolution_Button_Activation = false;
             //            진화버튼 제거
@@ -3105,7 +3126,7 @@ private void button_Create_method_Init(){
 
                 if(land_Mark_Hit_Flag){
                     landMark_Damage_View = new LandMark_Damage_View(touchx,touchy);
-                    landMark_Damage_View.set_Damage(character_Damege);
+                    landMark_Damage_View.set_Damage(character_Randmark_Damege_Temp);
                     landMark_Damage_View_List.add(landMark_Damage_View);
                 }
 
@@ -3275,11 +3296,11 @@ private void button_Create_method_Init(){
                 if (ground_List.get(i) instanceof Ground_Drag_Clam) {
                     //조개 그리기
 
-                    if(ground_List.get(i).get_Ground_Hp() > 300) {
+                    if(ground_List.get(i).get_Ground_Hp() > 3500) {
                         draw.draw_Bmp(canvas, ground_Drag_Clam_img[0], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                    }else if(ground_List.get(i).get_Ground_Hp() > 200) {
+                    }else if(ground_List.get(i).get_Ground_Hp() > 2200) {
                         draw.draw_Bmp(canvas, ground_Drag_Clam_img[1], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                    }else if(ground_List.get(i).get_Ground_Hp() > 100) {
+                    }else if(ground_List.get(i).get_Ground_Hp() > 1000) {
                         draw.draw_Bmp(canvas, ground_Drag_Clam_img[2], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
                     }else if(ground_List.get(i).get_Ground_Hp() > 0) {
                         draw.draw_Bmp(canvas, ground_Drag_Clam_img[3], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
@@ -3307,7 +3328,7 @@ private void button_Create_method_Init(){
                         pop_Temp_img = effect_Pop_damage8_Image[tempInt];
                     }else if(character_Damege == 9) {
                         pop_Temp_img = effect_Pop_damage9_Image[tempInt];
-                    }else if(character_Damege == 10) {
+                    }else if(character_Damege >= 10) {
                         pop_Temp_img = effect_Pop_damage10_Image[tempInt];
                     }
 
@@ -3315,6 +3336,7 @@ private void button_Create_method_Init(){
                         draw.draw_Bmp(canvas, pop_Temp_img,
                                 ground_List.get(ground_Remove_Temp).get_Ground_Point_X() + random.nextInt(ground_Drag_Crab_img[0].getWidth()) ,
                                 ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() + random.nextInt(ground_Drag_Crab_img[0].getHeight()));
+                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
                         clam_Ground_Hit_Flag = false;
 
                         break;
@@ -3501,6 +3523,7 @@ private void button_Create_method_Init(){
                         draw.draw_Bmp(canvas, effect_Temp,
                                 ground_List.get(ground_Remove_Temp).get_Ground_Point_X() - 35,
                                 ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() - 35);
+                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
                         snail_Ground_Hit_Flag = false;
                     }
 
@@ -3541,6 +3564,12 @@ private void button_Create_method_Init(){
                         draw.draw_Bmp(canvas, effect_Temp,
                                 ground_List.get(ground_Remove_Temp).get_Ground_Point_X() - 35,
                                 ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() - 35);
+
+                        //클릭된 소라게의체력을 깍는다.
+                        if(!((Ground_Touch_Hermit)ground_List.get(ground_Remove_Temp)).get_Immortal_Mode()) {
+                            ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
+                        }
+
                         hermit_Ground_Hit_Flag = false;
                     }
 
@@ -3570,6 +3599,7 @@ private void button_Create_method_Init(){
                          draw.draw_Bmp(canvas, effect_Temp,
                                  ground_List.get(ground_Remove_Temp).get_Ground_Point_X(),
                                  ground_List.get(ground_Remove_Temp).get_Ground_Point_Y());
+                         ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
                          starfish_Ground_Hit_Flag = false;
                      }
 
@@ -3593,6 +3623,12 @@ private void button_Create_method_Init(){
                          draw.draw_Bmp(canvas, effect_Temp,
                                  ground_List.get(ground_Remove_Temp).get_Ground_Point_X(),
                                  ground_List.get(ground_Remove_Temp).get_Ground_Point_Y());
+
+                         //클릭된 곤벌레의체력을 깍는다.
+                         if(ground_List.get(i).get_Ground_Point_Y() < 0) {
+                             ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(100);
+                         }
+
                          bearbug_Ground_Hit_Flag = false;
                      }
 
@@ -3620,6 +3656,9 @@ private void button_Create_method_Init(){
                          draw.draw_Bmp(canvas, effect_Temp,
                                  ground_List.get(ground_Remove_Temp).get_Ground_Point_X(),
                                  ground_List.get(ground_Remove_Temp).get_Ground_Point_Y());
+
+                         ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
+
                          stingray_Ground_Hit_Flag = false;
                      }
 
@@ -3643,6 +3682,17 @@ private void button_Create_method_Init(){
                          draw.draw_Bmp(canvas, effect_Temp,
                                  ground_List.get(ground_Remove_Temp).get_Ground_Point_X(),
                                  ground_List.get(ground_Remove_Temp).get_Ground_Point_Y());
+
+                         if(ground_Hit_Drag){
+                             //드래그 중일때
+                             if(!((Ground_Drag_Lobsters)ground_List.get(ground_Remove_Temp)).get_Mode()) {
+                                 ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
+                             }
+                         }else {
+                             //터치 중일때
+                             ((Ground_Drag_Lobsters)ground_List.get(ground_Remove_Temp)).set_Mode();
+                         }
+
                          lobsters_Ground_Hit_Flag = false;
                      }
 
@@ -3738,7 +3788,7 @@ private void button_Create_method_Init(){
                         pop_Temp_img = effect_Pop_damage8_Image[tempInt];
                     }else if(character_Damege == 9) {
                         pop_Temp_img = effect_Pop_damage9_Image[tempInt];
-                    }else if(character_Damege == 10) {
+                    }else if(character_Damege >= 10) {
                         pop_Temp_img = effect_Pop_damage10_Image[tempInt];
                     }
 
@@ -3746,6 +3796,8 @@ private void button_Create_method_Init(){
                         draw.draw_Bmp(canvas, pop_Temp_img,
                                 ground_List.get(ground_Remove_Temp).get_Ground_Point_X() + random.nextInt(ground_Drag_Crab_img[0].getWidth())-35 ,
                                 ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() + random.nextInt(ground_Drag_Crab_img[0].getHeight())-35);
+
+                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
                         crap_Ground_Hit_Flag = false;
                     }
 
@@ -3821,9 +3873,15 @@ private void button_Create_method_Init(){
                      * 성게 터치 이펙트
                      */
                    if(i == ground_Remove_Temp && seaurchin_Ground_Hit_Flag){
-//                       draw.draw_Bmp(canvas, effect_Temp,
-//                               ground_List.get(ground_Remove_Temp).get_Ground_Point_X() + random.nextInt(ground_Touch_Snail_Hp1_img[0].getWidth()) - 35,
-//                               ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() + random.nextInt(ground_Touch_Snail_Hp1_img[0].getHeight()) - 35);
+                       draw.draw_Bmp(canvas, effect_Temp,
+                               ground_List.get(ground_Remove_Temp).get_Ground_Point_X() + random.nextInt(ground_Touch_Snail_Hp1_img[0].getWidth()) - 35,
+                               ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() + random.nextInt(ground_Touch_Snail_Hp1_img[0].getHeight()) - 35);
+
+                       //성게가 공격 모드 일때, 게딱지가 아닐때
+                       if(((Ground_Trap_Urchin)ground_List.get(ground_Remove_Temp)).get_Urchin_Attack_Mode() && !(main_Character instanceof Main_Character_Shellfish_Tear3)){
+                           //get_Urchin_Attack_Mode()
+                           main_Character.set_Hp_Minus();
+                       }
 
                        seaurchin_Ground_Hit_Flag = false;
 //                       ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();  //성게 삭제,
@@ -3999,7 +4057,7 @@ private void button_Create_method_Init(){
                 draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
 
                 //이미지 크기 재 조정
-                if(fish_List.get(i).get_Fish_Speed() <= 0) {
+                if(fish_List.get(i).get_Fish_Speed() <= 0 && !(fish_List.get(i) instanceof Fish_Trap_Jellyfish)) {
                     effect_Slow_img[fish_List.get(i).get_Slow_Effect()] = Bitmap.createScaledBitmap(
                             effect_Slow_img[fish_List.get(i).get_Slow_Effect()],
                             fish_Touch_Default_Hp1_img[0].getWidth(),
@@ -4015,7 +4073,7 @@ private void button_Create_method_Init(){
                 if(i == smallFishIndex && default_Fish_Hit_Flag) {
 
 //                    fish_List.get(fish_List.get(smallFishIndex).get_Fish_Target()).set_Hp_Minus();
-
+                    fish_List.get(smallFishIndex).set_Hp_Minus();            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
                     draw.draw_Bmp(canvas, effect_Temp, fish_List.get(smallFishIndex).get_Fish_Point_X() - 15, fish_List.get(smallFishIndex).get_Fish_Point_Y());
                     default_Fish_Hit_Flag = false;
                 }
@@ -4098,7 +4156,7 @@ private void button_Create_method_Init(){
                         pop_Temp_img = effect_Pop_damage8_Image[tempInt];
                     }else if(character_Damege == 9) {
                         pop_Temp_img = effect_Pop_damage9_Image[tempInt];
-                    }else if(character_Damege == 10) {
+                    }else if(character_Damege >= 10) {
                         pop_Temp_img = effect_Pop_damage10_Image[tempInt];
                     }
 
@@ -4107,6 +4165,7 @@ private void button_Create_method_Init(){
                             fish_List.get(smallFishIndex).get_Fish_Point_X() + random.nextInt(fish_Drag_Default_img[0].getWidth() - 25),
                             fish_List.get(smallFishIndex).get_Fish_Point_Y() + random.nextInt(fish_Drag_Default_img[0].getHeight()) - 35);
 
+                    fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege);            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
 
                     drag_Fish_Hit_Flag = false;
 
@@ -4191,14 +4250,14 @@ private void button_Create_method_Init(){
                         pop_Temp_img = effect_Pop_damage8_Image[tempInt];
                     }else if(character_Damege == 9) {
                         pop_Temp_img = effect_Pop_damage9_Image[tempInt];
-                    }else if(character_Damege == 10) {
+                    }else if(character_Damege >= 10) {
                         pop_Temp_img = effect_Pop_damage10_Image[tempInt];
                     }
 
                     draw.draw_Bmp(canvas, pop_Temp_img,
                             fish_List.get(smallFishIndex).get_Fish_Point_X() + random.nextInt(fish_Drag_Shark_img[0].getWidth() - 25),
                             fish_List.get(smallFishIndex).get_Fish_Point_Y() + random.nextInt(fish_Drag_Shark_img[0].getHeight()) - 35);
-
+                    fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege);            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
                     drag_Shark_Hit_Flag = false;
                 }
             }
@@ -5331,7 +5390,7 @@ private void button_Create_method_Init(){
 
             for(int j=0; j<ground_List.size(); j++){
 
-                if(!(ground_List.get(j) instanceof Land_Mark)){
+                if(!(ground_List.get(j) instanceof Land_Mark) || !(ground_List.get(j) instanceof Ground_Drag_Clam)){
 
                     if(skill_Lightning_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Lightning_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()){
                         if(ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Lightning_List.get(i).get_Y_Point() && skill_Lightning_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()){
@@ -5442,7 +5501,7 @@ private void button_Create_method_Init(){
 
             for(int j=0; j<ground_List.size(); j++){
 
-                if(!(ground_List.get(j) instanceof Land_Mark)){
+                if(!(ground_List.get(j) instanceof Land_Mark || !(ground_List.get(j) instanceof Ground_Drag_Clam))){
 
                     if(skill_Lightning2_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Lightning2_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()){
                         if(ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Lightning2_List.get(i).get_Y_Point() && skill_Lightning2_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()){
@@ -5754,15 +5813,7 @@ if(skill_Boom_Poison_List.get(i).get_Skill_Status() >= 3){
         }
 
 
-        /**
-         *  점수 그리기
-         */
-//        score_Text_Size = window_Width / 15;
 
-        score_Text_Size = convertPixelsToDp(30, _context);
-        paint_Temp.setTextSize(score_Text_Size);
-        paint_Temp.setColor(Color.YELLOW);
-        canvas.drawText(Score+"", 30, convertPixelsToDp(80, _context), paint_Temp);
 
         //나인패치 적용한 hp 그리기
 
@@ -5894,22 +5945,47 @@ if(skill_Boom_Poison_List.get(i).get_Skill_Status() >= 3){
             day_Count_View++;
 
 
+        draw.draw_Bmp(canvas, gold_img, convertPixelsToDp(10, _context), convertPixelsToDp(55, _context));
+        score_Text_Size = convertPixelsToDp(20, _context);
+        paint_Temp.setTextSize(score_Text_Size);
+        paint_Temp.setStyle(Paint.Style.FILL);
+        paint_Temp.setColor(Color.WHITE);
+        canvas.drawText("x " + money , convertPixelsToDp(27, _context), convertPixelsToDp(70, _context), paint_Temp);
 
-        score_Text_Size = convertPixelsToDp(30, _context);
+        score_Text_Size = convertPixelsToDp(20, _context);
+        paint_Temp.setStrokeWidth(convertPixelsToDp(1, _context));
+        paint_Temp.setStyle(Paint.Style.STROKE);
+        paint_Temp.setColor(Color.BLACK);
+        canvas.drawText("x " + money , convertPixelsToDp(27, _context), convertPixelsToDp(70, _context), paint_Temp);
+
+
+
 //
+            /**
+             *  점수 그리기
+             */
+//        score_Text_Size = window_Width / 15;
+
+        paint.setStrokeWidth(convertPixelsToDp(1, _context));
+        score_Text_Size = convertPixelsToDp(30, _context);
+        paint_Temp.setTextSize(score_Text_Size);
+        paint_Temp.setStyle(Paint.Style.FILL);
+        paint_Temp.setColor(Color.YELLOW);
+        canvas.drawText(Score+"", convertPixelsToDp(10, _context), convertPixelsToDp(100, _context), paint_Temp);
+
         //점수 배경
         paint.setTextSize(score_Text_Size);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(convertPixelsToDp(1, _context));
         paint.setColor(Color.BLACK);
-        canvas.drawText(Score+"", 30, convertPixelsToDp(80, _context), paint);
+        canvas.drawText(Score+"", convertPixelsToDp(10, _context), convertPixelsToDp(100, _context), paint);
 
         //베스트 점수
         paint_Best.setTextSize(score_Text_Size-(score_Text_Size/2));
         paint_Best.setStyle(Paint.Style.STROKE);
         paint_Best.setStrokeWidth(convertPixelsToDp(1, _context));
         paint_Best.setColor(Color.BLACK);
-        canvas.drawText("Best ", 30, convertPixelsToDp(80, _context)+(score_Text_Size/2), paint_Best);
+        canvas.drawText("Best ", convertPixelsToDp(10, _context), convertPixelsToDp(100, _context)+(score_Text_Size/2), paint_Best);
 
 
 
@@ -6260,6 +6336,7 @@ if(skill_Boom_Poison_List.get(i).get_Skill_Status() >= 3){
             }
 
 
+
             if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 7){
 
                 //모든 물고기 및 그라운드 생명체 hp - 100 해야된다.
@@ -6319,7 +6396,6 @@ if(skill_Boom_Poison_List.get(i).get_Skill_Status() >= 3){
                 try {
                     canvas = mSurfaceHolder.lockCanvas(null);
 //                    synchronized (mSurfaceHolder) {
-
 
 
                     /**
@@ -6570,8 +6646,7 @@ public void add_Fish_Touch_Marlin(){
             first_Default_Fish = false;
 
             //메모리 오버 때문에 비트맵 설명, 기본 물고기 일때
-//            if(fish_Touch_Default.get_Fish_Class() == 1) {
-//                game_thread.function_Init_Explain_Fish_Default();
+//            if(fish_Touch_Default.get_Fish_ClassLand_Markin_Fish_Default();
 //            }
         }
         fish_List.add(fish_Touch_Default);                                  //물고기 리스트에 추가
@@ -6672,7 +6747,7 @@ public void add_Fish_Touch_Marlin(){
      *  드래그 물고기 추가하기
      */
     public void add_Fish_Drag_Default(){
-        fish_Drag_Default = new Fish_Drag_Default(window_Width, 30, fish_Drag_Default_img[0].getWidth(), fish_Drag_Default_img[0].getHeight());       //드래그로 잡는 fish_Touch_Default 물고기생성
+        fish_Drag_Default = new Fish_Drag_Default(window_Width, 2 * day_Count, fish_Drag_Default_img[0].getWidth(), fish_Drag_Default_img[0].getHeight());       //드래그로 잡는 fish_Touch_Default 물고기생성
 
         //처음 나올때 설명 붙여서 나옴
         if(first_Drag_Fish){
@@ -6691,7 +6766,7 @@ public void add_Fish_Touch_Marlin(){
 
     // 드래그 물고기
     public void add_Fish_Drag_Default(float x, float y){
-        fish_Drag_Default = new Fish_Drag_Default(window_Width, 30, fish_Drag_Default_img[0].getWidth(), fish_Drag_Default_img[0].getHeight());
+        fish_Drag_Default = new Fish_Drag_Default(window_Width, 2 * day_Count, fish_Drag_Default_img[0].getWidth(), fish_Drag_Default_img[0].getHeight());
         fish_Drag_Default.set_Position(x, y);
         fish_List.add(fish_Drag_Default);
     }
@@ -6715,7 +6790,7 @@ public void add_Fish_Touch_Marlin(){
      * 상어 추가하기
      */
     public void add_Fish_Drag_Shark(){
-        fish_Drag_Shark = new Fish_Drag_Shark(window_Width, 100, fish_Drag_Shark_img[0].getWidth(), fish_Drag_Shark_img[0].getHeight());       //드래그로 잡는 fish_Touch_Default 물고기생성
+        fish_Drag_Shark = new Fish_Drag_Shark(window_Width, 10 * day_Count, fish_Drag_Shark_img[0].getWidth(), fish_Drag_Shark_img[0].getHeight());       //드래그로 잡는 fish_Touch_Default 물고기생성
 
         fish_List.add(fish_Drag_Shark);
     }
@@ -6755,10 +6830,11 @@ public void add_Fish_Touch_Marlin(){
 
 
 
-        ground_Touch_Snail = new Ground_Touch_Snail(window_Width,
+        ground_Touch_Snail = new Ground_Touch_Snail(window_Width - convertPixelsToDp(75, _context),
                 ground_Touch_Snail_Hp1_img[0].getWidth(),
                 ground_Touch_Snail_Hp1_img[0].getHeight(), 5, ground_Touch_Snail_Hp1_img[0].getWidth() + convertPixelsToDp(15, _context) ,ground_Touch_Snail_Hp1_img[0].getHeight());
         ground_Touch_Snail.set_Class_NUm(0);
+
         //첫 번째 달팽이 생성
         if(first_Snail){
             ground_Touch_Snail.set_First_Test_Object((window_Width/2) - ground_Touch_Snail_Hp1_img[0].getHeight());
@@ -6787,9 +6863,9 @@ public void add_Fish_Touch_Marlin(){
      * 그라운드 생성구간 (가제)
      */
     public void add_Ground_Lobsters(){
-        ground_drag_lobsters = new Ground_Drag_Lobsters(window_Width,
+        ground_drag_lobsters = new Ground_Drag_Lobsters(window_Width - convertPixelsToDp(75, _context),
                 ground_Drag_Lobsters_img[0].getWidth(),
-                ground_Drag_Lobsters_img[0].getHeight(), 30, ground_Drag_Lobsters_img[0].getWidth() + convertPixelsToDp(15, _context) ,ground_Drag_Lobsters_img[0].getHeight());
+                ground_Drag_Lobsters_img[0].getHeight(), 2 * day_Count, ground_Drag_Lobsters_img[0].getWidth() + convertPixelsToDp(15, _context) ,ground_Drag_Lobsters_img[0].getHeight());
         ground_List.add(ground_drag_lobsters); //달팽이 생성
     }
 
@@ -6798,7 +6874,7 @@ public void add_Fish_Touch_Marlin(){
      * 그라운드 생성구간 (불가사리)
      */
     public void add_Ground_Starfish(){
-        ground_Touch_Starfish = new Ground_Touch_Starfish(window_Width,
+        ground_Touch_Starfish = new Ground_Touch_Starfish(window_Width - convertPixelsToDp(75, _context),
                 ground_Touch_Starfish_img[0].getWidth(),
                 ground_Touch_Starfish_img[0].getHeight(), 5, ground_Touch_Starfish_img[0].getWidth() + convertPixelsToDp(15, _context) ,ground_Touch_Starfish_img[0].getHeight());
 
@@ -6817,7 +6893,7 @@ public void add_Fish_Touch_Marlin(){
      * 그라운드 생성구간 (곰 벌레)
      */
     public void add_Ground_Bearbug(){
-        ground_Touch_Bearbug = new Ground_Touch_Bearbug(window_Width,
+        ground_Touch_Bearbug = new Ground_Touch_Bearbug(window_Width - convertPixelsToDp(75, _context),
                 ground_Touch_Bearbug_img[0].getWidth(),
                 ground_Touch_Bearbug_img[0].getHeight(), 100, ground_Touch_Bearbug_img[0].getWidth() + convertPixelsToDp(15, _context) ,ground_Touch_Bearbug_img[0].getHeight());
 
@@ -6829,7 +6905,7 @@ public void add_Fish_Touch_Marlin(){
      * 그라운드 생성구간 (소러게)
      */
     public void add_Ground_Hermit(){
-        ground_Touch_Hermit = new Ground_Touch_Hermit(window_Width,
+        ground_Touch_Hermit = new Ground_Touch_Hermit(window_Width - convertPixelsToDp(75, _context),
                 ground_Touch_Hermit_Hp1_img[0].getWidth(),
                 ground_Touch_Hermit_Hp1_img[0].getHeight(), 5, ground_Touch_Hermit_Hp1_img[0].getWidth() + convertPixelsToDp(15, _context) ,ground_Touch_Hermit_Hp1_img[0].getHeight());
 //        ground_Touch_Hermit.set_Class_NUm(0);
@@ -6848,7 +6924,7 @@ public void add_Fish_Touch_Marlin(){
      */
 
     public void add_Ground_Stingray(){
-        ground_Touch_Stingray = new Ground_Touch_Stingray(window_Width,
+        ground_Touch_Stingray = new Ground_Touch_Stingray(window_Width - convertPixelsToDp(75, _context),
                 ground_Touch_Stingray_img[0].getWidth(),
                 ground_Touch_Stingray_img[0].getHeight(), 5, ground_Touch_Stingray_img[0].getWidth() + convertPixelsToDp(15, _context) ,ground_Touch_Stingray_img[0].getHeight());
         ground_List.add(ground_Touch_Stingray);//가오리 추가
@@ -6870,10 +6946,13 @@ public void add_Fish_Touch_Marlin(){
     /**
      * 달팽이 보스 생성
      */
-    public void add_Ground_Boss(float x, float y){
+    public void add_Ground_Boss(){
+
+
+
         ground_Touch_Snail = new Ground_Touch_Snail(window_Width,
                 ground_snail_Middle_Hp1_img[0].getWidth(),
-                ground_snail_Middle_Hp1_img[0].getHeight(), 5,ground_snail_Boss_Hp1_img[0].getWidth(),ground_snail_Boss_Hp1_img[0].getHeight(), x, y);
+                ground_snail_Middle_Hp1_img[0].getHeight(), 5,ground_snail_Boss_Hp1_img[0].getWidth(),ground_snail_Boss_Hp1_img[0].getHeight(), random.nextInt(window_Width - convertPixelsToDp(75, _context)), -30);
         ground_Touch_Snail.set_Class_NUm(2);
         ground_List.add(ground_Touch_Snail); //달팽이 생성
     }
@@ -6884,9 +6963,9 @@ public void add_Fish_Touch_Marlin(){
      * 꽃게 추가
      */
     public void add_Ground_Crab(){
-        ground_Drag_Crab = new Ground_Drag_Crab(window_Width,
+        ground_Drag_Crab = new Ground_Drag_Crab(window_Width - convertPixelsToDp(75, _context),
                 ground_Drag_Crab_img[0].getWidth(),
-                ground_Drag_Crab_img[0].getHeight(), 30, ground_Drag_Crab_img[0].getWidth(),ground_Drag_Crab_img[0].getHeight());
+                ground_Drag_Crab_img[0].getHeight(), 2 * day_Count, ground_Drag_Crab_img[0].getWidth(),ground_Drag_Crab_img[0].getHeight());
 
         //첫 번째 꽃게 생성
         if(first_Crab){
@@ -6936,7 +7015,7 @@ public void add_Fish_Touch_Marlin(){
     public void add_Ground_Clam(){
         ground_Drag_Clam = new Ground_Drag_Clam(window_Width,
                 ground_Drag_Crab_img[0].getWidth(),
-                ground_Drag_Crab_img[0].getHeight(), 500,ground_Drag_Clam_img[0].getWidth(),ground_Drag_Clam_img[0].getHeight(), window_Height, window_Width);
+                ground_Drag_Crab_img[0].getHeight(), 5000, ground_Drag_Clam_img[0].getWidth(),ground_Drag_Clam_img[0].getHeight(), window_Height, window_Width);
 
         ground_List.add(ground_Drag_Clam); //꽃게
     }
@@ -6993,11 +7072,9 @@ public void add_Fish_Touch_Marlin(){
         land_Mark.set_Class_Num(land_Mark_Class);
         land_Mark_Class++;
 
-        if(land_Mark_Class == 2) {
             land_Mark_Img_View_Separate[0] *= 10;
             land_Mark_Img_View_Separate[1] *= 10;
             land_Mark_Img_View_Separate[2] *= 10;
-        }
 
         ground_List.add(land_Mark);
 
@@ -7199,8 +7276,8 @@ public void add_Fish_Touch_Marlin(){
                 if(split_Fish_Class == 1){  //중간보스이면
                     add_Fish_Touch_Default(split_Fish_X, split_Fish_Y);
                     add_Fish_Touch_Default(split_Fish_X, split_Fish_Y);
-                    add_Fish_Touch_Default(split_Fish_X, split_Fish_Y);
-                    add_Fish_Touch_Default(split_Fish_X, split_Fish_Y);
+//                    add_Fish_Touch_Default(split_Fish_X, split_Fish_Y);
+//                    add_Fish_Touch_Default(split_Fish_X, split_Fish_Y);
 
                 }else if(split_Fish_Class == 2){
                     add_Middle_Fish_Touch_Default(split_Fish_X, split_Fish_Y);
@@ -7707,9 +7784,10 @@ public void skill_Ground_Attack(){
 
 
                         Score++;
+                        money++;
                         //클릭된 달팽이의체력을 깍는다.
-                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
-
+//                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
+                        main_Character.set_Character_Experience(1);
 
 
 
@@ -7746,10 +7824,11 @@ public void skill_Ground_Attack(){
 
 
                         starfish_Ground_Hit_Flag = true;   //불가사리 터치 이벤트 doDraw에서 발생
-                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
+//                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
 
                         Score++;
-
+                        money++;
+                        main_Character.set_Character_Experience(1);
 
                         //            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
                         soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
@@ -7789,12 +7868,13 @@ public void skill_Ground_Attack(){
 
 
                         Score++;
-                        //클릭된 소라게의체력을 깍는다.
-                        if(!((Ground_Touch_Hermit)ground_List.get(ground_Remove_Temp)).get_Immortal_Mode()) {
-                            ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
-                        }
+                        money++;
+//                        //클릭된 소라게의체력을 깍는다.
+//                        if(!((Ground_Touch_Hermit)ground_List.get(ground_Remove_Temp)).get_Immortal_Mode()) {
+//                            ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
+//                        }
                         ((Ground_Touch_Hermit)ground_List.get(ground_Remove_Temp)).set_Immortal_Mode();
-
+                        main_Character.set_Character_Experience(1);
 
 
 
@@ -7833,12 +7913,13 @@ public void skill_Ground_Attack(){
 
                         bearbug_Ground_Hit_Flag = true;
                         ((Ground_Touch_Bearbug)ground_List.get(ground_Remove_Temp)).set_Knockback(convertPixelsToDp(15, _context) + convertPixelsToDp(random.nextInt(60),_context));
-
+                        main_Character.set_Character_Experience(1);
                         Score++;
-                        //클릭된 곤벌레의체력을 깍는다.
-                        if(ground_List.get(i).get_Ground_Point_Y() < 0) {
-                            ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(100);
-                        }
+                        money++;
+//                        //클릭된 곤벌레의체력을 깍는다.
+//                        if(ground_List.get(i).get_Ground_Point_Y() < 0) {
+//                            ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(100);
+//                        }
                         soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         return true;
 
@@ -7871,9 +7952,10 @@ public void skill_Ground_Attack(){
                         stingray_Ground_Hit_Flag = true;   //가오리 터치 이벤트 doDraw에서 발생
 
                         Score++;
+                        money++;
                         //클릭된 가오리의체력을 깍는다.
-
-                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
+                        main_Character.set_Character_Experience(1);
+//                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
 
                         soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         return true;
@@ -7904,20 +7986,21 @@ public void skill_Ground_Attack(){
                             effect_Temp = effect_Pop5_img[4];
                         }
 
-                        if(ground_Hit_Drag){
-                            //드래그 중일때
-                            if(!((Ground_Drag_Lobsters)ground_List.get(ground_Remove_Temp)).get_Mode()) {
-                                ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
-                            }
-                        }else {
-                            //터치 중일때
-                            ((Ground_Drag_Lobsters)ground_List.get(ground_Remove_Temp)).set_Mode();
-                        }
+//                        if(ground_Hit_Drag){
+//                            //드래그 중일때
+//                            if(!((Ground_Drag_Lobsters)ground_List.get(ground_Remove_Temp)).get_Mode()) {
+//                                ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
+//                            }
+//                        }else {
+//                            //터치 중일때
+//                            ((Ground_Drag_Lobsters)ground_List.get(ground_Remove_Temp)).set_Mode();
+//                        }
 
                         lobsters_Ground_Hit_Flag = true;   //가오리 터치 이벤트 doDraw에서 발생
 
                         Score++;
-                        //클릭된 가오리의체력을 깍는다.
+                        money++;
+                        main_Character.set_Character_Experience(character_Drag_Damege);
                         soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         return true;
 
@@ -7947,7 +8030,8 @@ public void skill_Ground_Attack(){
                         ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
                         soundPool.play(sound_Effect[11], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
                         Score++;            //점수 추가
-                        main_Character.set_Character_Experience();  //경험치 추가
+                        money++;
+                        main_Character.set_Character_Experience(1);  //경험치 추가
                         return true;
 
                     }
@@ -7973,10 +8057,11 @@ public void skill_Ground_Attack(){
                         }
 
 
-                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
+//                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
                         soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
                         Score++;            //점수 추가
-                        main_Character.set_Character_Experience();  //경험치 추가
+                        money++;
+                        main_Character.set_Character_Experience(character_Drag_Damege);  //경험치 추가
                         return true;
 
                     }
@@ -8002,10 +8087,11 @@ public void skill_Ground_Attack(){
                         }
 
 
-                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
+//                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
                         soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
                         Score++;            //점수 추가
-//                main_Character.set_Character_Experience();  //경험치 추가
+                        money++;
+                main_Character.set_Character_Experience(character_Drag_Damege);  //경험치 추가
                         return true;
 
 
@@ -8047,17 +8133,18 @@ public void skill_Ground_Attack(){
                         ground_Remove_Temp = i;
                         tempInt = random.nextInt(5);
                         land_Mark_Hit_Flag = true; //랜드마크 이펙트 doDraw에서 발생
-
+                        character_Randmark_Damege_Temp = 1 + random.nextInt(character_Randmark_Damege);
                         //드래그된 랜드마크의 체력을 깍는다.
                         if(main_Character.get_Damage() > 1) {
-                            character_Damege = 1 + random.nextInt(main_Character.get_Damage());
+                            character_Damege = 1 + random.nextInt(character_Randmark_Damege_Temp);
                         }
 
 
                         ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
                         soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
                         Score++;            //점수 추가
-//                main_Character.set_Character_Experience();  //경험치 추가
+                        money++;
+                        main_Character.set_Character_Experience(character_Randmark_Damege_Temp);  //경험치 추가
 
                         //랜드마크 삭제의 경우
                         if(ground_List.get(ground_Remove_Temp).get_Ground_Hp() <= 0){
@@ -8088,11 +8175,11 @@ public void skill_Ground_Attack(){
                         seaurchin_Ground_Hit_Flag = true;   //성게 터치 이벤트는 doDraw 에서
                         ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();  //성게 삭제,
 
-                        //성게가 공격 모드 일때, 게딱지가 아닐때
-                        if(((Ground_Trap_Urchin)ground_List.get(ground_Remove_Temp)).get_Urchin_Attack_Mode() && !(main_Character instanceof Main_Character_Shellfish_Tear3)){
-                            //get_Urchin_Attack_Mode()
-                            main_Character.set_Hp_Minus();
-                        }
+//                        //성게가 공격 모드 일때, 게딱지가 아닐때
+//                        if(((Ground_Trap_Urchin)ground_List.get(ground_Remove_Temp)).get_Urchin_Attack_Mode() && !(main_Character instanceof Main_Character_Shellfish_Tear3)){
+//                            //get_Urchin_Attack_Mode()
+//                            main_Character.set_Hp_Minus();
+//                        }
 
 
                         //메인 캐릭터 hp 감소 루틴 추가 해야함
@@ -8183,7 +8270,7 @@ public void skill_Ground_Attack(){
                     soundPool.play(sound_Effect[random.nextInt(2)], 0.5F, 0.5F, 0, 0, 1.0F);   //물고기 기본 팝 사운드
 
 
-                        fish_List.get(smallFishIndex).set_Hp_Minus();            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
+//                        fish_List.get(smallFishIndex).set_Hp_Minus();            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
 
                     default_Fish_Hit_Flag = true;   //그림은 드로우에서
 
@@ -8194,7 +8281,8 @@ public void skill_Ground_Attack(){
 
 //                    delete_Fish_Select(smallFishIndex);     //피가0이 된 물고기 삭제.
                     Score++;
-                    main_Character.set_Character_Experience(); //경험치 추가
+                    money++;
+                    main_Character.set_Character_Experience(1); //경험치 추가
                     return true;
 
                 }else if(fish_List.get(smallFishIndex) instanceof Fish_Touch_Squid){
@@ -8233,7 +8321,8 @@ public void skill_Ground_Attack(){
 
 
                     Score++;                                                 //점수 증가
-                    main_Character.set_Character_Experience();  //경험치 추가
+                    money++;
+                    main_Character.set_Character_Experience(character_Drag_Damege);  //경험치 추가
 
 
 
@@ -8241,7 +8330,7 @@ public void skill_Ground_Attack(){
                     if(fish_List.get(smallFishIndex) instanceof Fish_Drag_Default){
                         //드래그 물고기 및 해파리 대미지 입힌다.
 
-                        fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege);            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
+//                        fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege);            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
 
                         drag_Fish_Hit_Flag = true;  //그림은 드로우에
                         soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
@@ -8262,7 +8351,7 @@ public void skill_Ground_Attack(){
                         ((Fish_Drag_Shark)fish_List.get(smallFishIndex)).set_Knockback();
 
                         //대미지 입힌다.
-                        fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege);            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
+//                        fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege);            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
 
                         soundPool.play(sound_Effect[12], 0.05F, 0.05F, 0, 0, 1.0F);
                         drag_Shark_Hit_Flag = true;
@@ -8316,7 +8405,7 @@ public void skill_Ground_Attack(){
 
 
         // #50 부분에 각 캐릭터마다 모양 변화 경험치가 들어가야함
-        if(main_Character.set_Character_Upgrade(50)){
+        if(main_Character.set_Character_Upgrade()){
             //점수에 따라 곰팡이 진화
             main_Character.Set_Main_Character_Mode_Status();
 
@@ -8979,10 +9068,63 @@ public void skill_Ground_Attack(){
 
         //Log.i("[뷰]", "구성");
         Log.e("surfaceCreated","surfaceCreated");
+
+        Intent intent = ((Activity)_context).getIntent();
+        int setIntent[] = intent.getIntArrayExtra("set");
+
+        ruby = setIntent[0];
+        money = setIntent[1];
+        Log.e("a", money + "@@");
+        character_Randmark_Damege  = setIntent[2];
+        character_Drag_Damege = setIntent[3];
+        urchinresistance = setIntent[4];
+        lightningresistance = setIntent[5];
+        crocodileresistance = setIntent[6];
+        ft1 = setIntent[7];     ft2 = setIntent[8];     ft3 = setIntent[9];     ft4 = setIntent[10];     ft5 = setIntent[11];     ft6 = setIntent[12];     ft7 = setIntent[13];     ft8 = setIntent[14];     ft9 = setIntent[15];   ft10 = setIntent[16];
+
+        st1 = setIntent[17];    st2 = setIntent[18];    st3 = setIntent[19];  st4 = setIntent[20];   st5 = setIntent[21];     st6 = setIntent[22];      st7 = setIntent[23];     st8 = setIntent[24];  st9 = setIntent[25];   st10 = setIntent[26];
+
+        mt1 = setIntent[27];
+        mt2 = setIntent[28];
+        mt3 = setIntent[29];
+        mt4 = setIntent[30];
+        mt5 = setIntent[31];
+        mt6 = setIntent[32];
+        mt7 = setIntent[33];
+        mt8 = setIntent[34];
+        mt9 = setIntent[35];
+        mt10 = setIntent[36];
+//
+//        money = 100;
+
+        soundPool.release();
+        soundPool = new SoundPool(20, AudioManager.STREAM_ALARM, 0); //사운드 앞에 1은 하나만 가져다 놓겠다는 뜻. 나중에 추가 요망
+        //소리 로드
+        sound_Effect[0] = soundPool.load(_context, R.raw.fish_default_sound_1, 1);      //팝1
+        sound_Effect[1] = soundPool.load(_context, R.raw.fish_default_sound_2, 1);      //팝2
+        sound_Effect[2] = soundPool.load(_context, R.raw.drag_sound_1, 1);      //드래그1
+        sound_Effect[3] = soundPool.load(_context, R.raw.drag_sound_2, 1);      //드래그2
+
+        //소리 상어 친구 부르기
+        sound_Effect[4] = soundPool.load(_context, R.raw.friend_shark_roar, 1);
+        sound_Effect[5] = soundPool.load(_context, R.raw.friend_shark_effect_1, 1);
+        sound_Effect[6] = soundPool.load(_context, R.raw.friend_shark_effect_2, 1);
+        sound_Effect[7] = soundPool.load(_context, R.raw.friend_shark_effect_3, 1);
+
+        sound_Effect[8] = soundPool.load(_context, R.raw.effect_window_sound, 1);   //설명창 등장 사운드
+        sound_Effect[9] = soundPool.load(_context, R.raw.skill_crabb_sound, 1);     //꽃게 스킬 소리
+        sound_Effect[10] = soundPool.load(_context, R.raw.skill_laser_sound, 1);     //레이저 스킬 소리
+
+        sound_Effect[11] = soundPool.load(_context, R.raw.effect_wave_pop, 1);     //파도 팝 소리
+
+        sound_Effect[12] = soundPool.load(_context, R.raw.drag_steel, 1);     //강철 참돔 드래그 소리
+
+
     }
     TimerTask fish_Maker, stage_Day;
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
         //Log.i("[뷰]", "교체");
         window_Width = width; //화면의 크기
         window_Height = height;
@@ -8990,7 +9132,7 @@ public void skill_Ground_Attack(){
         game_thread = new Game_Thread(/*holder*/);  //쓰레드가 홈버튼을 누름으로 인해 파괴 된다면 다시 생성
         game_thread.start(); //게임
 
-        distroy_Run = true;
+//        distroy_Run = true;
 
 //         if(game_thread.getState() == Thread.State.TERMINATED) {
 //            game_thread = new Game_Thread(/*holder*/);  //쓰레드가 홈버튼을 누름으로 인해 파괴 된다면 다시 생성
@@ -9012,8 +9154,16 @@ public void skill_Ground_Attack(){
         SharedPreferences pref = _context.getSharedPreferences("pref", Activity.MODE_APPEND);
         if(pref != null){
             Log.e("a","!");
-            Score = pref.getInt("score", 100);
+            Score = pref.getInt("score", 0);
+//            money = pref.getInt("money", 0);
         }
+
+
+
+
+
+
+
 
         /**
          * 타이머를 통한 물고기 생성
@@ -9072,7 +9222,6 @@ public void skill_Ground_Attack(){
 
                     //게임 동작 중에만 추가한다.
                     if(mRun) {
-
 //                        add_Fish_Drag_Default();
 //                        add_Fish_Drag_Steelbream();
 //                        add_Ground_Starfish();
@@ -9083,11 +9232,11 @@ public void skill_Ground_Attack(){
 //                        add_Fish_Drag_Shark();
 //                        add_Ground_Crab();
 
-                        if(day_Count < 5) {
+                        if(day_Count < 10) {
                             //기본 물고기
                             if (day_Count >= 0) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 0 && enumy_Appear){
                                     explain[0] = true;
                                     enumy_Appear = false;
                                     first_Explain = true;
@@ -9097,29 +9246,29 @@ public void skill_Ground_Attack(){
                                 add_Fish_Touch_Default();
                                 add_Fish_Touch_Default();
                             }
-                            if (day_Count >= 1) {
-                                add_Fish_Touch_Default();
-                                add_Fish_Touch_Default();
-                            }
                             if (day_Count >= 2) {
                                 add_Fish_Touch_Default();
                             }
-                            if (day_Count >= 3) {
-                                add_Fish_Touch_Default();
+                            if (day_Count >= 4) {
                                 add_Fish_Touch_Default();
                             }
-                            if (day_Count >= 4) {
-                                enumy_Appear = true;
+                            if (day_Count >= 6) {
+                                add_Fish_Touch_Default();
+                            }
+                            if (day_Count >= 8) {
                                 add_Boss_Fish_Touch_Default();
+                            }
+                            if(day_Count == 9){
+                                enumy_Appear = true;
                             }
                         }
 
 
-                        if(day_Count < 10){
+                        if(day_Count < 20){
                             //달팽이 추가
-                            if(day_Count >= 5) {
+                            if(day_Count >= 10) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 10 && enumy_Appear){
                                     explain[0] = false;
                                     explain[1] = true;
                                     enumy_Appear = false;
@@ -9127,31 +9276,32 @@ public void skill_Ground_Attack(){
                                 }
 
                                 add_Ground_Snail();
+                                add_Fish_Touch_Default();
+                            }
+                            if(day_Count >= 12) {
+                                add_Fish_Touch_Default();
+                                add_Fish_Touch_Default();
+                            }
+                            if(day_Count >= 14) {
+                                add_Fish_Touch_Default();
+                            }
+                            if(day_Count >= 16) {
                                 add_Ground_Snail();
                             }
-                            if(day_Count >= 6) {
+                            if(day_Count >= 18) {
                                 add_Fish_Touch_Default();
-                                add_Fish_Touch_Default();
+                                add_Ground_Boss();
                             }
-                            if(day_Count >= 7) {
-                                add_Fish_Touch_Default();
-                            }
-                            if(day_Count >= 8) {
-                                add_Ground_Snail();
-                            }
-                            if(day_Count >= 9) {
+                            if(day_Count == 19){
                                 enumy_Appear = true;
-                                add_Ground_Snail();
-                                add_Fish_Touch_Default();
-                                add_Ground_Boss(window_Width/2 , -30);
                             }
                         }
 
-                        if(day_Count < 15){
+                        if(day_Count < 30){
                             //드래그 물고기 추가
-                            if(day_Count >= 10) {
+                            if(day_Count >= 20) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 20 &&enumy_Appear){
                                     explain[1] = false;
                                     explain[2] = true;
                                     enumy_Appear = false;
@@ -9162,69 +9312,68 @@ public void skill_Ground_Attack(){
                                 add_Fish_Touch_Default();
                                 add_Ground_Snail();
                             }
-                            if(day_Count >= 11) {
-                                add_Fish_Drag_Default();
+                            if(day_Count >= 22) {
                                 add_Fish_Touch_Default();
                             }
-                            if(day_Count >= 12) {
-                                add_Ground_Snail();
+                            if(day_Count >= 24) {
+                                add_Fish_Drag_Default();
                                 add_Ground_Snail();
                                 add_Boss_Fish_Touch_Default();
                             }
-                            if(day_Count >= 13) {
+                            if(day_Count >= 26) {
                                 add_Fish_Touch_Default();
                                 add_Fish_Touch_Default();
                             }
-                            if(day_Count >= 14) {
-                                enumy_Appear = true;
+                            if(day_Count >= 28) {
                                 add_Fish_Drag_Default();
-                                add_Fish_Touch_Default();
-                                add_Ground_Snail();
-                                add_Ground_Boss(window_Width/2 , -30);
+                                add_Ground_Boss();
+                            }
+                            if(day_Count == 29){
+                                enumy_Appear = true;
                             }
                         }
 
-                        if(day_Count < 20){
+                        if(day_Count < 40){
                             //꽃게 추가
-                            if(day_Count >= 15) {
+                            if(day_Count >= 30) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 30 &&enumy_Appear){
                                     explain[2] = false;
                                     explain[3] = true;
                                     enumy_Appear = false;
                                     first_Explain = true;
                                 }
-
                                 add_Ground_Crab();
-                            }
-                            if(day_Count >= 16) {
-                                add_Fish_Drag_Default();
                                 add_Fish_Touch_Default();
-                                add_Ground_Boss(window_Width/2 , -30);
+                                add_Fish_Touch_Default();
+                            }
+                            if(day_Count >= 32) {
+                                add_Fish_Drag_Default();
                                 add_Ground_Snail();
                             }
-                            if(day_Count >= 17) {
+                            if(day_Count >= 34) {
                                 add_Ground_Crab();
                             }
-                            if(day_Count >= 18) {
+                            if(day_Count >= 36) {
                                 add_Fish_Drag_Default();
                                 add_Fish_Touch_Default();
-                                add_Fish_Touch_Default();
-                                add_Boss_Fish_Touch_Default();
                                 add_Ground_Snail();
                             }
-                            if(day_Count >= 19) {
+                            if(day_Count >= 38) {
+                                add_Fish_Drag_Default();
+                                add_Ground_Crab();
+                            }
+                            if(day_Count == 39){
                                 enumy_Appear = true;
-                                add_Fish_Drag_Default();
-                                add_Ground_Crab();
+                                add_Ground_Boss();
                             }
                         }
 
 
 
-                        if(day_Count < 25) {
+                        if(day_Count < 50) {
                             //오징어 추가
-                            if (day_Count >= 20) {
+                            if (day_Count == 40 &&day_Count >= 40) {
 
                                 if(enumy_Appear){
                                     explain[3] = false;
@@ -9235,36 +9384,35 @@ public void skill_Ground_Attack(){
 
                                 add_Fish_Touch_Squid();//오징어 추가
                             }
-                            if (day_Count >= 21) {
+                            if (day_Count >= 42) {
                                 add_Fish_Drag_Default();
                                 add_Fish_Touch_Default();
-                                add_Ground_Snail();
                             }
-                            if (day_Count >= 22) {
+                            if (day_Count >= 44) {
                                 add_Fish_Touch_Default();
                                 add_Ground_Crab();
                             }
-                            if (day_Count >= 23) {
+                            if (day_Count >= 46) {
                                 add_Fish_Touch_Default();
                                 add_Fish_Drag_Default();
                                 add_Ground_Snail();
-                                add_Ground_Boss(window_Width/2 , -30);
                             }
-                            if (day_Count >= 24) {
-                                enumy_Appear = true;
+                            if (day_Count >= 48) {
                                 add_Fish_Touch_Squid();//오징어 추가
-                                add_Fish_Drag_Default();
                                 add_Boss_Fish_Touch_Default();
-                                add_Fish_Touch_Default();
                                 add_Ground_Crab();
+                                add_Ground_Boss();
+                            }
+                            if(day_Count == 49){
+                                enumy_Appear = true;
                             }
                         }
 
-                        if(day_Count < 30) {
+                        if(day_Count < 60) {
                             //성게 추가
-                            if (day_Count >= 25) {
+                            if (day_Count >= 50) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 50 &&enumy_Appear){
                                     explain[4] = false;
                                     explain[5] = true;
                                     enumy_Appear = false;
@@ -9274,35 +9422,34 @@ public void skill_Ground_Attack(){
                                 add_Ground_Urchin();
                                 add_Fish_Touch_Squid();//오징어 추가
                                 add_Fish_Drag_Default();
-                                add_Boss_Fish_Touch_Default();
-                                add_Ground_Boss(window_Width/2 , -30);
+                                add_Fish_Touch_Default();
                                 add_Ground_Snail();
                             }
-                            if (day_Count >= 26) {
+                            if (day_Count >= 52) {
                                 add_Fish_Drag_Default();
                                 add_Fish_Touch_Default();
                                 add_Ground_Crab();
-                                add_Ground_Crab();
                             }
-                            if (day_Count >= 27) {
+                            if (day_Count >= 54) {
                                 add_Ground_Urchin();
                             }
-                            if (day_Count >= 28) {
-                                add_Ground_Urchin();
+                            if (day_Count >= 56) {
+                                add_Ground_Boss();
                             }
-                            if (day_Count >= 29) {
-                                enumy_Appear = true;
-                                add_Fish_Touch_Default();
+                            if (day_Count >= 58) {
                                 add_Fish_Touch_Default();
                                 add_Boss_Fish_Touch_Default();
                             }
+                            if(day_Count == 59){
+                                enumy_Appear = true;
+                            }
                         }
 
-                        if(day_Count < 35) {
+                        if(day_Count < 70) {
                             //전기 뱀장어 추가
-                            if (day_Count >= 30) {
+                            if (day_Count >= 60) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 60 &&enumy_Appear){
                                     explain[5] = false;
                                     explain[6] = true;
                                     enumy_Appear = false;
@@ -9312,34 +9459,34 @@ public void skill_Ground_Attack(){
                                 add_Fish_Touch_Ell();
                                 add_Fish_Drag_Default();
                                 add_Fish_Touch_Default();
-                                add_Ground_Boss(window_Width/2 , -30);
+                                add_Ground_Boss();
                                 add_Ground_Snail();
                             }
-                            if (day_Count >= 31) {
+                            if (day_Count >= 62) {
                                 add_Fish_Touch_Squid();//오징어 추가
                             }
-                            if (day_Count >= 32) {
+                            if (day_Count >= 64) {
                                 add_Ground_Urchin();
                             }
-                            if (day_Count >= 33) {
-                                add_Fish_Drag_Default();
+                            if (day_Count >= 66) {
                                 add_Fish_Drag_Default();
                             }
-                            if (day_Count >= 34) {
-                                enumy_Appear = true;
+                            if (day_Count >= 68) {
                                 add_Boss_Fish_Touch_Default();
                                 add_Fish_Touch_Default();
                                 add_Fish_Touch_Squid();//오징어 추가
-                                add_Fish_Touch_Squid();//오징어 추가
                                 add_Ground_Crab();
+                            }
+                            if(day_Count == 69){
+                                enumy_Appear = true;
                             }
                         }
 
-                        if(day_Count < 40) {
+                        if(day_Count < 80) {
                             //소라게 추가
-                            if (day_Count >= 35) {
+                            if (day_Count >= 70) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 70 &&enumy_Appear){
                                     explain[6] = false;
                                     explain[7] = true;
                                     enumy_Appear = false;
@@ -9350,215 +9497,205 @@ public void skill_Ground_Attack(){
                                 add_Fish_Touch_Default();
                                 add_Fish_Touch_Squid();//오징어 추가
                                 add_Ground_Urchin();
-
+                                add_Fish_Touch_Default();
                             }
-                            if (day_Count >= 36) {
+                            if (day_Count >= 72) {
                                 add_Fish_Touch_Squid();//오징어 추가
                                 add_Fish_Touch_Default();
-                                add_Boss_Fish_Touch_Default();
+
                             }
-                            if (day_Count >= 37) {
+                            if (day_Count >= 74) {
                                 add_Ground_Crab();
                             }
-                            if (day_Count >= 38) {
-                                add_Ground_Hermit();
-                            }
-                            if (day_Count >= 39) {
-                                enumy_Appear = true;
-                                add_Fish_Touch_Default();
-                                add_Fish_Touch_Default();
-                                add_Ground_Boss(window_Width/2 , -30);
+                            if (day_Count >= 76) {
                                 add_Boss_Fish_Touch_Default();
+                            }
+                            if (day_Count >= 78) {
+                                add_Ground_Boss();
+                                add_Boss_Fish_Touch_Default();
+                            }
+                            if(day_Count == 79){
+                                enumy_Appear = true;
                             }
                         }
 
-                        if(day_Count < 45) {
+                        if(day_Count < 90) {
                             //청새치
-                            if (day_Count >= 40) {
+                            if (day_Count >= 80) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 80 &&enumy_Appear){
                                     explain[7] = false;
                                     explain[8] = true;
                                     enumy_Appear = false;
                                     first_Explain = true;
                                 }
-
-                                add_Ground_Urchin();
                                 add_Fish_Touch_Marlin();
                                 add_Fish_Touch_Default();
                                 add_Boss_Fish_Touch_Default();
                             }
-                            if (day_Count >= 41) {
+                            if (day_Count >= 82) {
                                 add_Fish_Drag_Default();
-                                add_Fish_Drag_Default();
+                                add_Fish_Touch_Default();
                             }
-                            if (day_Count >= 42) {
+                            if (day_Count >= 84) {
                                 add_Fish_Touch_Marlin();
                                 add_Ground_Crab();
+                                add_Ground_Urchin();
                             }
-                            if (day_Count >= 43) {
+                            if (day_Count >= 86) {
                                 add_Fish_Touch_Default();
-                                add_Fish_Touch_Default();
-                                add_Ground_Hermit();
                                 add_Ground_Hermit();
                                 add_Ground_Urchin();
-                                add_Ground_Boss(window_Width/2 , -30);
+                                add_Ground_Boss();
                             }
-                            if (day_Count >= 44) {
+                            if (day_Count >= 88) {
+                                add_Fish_Touch_Marlin();
+                            }
+                            if(day_Count == 89){
                                 enumy_Appear = true;
-                                add_Fish_Touch_Marlin();
-                                add_Fish_Touch_Marlin();
                             }
                         }
 
 
 
-                        if(day_Count < 50) {
+                        if(day_Count < 100) {
                             //파도 주의보
-                            if (day_Count >= 45) {
+                            if (day_Count >= 90) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 90 &&enumy_Appear){
                                     explain[8] = false;
                                     explain[9] = true;
                                     enumy_Appear = false;
                                     first_Explain = true;
                                 }
 
-                                add_Ground_Urchin();
                                 add_Ground_Wave();
-                                add_Fish_Touch_Default();
                                 add_Fish_Touch_Default();
                                 add_Boss_Fish_Touch_Default();
                             }
-                            if (day_Count >= 46) {
+                            if (day_Count >= 92) {
                                 add_Fish_Touch_Marlin();
                                 add_Fish_Touch_Squid();//오징어 추가
                                 add_Ground_Snail();
-                                add_Ground_Boss(window_Width/2 , -30);
                                 add_Ground_Urchin();
                             }
-                            if (day_Count >= 47) {
+                            if (day_Count >= 94) {
                                 add_Fish_Touch_Squid();//오징어 추가
                                 add_Fish_Touch_Marlin();
                                 add_Ground_Hermit();
                             }
-                            if (day_Count >= 48) {
+                            if (day_Count >= 96) {
                                 add_Fish_Drag_Default();
                                 add_Fish_Drag_Default();
                                 add_Boss_Fish_Touch_Default();
-                                add_Ground_Snail();
                             }
-                            if (day_Count >= 49) {
+                            if (day_Count >= 98) {
+                                add_Ground_Boss();
+                            }
+                            if(day_Count == 99){
                                 enumy_Appear = true;
-                                add_Fish_Touch_Squid();//오징어 추가
-                                add_Ground_Snail();
                             }
                         }
 
-                        if(day_Count < 55) {
+                        if(day_Count < 110) {
                             //바다악어
-                            if (day_Count >= 50) {
+                            if (day_Count >= 100) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 100 &&enumy_Appear){
                                     explain[9] = false;
                                     explain[10] = true;
                                     enumy_Appear = false;
                                     first_Explain = true;
                                 }
 
-                                add_Ground_Urchin();
                                 add_Ground_Crocodile();
                                 add_Fish_Touch_Default();
                                 add_Fish_Drag_Default();
                                 add_Boss_Fish_Touch_Default();
                                 add_Ground_Snail();
                             }
-                            if (day_Count >= 51) {
+                            if (day_Count >= 102) {
                                 add_Fish_Touch_Marlin();
-                                add_Fish_Touch_Marlin();
-                                add_Ground_Boss(window_Width/2 , -30);
                                 add_Fish_Touch_Marlin();
                             }
-                            if (day_Count >= 52) {
+                            if (day_Count >= 104) {
                                 add_Ground_Wave();
                                 add_Fish_Touch_Squid();//오징어 추가
-                                add_Fish_Touch_Squid();//오징어 추가
+                                add_Ground_Urchin();
 
                             }
-                            if (day_Count >= 53) {
+                            if (day_Count >= 106) {
                                 add_Ground_Snail();
                                 add_Ground_Crab();
                             }
-                            if (day_Count >= 54) {
-                                enumy_Appear = true;
+                            if (day_Count >= 108) {
                                 add_Ground_Crocodile();
                                 add_Ground_Crab();
-                                add_Ground_Boss(window_Width/2 , -30);
+                                add_Ground_Boss();
+                            }
+                            if(day_Count == 109){
+                                enumy_Appear = true;
                             }
                         }
 
 
-                        if(day_Count < 60) {
+                        if(day_Count < 120) {
                             //강철 참돔
-                            if (day_Count >= 55) {
+                            if (day_Count >= 110) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 110 &&enumy_Appear){
                                     explain[10] = false;
                                     explain[11] = true;
                                     enumy_Appear = false;
                                     first_Explain = true;
                                 }
 
-                                add_Ground_Urchin();
                                 add_Fish_Drag_Steelbream();
                                 add_Fish_Touch_Default();
                                 add_Fish_Drag_Default();
                                 add_Ground_Snail();
                             }
-                            if (day_Count >= 56) {
+                            if (day_Count >= 112) {
                                 add_Ground_Snail();
                                 add_Boss_Fish_Touch_Default();
                                 add_Ground_Crab();
-                                add_Ground_Boss(window_Width/2 , -30);
                             }
-                            if (day_Count >= 57) {
+                            if (day_Count >= 114) {
                                 add_Ground_Crocodile();
-                                add_Ground_Crab();
-                                add_Fish_Drag_Steelbream();
                                 add_Ground_Wave();
+                                add_Ground_Urchin();
                             }
-                            if (day_Count >= 58) {
+                            if (day_Count >= 116) {
                                 add_Fish_Touch_Marlin();
                                 add_Fish_Touch_Squid();//오징어 추가
                                 add_Ground_Hermit();
                             }
-                            if (day_Count >= 59) {
-                                enumy_Appear = true;
+                            if (day_Count >= 118) {
                                 add_Ground_Hermit();
                                 add_Fish_Drag_Steelbream();
                             }
+                            if(day_Count == 119){
+                                enumy_Appear = true;
+                            }
                         }
 
-                        if(day_Count < 65) {
+                        if(day_Count < 130) {
                             //복제 가사리
-                            if (day_Count >= 60) {
+                            if (day_Count >= 120) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 120 &&enumy_Appear){
                                     explain[11] = false;
                                     explain[12] = true;
                                     enumy_Appear = false;
                                     first_Explain = true;
                                 }
 
-                                add_Ground_Urchin();
                                 add_Fish_Touch_Default();
                                 add_Ground_Starfish();
                                 add_Boss_Fish_Touch_Default();
-                                add_Fish_Touch_Marlin();
-                                add_Fish_Touch_Squid();//오징어 추가
                                 add_Ground_Hermit();
                             }
-                            if (day_Count >= 61) {
+                            if (day_Count >= 122) {
                                 add_Fish_Touch_Default();
                                 add_Fish_Touch_Marlin();
                                 add_Ground_Wave();
@@ -9568,37 +9705,36 @@ public void skill_Ground_Attack(){
                                 add_Ground_Crab();
                                 add_Fish_Drag_Steelbream();
                             }
-                            if (day_Count >= 62) {
+                            if (day_Count >= 124) {
                                 add_Ground_Urchin();
-                                add_Ground_Boss(window_Width/2 , -30);
+                                add_Ground_Boss();
                                 add_Ground_Hermit();
-                                add_Fish_Touch_Default();
                                 add_Fish_Drag_Steelbream();
                                 add_Fish_Touch_Squid();
                             }
-                            if (day_Count >= 63) {
+                            if (day_Count >= 126) {
                                 add_Fish_Touch_Default();
-                                add_Ground_Starfish();
                                 add_Ground_Crab();
                                 add_Fish_Drag_Default();
                             }
-                            if (day_Count >= 64) {
-                                enumy_Appear = true;
-                                add_Fish_Touch_Default();
+                            if (day_Count >= 128) {
                                 add_Fish_Touch_Marlin();
-
+                                add_Boss_Fish_Touch_Default();
+                            }
+                            if(day_Count == 129){
+                                enumy_Appear = true;
                             }
                         }
 
 
 
-                        if(day_Count < 70) {
+                        if(day_Count < 140) {
 
 
                             //방해 거북
-                            if (day_Count >= 65) {
+                            if (day_Count >= 130) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 130 && enumy_Appear){
                                     explain[12] = false;
                                     explain[13] = true;
                                     enumy_Appear = false;
@@ -9607,41 +9743,39 @@ public void skill_Ground_Attack(){
 
                                 add_Ground_Urchin();
                                 add_Ground_Hermit();
-                                add_Ground_Boss(window_Width/2 , -30);
                                 add_Fish_Turtle();
-                                add_Fish_Touch_Squid();
                                 add_Ground_Crab();
-                                add_Boss_Fish_Touch_Default();
-                            }
-                            if (day_Count >= 66) {
                                 add_Fish_Touch_Default();
-                                add_Ground_Starfish();
+                            }
+                            if (day_Count >= 132) {
+                                add_Fish_Touch_Default();
                                 add_Ground_Wave();
                                 add_Fish_Drag_Default();
+                                add_Ground_Starfish();
                             }
-                            if (day_Count >= 67) {
+                            if (day_Count >= 134) {
                                 add_Ground_Crab();
                                 add_Ground_Crocodile();
-                                add_Ground_Hermit();
                             }
-                            if (day_Count >= 68) {
-                                add_Ground_Urchin();
+                            if (day_Count >= 136) {
                                 add_Fish_Touch_Squid();
+                                add_Boss_Fish_Touch_Default();
                             }
-                            if (day_Count >= 69) {
-                                enumy_Appear = true;
+                            if (day_Count >= 138) {
                                 add_Fish_Touch_Default();
-                                add_Ground_Boss(window_Width/2 , -30);
-                                add_Fish_Touch_Default();
+                                add_Ground_Boss();
                                 add_Fish_Drag_Default();
+                            }
+                            if(day_Count == 139){
+                                enumy_Appear = true;
                             }
                         }
 
-                        if(day_Count < 75) {
+                        if(day_Count < 150) {
                             //불사 곰벌레
-                            if (day_Count >= 70) {
+                            if (day_Count >= 140) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 140 && enumy_Appear){
                                     explain[13] = false;
                                     explain[14] = true;
                                     enumy_Appear = false;
@@ -9651,147 +9785,139 @@ public void skill_Ground_Attack(){
                                 add_Ground_Bearbug();
                                 add_Ground_Starfish();
                                 add_Fish_Touch_Default();
-                                add_Ground_Boss(window_Width/2 , -30);
                                 add_Fish_Touch_Squid();
-                                add_Boss_Fish_Touch_Default();
                             }
-                            if (day_Count >= 71) {
+                            if (day_Count >= 142) {
                                 add_Ground_Crab();
                                 add_Fish_Drag_Default();
-                                add_Ground_Bearbug();
                                 add_Ground_Hermit();
                             }
-                            if (day_Count >= 72) {
+                            if (day_Count >= 144) {
                                 add_Ground_Urchin();
                                 add_Fish_Turtle();
                                 add_Ground_Crab();
                                 add_Fish_Touch_Default();
                                 add_Ground_Wave();
+                                add_Boss_Fish_Touch_Default();
                             }
-                            if (day_Count >= 73) {
+                            if (day_Count >= 146) {
                                 add_Ground_Crocodile();
                                 add_Fish_Drag_Default();
                             }
-                            if (day_Count >= 74) {
-                                enumy_Appear = true;
-                                add_Fish_Turtle();
+                            if (day_Count >= 148) {
                                 add_Ground_Bearbug();
+                            }
+                            if(day_Count == 149){
+                                enumy_Appear = true;
                             }
                         }
 
-                        if(day_Count < 80) {
+                        if(day_Count < 160) {
                             //클로킹 오리
-                            if (day_Count >= 75) {
+                            if (day_Count >= 150) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 150 && enumy_Appear){
                                     explain[14] = false;
                                     explain[15] = true;
                                     enumy_Appear = false;
                                     first_Explain = true;
                                 }
 
-                                add_Ground_Wave();
                                 add_Ground_Stingray();
                                 add_Fish_Turtle();
                                 add_Ground_Urchin();
-                                add_Ground_Boss(window_Width/2 , -30);
+                                add_Ground_Boss();
                                 add_Fish_Touch_Default();
                                 add_Ground_Crocodile();
                                 add_Fish_Drag_Default();
                             }
-                            if (day_Count >= 76) {
+                            if (day_Count >= 152) {
+                                add_Ground_Wave();
                                 add_Ground_Crab();
                                 add_Ground_Bearbug();
                             }
-                            if (day_Count >= 77) {
+                            if (day_Count >= 154) {
                                 add_Ground_Starfish();
-                                add_Ground_Bearbug();
                                 add_Boss_Fish_Touch_Default();
                                 add_Ground_Stingray();
                             }
-                            if (day_Count >= 78) {
-                                add_Ground_Urchin();
-                                add_Fish_Turtle();
+                            if (day_Count >= 156) {
                                 add_Fish_Touch_Default();
                                 add_Ground_Crab();
                                 add_Fish_Touch_Squid();
-                                add_Ground_Boss(window_Width/2 , -30);
                                 add_Fish_Drag_Default();
                             }
-                            if (day_Count >= 79) {
-                                enumy_Appear = true;
-                                add_Ground_Hermit();
+                            if (day_Count >= 158) {
                                 add_Ground_Hermit();
 
+                            }
+                            if(day_Count == 159){
+                                enumy_Appear = true;
                             }
                         }
 
-                        if(day_Count < 85){
+                        if(day_Count < 170){
                             //가제 추가
-                            if (day_Count >= 80) {
+                            if (day_Count >= 160) {
 
-                                if(enumy_Appear){
+                                if(day_Count == 160 && enumy_Appear){
+                                    explain[15] = false;
+                                    explain[16] = true;
+                                    enumy_Appear = false;
+                                    first_Explain = true;
+                                }
+
+                                add_Ground_Lobsters();
+                                add_Ground_Wave();
+                                add_Fish_Touch_Default();
+                                add_Fish_Drag_Default();
+                                add_Fish_Touch_Squid();
+                                add_Boss_Fish_Touch_Default();
+                            }
+                            if (day_Count >= 162) {
+                                add_Ground_Urchin();
+                                add_Ground_Starfish();
+                                add_Ground_Crab();
+                                add_Ground_Hermit();
+                                add_Ground_Bearbug();
+                                add_Ground_Crocodile();
+                            }
+                            if (day_Count >= 164) {
+                                add_Ground_Stingray();
+                                add_Ground_Lobsters();
+                                add_Ground_Boss();
+                            }
+                            if (day_Count >= 166) {
+                                add_Ground_Starfish();
+                                add_Fish_Turtle();
+                            }
+                            if (day_Count >= 168) {
+                                add_Ground_Boss();
+                                add_Ground_Crab();
+                            }
+                            if(day_Count == 169){
+                                enumy_Appear = true;
+                            }
+                        }
+
+                        if(day_Count < 180) {
+                            //드래그 상어
+                            if (day_Count >= 170) {
+
+                                if(day_Count == 170 && enumy_Appear){
                                     explain[16] = false;
                                     explain[17] = true;
                                     enumy_Appear = false;
                                     first_Explain = true;
                                 }
 
-                                add_Ground_Lobsters();
-                                add_Ground_Bearbug();
-                                add_Ground_Wave();
-                                add_Fish_Touch_Default();
-                                add_Ground_Boss(window_Width/2 , -30);
-                                add_Fish_Drag_Default();
-                                add_Fish_Touch_Squid();
-                                add_Boss_Fish_Touch_Default();
-                            }
-                            if (day_Count >= 81) {
-                                add_Ground_Urchin();
-                                add_Ground_Starfish();
-                                add_Fish_Turtle();
-                                add_Ground_Crab();
-                                add_Ground_Hermit();
-                            }
-                            if (day_Count >= 82) {
-                                add_Ground_Stingray();
-                                add_Ground_Stingray();
-                                add_Ground_Lobsters();
-                                add_Ground_Crocodile();
-                                add_Fish_Drag_Default();
-                                add_Fish_Touch_Default();
-                            }
-                            if (day_Count >= 83) {
-                                add_Ground_Starfish();
-                                add_Fish_Turtle();
-                            }
-                            if (day_Count >= 84) {
-                                enumy_Appear = true;
-                                add_Ground_Bearbug();
-                                add_Ground_Boss(window_Width/2 , -30);
-                                add_Ground_Crab();
-                                add_Fish_Drag_Default();
-                            }
-                        }
-
-                        if(day_Count < 90) {
-                            //드래그 상어
-                            if (day_Count >= 85) {
-
-                                if(enumy_Appear){
-                                    explain[17] = false;
-                                    explain[18] = true;
-                                    enumy_Appear = false;
-                                    first_Explain = true;
-                                }
-
                                 add_Fish_Drag_Shark();
                                 add_Ground_Bearbug();
                                 add_Ground_Crab();
 
                                 add_Fish_Drag_Default();
                             }
-                            if (day_Count >= 86) {
+                            if (day_Count >= 172) {
                                 add_Ground_Urchin();
                                 add_Ground_Wave();
                                 add_Boss_Fish_Touch_Default();
@@ -9799,33 +9925,35 @@ public void skill_Ground_Attack(){
                                 add_Ground_Stingray();
                                 add_Ground_Bearbug();
                                 add_Fish_Touch_Squid();
-                                add_Ground_Boss(window_Width/2 , -30);
+                                add_Ground_Boss();
                                 add_Fish_Touch_Default();
                                 add_Fish_Drag_Default();
                             }
-                            if (day_Count >= 87) {
+                            if (day_Count >= 174) {
                                 add_Ground_Starfish();
                                 add_Ground_Lobsters();
                                 add_Ground_Crocodile();
                                 add_Fish_Touch_Default();
                                 add_Fish_Drag_Shark();
                             }
-                            if (day_Count >= 88) {
+                            if (day_Count >= 176) {
                                 add_Ground_Urchin();
                                 add_Fish_Touch_Default();
                                 add_Fish_Drag_Default();
                                 add_Fish_Turtle();
                                 add_Ground_Crab();
                                 add_Ground_Hermit();
-                                add_Ground_Boss(window_Width/2 , -30);
+                                add_Ground_Boss();
                                 add_Ground_Stingray();
                             }
-                            if (day_Count >= 90) {
-                                enumy_Appear = true;
+                            if (day_Count >= 178) {
                                 add_Ground_Lobsters();
                                 add_Ground_Crab();
                                 add_Fish_Touch_Default();
                                 add_Fish_Touch_Default();
+                            }
+                            if(day_Count == 179){
+                                enumy_Appear = true;
                             }
                         }
 
@@ -9902,12 +10030,21 @@ public void skill_Ground_Attack(){
     public void surfaceDestroyed(SurfaceHolder holder) {
         //Log.i("[뷰]", "파괴");
 
+        soundPool.release();
+
         distroy_Run = false;
+        m_Run_False();
 
         ///값 저장
         SharedPreferences pref = _context.getSharedPreferences("pref", Activity.MODE_APPEND);
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt("score", Score);
+//        editor.putInt("money", money);
+
+
+
+
+
         Log.e("a",Score + "");
         editor.commit();
 
@@ -9935,7 +10072,8 @@ public void skill_Ground_Attack(){
         effect_Pop_Steel_img.recycle();
         effect_Pop_Turtle.recycle();
         effect_Stage_Day_img.recycle();
-        explain_Window_ima.recycle();
+//        explain_Window_ima.recycle();     //재시작 떄문에 일단 리사이클 안함
+        gold_img.recycle();
 
         explain_Window_Revoluition.recycle();
         backGroundImg.recycle();

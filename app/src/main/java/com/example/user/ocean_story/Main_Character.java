@@ -136,9 +136,9 @@ public class Main_Character {
      * 경험치
      */
     int experience = 0;
-    public void set_Character_Experience(){
-        experience++;
-        upgrade_Experience++;
+    public void set_Character_Experience(int index){
+        experience+=index;
+        upgrade_Experience+=index;
         revolution_Character = true;
     }
 
@@ -157,8 +157,33 @@ public class Main_Character {
      * 모양 변화
      */
     int upgrade_Experience = 0;
+    int up_Score = 0;
+    public boolean set_Character_Upgrade(){
 
-    public boolean set_Character_Upgrade(int up_Score){
+        if(tear == 0){
+            up_Score = 100;
+        }else if(tear == 1){
+            up_Score = 300;
+        }else if(tear == 2){
+            up_Score = 600;
+        }else if(tear == 3){
+            up_Score = 1600;
+        }else if(tear == 4){
+            up_Score = 3000;
+        }else if(tear == 5){
+            up_Score = 4300;
+        }else if(tear == 6){
+            up_Score = 5000;
+        }else if(tear == 7){
+            up_Score = 6000;
+        }else if(tear == 8){
+            up_Score = 13000;
+        }else if(tear == 9){
+            up_Score = 20000;
+        }else if(tear == 10){
+            up_Score = 30000;
+        }
+
         if(up_Score <= upgrade_Experience){
             upgrade_Experience = 0;
             return true;
@@ -166,6 +191,8 @@ public class Main_Character {
             return false;
         }
     }
+
+
 //        if(revolution_Character) {
 //            revolution_Character = false;
 //            if (150 <= experience) {
@@ -348,27 +375,27 @@ public class Main_Character {
      */
     public int get_Revolrution_Step(){
         if(tear == 0){
-            return 30;
+            return 300;
         }else if(tear == 1){
-            return 40;
+            return 900;
         }else if(tear == 2){
-            return 50;
+            return 2000;
         }else if(tear == 3){
-            return 60;
+            return 5000;
         }else if(tear == 4){
-            return 70;
+            return 9000;
         }else if(tear == 5){
-            return 80;
+            return 13000;
         }else if(tear == 6){
-            return 90;
+            return 200000;
         }else if(tear == 7){
-            return 100;
+            return 300000;
         }else if(tear == 8){
-            return 110;
+            return 500000;
         }else if(tear == 9){
-            return 120;
+            return 600000;
         }else if(tear == 10){
-            return 130;
+            return 1000000;
         }
 
         return 5000000;

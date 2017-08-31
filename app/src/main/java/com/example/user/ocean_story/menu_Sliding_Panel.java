@@ -58,6 +58,7 @@ public class menu_Sliding_Panel extends Activity {
         finish();   //액티비티 종료
 
 
+
     }
 
 

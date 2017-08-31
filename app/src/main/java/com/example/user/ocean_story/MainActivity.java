@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         setContentView(R.layout.activity_main);
 
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             //데이터 베이스 생성시에 한번만 실행해야 한다.
             String sql = "create table maincharacterinfo(_id integer PRIMARY KEY autoincrement, ruby integer,money integer,structuredamage integer, dragdamage integer, urchinresistance integer,  lightningresistance integer, crocodileresistance integer, ft1 integer, ft2 integer, ft3 integer, ft4 integer, ft5 integer, ft6 integer, ft7 integer, ft8 integer, ft9 integer, ft10 integer, st1 integer, st2 integer, st3 integer, st4 integer, st5 integer, st6 integer, st7 integer, st8 integer, st9 integer, st10 integer, mt1 integer, mt2 integer, mt3 integer, mt4 integer, mt5 integer, mt6 integer, mt7 integer, mt8 integer, mt9 integer, mt10 integer)";
             database.execSQL(sql);
-            insertData(1, 1, 1, 1, 1, 1, 1,
+            insertData(0, 0, 1, 1, 1, 1, 1,
                     1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                     1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                     1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
@@ -120,11 +121,11 @@ public class MainActivity extends AppCompatActivity {
             Cursor cursor = database.rawQuery(sql, null);
             Log.e("e", " : " + cursor.getCount());
             cursor.moveToNext();
-
             for(int i=0; i<37; i++){
                 info[i] = cursor.getInt(i);
-            }
 
+            }
+            Toast.makeText(getApplicationContext(), "" + "db 값" + info[1], Toast.LENGTH_SHORT).show();
 //                for(int i=0; i<cursor.getCount(); i++){
 //                cursor.moveToNext();
 //
@@ -184,8 +185,30 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode==RESULT_OK) { // 정상 반환일 경우에만 동작하겠다
             Toast.makeText(getApplicationContext(), "??", Toast.LENGTH_SHORT).show();
 //            int num = data.getIntExtra("hap", 0);
-            info = data.getIntArrayExtra("info");
-//            Toast.makeText(getApplicationContext(), "" + info[0], Toast.LENGTH_SHORT).show();
+//            info = data.getIntArrayExtra("info");
+              int get_Item[] = data.getIntArrayExtra("item");
+            Toast.makeText(getApplicationContext(), "" + get_Item[0], Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "" + get_Item[1], Toast.LENGTH_SHORT).show();
+            info[0] = get_Item[0];
+            info[1] = get_Item[1];
+            //0 = money, 1 = ruby
+//
+//            SharedPreferences pref = GameMain._context.getSharedPreferences("pref", Activity.MODE_APPEND);
+//            SharedPreferences.Editor editor = pref.edit();
+//            editor.putInt("money", get_Item[0]);
+
+//            if(database != null){
+
+                String sql = "UPDATE maincharacterinfo SET money = '"+ get_Item[1] +"', ruby = '"+ get_Item[0] +"'";
+                database.execSQL(sql);
+
+
+
+
+//            }
+
+            selectData();
+
         }
 
 
@@ -200,7 +223,10 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 
-        //intent.putExtra("cha","aa");
+        Toast.makeText(getApplicationContext(), "" + "db 값 던지기" + info[1], Toast.LENGTH_SHORT).show();
+        intent.putExtra("set", info);
+
+
         startActivityForResult(intent, 1001);
 
 

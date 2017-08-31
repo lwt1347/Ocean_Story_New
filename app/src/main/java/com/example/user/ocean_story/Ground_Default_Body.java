@@ -42,7 +42,7 @@ public class Ground_Default_Body {
         this.hp = hp;
 
         this.window_Width = window_Width;       //생성될 위치 및 벽을 못 넘도록 하기 위해 사용
-        ground_Point_X = 30 + (float)Math.random() * (window_Width-100);         //생성될 위치
+        ground_Point_X = 30 + (float)Math.random() * (window_Width);         //생성될 위치
 
         //처음 생성된 객체인가.
         first_Test_Object = false;
