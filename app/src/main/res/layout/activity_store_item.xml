@@ -1,50 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="330dp"
+    android:orientation="horizontal"
     android:weightSum="1">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="52dp"
-        android:layout_height="43dp"
-        android:layout_margin="10dp" />
+        android:layout_width="match_parent"
+        android:layout_height="313dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
 
     <LinearLayout
-        android:layout_width="141dp"
-        android:layout_height="58dp"
-        android:layout_margin="10dp"
-        android:layout_marginTop="30dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="162dp"
+        android:layout_height="75dp"
+        android:layout_weight="0.60"
         android:orientation="vertical"
         android:weightSum="1"
-        android:layout_weight="0.60">
+        android:layout_above="@+id/textView6"
+        android:layout_centerHorizontal="true">
 
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="27dp"
+            android:layout_height="wrap_content"
+            android:shadowColor="#FF000000"
+            android:shadowDx="2"
+            android:shadowDy="-2"
+            android:shadowRadius="1"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="24dp" />
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
-            android:layout_height="31dp"
-
+            android:layout_height="51dp"
+            android:gravity="center_vertical"
+            android:shadowColor="#FF000000"
+            android:shadowDx="2"
+            android:shadowDy="-2"
+            android:shadowRadius="1"
             android:text="111"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="14dp" />
+            android:textColor="@android:color/holo_orange_light"
+            android:textSize="20dp" />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="80dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="5dp"
-        android:layout_weight="0.15" />
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:layout_weight="0.15"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/background_gold"
+        android:layout_marginRight="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_alignBottom="@+id/linearLayout"
+        android:layout_toLeftOf="@+id/linearLayout"
+        android:layout_toStartOf="@+id/linearLayout" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/store_explain_level"
+        android:layout_alignTop="@+id/linearLayout"
+        android:layout_alignRight="@+id/imageView2"
+        android:layout_alignEnd="@+id/imageView2" />
+
+</RelativeLayout>

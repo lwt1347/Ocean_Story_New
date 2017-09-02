@@ -26,11 +26,16 @@ public class Activity_Store_Item_View extends LinearLayout{
 
 
     ImageView imageView;
-
+    ImageView imageView2;
+    ImageView imageView3;
 
     public TextView get_TextView(){
         textView2 = (TextView) findViewById(R.id.textView2);
         return textView2;
+    }
+    public TextView get_TextLevel(){
+        textView = (TextView) findViewById(R.id.textView);
+        return textView;
     }
 
     public void set_Text(){
@@ -63,7 +68,8 @@ public class Activity_Store_Item_View extends LinearLayout{
         imageView = (ImageView)findViewById(R.id.imageView);
         textView6 = (TextView) findViewById(R.id.textView6);
 
-
+        imageView2 = (ImageView)findViewById(R.id.imageView2);
+        imageView3 = (ImageView)findViewById(R.id.imageView3);
 
     }
 
@@ -73,15 +79,21 @@ public class Activity_Store_Item_View extends LinearLayout{
     public void setText(String cost){
         textView2.setText(cost);
     }
+    public void setTextLever(String lv){
+        textView.setText(lv);
+    }
 
 
 
 
     //이미지 뷰에 이미지 설정
-    public void setImage(int resid, int resid2, int resid3){
+    public void setImage(int resid, int resid2){
         imageView.setImageResource(resid);
         textView6.setBackgroundResource(resid2);
-        textView.setBackgroundResource(resid3);
+
+        imageView2.setBackgroundResource(R.drawable.store_explain_gold);
+        imageView3.setBackgroundResource(R.drawable.store_explain_level);
+
     }
 
     @Override

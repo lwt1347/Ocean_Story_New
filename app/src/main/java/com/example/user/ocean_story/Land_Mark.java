@@ -19,7 +19,7 @@ public class Land_Mark extends Ground_Default_Body {
      * @param height
      * @param hp
      */
-    Land_Mark(float window_Width, int width, int height, int hp, float x, float y) {
+    Land_Mark(float window_Width, int width, int height, double hp, float x, float y) {
         super(window_Width, width, height, hp, 0, 0);
         ground_Point_X = x;
         ground_Point_Y = y;
@@ -41,17 +41,17 @@ public class Land_Mark extends Ground_Default_Body {
 
     private void set_HP(int param_Class_Num){
         if(param_Class_Num == 1){
-            this.hp = 400;
-        }else if(param_Class_Num == 2){
-            this.hp = 4000;
-        }else if(param_Class_Num == 3){
             this.hp = 40000;
-        }else if(param_Class_Num == 4){
+        }else if(param_Class_Num == 2){
             this.hp = 400000;
-        }else if(param_Class_Num == 5){
+        }else if(param_Class_Num == 3){
             this.hp = 4000000;
-        }else if(param_Class_Num == 6){
+        }else if(param_Class_Num == 4){
             this.hp = 40000000;
+        }else if(param_Class_Num == 5){
+            this.hp = 400000000;
+        }else if(param_Class_Num == 6){
+            this.hp = 4000000000.0;
         }
 
     }

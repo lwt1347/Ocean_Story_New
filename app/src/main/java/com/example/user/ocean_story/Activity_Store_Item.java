@@ -1,6 +1,9 @@
 package com.example.user.ocean_story;
 
+import android.util.Log;
 import android.widget.TextView;
+
+import java.text.NumberFormat;
 
 /**
  * Created by Lee on 2017-07-31.
@@ -13,12 +16,12 @@ public class Activity_Store_Item {
 
     int resId;
     int resId2;
-    int resId3;
-    int lever;
+    double resId3;
+    double lever;
 
 
 
-    public Activity_Store_Item(String name, int lever, double cost, int resId, int resId2, int resId3) {
+    public Activity_Store_Item(String name, double lever, double cost, int resId, int resId2, double resId3) {
         this.name = name;
         this.cost = cost;
         this.lever = lever;
@@ -41,18 +44,22 @@ public class Activity_Store_Item {
     }
 
     public double getCost() {
-        return cost;
+        Log.e("a", cost + "@@");
+
+
+        return (cost);
     }
 
-    public void setCost(int cost) {
-        this.cost = cost;
+    public void setCost(double cost) {
+        this.cost = (cost);
     }
-    public int getLever(){
+    public double getLever(){
         return lever;
     }
     public void setLever(int lever){
         this.lever = lever;
     }
+
     public void setLever(){
         lever++;
     }
@@ -74,7 +81,7 @@ public class Activity_Store_Item {
         this.resId2 = resId2;
     }
 
-    public int getResId3() {
+    public double getResId3() {
         return resId3;
     }
 
@@ -82,14 +89,17 @@ public class Activity_Store_Item {
         this.resId3 = resId3;
     }
 
-
+    NumberFormat f;
     @Override
     public String toString() {
+        f = NumberFormat.getInstance();
+        f.setGroupingUsed(false);
         return "Activity_Store_Item{" +
                 "name='" + name + '\'' +
-                ", cost='" + cost + '\'' +
+                ", cost='" + f.format(cost) + '\'' +
                 '}';
     }
+
 
 
 

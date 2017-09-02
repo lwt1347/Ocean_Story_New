@@ -21,7 +21,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
 
-    int info[] = new int[50];
+    double info[] = new double[50];
 
     //sql 라이트
     SQLiteDatabase database;
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         Log.e("aa","dbset = "+dbset);
         if(dbset == 0) {
             //데이터 베이스 생성시에 한번만 실행해야 한다.
-            String sql = "create table maincharacterinfo(_id integer PRIMARY KEY autoincrement, ruby integer,money integer,structuredamage integer, dragdamage integer, urchinresistance integer,  lightningresistance integer, crocodileresistance integer, ft1 integer, ft2 integer, ft3 integer, ft4 integer, ft5 integer, ft6 integer, ft7 integer, ft8 integer, ft9 integer, ft10 integer, st1 integer, st2 integer, st3 integer, st4 integer, st5 integer, st6 integer, st7 integer, st8 integer, st9 integer, st10 integer, mt1 integer, mt2 integer, mt3 integer, mt4 integer, mt5 integer, mt6 integer, mt7 integer, mt8 integer, mt9 integer, mt10 integer)";
+            String sql = "create table maincharacterinfo(_id integer PRIMARY KEY autoincrement, ruby integer,money double,structuredamage integer, dragdamage integer, urchinresistance integer,  lightningresistance integer, crocodileresistance integer, ft1 integer, ft2 integer, ft3 integer, ft4 integer, ft5 integer, ft6 integer, ft7 integer, ft8 integer, ft9 integer, ft10 integer, st1 integer, st2 integer, st3 integer, st4 integer, st5 integer, st6 integer, st7 integer, st8 integer, st9 integer, st10 integer, mt1 integer, mt2 integer, mt3 integer, mt4 integer, mt5 integer, mt6 integer, mt7 integer, mt8 integer, mt9 integer, mt10 integer)";
             database.execSQL(sql);
             insertData(0, 0, 1, 1, 1, 1, 1,
                     1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
      * 데이터 베이스
      */
     //값 집어넣기
-    public void insertData(int ruby,  int money, int structuredamage, int dragdamage, int urchinresistance, int lightningresistance, int crocodileresistance,
+    public void insertData(int ruby,  double money, int structuredamage, int dragdamage, int urchinresistance, int lightningresistance, int crocodileresistance,
                            int ft1 ,int ft2, int ft3, int ft4, int ft5, int ft6, int ft7, int ft8, int ft9, int ft10,
                            int st1, int st2, int st3, int st4, int st5, int st6, int st7, int st8, int st9, int st10,
                            int mt1, int mt2, int mt3, int mt4, int mt5, int mt6, int mt7, int mt8, int mt9, int mt10){
@@ -116,7 +116,8 @@ public class MainActivity extends AppCompatActivity {
     //값 가져오기
     public void selectData(){
         if(database != null){
-            String sql = "select ruby, money, structuredamage, dragdamage, urchinresistance, lightningresistance, crocodileresistance, ft1, ft2, ft3, ft4, ft5, ft6, ft7, ft8, ft9, ft10, st1, st2, st3, st4, st5, st6, st7, st8, st9, st10, mt1, mt2, mt3, mt4, mt5, mt6, mt7, mt8, mt9, mt10 from maincharacterinfo";
+            String sql = "select ruby, money, structuredamage, dragdamage, urchinresistance, lightningresistance, crocodileresistance, " +
+                    "ft1, ft2, ft3, ft4, ft5, ft6, ft7, ft8, ft9, ft10, st1, st2, st3, st4, st5, st6, st7, st8, st9, st10, mt1, mt2, mt3, mt4, mt5, mt6, mt7, mt8, mt9, mt10 from maincharacterinfo";
 
             Cursor cursor = database.rawQuery(sql, null);
             Log.e("e", " : " + cursor.getCount());
@@ -126,50 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
             Toast.makeText(getApplicationContext(), "" + "db 값" + info[1], Toast.LENGTH_SHORT).show();
-//                for(int i=0; i<cursor.getCount(); i++){
-//                cursor.moveToNext();
-//
-////                String name = cursor.getString(0);
-////                int age = cursor.getInt(1);
-////                String mobile = cursor.getString(2);
-//                info[i] = cursor.getInt(i);
-//
-////                 structuredamage = cursor.getInt(0);
-////                 dragdamage = cursor.getInt(1);
-////                 score = cursor.getInt(2);
-////                 money = cursor.getInt(3);
-////                 ruby = cursor.getInt(4);
-////                 ft1 = cursor.getInt(5);
-////                 ft2 = cursor.getInt(6);
-////                 ft3 = cursor.getInt(7);
-////                 ft4 = cursor.getInt(8);
-////                 ft5 = cursor.getInt(9);
-////                 ft6 = cursor.getInt(10);
-////                 ft7 = cursor.getInt(11);
-////                 ft8 = cursor.getInt(12);
-////                 ft9 = cursor.getInt(13);
-////                 ft10 = cursor.getInt(14);
-////                 st1 = cursor.getInt(15);
-////                 st2 = cursor.getInt(16);
-////                 st3 = cursor.getInt(17);
-////                 st4 = cursor.getInt(18);
-////                 st5 = cursor.getInt(19);
-////                 st6 = cursor.getInt(20);
-////                 st7 = cursor.getInt(21);
-////                 st8 = cursor.getInt(22);
-////                 st9 = cursor.getInt(23);
-////                 st10 = cursor.getInt(24);
-////                 mt1 = cursor.getInt(25);
-////                 mt2 = cursor.getInt(26);
-////                 mt3 = cursor.getInt(27);
-////                 mt4 = cursor.getInt(28);
-////                 mt5 = cursor.getInt(29);
-////                 mt6 = cursor.getInt(30);
-////                 mt7 = cursor.getInt(31);
-////                 mt8 = cursor.getInt(32);
-////                 mt9 = cursor.getInt(33);
-////                 mt10 = cursor.getInt(34);
-//            }
+
 
             cursor.close();
         }
@@ -180,15 +138,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 
-
+    try {
         // 넘어갔던 화면에서 되돌아 왔을 때
-        if (resultCode==RESULT_OK) { // 정상 반환일 경우에만 동작하겠다
+        if (resultCode == RESULT_OK) { // 정상 반환일 경우에만 동작하겠다
             Toast.makeText(getApplicationContext(), "??", Toast.LENGTH_SHORT).show();
 //            int num = data.getIntExtra("hap", 0);
 //            info = data.getIntArrayExtra("info");
-              int get_Item[] = data.getIntArrayExtra("item");
-            Toast.makeText(getApplicationContext(), "" + get_Item[0], Toast.LENGTH_SHORT).show();
-            Toast.makeText(getApplicationContext(), "" + get_Item[1], Toast.LENGTH_SHORT).show();
+            double get_Item[] = data.getDoubleArrayExtra("item");
+//            Toast.makeText(getApplicationContext(), "" + get_Item[0], Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "" + get_Item[1], Toast.LENGTH_SHORT).show();
             info[0] = get_Item[0];
             info[1] = get_Item[1];
             //0 = money, 1 = ruby
@@ -199,10 +157,8 @@ public class MainActivity extends AppCompatActivity {
 
 //            if(database != null){
 
-                String sql = "UPDATE maincharacterinfo SET money = '"+ get_Item[1] +"', ruby = '"+ get_Item[0] +"'";
-                database.execSQL(sql);
-
-
+            String sql = "UPDATE maincharacterinfo SET money = '" + get_Item[1] + "', ruby = '" + get_Item[0] + "'";
+            database.execSQL(sql);
 
 
 //            }
@@ -210,7 +166,9 @@ public class MainActivity extends AppCompatActivity {
             selectData();
 
         }
-
+    }catch (Exception e){
+        Log.e("onActivityResult", "onActivityResult");
+    }
 
     }
 
@@ -223,7 +181,9 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 
-        Toast.makeText(getApplicationContext(), "" + "db 값 던지기" + info[1], Toast.LENGTH_SHORT).show();
+        selectData();
+
+//        Toast.makeText(getApplicationContext(), "" + "db 값 던지기" + info[1], Toast.LENGTH_SHORT).show();
         intent.putExtra("set", info);
 
 
@@ -244,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
      * 상점 가기
      */
     public void onButtonStore(View view){
+        selectData();
         Intent intent = new Intent(getApplicationContext(), Activity_Store.class);
         intent.putExtra("info", info);
 //        Toast.makeText(getApplicationContext(), "" + info[0], Toast.LENGTH_SHORT).show();

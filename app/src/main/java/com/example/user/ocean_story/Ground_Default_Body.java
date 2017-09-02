@@ -13,7 +13,7 @@ public class Ground_Default_Body {
      * 기본 바닥 생명체 변수지정 메모리가 작은 순서로 지정함
      */
 
-    protected int hp;                               // Hp
+    protected double hp;                               // Hp
     protected int width;                            //물고기와 다르게 직접 터치를 해야 하기 때문에 넓이와 높이 갚이 필요하다.
     protected int height;
     protected int ground_Draw_Status = 0;             //그라운드 움직임
@@ -34,7 +34,7 @@ public class Ground_Default_Body {
      * 기본 생성자
      */
 
-    Ground_Default_Body(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size){
+    Ground_Default_Body(float window_Width, int width, int height, double hp, int param_Width_Size, int param_Height_Size){
 
         //width height 를 이미지의 넓이를 파라미터로 가져온다.
         this.width = width;
@@ -95,7 +95,7 @@ public class Ground_Default_Body {
      *  반환 [얻어오기]
      */
 
-    public int get_Ground_Hp(){
+    public double get_Ground_Hp(){
         return hp;                              //바닥 생명체 Hp 가져오기
     }
 
