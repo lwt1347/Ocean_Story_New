@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 info[i] = cursor.getInt(i);
 
             }
-            Toast.makeText(getApplicationContext(), "" + "db 값" + info[1], Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "" + "db 값" + info[1], Toast.LENGTH_SHORT).show();
 
 
             cursor.close();
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     try {
         // 넘어갔던 화면에서 되돌아 왔을 때
         if (resultCode == RESULT_OK) { // 정상 반환일 경우에만 동작하겠다
-            Toast.makeText(getApplicationContext(), "??", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "??", Toast.LENGTH_SHORT).show();
 //            int num = data.getIntExtra("hap", 0);
 //            info = data.getIntArrayExtra("info");
             double get_Item[] = data.getDoubleArrayExtra("item");

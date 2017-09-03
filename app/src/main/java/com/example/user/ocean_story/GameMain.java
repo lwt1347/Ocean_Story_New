@@ -77,6 +77,13 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private int Score = 0;                          //점수
 
 
+    int warning_Time = 100;
+    int warning_Time_Cycle = 0;
+    boolean warning_Flag = false;
+    boolean warning_Marlin_Flag = false;
+    boolean warning_Ell_Flag = false;
+    boolean warning_Wave_Flag = false;
+
 
     /**
      * 터치 이벤트시 발생하면 draw 에서 그리기 위한 flag 변수들
@@ -126,6 +133,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private Bitmap shadow_img[] = new Bitmap[8];//그림자 이미지
 
     private Bitmap nine_Patch_Hp = null;   //hp
+    private Bitmap warning_img = null;
 
     private NinePatch ninePatch;     //나인패치 적용방법 변수
     /**
@@ -331,6 +339,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
 
+
+
     //메인 캐릭터 이미지 [문어]
 
     //메인 캐릭터 이미지 [오리진: 곰팡이]
@@ -359,10 +369,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
     //캐릭터 진화버튼 설명창
-    private Bitmap explain_Window_Fish = null;
-    private Bitmap explain_Window_Shellfish = null;
-    private Bitmap explain_Window_Moullusc = null;
-    private Bitmap explain_Window_Plankton = null;
+    private Bitmap explain_Window_MainCharacker = null;
+
 
 
 
@@ -717,6 +725,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         background_Sound.setVolume(1f,1f);
         background_Sound.start();
 
+
+
     }
 
 
@@ -824,8 +834,6 @@ private void button_Create_method_Init(){
          */
 
 
-
-
         //배경 화면 동적 움직임 생성
         //따로 쓰레드를 돌릴 필요 없이 게임 안에서 동작하게끔 한다.
         background_Effect_One = new Background_Effect_One(window_Width, window_Height);
@@ -859,12 +867,12 @@ private void button_Create_method_Init(){
         first_Ell = true;
 
 //        game_thread.function_Skill_Thorn_img();
-        main_Character = new Main_Character_Fish_Tear2(0,0, window_Width, window_Height,0,0);
+        main_Character = new Main_Character_Plankton_1(0,0, window_Width, window_Height,0,0);
 
         //메인 캐릭터
         Init_Main_Character_Image(_context, main_Character);
 
-        main_Character = new Main_Character_Fish_Tear2((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+        main_Character = new Main_Character_Plankton_1((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
 //        game_thread.function_Skill_Soycrab_img();
 
 
@@ -897,9 +905,6 @@ private void button_Create_method_Init(){
         /**
          *  랜드 마크 이미지 변경 시점
          */
-        land_Mark_Img_View_Separate[2] = 30;
-        land_Mark_Img_View_Separate[1] = 20;
-        land_Mark_Img_View_Separate[0] = 10;
 
 
         //이빨 지뢰 제거
@@ -1484,43 +1489,43 @@ private void button_Create_method_Init(){
          */
         public void function_Explain_Window_Fish_Tear_1() { //explain_window_origincrab
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_1tearfish);
-            explain_Window_Fish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Fish_Tear_2() {
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_2tearfish);
-            explain_Window_Fish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Fish_Tear_3() {
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_3tearfish);
-            explain_Window_Fish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Fish_Tear_4() {
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_4tearfish);
-            explain_Window_Fish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Fish_Tear_5() {
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_5tearfish);
-            explain_Window_Fish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Fish_Tear_6() {
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_6tearfish);
-            explain_Window_Fish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Fish_Tear_7() {
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_7tearfish);
-            explain_Window_Fish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Fish_Tear_8() {
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_8tearfish);
-            explain_Window_Fish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Fish_Tear_9() {
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_9tearfish);
-            explain_Window_Fish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Fish_Tear_10() {
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_10tearfish);
-            explain_Window_Fish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
 
 
@@ -1530,52 +1535,52 @@ private void button_Create_method_Init(){
         public void function_Explain_Window_Moulluse_Tear_1() {
             //삼징어 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_1moullusc);
-            explain_Window_Moullusc = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Moulluse_Tear_2() {
             //삼징어 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_2moullusc);
-            explain_Window_Moullusc = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Moulluse_Tear_3() {
             //삼징어 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_3moullusc);
-            explain_Window_Moullusc = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Moulluse_Tear_4() {
             //삼징어 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_4moullusc);
-            explain_Window_Moullusc = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Moulluse_Tear_5() {
             //삼징어 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_5moullusc);
-            explain_Window_Moullusc = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Moulluse_Tear_6() {
             //삼징어 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_6moullusc);
-            explain_Window_Moullusc = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Moulluse_Tear_7() {
             //삼징어 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_7moullusc);
-            explain_Window_Moullusc = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Moulluse_Tear_8() {
             //삼징어 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_8moullusc);
-            explain_Window_Moullusc = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Moulluse_Tear_9() {
             //삼징어 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_9moullusc);
-            explain_Window_Moullusc = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Moulluse_Tear_10() {
             //삼징어 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_10moullusc);
-            explain_Window_Moullusc = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
 
 
@@ -1585,74 +1590,74 @@ private void button_Create_method_Init(){
         public void function_Explain_Window_Shellfish_Tear_1() {
             //게딱지 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_1tearshellfish);
-            explain_Window_Shellfish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
 
         }
         public void function_Explain_Window_Shellfish_Tear_2() {
             //게딱지 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_2tearshellfish);
-            explain_Window_Shellfish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Shellfish_Tear_3() {
             //게딱지 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_3tearshellfish);
-            explain_Window_Shellfish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Shellfish_Tear_4() {
             //게딱지 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_4tearshellfish);
-            explain_Window_Shellfish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Shellfish_Tear_5() {
             //게딱지 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_5tearshellfish);
-            explain_Window_Shellfish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Shellfish_Tear_6() {
             //게딱지 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_6tearshellfish);
-            explain_Window_Shellfish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }public void function_Explain_Window_Shellfish_Tear_7() {
             //게딱지 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_7tearshellfish);
-            explain_Window_Shellfish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }public void function_Explain_Window_Shellfish_Tear_8() {
             //게딱지 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_8tearshellfish);
-            explain_Window_Shellfish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Shellfish_Tear_9() {
             //게딱지 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_9tearshellfish);
-            explain_Window_Shellfish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
         public void function_Explain_Window_Shellfish_Tear_10() {
             //게딱지 설명창
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_10tearshellfish);
-            explain_Window_Shellfish = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
 
 
 
-        public void function_Explain_Window_Palnkton_Tear_1() {
+        public void function_Explain_Window_Plankton_Tear_1() {
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_1tear_plankton);
-            explain_Window_Plankton = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
-        public void function_Explain_Window_Palnkton_Tear_2() {
+        public void function_Explain_Window_Plankton_Tear_2() {
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_2tear_plankton);
-            explain_Window_Plankton = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
-        public void function_Explain_Window_Palnkton_Tear_3() {
+        public void function_Explain_Window_Plankton_Tear_3() {
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_3tear_plankton);
-            explain_Window_Plankton = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
-        public void function_Explain_Window_Palnkton_Tear_4() {
+        public void function_Explain_Window_Plankton_Tear_4() {
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_4tear_plankton);
-            explain_Window_Plankton = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
-        public void function_Explain_Window_Palnkton_Tear_5() {
+        public void function_Explain_Window_Plankton_Tear_5() {
             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_5tear_plankton);
-            explain_Window_Plankton = image.getBitmap();
+            explain_Window_MainCharacker = image.getBitmap();
         }
 
 
@@ -2594,6 +2599,26 @@ private void button_Create_method_Init(){
         }
 
 
+        /**
+         * 경고 이미지
+         */
+
+
+        boolean warning_Add_Flag = false;
+        public void function_Warning_Marlin(){
+            image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.warning_marlin);
+            warning_img = image.getBitmap();
+        }
+        public void function_Warning_Wave(){
+            image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.warning_wave);
+            warning_img = image.getBitmap();
+        }
+        public void function_Warning_Ell(){
+            image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.warning_ell);
+            warning_img = image.getBitmap();
+        }
+
+
 
         /**
          *  이미지 초기화 기법 함수
@@ -3095,6 +3120,7 @@ private void button_Create_method_Init(){
 
 
 
+
         //랜드마크 그리기
         for(int i=0; i<ground_List.size(); i++){
             if(ground_List.get(i) instanceof Land_Mark){
@@ -3104,16 +3130,17 @@ private void button_Create_method_Init(){
                     landMark_Damage_View = new LandMark_Damage_View(touchx,touchy);
                     landMark_Damage_View.set_Damage(character_Randmark_Damege_Temp);
                     landMark_Damage_View_List.add(landMark_Damage_View);
+                    Log.e("a",ground_List.get(i).get_Ground_Hp() + "");
                 }
 
                 if(land_Mark.get_Class_Num() == 0) {
-                    if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[2]) {
+                    if (ground_List.get(i).get_Ground_Hp() > 30000) {
 
                         draw.draw_Bmp(canvas, land_Mark1_img[0], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
 
-                    } else if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[1]) {
+                    } else if (ground_List.get(i).get_Ground_Hp() > 20000) {
                         draw.draw_Bmp(canvas, land_Mark1_img[1], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                    } else if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[0]) {
+                    } else if (ground_List.get(i).get_Ground_Hp() > 10000) {
                         draw.draw_Bmp(canvas, land_Mark1_img[2], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
                     } else {
                         draw.draw_Bmp(canvas, land_Mark1_img[3], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
@@ -3129,11 +3156,11 @@ private void button_Create_method_Init(){
                         land_Mark_Hit_Flag = false;
                     }
                 }else if(land_Mark.get_Class_Num() == 1){
-                    if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[2]) {
+                    if (ground_List.get(i).get_Ground_Hp() > 300000) {
                         draw.draw_Bmp(canvas, land_Mark2_img[0], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                    } else if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[1]) {
+                    } else if (ground_List.get(i).get_Ground_Hp() > 200000) {
                         draw.draw_Bmp(canvas, land_Mark2_img[1], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                    } else if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[0]) {
+                    } else if (ground_List.get(i).get_Ground_Hp() > 100000) {
                         draw.draw_Bmp(canvas, land_Mark2_img[2], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
                     } else{
                         draw.draw_Bmp(canvas, land_Mark2_img[3], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
@@ -3150,11 +3177,11 @@ private void button_Create_method_Init(){
                         land_Mark_Hit_Flag = false;
                     }
                 }else if(land_Mark.get_Class_Num() == 2){
-                    if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[2]) {
+                    if (ground_List.get(i).get_Ground_Hp() > 3000000) {
                         draw.draw_Bmp(canvas, land_Mark3_img[0], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                    } else if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[1]) {
+                    } else if (ground_List.get(i).get_Ground_Hp() > 2000000) {
                         draw.draw_Bmp(canvas, land_Mark3_img[1], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                    } else if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[0]) {
+                    } else if (ground_List.get(i).get_Ground_Hp() > 1000000) {
                         draw.draw_Bmp(canvas, land_Mark3_img[2], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
                     } else {
                         draw.draw_Bmp(canvas, land_Mark3_img[3], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
@@ -3169,11 +3196,11 @@ private void button_Create_method_Init(){
                         land_Mark_Hit_Flag = false;
                     }
                 }else if(land_Mark.get_Class_Num() == 3){
-                    if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[2]) {
+                    if (ground_List.get(i).get_Ground_Hp() > 30000000) {
                         draw.draw_Bmp(canvas, land_Mark4_img[0], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                    } else if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[1]) {
+                    } else if (ground_List.get(i).get_Ground_Hp() > 20000000) {
                         draw.draw_Bmp(canvas, land_Mark4_img[1], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                    } else if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[0]) {
+                    } else if (ground_List.get(i).get_Ground_Hp() > 10000000) {
                         draw.draw_Bmp(canvas, land_Mark4_img[2], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
                     } else {
                         draw.draw_Bmp(canvas, land_Mark4_img[3], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
@@ -3187,11 +3214,11 @@ private void button_Create_method_Init(){
                         land_Mark_Hit_Flag = false;
                     }
                 }else if(land_Mark.get_Class_Num() == 4){
-                    if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[2]) {
+                    if (ground_List.get(i).get_Ground_Hp() > 300000000) {
                         draw.draw_Bmp(canvas, land_Mark5_img[0], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                    } else if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[1]) {
+                    } else if (ground_List.get(i).get_Ground_Hp() > 200000000) {
                         draw.draw_Bmp(canvas, land_Mark5_img[1], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                    } else if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[0]) {
+                    } else if (ground_List.get(i).get_Ground_Hp() > 100000000) {
                         draw.draw_Bmp(canvas, land_Mark5_img[2], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
                     } else  {
                         draw.draw_Bmp(canvas, land_Mark5_img[3], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
@@ -3207,11 +3234,11 @@ private void button_Create_method_Init(){
                     }
 
                 }else if(land_Mark.get_Class_Num() == 5){
-                    if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[2]) {
+                    if (ground_List.get(i).get_Ground_Hp() > 3000000000.0) {
                         draw.draw_Bmp(canvas, land_Mark6_img[0], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                    } else if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[1]) {
+                    } else if (ground_List.get(i).get_Ground_Hp() > 2000000000.0) {
                         draw.draw_Bmp(canvas, land_Mark6_img[1], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                    } else if (ground_List.get(i).get_Ground_Hp() > land_Mark_Img_View_Separate[0]) {
+                    } else if (ground_List.get(i).get_Ground_Hp() > 1000000000.0) {
                         draw.draw_Bmp(canvas, land_Mark6_img[2], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
                     } else  {
                         draw.draw_Bmp(canvas, land_Mark6_img[3], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
@@ -3231,6 +3258,10 @@ private void button_Create_method_Init(){
                 break;
             }
         }
+
+
+
+
 
 //랜드 마크 대미지 보여주기
         score_Text_Size = convertPixelsToDp(15, _context);
@@ -5791,6 +5822,65 @@ if(skill_Boom_Poison_List.get(i).get_Skill_Status() >= 3){
 
 
 
+        //경고 그리기
+
+//            int warning_Time = 0;
+//            boolean warning_Flag = false;
+
+            if(warning_Flag) {
+                if (warning_Time > 255) {
+                    warning_Time = 255;
+                }
+
+                paint.setAlpha(warning_Time);
+                if (warning_Time >= 255) {
+                    warning_Add_Flag = false;
+                    warning_Time_Cycle++;
+
+                    if(warning_Time_Cycle > 6){
+                        warning_Time_Cycle = 0;
+                        warning_Flag = false;
+                        warning_Marlin_Flag = false;
+                    }
+
+                } else if (warning_Time <= 100) {
+                    warning_Add_Flag = true;
+                }
+
+                if (warning_Add_Flag) {
+                    warning_Time += 25;
+                } else {
+                    warning_Time -= 25;
+                }
+
+
+                if(warning_Marlin_Flag){
+//                    warning_img
+                    function_Warning_Marlin();
+                }else if(warning_Wave_Flag){
+                    function_Warning_Wave();
+                }else if(warning_Ell_Flag){
+                    function_Warning_Ell();
+                }
+
+                canvas.drawBitmap(warning_img, null,
+                        new Rect(window_Width / 2 - convertPixelsToDp(95, _context),
+                                window_Height / 2 - convertPixelsToDp(90, _context),
+                                window_Width / 2 - convertPixelsToDp(95, _context) + warning_img.getWidth(),
+                                window_Height / 2 - convertPixelsToDp(90, _context) + warning_img.getHeight()), paint);
+            }
+//            draw.draw_Bmp(canvas, warning_img,
+//                    window_Width / 2 - convertPixelsToDp(150, _context),
+//                    window_Height / 2 - convertPixelsToDp(145, _context));
+
+
+
+
+
+
+
+
+
         //나인패치 적용한 hp 그리기
 
         if(main_Character.get_Max_Hp() == 1){
@@ -6089,142 +6179,11 @@ if(skill_Boom_Poison_List.get(i).get_Skill_Status() >= 3){
 
             draw.draw_Bmp(canvas, backGroundImg_black, 0, 0);
 
-
-            /**
-             * 설명창 띄우기
-             */
-            if(main_Character instanceof Main_Character_Shellfish_Tear1) {
-                draw.draw_Bmp(canvas, explain_Window_Shellfish,
+            draw.draw_Bmp(canvas, explain_Window_MainCharacker,
                         window_Width / 2 - convertPixelsToDp(120, _context),
                         window_Height / 2 - convertPixelsToDp(220, _context));
-            }
-            else if(main_Character instanceof Main_Character_Shellfish_Tear2) {
-                draw.draw_Bmp(canvas, explain_Window_Shellfish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Shellfish_Tear3) {
-                draw.draw_Bmp(canvas, explain_Window_Shellfish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Shellfish_Tear4) {
-                draw.draw_Bmp(canvas, explain_Window_Shellfish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Shellfish_Tear5) {
-                draw.draw_Bmp(canvas, explain_Window_Shellfish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Shellfish_Tear6) {
-                draw.draw_Bmp(canvas, explain_Window_Shellfish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Shellfish_Tear7) {
-                draw.draw_Bmp(canvas, explain_Window_Shellfish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Shellfish_Tear8) {
-                draw.draw_Bmp(canvas, explain_Window_Shellfish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Shellfish_Tear9) {
-                draw.draw_Bmp(canvas, explain_Window_Shellfish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Shellfish_Tear10) {
-                draw.draw_Bmp(canvas, explain_Window_Shellfish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }
 
 
-
-
-            else if(main_Character instanceof Main_Character_Fish_Tear1){
-                draw.draw_Bmp(canvas, explain_Window_Fish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Fish_Tear2){
-                draw.draw_Bmp(canvas, explain_Window_Fish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Fish_Tear3){
-                draw.draw_Bmp(canvas, explain_Window_Fish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Fish_Tear4){
-                draw.draw_Bmp(canvas, explain_Window_Fish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Fish_Tear5){
-                draw.draw_Bmp(canvas, explain_Window_Fish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Fish_Tear6){
-                draw.draw_Bmp(canvas, explain_Window_Fish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Fish_Tear7){
-                draw.draw_Bmp(canvas, explain_Window_Fish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Fish_Tear8){
-                draw.draw_Bmp(canvas, explain_Window_Fish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Fish_Tear9){
-                draw.draw_Bmp(canvas, explain_Window_Fish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Fish_Tear10){
-                draw.draw_Bmp(canvas, explain_Window_Fish,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }
-
-
-
-
-            else if(main_Character instanceof Main_Character_Moulluse_Tear1){
-                draw.draw_Bmp(canvas, explain_Window_Moullusc,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Moulluse_Tear2){
-                draw.draw_Bmp(canvas, explain_Window_Moullusc,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Moulluse_Tear3){
-                draw.draw_Bmp(canvas, explain_Window_Moullusc,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Moulluse_Tear4){
-                draw.draw_Bmp(canvas, explain_Window_Moullusc,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Moulluse_Tear5){
-                draw.draw_Bmp(canvas, explain_Window_Moullusc,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Moulluse_Tear6){
-                draw.draw_Bmp(canvas, explain_Window_Moullusc,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Moulluse_Tear7){
-                draw.draw_Bmp(canvas, explain_Window_Moullusc,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Moulluse_Tear8){
-                draw.draw_Bmp(canvas, explain_Window_Moullusc,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Moulluse_Tear9){
-                draw.draw_Bmp(canvas, explain_Window_Moullusc,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }else if(main_Character instanceof Main_Character_Moulluse_Tear10){
-                draw.draw_Bmp(canvas, explain_Window_Moullusc,
-                        window_Width / 2 - convertPixelsToDp(120, _context),
-                        window_Height / 2 - convertPixelsToDp(220, _context));
-            }
 
 
 
@@ -6608,6 +6567,52 @@ public void add_Fish_Touch_Marlin(){
     fish_List.add(fish_Touch_Marlin);
 }
 
+/**
+ * 청 새치 주의!
+ */
+public void wave_Marlin(){
+    warning_Flag = true;
+    warning_Marlin_Flag = true;
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight(), -convertPixelsToDp(500, _context) + convertPixelsToDp( random.nextInt(300)*-1, _context));
+    fish_List.add(fish_Touch_Marlin);
+}
+
 
 
     /**
@@ -6686,6 +6691,10 @@ public void add_Fish_Touch_Marlin(){
      * 전기뱀장어 추가
      */
     public void add_Fish_Touch_Ell(){
+
+        warning_Flag = true;
+        warning_Ell_Flag = true;
+
         fish_Touch_Ell = new Fish_Touch_Ell(window_Width, 1, fish_Touch_Ell_img[0].getWidth(), fish_Touch_Ell_img[0].getHeight());       //오징어 생성
 
         if(first_Ell){
@@ -6963,12 +6972,15 @@ public void add_Fish_Touch_Marlin(){
      */
     public void add_Ground_Wave(){
 
+        warning_Flag = true;
+        warning_Wave_Flag = true;
+
         float wave_X_Point = 30 + (float)Math.random() * (window_Width-100);         //생성될 위치
 
         for(int i=0; i<30; i++) {
             ground_drag_wave = new Ground_Drag_Wave(window_Width,
                     ground_Drag_Wave_img[0].getWidth(),
-                    ground_Drag_Wave_img[0].getHeight() , 1, ground_Drag_Wave_img[1].getWidth(), ground_Drag_Wave_img[0].getHeight(), wave_X_Point, -convertPixelsToDp(i*15, _context));
+                    ground_Drag_Wave_img[0].getHeight() , 1, ground_Drag_Wave_img[1].getWidth(), ground_Drag_Wave_img[0].getHeight(), wave_X_Point, -convertPixelsToDp(500, _context) - convertPixelsToDp(i*15, _context));
 
             ground_List.add(ground_drag_wave); //파도
         }
@@ -7003,7 +7015,6 @@ public void add_Fish_Touch_Marlin(){
      */
     Land_Mark land_Mark;
     int land_Mark_Class = 1;
-    int land_Mark_Img_View_Separate[] = new int[3];
 
     public void add_Ground_Land_Mark(){
         //이 부분 고칠
@@ -7048,9 +7059,6 @@ public void add_Fish_Touch_Marlin(){
         land_Mark.set_Class_Num(land_Mark_Class);
         land_Mark_Class++;
 
-            land_Mark_Img_View_Separate[0] *= 10;
-            land_Mark_Img_View_Separate[1] *= 10;
-            land_Mark_Img_View_Separate[2] *= 10;
 
         ground_List.add(land_Mark);
 
@@ -8116,7 +8124,7 @@ public void skill_Ground_Attack(){
                         }
 
 
-                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
+                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Randmark_Damege_Temp);
                         soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
                         Score+=random.nextInt(5);     //점수 추가
                         money+=character_Randmark_Damege_Temp;
@@ -8493,363 +8501,1025 @@ public void skill_Ground_Attack(){
 
 
                         //진화 성공시
-                        int rand_Temp = random.nextInt(100);
+                        int rand_Temp = random.nextInt(100);    //진화 여부
+                        int rand_Temp2 = random.nextInt(100);   //보존, 퇴화 여부
+                        int rand_Temp3 = random.nextInt(100);   //종류 선택
+                        //진화 확률 = 0티어 플랑크톤 일때 100 %
+                        //1티어 일때 90%, 2티어 80%, 3티어 70%, 4티어 60%, 5티어 50%, 6티어 40%, 7티어 30%, 6티어 20%, 9티어, 10%
 
-                        if (main_Character.get_Tear() == 0) {
-                            if (rand_Temp < 30) {
-                                //메모리 관리
+                        if((main_Character.get_Tear() == 0)){
+
+                            Log.e("a","asdasdsad@@@");
+
+                            //메모리 관리 기법
+
+                            //0티어 진화
+                            if (rand_Temp3 <= 25) {
                                 game_thread.function_Explain_Window_Shellfish_Tear_1();
                                 main_Character = new Main_Character_Shellfish_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
 
-                            } else if (rand_Temp < 60) {
-                                //메모리 관리
+                            } else if (rand_Temp3 <= 50) {
                                 game_thread.function_Explain_Window_Fish_Tear_1();
                                 main_Character = new Main_Character_Fish_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
 
 
-                            } else {
+                            } else if(rand_Temp3 <= 75){
                                 //메모리 관리
                                 game_thread.function_Explain_Window_Moulluse_Tear_1();
                                 main_Character = new Main_Character_Moulluse_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-
+                            } else {
+                                game_thread.function_Explain_Window_Plankton_Tear_2();
+                                main_Character = new Main_Character_Plankton_2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
                             }
+                            Log.e("a","asdasdsad###");
+
                             main_Character.set_Tear(1);
-                        } else if (main_Character.get_Tear() == 1) {
-
-                            //메모리 관리 기법
-                            if (main_Character instanceof Main_Character_Shellfish_Tear1) {
-                                explain_Window_Shellfish.recycle();
-                                explain_Window_Shellfish = null;
-
-                            } else if (main_Character instanceof Main_Character_Fish_Tear1) {
-                                explain_Window_Fish.recycle();
-                                explain_Window_Fish = null;
-                            } else if (main_Character instanceof Main_Character_Moulluse_Tear1) {
-                                explain_Window_Moullusc.recycle();
-                                explain_Window_Moullusc = null;
-                            }
-
-
-                            if (rand_Temp < 30) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Shellfish_Tear_2();
-                                main_Character = new Main_Character_Shellfish_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-
-                            } else if (rand_Temp < 60) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Fish_Tear_2();
-                                game_thread.function_Skill_Thorn_img();
-                                main_Character = new Main_Character_Fish_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            } else {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Moulluse_Tear_2();
-                                main_Character = new Main_Character_Moulluse_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-
-                            }
-                            main_Character.set_Tear(2);
-                        } else if (main_Character.get_Tear() == 2) {
-
-
-                            //메모리 관리 기법
-                            if (main_Character instanceof Main_Character_Shellfish_Tear2) {
-                                explain_Window_Shellfish.recycle();
-                                explain_Window_Shellfish = null;
-                            } else if (main_Character instanceof Main_Character_Fish_Tear2) {
-//                                game_thread.recycle_Skill_Thorn_img();
-                                explain_Window_Fish.recycle();
-                                explain_Window_Fish = null;
-                            } else if (main_Character instanceof Main_Character_Moulluse_Tear2) {
-                                explain_Window_Moullusc.recycle();
-                                explain_Window_Moullusc = null;
-                            }
-
-
-                            if (rand_Temp < 30) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Shellfish_Tear_3();
-                                main_Character = new Main_Character_Shellfish_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-
-                            } else if (rand_Temp < 60) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Fish_Tear_3();
-                                game_thread.function_Skill_Teeth_mine_img();
-                                main_Character = new Main_Character_Fish_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            } else {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Moulluse_Tear_3();
-                                game_thread.function_Skill_Slow_Cloud_img();
-                                main_Character = new Main_Character_Moulluse_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            }
-                            main_Character.set_Tear(3);
-                        } else if (main_Character.get_Tear() == 3) {
-
-
-                            //메모리 관리 기법
-                            if (main_Character instanceof Main_Character_Shellfish_Tear3) {
-                                explain_Window_Shellfish.recycle();
-                                explain_Window_Shellfish = null;
-                            } else if (main_Character instanceof Main_Character_Fish_Tear3) {
-//                                game_thread.recycle_Skill_Teeth_mine_img();
-                                explain_Window_Fish.recycle();
-                                explain_Window_Fish = null;
-                            } else if (main_Character instanceof Main_Character_Moulluse_Tear3) {
-//                                game_thread.recycle_Skill_Slow_Cloud_img();
-                                explain_Window_Moullusc.recycle();
-                                explain_Window_Moullusc = null;
-                            }
-
-
-                            if (rand_Temp < 30) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Shellfish_Tear_4();
-                                game_thread.function_Skill_Crab_img();
-                                main_Character = new Main_Character_Shellfish_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            } else if (rand_Temp < 60) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Fish_Tear_4();
-                                game_thread.function_Skill_earthquake_img();
-                                main_Character = new Main_Character_Fish_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            } else {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Moulluse_Tear_4();
-                                game_thread.function_Skill_Butter_img();
-                                main_Character = new Main_Character_Moulluse_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            }
-                            main_Character.set_Tear(4);
-                        } else if (main_Character.get_Tear() == 4) {
-
-
-                            //메모리 관리 기법
-                            if (main_Character instanceof Main_Character_Shellfish_Tear4) {
-                                explain_Window_Shellfish.recycle();
-                                explain_Window_Shellfish = null;
-//                                game_thread.recycle_Skill_Crab_img();
-                            } else if (main_Character instanceof Main_Character_Fish_Tear4) {
-//                                game_thread.recycle_Skill_earthquake_img();
-                                explain_Window_Fish.recycle();
-                                explain_Window_Fish = null;
-                            } else if (main_Character instanceof Main_Character_Moulluse_Tear4) {
-//                                game_thread.recycle_Skill_Butter_img();
-                                explain_Window_Moullusc.recycle();
-                                explain_Window_Moullusc = null;
-                            }
-
-
-                            if (rand_Temp < 30) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Shellfish_Tear_5();
-                                game_thread.function_Skill_Soycrab_img();
-                                main_Character = new Main_Character_Shellfish_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            } else if (rand_Temp < 60) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Fish_Tear_5();
-                                game_thread.function_Skill_Teeth_mine2_img();
-                                main_Character = new Main_Character_Fish_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            } else {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Moulluse_Tear_5();
-                                game_thread.function_Skill_Fork_img();
-                                main_Character = new Main_Character_Moulluse_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            }
-                            main_Character.set_Tear(5);
-                        } else if (main_Character.get_Tear() == 5) {
-
-                            //메모리 관리 기법
-                            if (main_Character instanceof Main_Character_Shellfish_Tear5) {
-//                                game_thread.recycle_Skill_Soycrab_img();
-                                explain_Window_Shellfish.recycle();
-                                explain_Window_Shellfish = null;
-                            } else if (main_Character instanceof Main_Character_Fish_Tear5) {
-//                                game_thread.recycle_Skill_Teeth_mine2_img();
-                                explain_Window_Fish.recycle();
-                                explain_Window_Fish = null;
-                            } else if (main_Character instanceof Main_Character_Moulluse_Tear5) {
-//                                game_thread.recycle_Skill_Fork_img();
-                                explain_Window_Moullusc.recycle();
-                                explain_Window_Moullusc = null;
-                            }
-
-
-                            if (rand_Temp < 30) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Shellfish_Tear_6();
-                                game_thread.function_Skill_Thorn2_img();
-                                main_Character = new Main_Character_Shellfish_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            } else if (rand_Temp < 60) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Fish_Tear_6();
-                                main_Character = new Main_Character_Fish_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-
-                            } else {//메모리 관리
-                                game_thread.function_Explain_Window_Moulluse_Tear_6();
-                                game_thread.function_Skill_Laser_img();
-                                main_Character = new Main_Character_Moulluse_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            }
-                            main_Character.set_Tear(6);
-                        } else if (main_Character.get_Tear() == 6) {
-
-                            //메모리 관리 기법
-                            if (main_Character instanceof Main_Character_Shellfish_Tear6) {
-//                                game_thread.recycle_Skill_Thorn2_img();
-                                explain_Window_Shellfish.recycle();
-                                explain_Window_Shellfish = null;
-                            } else if (main_Character instanceof Main_Character_Fish_Tear6) {
-                                explain_Window_Fish.recycle();
-                                explain_Window_Fish = null;
-                            } else if (main_Character instanceof Main_Character_Moulluse_Tear6) {
-//                                game_thread.recycle_Skill_Laser_img();
-                                explain_Window_Moullusc.recycle();
-                                explain_Window_Moullusc = null;
-                            }
-
-
-                            if (rand_Temp < 30) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Shellfish_Tear_7();
-                                game_thread.function_Skill_fry_img();
-                                main_Character = new Main_Character_Shellfish_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            } else if (rand_Temp < 60) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Fish_Tear_7();
-                                game_thread.function_Skill_lightnign_img();
-                                main_Character = new Main_Character_Fish_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            } else {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Moulluse_Tear_7();
-                                main_Character = new Main_Character_Moulluse_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-
-                            }
-                            main_Character.set_Tear(7);
-                        } else if (main_Character.get_Tear() == 7) {
-
-                            //메모리 관리 기법
-                            if (main_Character instanceof Main_Character_Shellfish_Tear7) {
-//                                game_thread.recycle_Skill_fry_img();
-                                explain_Window_Shellfish.recycle();
-                                explain_Window_Shellfish = null;
-                            } else if (main_Character instanceof Main_Character_Fish_Tear7) {
-//                                game_thread.recycle_Skill_lightnign_img();
-                                explain_Window_Fish.recycle();
-                                explain_Window_Fish = null;
-                            } else if (main_Character instanceof Main_Character_Moulluse_Tear7) {
-                                explain_Window_Moullusc.recycle();
-                                explain_Window_Moullusc = null;
-                            }
-
-                            if (rand_Temp < 30) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Shellfish_Tear_8();
-                                game_thread.function_Skill_Crab_img();
-                                main_Character = new Main_Character_Shellfish_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            } else if (rand_Temp < 60) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Fish_Tear_8();
-                                game_thread.function_Skill_lightnign1_img();
-                                main_Character = new Main_Character_Fish_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            } else {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Moulluse_Tear_8();
-                                game_thread.function_Skill_Boom_Poison_img();
-                                main_Character = new Main_Character_Moulluse_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            }
-                            main_Character.set_Tear(8);
-                        } else if (main_Character.get_Tear() == 8) {
-
-                            //메모리 관리 기법
-                            if (main_Character instanceof Main_Character_Shellfish_Tear8) {
-//                                game_thread.recycle_Skill_Crab_img();
-                                explain_Window_Shellfish.recycle();
-                                explain_Window_Shellfish = null;
-                            } else if (main_Character instanceof Main_Character_Fish_Tear8) {
-//                                game_thread.recycle_Skill_lightnign1_img();
-                                explain_Window_Fish.recycle();
-                                explain_Window_Fish = null;
-                            } else if (main_Character instanceof Main_Character_Moulluse_Tear8) {
-//                                game_thread.recycle_Skill_Boom_Poison_img();
-                                explain_Window_Moullusc.recycle();
-                                explain_Window_Moullusc = null;
-                            }
-
-                            if (rand_Temp < 30) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Shellfish_Tear_9();
-                                main_Character = new Main_Character_Shellfish_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                                game_thread.function_Skill_Wave_img();
-                            } else if (rand_Temp < 60) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Fish_Tear_9();
-                                main_Character = new Main_Character_Fish_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                                game_thread.function_Skill_Sea_Snake_img();
-                            } else {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Moulluse_Tear_9();
-                                game_thread.function_Skill_wall_img();
-                                main_Character = new Main_Character_Moulluse_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            }
-                            main_Character.set_Tear(9);
-                        } else if (main_Character.get_Tear() == 9) {
-
-                            //메모리 관리 기법
-                            if (main_Character instanceof Main_Character_Shellfish_Tear8) {
-//                                game_thread.recycle_Skill_Wave_img();
-                                explain_Window_Shellfish.recycle();
-                                explain_Window_Shellfish = null;
-                            } else if (main_Character instanceof Main_Character_Fish_Tear8) {
-//                                game_thread.recycle_Skill_Sea_Snake_img();
-                                explain_Window_Fish.recycle();
-                                explain_Window_Fish = null;
-                            } else if (main_Character instanceof Main_Character_Moulluse_Tear8) {
-//                                game_thread.recycle_Skill_wall_img();
-                                explain_Window_Moullusc.recycle();
-                                explain_Window_Moullusc = null;
-                            }
-
-                            if (rand_Temp < 30) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Shellfish_Tear_10();
-                                game_thread.function_Skill_stomp_img();
-                                main_Character = new Main_Character_Shellfish_Tear10(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            } else if (rand_Temp < 60) {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Fish_Tear_10();
-                                game_thread.function_Skill_Thorn_img();
-                                main_Character = new Main_Character_Fish_Tear10(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            } else {
-                                //메모리 관리
-                                game_thread.function_Explain_Window_Moulluse_Tear_10();
-                                game_thread.function_Skill_Poison123_img();
-                                main_Character = new Main_Character_Moulluse_Tear10(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
-                            }
-                            main_Character.set_Tear(10);
                         }
+
+                        else if((main_Character.get_Tear() == 1) ){
+
+                            //메모리 관리 기법
+                            explain_Window_MainCharacker.recycle();
+                            explain_Window_MainCharacker = null;
+
+                            if(rand_Temp <= 90){
+                                //1티어 진화 확률 90%
+
+                                if (rand_Temp3 <= 25) {
+                                    game_thread.function_Explain_Window_Shellfish_Tear_2();
+                                    main_Character = new Main_Character_Shellfish_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                } else if (rand_Temp3 <= 50) {
+                                    game_thread.function_Explain_Window_Fish_Tear_2();
+                                    main_Character = new Main_Character_Fish_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Thorn_img();
+
+
+                                } else if(rand_Temp3 <= 75){
+                                    //메모리 관리
+                                    game_thread.function_Explain_Window_Moulluse_Tear_2();
+                                    main_Character = new Main_Character_Moulluse_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                } else {
+                                    game_thread.function_Explain_Window_Plankton_Tear_3();
+                                    main_Character = new Main_Character_Plankton_3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                }
+                                main_Character.set_Tear(2);
+
+
+                            }else{
+                                //1티어 전이 확률 90%
+                                //1티어 퇴화 확률 10%
+                                if(rand_Temp2 <= 90){
+                                    //1티어 전이
+                                    //0티어 진화
+                                    if (rand_Temp3 <= 25) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_1();
+                                        main_Character = new Main_Character_Shellfish_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    } else if (rand_Temp3 <= 50) {
+                                        game_thread.function_Explain_Window_Fish_Tear_1();
+                                        main_Character = new Main_Character_Fish_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+
+                                    } else if(rand_Temp3 <= 75){
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_1();
+                                        main_Character = new Main_Character_Moulluse_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    } else {
+                                        game_thread.function_Explain_Window_Plankton_Tear_2();
+                                        main_Character = new Main_Character_Plankton_2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    }
+                                    main_Character.set_Tear(1);
+
+                                }else {
+                                    //1티어 퇴화
+                                    game_thread.function_Explain_Window_Plankton_Tear_1();
+                                    main_Character = new Main_Character_Plankton_1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                }
+
+                            }
+                        }
+
+
+                        else if((main_Character.get_Tear() == 2) ){
+
+                            //메모리 관리 기법
+                            explain_Window_MainCharacker.recycle();
+                            explain_Window_MainCharacker = null;
+
+                            if(rand_Temp <= 80){
+                                //2티어 진화 확률 80%
+
+                                if (rand_Temp3 <= 25) {
+                                    game_thread.function_Explain_Window_Shellfish_Tear_3();
+                                    main_Character = new Main_Character_Shellfish_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+
+
+                                } else if (rand_Temp3 <= 50) {
+                                    game_thread.function_Explain_Window_Fish_Tear_3();
+                                    main_Character = new Main_Character_Fish_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Teeth_mine_img();
+
+                                } else if(rand_Temp3 <= 75){
+                                    //메모리 관리
+                                    game_thread.function_Explain_Window_Moulluse_Tear_3();
+                                    main_Character = new Main_Character_Moulluse_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Slow_Cloud_img();
+
+                                } else {
+                                    game_thread.function_Explain_Window_Plankton_Tear_4();
+                                    main_Character = new Main_Character_Plankton_4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                }
+                                main_Character.set_Tear(3);
+
+
+                            }else{
+                                //2티어 전이 확률 80%
+                                //2티어 퇴화 확률 20%
+                                if(rand_Temp2 <= 80){
+                                    //2티어 전이
+                                    if (rand_Temp3 <= 25) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_2();
+                                        main_Character = new Main_Character_Shellfish_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    } else if (rand_Temp3 <= 50) {
+                                        game_thread.function_Explain_Window_Fish_Tear_2();
+                                        main_Character = new Main_Character_Fish_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Thorn_img();
+
+                                    } else if(rand_Temp3 <= 75){
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_2();
+                                        main_Character = new Main_Character_Moulluse_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    } else {
+                                        game_thread.function_Explain_Window_Plankton_Tear_3();
+                                        main_Character = new Main_Character_Plankton_3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    }
+                                    main_Character.set_Tear(2);
+                                }else {
+                                    //2티어 퇴화
+                                    if (rand_Temp3 <= 25) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_1();
+                                        main_Character = new Main_Character_Shellfish_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    } else if (rand_Temp3 <= 50) {
+                                        game_thread.function_Explain_Window_Fish_Tear_1();
+                                        main_Character = new Main_Character_Fish_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+
+                                    } else if(rand_Temp3 <= 75){
+                                        //메모리 관리
+                                       game_thread.function_Explain_Window_Moulluse_Tear_1();
+                                        main_Character = new Main_Character_Moulluse_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    } else {
+                                        game_thread.function_Explain_Window_Plankton_Tear_2();
+                                        main_Character = new Main_Character_Plankton_2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    }
+                                    main_Character.set_Tear(1);
+                                }
+
+                            }
+                        }
+
+
+                        else if((main_Character.get_Tear() == 3) ){
+
+                            //메모리 관리 기법
+                            explain_Window_MainCharacker.recycle();
+                            explain_Window_MainCharacker = null;
+
+                            if(rand_Temp <= 70){
+
+                                if (rand_Temp3 <= 25) {
+                                    game_thread.function_Explain_Window_Shellfish_Tear_4();
+                                    main_Character = new Main_Character_Shellfish_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Crab_img();
+
+                                } else if (rand_Temp3 <= 50) {
+                                    game_thread.function_Explain_Window_Fish_Tear_4();
+                                    main_Character = new Main_Character_Fish_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_earthquake_img();
+
+                                } else if(rand_Temp3 <= 75){
+                                    //메모리 관리
+                                    game_thread.function_Explain_Window_Moulluse_Tear_4();
+                                    main_Character = new Main_Character_Moulluse_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Butter_img();
+
+                                } else {
+                                    game_thread.function_Explain_Window_Plankton_Tear_5();
+                                    main_Character = new Main_Character_Plankton_5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                }
+                                main_Character.set_Tear(4);
+
+                            }else{
+                                if(rand_Temp2 <= 70){
+                                    if (rand_Temp3 <= 25) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_3();
+                                        main_Character = new Main_Character_Shellfish_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+
+
+                                    } else if (rand_Temp3 <= 50) {
+                                        game_thread.function_Explain_Window_Fish_Tear_3();
+                                        main_Character = new Main_Character_Fish_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Teeth_mine_img();
+
+                                    } else if(rand_Temp3 <= 75){
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_3();
+                                        main_Character = new Main_Character_Moulluse_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Slow_Cloud_img();
+
+                                    } else {
+                                        game_thread.function_Explain_Window_Plankton_Tear_4();
+                                        main_Character = new Main_Character_Plankton_4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    }
+                                    main_Character.set_Tear(3);
+                                }else {
+                                    if (rand_Temp3 <= 25) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_2();
+                                        main_Character = new Main_Character_Shellfish_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    } else if (rand_Temp3 <= 50) {
+                                        game_thread.function_Explain_Window_Fish_Tear_2();
+                                        main_Character = new Main_Character_Fish_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Thorn_img();
+
+                                    } else if(rand_Temp3 <= 75){
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_2();
+                                        main_Character = new Main_Character_Moulluse_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+
+
+                                    } else {
+                                        game_thread.function_Explain_Window_Plankton_Tear_3();
+                                        main_Character = new Main_Character_Plankton_3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    }
+                                    main_Character.set_Tear(2);
+                                }
+
+                            }
+                        }
+
+
+                        else if((main_Character.get_Tear() == 4) ){
+
+                            //메모리 관리 기법
+                            explain_Window_MainCharacker.recycle();
+                            explain_Window_MainCharacker = null;
+
+                            if(rand_Temp <= 60){
+
+                                if (rand_Temp3 <= 33) {
+                                    game_thread.function_Explain_Window_Shellfish_Tear_5();
+                                    main_Character = new Main_Character_Shellfish_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Soycrab_img();
+
+                                } else if (rand_Temp3 <= 66) {
+                                    game_thread.function_Explain_Window_Fish_Tear_5();
+                                    main_Character = new Main_Character_Fish_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Teeth_mine2_img();
+
+                                } else {
+                                    //메모리 관리
+                                    game_thread.function_Explain_Window_Moulluse_Tear_5();
+                                    main_Character = new Main_Character_Moulluse_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Fork_img();
+
+                                }
+                                main_Character.set_Tear(5);
+
+                            }else{
+                                if(rand_Temp2 <= 60){
+
+                                    if (rand_Temp3 <= 25) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_4();
+                                        main_Character = new Main_Character_Shellfish_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Crab_img();
+
+                                    } else if (rand_Temp3 <= 50) {
+                                        game_thread.function_Explain_Window_Fish_Tear_4();
+                                        main_Character = new Main_Character_Fish_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_earthquake_img();
+
+                                    } else if(rand_Temp3 <= 75){
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_4();
+                                        main_Character = new Main_Character_Moulluse_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Butter_img();
+
+                                    } else {
+                                        game_thread.function_Explain_Window_Plankton_Tear_5();
+                                        main_Character = new Main_Character_Plankton_5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    }
+                                    main_Character.set_Tear(4);
+
+                                }else {
+
+                                    if (rand_Temp3 <= 25) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_3();
+                                        main_Character = new Main_Character_Shellfish_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    } else if (rand_Temp3 <= 50) {
+                                        game_thread.function_Explain_Window_Fish_Tear_3();
+                                        main_Character = new Main_Character_Fish_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Teeth_mine_img();
+
+                                    } else if(rand_Temp3 <= 75){
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_3();
+                                        main_Character = new Main_Character_Moulluse_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Slow_Cloud_img();
+
+                                    } else {
+                                        game_thread.function_Explain_Window_Plankton_Tear_4();
+                                        main_Character = new Main_Character_Plankton_4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    }
+                                    main_Character.set_Tear(3);
+
+                                }
+
+                            }
+                        }
+
+
+                        else if((main_Character.get_Tear() == 5) ){
+
+                            //메모리 관리 기법
+                            explain_Window_MainCharacker.recycle();
+                            explain_Window_MainCharacker = null;
+
+                            if(rand_Temp <= 50){
+
+                                if (rand_Temp3 <= 33) {
+                                    game_thread.function_Explain_Window_Shellfish_Tear_6();
+                                    main_Character = new Main_Character_Shellfish_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Thorn2_img();
+
+                                } else if (rand_Temp3 <= 66) {
+                                    game_thread.function_Explain_Window_Fish_Tear_6();
+                                    main_Character = new Main_Character_Fish_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+
+                                } else {
+                                    //메모리 관리
+                                    game_thread.function_Explain_Window_Moulluse_Tear_6();
+                                    main_Character = new Main_Character_Moulluse_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Laser_img();
+
+                                }
+                                main_Character.set_Tear(6);
+
+                            }else{
+                                if(rand_Temp2 <= 50){
+
+                                    if (rand_Temp3 <= 33) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_5();
+                                        main_Character = new Main_Character_Shellfish_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Soycrab_img();
+
+                                    } else if (rand_Temp3 <= 66) {
+                                        game_thread.function_Explain_Window_Fish_Tear_5();
+                                        main_Character = new Main_Character_Fish_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Teeth_mine2_img();
+
+                                    } else {
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_5();
+                                        main_Character = new Main_Character_Moulluse_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Fork_img();
+
+                                    }
+                                    main_Character.set_Tear(5);
+
+                                }else {
+
+                                    if (rand_Temp3 <= 25) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_4();
+                                        main_Character = new Main_Character_Shellfish_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Crab_img();
+
+                                    } else if (rand_Temp3 <= 50) {
+                                        game_thread.function_Explain_Window_Fish_Tear_4();
+                                        main_Character = new Main_Character_Fish_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    } else if(rand_Temp3 <= 75){
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_4();
+                                        main_Character = new Main_Character_Moulluse_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Butter_img();
+
+                                    } else {
+                                        game_thread.function_Explain_Window_Plankton_Tear_5();
+                                        main_Character = new Main_Character_Plankton_5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    }
+                                    main_Character.set_Tear(4);
+
+                                }
+
+                            }
+                        }
+
+
+
+                        else if((main_Character.get_Tear() == 6) ){
+
+                            //메모리 관리 기법
+                            explain_Window_MainCharacker.recycle();
+                            explain_Window_MainCharacker = null;
+
+                            if(rand_Temp <= 40){
+
+                                if (rand_Temp3 <= 33) {
+                                    game_thread.function_Explain_Window_Shellfish_Tear_7();
+                                    main_Character = new Main_Character_Shellfish_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_fry_img();
+
+                                } else if (rand_Temp3 <= 66) {
+                                    game_thread.function_Explain_Window_Fish_Tear_7();
+                                    main_Character = new Main_Character_Fish_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_lightnign_img();
+
+                                } else {
+                                    //메모리 관리
+                                    game_thread.function_Explain_Window_Moulluse_Tear_7();
+                                    main_Character = new Main_Character_Moulluse_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+
+                                }
+                                main_Character.set_Tear(7);
+
+                            }else{
+                                if(rand_Temp2 <= 40){
+
+                                    if (rand_Temp3 <= 33) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_6();
+                                        main_Character = new Main_Character_Shellfish_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Thorn2_img();
+
+                                    } else if (rand_Temp3 <= 66) {
+                                        game_thread.function_Explain_Window_Fish_Tear_6();
+                                        main_Character = new Main_Character_Fish_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    } else {
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_6();
+                                        main_Character = new Main_Character_Moulluse_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Laser_img();
+                                    }
+                                    main_Character.set_Tear(6);
+
+                                }else {
+
+                                    if (rand_Temp3 <= 33) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_5();
+                                        main_Character = new Main_Character_Shellfish_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Soycrab_img();
+
+                                    } else if (rand_Temp3 <= 66) {
+                                        game_thread.function_Explain_Window_Fish_Tear_5();
+                                        main_Character = new Main_Character_Fish_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Teeth_mine2_img();
+                                    } else {
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_5();
+                                        main_Character = new Main_Character_Moulluse_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Fork_img();
+                                    }
+                                    main_Character.set_Tear(5);
+
+                                }
+
+                            }
+                        }
+
+
+
+                        else if((main_Character.get_Tear() == 7) ){
+
+                            //메모리 관리 기법
+                            explain_Window_MainCharacker.recycle();
+                            explain_Window_MainCharacker = null;
+
+                            if(rand_Temp <= 30){
+
+                                if (rand_Temp3 <= 33) {
+                                    game_thread.function_Explain_Window_Shellfish_Tear_8();
+                                    main_Character = new Main_Character_Shellfish_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Crab_img();
+
+                                } else if (rand_Temp3 <= 66) {
+                                    game_thread.function_Explain_Window_Fish_Tear_8();
+                                    main_Character = new Main_Character_Fish_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_lightnign1_img();
+
+                                } else {
+                                    //메모리 관리
+                                    game_thread.function_Explain_Window_Moulluse_Tear_8();
+                                    main_Character = new Main_Character_Moulluse_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Boom_Poison_img();
+
+                                }
+                                main_Character.set_Tear(8);
+
+                            }else{
+                                if(rand_Temp2 <= 30){
+
+                                    if (rand_Temp3 <= 33) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_7();
+                                        main_Character = new Main_Character_Shellfish_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                        game_thread.function_Skill_fry_img();
+                                    } else if (rand_Temp3 <= 66) {
+                                        game_thread.function_Explain_Window_Fish_Tear_7();
+                                        main_Character = new Main_Character_Fish_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                        game_thread.function_Skill_lightnign_img();
+                                    } else {
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_7();
+                                        main_Character = new Main_Character_Moulluse_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    }
+                                    main_Character.set_Tear(7);
+
+                                }else {
+
+                                    if (rand_Temp3 <= 33) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_6();
+                                        main_Character = new Main_Character_Shellfish_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Thorn2_img();
+
+                                    } else if (rand_Temp3 <= 66) {
+                                        game_thread.function_Explain_Window_Fish_Tear_6();
+                                        main_Character = new Main_Character_Fish_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    } else {
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_6();
+                                        main_Character = new Main_Character_Moulluse_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Laser_img();
+                                    }
+                                    main_Character.set_Tear(6);
+
+                                }
+
+                            }
+                        }
+
+
+                        else if((main_Character.get_Tear() == 8) ){
+                            //메모리 관리 기법
+                            explain_Window_MainCharacker.recycle();
+                            explain_Window_MainCharacker = null;
+
+                            if(rand_Temp <= 20){
+
+                                if (rand_Temp3 <= 33) {
+                                    game_thread.function_Explain_Window_Shellfish_Tear_9();
+                                    main_Character = new Main_Character_Shellfish_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Wave_img();
+
+                                } else if (rand_Temp3 <= 66) {
+                                    game_thread.function_Explain_Window_Fish_Tear_9();
+                                    main_Character = new Main_Character_Fish_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Sea_Snake_img();
+
+                                } else {
+                                    //메모리 관리
+                                    game_thread.function_Explain_Window_Moulluse_Tear_9();
+                                    main_Character = new Main_Character_Moulluse_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_wall_img();
+                                }
+                                main_Character.set_Tear(9);
+
+                            }else{
+                                if(rand_Temp2 <= 20){
+
+                                    if (rand_Temp3 <= 33) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_8();
+                                        main_Character = new Main_Character_Shellfish_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                        game_thread.function_Skill_Crab_img();
+                                    } else if (rand_Temp3 <= 66) {
+                                        game_thread.function_Explain_Window_Fish_Tear_8();
+                                        main_Character = new Main_Character_Fish_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                        game_thread.function_Skill_lightnign1_img();
+                                    } else {
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_8();
+                                        main_Character = new Main_Character_Moulluse_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_Boom_Poison_img();
+
+                                    }
+                                    main_Character.set_Tear(8);
+
+                                }else {
+
+                                    if (rand_Temp3 <= 33) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_7();
+                                        main_Character = new Main_Character_Shellfish_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                        game_thread.function_Skill_fry_img();
+                                    } else if (rand_Temp3 <= 66) {
+                                        game_thread.function_Explain_Window_Fish_Tear_7();
+                                        main_Character = new Main_Character_Fish_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                        game_thread.function_Skill_lightnign_img();
+                                    } else {
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_7();
+                                        main_Character = new Main_Character_Moulluse_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    }
+                                    main_Character.set_Tear(7);
+
+                                }
+
+                            }
+                        }
+
+
+
+                        else if((main_Character.get_Tear() == 9) ){
+                            //메모리 관리 기법
+                            explain_Window_MainCharacker.recycle();
+                            explain_Window_MainCharacker = null;
+
+                            if(rand_Temp <= 10){
+
+                                if (rand_Temp3 <= 33) {
+                                    game_thread.function_Explain_Window_Shellfish_Tear_10();
+                                    main_Character = new Main_Character_Shellfish_Tear10(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_stomp_img();
+
+                                } else if (rand_Temp3 <= 66) {
+                                    game_thread.function_Explain_Window_Fish_Tear_10();
+                                    main_Character = new Main_Character_Fish_Tear10(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Thorn_img();
+
+                                } else {
+                                    //메모리 관리
+                                    game_thread.function_Explain_Window_Moulluse_Tear_10();
+                                    main_Character = new Main_Character_Moulluse_Tear10(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                    game_thread.function_Skill_Poison123_img();
+
+                                }
+                                main_Character.set_Tear(10);
+
+
+                            }else{
+                                if(rand_Temp2 <= 10){
+
+                                    if (rand_Temp3 <= 33) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_9();
+                                        main_Character = new Main_Character_Shellfish_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                        game_thread.function_Skill_Wave_img();
+                                    } else if (rand_Temp3 <= 66) {
+                                        game_thread.function_Explain_Window_Fish_Tear_9();
+                                        main_Character = new Main_Character_Fish_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                        game_thread.function_Skill_Sea_Snake_img();
+                                    } else {
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_9();
+                                        main_Character = new Main_Character_Moulluse_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                        game_thread.function_Skill_wall_img();
+                                    }
+                                    main_Character.set_Tear(9);
+
+                                }else {
+
+                                    if (rand_Temp3 <= 33) {
+                                        game_thread.function_Explain_Window_Shellfish_Tear_8();
+                                        main_Character = new Main_Character_Shellfish_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                        game_thread.function_Skill_Crab_img();
+                                    } else if (rand_Temp3 <= 66) {
+                                        game_thread.function_Explain_Window_Fish_Tear_8();
+                                        main_Character = new Main_Character_Fish_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                        game_thread.function_Skill_lightnign1_img();
+                                    } else {
+                                        //메모리 관리
+                                        game_thread.function_Explain_Window_Moulluse_Tear_8();
+                                        main_Character = new Main_Character_Moulluse_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                        game_thread.function_Skill_Boom_Poison_img();
+                                    }
+                                    main_Character.set_Tear(8);
+
+                                }
+
+                            }
+                        }
+
+
+
+//                        if (main_Character.get_Tear() == 0) {
+//                            if (rand_Temp < 30) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Shellfish_Tear_1();
+//                                main_Character = new Main_Character_Shellfish_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            } else if (rand_Temp < 60) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Fish_Tear_1();
+//                                main_Character = new Main_Character_Fish_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//
+//                            } else {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Moulluse_Tear_1();
+//                                main_Character = new Main_Character_Moulluse_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//
+//                            }
+//                            main_Character.set_Tear(1);
+//                        } else if (main_Character.get_Tear() == 1) {
+//
+//                            //메모리 관리 기법
+//                                explain_Window_MainCharacker.recycle();
+//                                explain_Window_MainCharacker = null;
+//
+//
+//                            if (rand_Temp < 30) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Shellfish_Tear_2();
+//                                main_Character = new Main_Character_Shellfish_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//
+//                            } else if (rand_Temp < 60) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Fish_Tear_2();
+//                                game_thread.function_Skill_Thorn_img();
+//                                main_Character = new Main_Character_Fish_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            } else {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Moulluse_Tear_2();
+//                                main_Character = new Main_Character_Moulluse_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//
+//                            }
+//                            main_Character.set_Tear(2);
+//                        } else if (main_Character.get_Tear() == 2) {
+//
+//
+//                            //메모리 관리 기법
+//                            explain_Window_MainCharacker.recycle();
+//                            explain_Window_MainCharacker = null;
+//
+//                            if (rand_Temp < 30) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Shellfish_Tear_3();
+//                                main_Character = new Main_Character_Shellfish_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//
+//                            } else if (rand_Temp < 60) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Fish_Tear_3();
+//                                game_thread.function_Skill_Teeth_mine_img();
+//                                main_Character = new Main_Character_Fish_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            } else {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Moulluse_Tear_3();
+//                                game_thread.function_Skill_Slow_Cloud_img();
+//                                main_Character = new Main_Character_Moulluse_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            }
+//                            main_Character.set_Tear(3);
+//                        } else if (main_Character.get_Tear() == 3) {
+//
+//
+//                            //메모리 관리 기법
+//                            explain_Window_MainCharacker.recycle();
+//                            explain_Window_MainCharacker = null;
+//
+//                            if (rand_Temp < 30) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Shellfish_Tear_4();
+//                                game_thread.function_Skill_Crab_img();
+//                                main_Character = new Main_Character_Shellfish_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            } else if (rand_Temp < 60) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Fish_Tear_4();
+//                                game_thread.function_Skill_earthquake_img();
+//                                main_Character = new Main_Character_Fish_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            } else {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Moulluse_Tear_4();
+//                                game_thread.function_Skill_Butter_img();
+//                                main_Character = new Main_Character_Moulluse_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            }
+//                            main_Character.set_Tear(4);
+//                        } else if (main_Character.get_Tear() == 4) {
+//
+//
+//                            //메모리 관리 기법
+//                            explain_Window_MainCharacker.recycle();
+//                            explain_Window_MainCharacker = null;
+//
+//
+//                            if (rand_Temp < 30) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Shellfish_Tear_5();
+//                                game_thread.function_Skill_Soycrab_img();
+//                                main_Character = new Main_Character_Shellfish_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            } else if (rand_Temp < 60) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Fish_Tear_5();
+//                                game_thread.function_Skill_Teeth_mine2_img();
+//                                main_Character = new Main_Character_Fish_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            } else {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Moulluse_Tear_5();
+//                                game_thread.function_Skill_Fork_img();
+//                                main_Character = new Main_Character_Moulluse_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            }
+//                            main_Character.set_Tear(5);
+//                        } else if (main_Character.get_Tear() == 5) {
+//
+//                            //메모리 관리 기법
+//                            explain_Window_MainCharacker.recycle();
+//                            explain_Window_MainCharacker = null;
+//
+//
+//                            if (rand_Temp < 30) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Shellfish_Tear_6();
+//                                game_thread.function_Skill_Thorn2_img();
+//                                main_Character = new Main_Character_Shellfish_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            } else if (rand_Temp < 60) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Fish_Tear_6();
+//                                main_Character = new Main_Character_Fish_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//
+//                            } else {//메모리 관리
+//                                game_thread.function_Explain_Window_Moulluse_Tear_6();
+//                                game_thread.function_Skill_Laser_img();
+//                                main_Character = new Main_Character_Moulluse_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            }
+//                            main_Character.set_Tear(6);
+//                        } else if (main_Character.get_Tear() == 6) {
+//
+//                            //메모리 관리 기법
+//                            explain_Window_MainCharacker.recycle();
+//                            explain_Window_MainCharacker = null;
+//
+//                            if (rand_Temp < 30) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Shellfish_Tear_7();
+//                                game_thread.function_Skill_fry_img();
+//                                main_Character = new Main_Character_Shellfish_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            } else if (rand_Temp < 60) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Fish_Tear_7();
+//                                game_thread.function_Skill_lightnign_img();
+//                                main_Character = new Main_Character_Fish_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            } else {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Moulluse_Tear_7();
+//                                main_Character = new Main_Character_Moulluse_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//
+//                            }
+//                            main_Character.set_Tear(7);
+//                        } else if (main_Character.get_Tear() == 7) {
+//
+//                            //메모리 관리 기법
+//                            explain_Window_MainCharacker.recycle();
+//                            explain_Window_MainCharacker = null;
+//
+//                            if (rand_Temp < 30) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Shellfish_Tear_8();
+//                                game_thread.function_Skill_Crab_img();
+//                                main_Character = new Main_Character_Shellfish_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            } else if (rand_Temp < 60) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Fish_Tear_8();
+//                                game_thread.function_Skill_lightnign1_img();
+//                                main_Character = new Main_Character_Fish_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            } else {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Moulluse_Tear_8();
+//                                game_thread.function_Skill_Boom_Poison_img();
+//                                main_Character = new Main_Character_Moulluse_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            }
+//                            main_Character.set_Tear(8);
+//                        } else if (main_Character.get_Tear() == 8) {
+//
+//
+//                            explain_Window_MainCharacker.recycle();
+//                            explain_Window_MainCharacker = null;
+//
+//                            if (rand_Temp < 30) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Shellfish_Tear_9();
+//                                main_Character = new Main_Character_Shellfish_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                                game_thread.function_Skill_Wave_img();
+//                            } else if (rand_Temp < 60) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Fish_Tear_9();
+//                                main_Character = new Main_Character_Fish_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                                game_thread.function_Skill_Sea_Snake_img();
+//                            } else {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Moulluse_Tear_9();
+//                                game_thread.function_Skill_wall_img();
+//                                main_Character = new Main_Character_Moulluse_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            }
+//                            main_Character.set_Tear(9);
+//                        } else if (main_Character.get_Tear() == 9) {
+//
+//
+//                            explain_Window_MainCharacker.recycle();
+//                            explain_Window_MainCharacker = null;
+//
+//                            if (rand_Temp < 30) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Shellfish_Tear_10();
+//                                game_thread.function_Skill_stomp_img();
+//                                main_Character = new Main_Character_Shellfish_Tear10(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            } else if (rand_Temp < 60) {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Fish_Tear_10();
+//                                game_thread.function_Skill_Thorn_img();
+//                                main_Character = new Main_Character_Fish_Tear10(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            } else {
+//                                //메모리 관리
+//                                game_thread.function_Explain_Window_Moulluse_Tear_10();
+//                                game_thread.function_Skill_Poison123_img();
+//                                main_Character = new Main_Character_Moulluse_Tear10(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//                            }
+//                            main_Character.set_Tear(10);
+//                        }
+
+
+
+
+
 
 
                         //매인 캐릭터가 진화할때마다 메인 캐릭터의 이미지를 변화 시켜준다.
@@ -9034,7 +9704,7 @@ public void skill_Ground_Attack(){
         money = setIntent[1];
 
         Log.e("a", money + "@@");
-        character_Randmark_Damege  = setIntent[2];
+        character_Randmark_Damege = setIntent[2];
         character_Drag_Damege = setIntent[3];
         urchinresistance = setIntent[4];
         lightningresistance = setIntent[5];
@@ -9208,6 +9878,15 @@ public void skill_Ground_Attack(){
                                     enumy_Appear = false;
                                     first_Explain = true;
                                 }
+
+
+                                //청새치 웨이브
+                                if(day_Count == 1) {
+                                    wave_Marlin();
+                                    add_Ground_Wave();
+                                    add_Fish_Touch_Ell();
+                                }
+
 
                                 add_Fish_Touch_Default();
                                 add_Fish_Touch_Default();
@@ -10018,7 +10697,7 @@ public void skill_Ground_Attack(){
         try {
             function_Map_Monster_Recycle_Bitmap();
         }catch (Exception e){
-            Log.e("function_Map_Monster_Recycle_Bitmap", "function_Map_Monster_Recycle_Bitmap");
+            Log.e("function", "function_Map_Monster_Recycle_Bitmap");
         }
         try{
             Log.e("surfaceDestroyed","surfaceDestroyed");
