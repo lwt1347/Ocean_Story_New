@@ -9,10 +9,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     double info[] = new double[50];
+
+    private SoundPool soundPool = new SoundPool(20, AudioManager.STREAM_ALARM, 0); //사운드 앞에 1은 하나만 가져다 놓겠다는 뜻. 나중에 추가 요망
+    private int sound_Effect[] = new int[10];
 
     //sql 라이트
     SQLiteDatabase database;
@@ -45,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
+
         setContentView(R.layout.activity_main);
 
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -53,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.activity_main);
         layout.setBackgroundDrawable(new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.background_start)));
 
+
+        //음향
+        sound_Effect[0] = soundPool.load(this, R.raw.up, 1);      //팝1
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -189,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
 
         startActivityForResult(intent, 1001);
 
-
+        soundPool.play(sound_Effect[0], 0.7F, 0.7F, 0, 0, 1.0F);   //성공
 
 
     }
@@ -213,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
 //        recycleView(findViewById(R.layout.activity_store));
 
 
-
+        soundPool.play(sound_Effect[0], 0.7F, 0.7F, 0, 0, 1.0F);   //성공
 
 
     }

@@ -16,6 +16,16 @@ public class Skill_Body {
         y_Point = y;
     }
 
+    boolean remove_Flag = false;
+    //지우기
+    public void set_Remove(){
+        remove_Flag = true;
+    }
+    public boolean get_Remove(){
+        return remove_Flag;
+    }
+
+
     //위치 가져오기
     public float get_X_Point(){
         return x_Point;

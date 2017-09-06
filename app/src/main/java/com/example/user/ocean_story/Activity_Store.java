@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -32,6 +34,8 @@ public class Activity_Store extends Activity {
     Item_Adapter adapter;
 
 
+
+
     double info [] = new double[50];
     double info_Price[] = new double[50];
 
@@ -44,6 +48,10 @@ public class Activity_Store extends Activity {
 
     NumberFormat f;
     DecimalFormat df = new DecimalFormat("#,##0");
+
+    //효과음
+    private SoundPool soundPool = new SoundPool(20, AudioManager.STREAM_ALARM, 0); //사운드 앞에 1은 하나만 가져다 놓겠다는 뜻. 나중에 추가 요망
+    private int sound_Effect[] = new int[10];                        //효과음
 
 
     //sql 라이트
@@ -61,6 +69,12 @@ public class Activity_Store extends Activity {
 
         money = (TextView) findViewById(R.id.textView12);
         ruby = (TextView) findViewById(R.id.textView13);
+
+        //음향
+        sound_Effect[0] = soundPool.load(this, R.raw.up, 1);      //팝1
+        sound_Effect[1] = soundPool.load(this, R.raw.fail, 1);      //팝1
+
+
 
 
         //데이터 베이스
@@ -367,6 +381,7 @@ public class Activity_Store extends Activity {
             return position;
         }
 
+        boolean buy_Flag = false;
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
@@ -379,6 +394,7 @@ public class Activity_Store extends Activity {
             }else {
                 view = (Activity_Store_Item_View) convertView;
             }
+
 
 
                 Activity_Store_Item item = items.get(position);
@@ -403,17 +419,19 @@ public class Activity_Store extends Activity {
                     public void onClick(View v) {
 
                         Activity_Store_Item item =  (Activity_Store_Item)adapter.getItem(position);
-                 if(item.getName() == "ruby" && 10000000 <= info[1]){
+                 if(item.getName() == "ruby" && 10000000 <= info[1] ){
 //                     Toast.makeText(getApplicationContext(), "" + item.getName(), Toast.LENGTH_SHORT).show();
                      info[0] += 1;
                      info[1] -= 10000000;
+
+
 
                      money.setText("x " + df.format(info[1]));
                      ruby.setText("x " + df.format(info[0]));
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ruby = '"+ info[0] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                  }else if(item.getName() == "structure_damage" && info_Price[2] <= info[1]){
 
                      info[1] -= info_Price[2];  //돈
@@ -434,7 +452,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', structuredamage = '"+ info[2] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "drag_damage" && info_Price[3] <= info[1]){
 
 
@@ -454,7 +472,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', dragdamage = '"+ info[3] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
 
                  }else if(item.getName() == "urchin_resistance" && info_Price[4] <= info[1]){
 
@@ -473,7 +491,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', urchinresistance = '"+ info[4] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                  }else if(item.getName() == "lightning_resistance" && info_Price[5] <= info[1]){
 
                      info[1] -= info_Price[5];  //돈
@@ -491,7 +509,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', lightningresistance = '"+ info[5] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "crocodile_resistance" && info_Price[6] <= info[1]){
 
                      info[1] -= info_Price[6];  //돈
@@ -509,7 +527,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', crocodileresistance = '"+ info[6] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
 
                 }else if(item.getName() == "ft1"){
 
@@ -531,7 +549,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft2 = '"+ info[8] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "ft3"  && info_Price[9] <= info[1]){
 
                      info[1] -= info_Price[9];  //돈
@@ -549,7 +567,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft3 = '"+ info[9] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "ft4"  && info_Price[10] <= info[1]){
 
                      info[1] -= info_Price[10];  //돈
@@ -567,7 +585,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft4 = '"+ info[10] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "ft5"  && info_Price[11] <= info[1]){
 
                      info[1] -= info_Price[11];  //돈
@@ -585,7 +603,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft5 = '"+ info[11] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "ft6"  && info_Price[12] <= info[1]){
 
                      info[1] -= info_Price[12];  //돈
@@ -603,7 +621,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft6 = '"+ info[12] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "ft7"  && info_Price[13] <= info[1]){
 
                      info[1] -= info_Price[13];  //돈
@@ -621,7 +639,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft7 = '"+ info[13] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "ft8"  && info_Price[14] <= info[1]){
 
                      info[1] -= info_Price[14];  //돈
@@ -639,7 +657,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft8 = '"+ info[14] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "ft9"  && info_Price[15] <= info[1]){
 
                      info[1] -= info_Price[15];  //돈
@@ -657,7 +675,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft9 = '"+ info[15] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "ft10"  && info_Price[16] <= info[1]){
 
                      info[1] -= info_Price[16];  //돈
@@ -675,7 +693,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft10 = '"+ info[16] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "st1"){
 
                 }else if(item.getName() == "st2"  && info_Price[18] <= info[1]){
@@ -695,7 +713,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st2 = '"+ info[18] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "st3"  && info_Price[19] <= info[1]){
 
                      info[1] -= info_Price[19];  //돈
@@ -713,7 +731,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st3 = '"+ info[19] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "st4"  && info_Price[20] <= info[1]){
 
                      info[1] -= info_Price[20];  //돈
@@ -731,7 +749,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st4 = '"+ info[20] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "st5"  && info_Price[21] <= info[1]){
 
                      info[1] -= info_Price[21];  //돈
@@ -749,7 +767,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st5 = '"+ info[21] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "st6"  && info_Price[22] <= info[1]){
 
                      info[1] -= info_Price[22];  //돈
@@ -767,7 +785,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st6 = '"+ info[22] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "st7" && info_Price[23] <= info[1]){
 
                      info[1] -= info_Price[23];  //돈
@@ -785,7 +803,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st7 = '"+ info[23] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "st8" && info_Price[24] <= info[1]){
 
                      info[1] -= info_Price[24];  //돈
@@ -803,7 +821,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st8 = '"+ info[24] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                  }else if(item.getName() == "st9" && info_Price[25] <= info[1]){
 
                      info[1] -= info_Price[25];  //돈
@@ -821,7 +839,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st9 = '"+ info[25] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "st10" && info_Price[26] <= info[1]){
 
                      info[1] -= info_Price[26];  //돈
@@ -839,7 +857,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st10 = '"+ info[26] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "mt1"){
 
                 }else if(item.getName() == "mt2"){
@@ -861,7 +879,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt3 = '"+ info[29] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "mt4" && info_Price[30] <= info[1]){
 
                      info[1] -= info_Price[30];  //돈
@@ -879,7 +897,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt4 = '"+ info[30] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "mt5" && info_Price[31] <= info[1]){
 
                      info[1] -= info_Price[31];  //돈
@@ -897,7 +915,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt5 = '"+ info[31] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "mt6" && info_Price[32] <= info[1]){
 
                      info[1] -= info_Price[32];  //돈
@@ -915,7 +933,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt6 = '"+ info[32] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "mt7" && info_Price[33] <= info[1]){
 
                      info[1] -= info_Price[33];  //돈
@@ -933,7 +951,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt7 = '"+ info[33] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "mt8" && info_Price[34] <= info[1]){
 
                      info[1] -= info_Price[34];  //돈
@@ -951,7 +969,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt8 = '"+ info[34] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "mt9" && info_Price[35] <= info[1]){
 
                      info[1] -= info_Price[35];  //돈
@@ -969,7 +987,7 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt9 = '"+ info[35] +"'";
                      database.execSQL(sql);
-
+                     buy_Flag = true;
                 }else if(item.getName() == "mt10" && info_Price[36] <= info[1]){
                      info[1] -= info_Price[36];  //돈
                      info[36]++;         //기술 레벨
@@ -986,10 +1004,24 @@ public class Activity_Store extends Activity {
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt10 = '"+ info[36] +"'";
                      database.execSQL(sql);
+                     buy_Flag = true;
                 }
+
+
+                if(buy_Flag){
+                    soundPool.play(sound_Effect[0], 0.7F, 0.7F, 0, 0, 1.0F);   //성공
+                }else {
+                    soundPool.play(sound_Effect[1], 0.7F, 0.7F, 0, 0, 1.0F);   //실패
+                }
+                        buy_Flag = false;
+
+
+
 
                     }
                 });
+
+
 
             //아랫줄을 통해 상점 아이템 즉시 갱신
             adapter.notifyDataSetChanged();

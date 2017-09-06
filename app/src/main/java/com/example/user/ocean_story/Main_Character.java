@@ -71,6 +71,10 @@ public class Main_Character {
         return main_Character_Hp;
     }
 
+    public void set_Hp_Add(){
+        main_Character_Hp++;
+    }
+
     public int get_Max_Hp(){
         return main_Character_Max_Hp;
     }

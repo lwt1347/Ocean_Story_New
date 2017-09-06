@@ -47,13 +47,14 @@
         android:layout_alignStart="@+id/option_Button" />
 
     <Button
-        android:id="@+id/ranking_Button"
+        android:id="@+id/next_Stage"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:background="@drawable/rank_button"
-        android:layout_below="@+id/dictionary_Button"
         android:layout_alignLeft="@+id/dictionary_Button"
-        android:layout_alignStart="@+id/dictionary_Button" />
+        android:layout_alignStart="@+id/dictionary_Button"
+        android:layout_below="@+id/dictionary_Button"
+        android:background="@drawable/button_next_stage"
+        android:onClick="onButtonNextStage" />
 
     <Button
         android:id="@+id/call_FriendShark_Button"
@@ -61,9 +62,21 @@
         android:layout_height="35dp"
         android:background="@drawable/friend_shark_button"
         android:onClick="onButtonFriendSharkCall"
-        android:layout_below="@+id/ranking_Button"
-        android:layout_alignLeft="@+id/ranking_Button"
-        android:layout_alignStart="@+id/ranking_Button" />
+        android:layout_below="@+id/next_Stage"
+        android:layout_alignLeft="@+id/next_Stage"
+        android:layout_alignStart="@+id/next_Stage" />
+
+    <Button
+        android:id="@+id/heal_Button"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignEnd="@+id/call_FriendShark_Button"
+        android:layout_alignLeft="@+id/call_FriendShark_Button"
+        android:layout_alignRight="@+id/call_FriendShark_Button"
+        android:layout_alignStart="@+id/call_FriendShark_Button"
+        android:layout_below="@+id/call_FriendShark_Button"
+        android:background="@drawable/button_heal"
+        android:onClick="onButtonHeal" />
 
 
 </RelativeLayout>

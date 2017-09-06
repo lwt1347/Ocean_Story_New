@@ -50,6 +50,14 @@ public class LandMark_Damage_View {
 
     }
 
+    boolean remove_Flag = false;
+    public void set_Remove(){
+        remove_Flag = true;
+    }
+    public boolean get_Remove(){
+        return remove_Flag;
+    }
+
 
     public int get_X_Point(){
         return point_x;
