@@ -2,6 +2,7 @@ package com.example.user.ocean_story;
 
 import android.app.Activity;
 import android.app.KeyguardManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -29,10 +31,12 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
+import java.lang.ref.SoftReference;
 import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -756,6 +760,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
 
+
+
+
+
+
+
     /**
      *
      * 배경 화면 움직임
@@ -1032,7 +1042,6 @@ private void button_Create_method_Init(){
             effect_Slow_img[2] = image.getBitmap();
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.effect_slow_4);
             effect_Slow_img[3] = image.getBitmap();
-
 
 
             /**
@@ -10138,6 +10147,7 @@ public void skill_Ground_Attack(){
         try {
 
 
+
             //게임 동작 중에만 추가한다.
             if(mRun) {
 //                        add_Fish_Drag_Default();
@@ -10149,6 +10159,8 @@ public void skill_Ground_Attack(){
 //                        add_Ground_Lobsters();
 //                        add_Fish_Drag_Shark();
 //                        add_Ground_Crab();
+
+
 
                 if(day_Count < 10) {
                     //기본 물고기
@@ -10174,6 +10186,15 @@ public void skill_Ground_Attack(){
                         add_Fish_Touch_Default();
                         add_Fish_Touch_Default();
                         add_Fish_Touch_Default();
+                        add_Fish_JellyFish();               //해파리 추가
+                        add_Fish_JellyFish();               //해파리 추가
+                        add_Fish_JellyFish();               //해파리 추가
+                        add_Fish_JellyFish();               //해파리 추가
+                        add_Fish_JellyFish();               //해파리 추가
+                        add_Fish_JellyFish();               //해파리 추가
+
+
+
                     }
                     if (day_Count >= 2) {
                         add_Fish_Touch_Default();
