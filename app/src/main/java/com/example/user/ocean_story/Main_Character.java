@@ -222,6 +222,15 @@ public class Main_Character {
     //********************************************************************************************//
 
     /**
+     * pref 저장 클래스
+     */
+    protected int pref_Set = 100000001;
+    public int get_Pref(){
+        return pref_Set;
+    }
+
+
+    /**
      * 동작 함수, 설정
      */
 
@@ -238,6 +247,12 @@ public class Main_Character {
      */
     public void set_Hp_Minus(){
         main_Character_Hp --;
+    }
+    /**
+     * 캐릭터 hp 지정
+     */
+    public void set_Hp(int param_Hp){
+        main_Character_Hp = param_Hp;
     }
 
     /**

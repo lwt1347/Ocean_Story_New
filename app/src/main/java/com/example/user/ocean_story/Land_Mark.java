@@ -25,7 +25,6 @@ public class Land_Mark extends Ground_Default_Body {
         ground_Point_Y = y;
 
         ground_Class = 11;           //랜드마크 11번
-
     }
 
     public int get_Class_Num(){

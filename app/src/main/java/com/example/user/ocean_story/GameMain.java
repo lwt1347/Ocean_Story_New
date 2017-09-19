@@ -1276,7 +1276,7 @@ private void button_Create_method_Init(){
                 ground_snail_Boss_Hp2_img[i] = Init_Ground_Touch_Snail_Boss_Hp2_Image(_context, i);  //달팽이 이미지
                 ground_snail_Boss_Hp3_img[i] = Init_Ground_Touch_Snail_Boss_Hp3_Image(_context, i);  //달팽이 이미지
                 ground_snail_Boss_Hp4_img[i] = Init_Ground_Touch_Snail_Boss_Hp4_Image(_context, i);  //달팽이 이미지
-                ground_snail_Boss_Hp5_img[i] = Init_Ground_Touch_Snail_Boss_Hp4_Image(_context, i);  //달팽이 이미지
+                ground_snail_Boss_Hp5_img[i] = Init_Ground_Touch_Snail_Boss_Hp5_Image(_context, i);  //달팽이 이미지
             }
 
             for(int i = 0; i < 4; i++) {
@@ -3152,6 +3152,8 @@ private void button_Create_method_Init(){
         draw.draw_Bmp(canvas, backGroundImg, 0, 0);
 
 
+    try{
+
 
 
         //랜드마크 그리기
@@ -3292,13 +3294,19 @@ private void button_Create_method_Init(){
             }
         }
 
-
+    }catch (Exception e){
+        Log.e("a",e.getMessage());
+        Log.e("a",e.toString());
+        Log.e("a","랜드마크 그리기 부분");
+    }
 
 
 
 //랜드 마크 대미지 보여주기
         score_Text_Size = convertPixelsToDp(15, _context);
         paint_Temp.setTextSize(score_Text_Size);
+
+            try{
 
 
 
@@ -3329,6 +3337,8 @@ private void button_Create_method_Init(){
                 landMark_Damage_View_List.get(i).set_Remove();
             }
         }
+
+
         //지우기 방법
         for(int i=0; i<landMark_Damage_View_List.size(); i++){
             if(landMark_Damage_View_List.get(i).get_Remove()){
@@ -3336,8 +3346,14 @@ private void button_Create_method_Init(){
             }
         }
 
+            }catch (Exception e){
+                Log.e("a",e.getMessage());
+                Log.e("a",e.toString());
+                Log.e("a","랜드마크 대미지 부분");
+            }
 
 
+try{
 
         for(int i=0; i<ground_List.size(); i++){
             if(ground_List.get(i) instanceof Ground_Drag_Clam){
@@ -3396,13 +3412,19 @@ private void button_Create_method_Init(){
             }
 
         }
-
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","조개 그리기 부분");
+}
 
 
 
         /**
          * 배경 이펙트
          */
+        try{
+
         draw.draw_Bmp(canvas,
                 draw.rotate_Image(effect_Background_One_1_img[background_Effect_One.get_Draw_Background_Effect_Status()],background_Effect_One.get_Background_Angle())
                 , background_Effect_One.get_Background_Point_X(), background_Effect_One.get_Background_Point_Y());
@@ -3474,6 +3496,13 @@ private void button_Create_method_Init(){
 
 
 
+        }catch (Exception e){
+            Log.e("a","배경 이펙트");
+            Log.e("a", e.getMessage());
+            Log.e("a", e.toString());
+        }
+
+
 
         draw_Main_Character_Draw();  //메인 캐릭터 기본 이미지
         main_Character.character_Move();    //메인 캐릭터 움직임 효과
@@ -3481,14 +3510,13 @@ private void button_Create_method_Init(){
 
 
 
-
+            try{
 
         /**
          * 그라운드 그리기 (달팽이) 가장 아랫부분에 깔려야 하기 때문에 가장 위쪽에서 그림
          */
-        for(int i=ground_List.size() - 1; i >= 0; i--) {
-
-
+//        Log.e("a",ground_List.size() + "");
+        for(int i=0 ; i < ground_List.size(); i++) {
 
 
             if(ground_List.get(i).get_Ground_Hp() > 0){
@@ -3546,13 +3574,13 @@ private void button_Create_method_Init(){
 
                     }else if(ground_List.get(i).get_Class_Num() == 2){  //중간 보스
 
-                        if (ground_List.get(i).get_Ground_Hp() == 4) {
+                        if (ground_List.get(i).get_Ground_Hp() == 5) {
                             draw.draw_Bmp(canvas, ground_snail_Boss_Hp5_img[((Ground_Touch_Snail) ground_List.get(i)).get_Draw_Ground_Status()], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                        } else if (ground_List.get(i).get_Ground_Hp() == 3) {
+                        } else if (ground_List.get(i).get_Ground_Hp() == 4) {
                             draw.draw_Bmp(canvas, ground_snail_Boss_Hp4_img[((Ground_Touch_Snail) ground_List.get(i)).get_Draw_Ground_Status()], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                        } else if (ground_List.get(i).get_Ground_Hp() == 2) {
+                        } else if (ground_List.get(i).get_Ground_Hp() == 3) {
                             draw.draw_Bmp(canvas, ground_snail_Boss_Hp3_img[((Ground_Touch_Snail) ground_List.get(i)).get_Draw_Ground_Status()], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-                        } else if (ground_List.get(i).get_Ground_Hp() == 1) {
+                        } else if (ground_List.get(i).get_Ground_Hp() == 2) {
                             draw.draw_Bmp(canvas, ground_snail_Boss_Hp2_img[((Ground_Touch_Snail) ground_List.get(i)).get_Draw_Ground_Status()], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
                         } else{
                             draw.draw_Bmp(canvas, ground_snail_Boss_Hp1_img[((Ground_Touch_Snail) ground_List.get(i)).get_Draw_Ground_Status()], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
@@ -3980,723 +4008,759 @@ private void button_Create_method_Init(){
         }
 
 
-
-
-
-        /**
-         * 물고기 그리기
-         */
-
-        for(int i=fish_List.size() - 1; i >= 0 ; i--) {
-        if(fish_List.get(i).get_Fish_Hp() > 0){
-
-
-
-            if(fish_List.get(i) instanceof Fish_Trap_Turtle){
-                /**
-                 *  방해거북 그리기
-                 */
-                temp_Shadow_img = draw.rotate_Image(shadow_img[7], 90 - fish_List.get(i).get_Fish_Angle());
-                draw.draw_Bmp(canvas, temp_Shadow_img, fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(15, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(30, _context));
-
-                temp_Fish = draw.rotate_Image(fish_Turtle_img[fish_List.get(i).get_Draw_Fish_Status()], 90 - fish_List.get(i).get_Fish_Angle());
-                draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
-
-
-
-                //이팩트 그리기
-                if(turtle_Fish_Hit_Flag){
-                    pop_Temp_img = effect_Pop_Turtle;
-                    draw.draw_Bmp(canvas, pop_Temp_img, fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(random.nextInt(60), _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(random.nextInt(60), _context));
-                    turtle_Fish_Hit_Flag = false;
-                }
-
-
+            }catch (Exception e){
+                Log.e("a",e.getMessage());
+                Log.e("a",e.toString());
+                Log.e("a","그라운드 그리기 부분");
             }
 
-            else if (fish_List.get(i) instanceof Fish_Touch_Default) {
+            try{
 
                 /**
-                 * 물고기 설명 그림
+                 * 물고기 그리기
                  */
-//                if ((fish_List.get(i)).get_First_Test_Object()) { //첫 번째 물고기일때
-//
-//                    draw.draw_Bmp(canvas, explain_Default_Fish_img[fish_List.get(i).get_Draw_Fish_Status()],
-//                            fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(65, _context),
-//                            fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(20, _context));
-//
-//                    // 남은 hp 그리기
-//                    paint_Temp.setTextSize(convertPixelsToDp(15, _context));
-//                    paint_Temp.setColor(Color.RED);
-//                    paint_Temp.setStrokeWidth(4);
-//                    canvas.drawText("" + fish_List.get(i).get_Fish_Hp(),
-//                            fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(25, _context),
-//                            fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(47, _context), paint_Temp);
-//
-//                }
+
+                for(int i=fish_List.size() - 1; i >= 0 ; i--) {
+                if(fish_List.get(i).get_Fish_Hp() > 0){
+
+
+
+                    if(fish_List.get(i) instanceof Fish_Trap_Turtle){
+                        /**
+                         *  방해거북 그리기
+                         */
+                        temp_Shadow_img = draw.rotate_Image(shadow_img[7], 90 - fish_List.get(i).get_Fish_Angle());
+                        draw.draw_Bmp(canvas, temp_Shadow_img, fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(15, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(30, _context));
+
+                        temp_Fish = draw.rotate_Image(fish_Turtle_img[fish_List.get(i).get_Draw_Fish_Status()], 90 - fish_List.get(i).get_Fish_Angle());
+                        draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
+
+
+
+                        //이팩트 그리기
+                        if(turtle_Fish_Hit_Flag){
+                            pop_Temp_img = effect_Pop_Turtle;
+                            draw.draw_Bmp(canvas, pop_Temp_img, fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(random.nextInt(60), _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(random.nextInt(60), _context));
+                            turtle_Fish_Hit_Flag = false;
+                        }
+
+
+                    }
+
+                    else if (fish_List.get(i) instanceof Fish_Touch_Default) {
+
+                        /**
+                         * 물고기 설명 그림
+                         */
+        //                if ((fish_List.get(i)).get_First_Test_Object()) { //첫 번째 물고기일때
+        //
+        //                    draw.draw_Bmp(canvas, explain_Default_Fish_img[fish_List.get(i).get_Draw_Fish_Status()],
+        //                            fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(65, _context),
+        //                            fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(20, _context));
+        //
+        //                    // 남은 hp 그리기
+        //                    paint_Temp.setTextSize(convertPixelsToDp(15, _context));
+        //                    paint_Temp.setColor(Color.RED);
+        //                    paint_Temp.setStrokeWidth(4);
+        //                    canvas.drawText("" + fish_List.get(i).get_Fish_Hp(),
+        //                            fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(25, _context),
+        //                            fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(47, _context), paint_Temp);
+        //
+        //                }
 
 
 
 
-                /**
-                 *  이미지 회전
-                 */
-                 if(fish_List.get(i).get_Class_Num() == 0) {
-                     if (fish_List.get(i).get_Fish_Hp() == 1) {
-                         temp_Fish = draw.rotate_Image(fish_Touch_Default_Hp1_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                     } else if (fish_List.get(i).get_Fish_Hp() == 2) {
-                         temp_Fish = draw.rotate_Image(fish_Touch_Default_Hp2_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                     } else if (fish_List.get(i).get_Fish_Hp() == 3) {
-                         temp_Fish = draw.rotate_Image(fish_Touch_Default_Hp3_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                     } else if (fish_List.get(i).get_Fish_Hp() == 4) {
-                         temp_Fish = draw.rotate_Image(fish_Touch_Default_Hp4_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                     } else {
-                         temp_Fish = draw.rotate_Image(fish_Touch_Default_Hp5_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                     }
+                        /**
+                         *  이미지 회전
+                         */
+                         if(fish_List.get(i).get_Class_Num() == 0) {
+                             if (fish_List.get(i).get_Fish_Hp() == 1) {
+                                 temp_Fish = draw.rotate_Image(fish_Touch_Default_Hp1_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                             } else if (fish_List.get(i).get_Fish_Hp() == 2) {
+                                 temp_Fish = draw.rotate_Image(fish_Touch_Default_Hp2_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                             } else if (fish_List.get(i).get_Fish_Hp() == 3) {
+                                 temp_Fish = draw.rotate_Image(fish_Touch_Default_Hp3_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                             } else if (fish_List.get(i).get_Fish_Hp() == 4) {
+                                 temp_Fish = draw.rotate_Image(fish_Touch_Default_Hp4_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                             } else {
+                                 temp_Fish = draw.rotate_Image(fish_Touch_Default_Hp5_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                             }
 
-                     temp_Shadow_img = draw.rotate_Image(shadow_img[0], -fish_List.get(i).get_Fish_Angle());
+                             temp_Shadow_img = draw.rotate_Image(shadow_img[0], -fish_List.get(i).get_Fish_Angle());
 
-                 }else if(fish_List.get(i).get_Class_Num() == 1){   //중간 보스
+                         }else if(fish_List.get(i).get_Class_Num() == 1){   //중간 보스
 
-                     if (fish_List.get(i).get_Fish_Hp() >= 4) {
-                         temp_Fish = draw.rotate_Image(fish_Touch_Default_Middle_Hp1_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                     } else if (fish_List.get(i).get_Fish_Hp() >= 3) {
-                         temp_Fish = draw.rotate_Image(fish_Touch_Default_Middle_Hp2_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                     } else if (fish_List.get(i).get_Fish_Hp() >= 2) {
-                         temp_Fish = draw.rotate_Image(fish_Touch_Default_Middle_Hp3_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                     } else if (fish_List.get(i).get_Fish_Hp() >= 1) {
-                         temp_Fish = draw.rotate_Image(fish_Touch_Default_Middle_Hp4_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                     } else {
-                         temp_Fish = draw.rotate_Image(fish_Touch_Default_Middle_Hp5_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                     }
+                             if (fish_List.get(i).get_Fish_Hp() >= 4) {
+                                 temp_Fish = draw.rotate_Image(fish_Touch_Default_Middle_Hp1_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                             } else if (fish_List.get(i).get_Fish_Hp() >= 3) {
+                                 temp_Fish = draw.rotate_Image(fish_Touch_Default_Middle_Hp2_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                             } else if (fish_List.get(i).get_Fish_Hp() >= 2) {
+                                 temp_Fish = draw.rotate_Image(fish_Touch_Default_Middle_Hp3_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                             } else if (fish_List.get(i).get_Fish_Hp() >= 1) {
+                                 temp_Fish = draw.rotate_Image(fish_Touch_Default_Middle_Hp4_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                             } else {
+                                 temp_Fish = draw.rotate_Image(fish_Touch_Default_Middle_Hp5_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                             }
 
-                     temp_Shadow_img = draw.rotate_Image(shadow_img[1], -fish_List.get(i).get_Fish_Angle());
+                             temp_Shadow_img = draw.rotate_Image(shadow_img[1], -fish_List.get(i).get_Fish_Angle());
 
-                 }else if(fish_List.get(i).get_Class_Num() == 2){   //보스
-
-
-
-
-                     if (fish_List.get(i).get_Fish_Hp() >= 4) {
-                         temp_Fish = draw.rotate_Image(fish_Touch_Default_Boss_Hp5_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                     } else if (fish_List.get(i).get_Fish_Hp() >= 3) {
-                         temp_Fish = draw.rotate_Image(fish_Touch_Default_Boss_Hp4_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                     } else if (fish_List.get(i).get_Fish_Hp() >= 2) {
-                         temp_Fish = draw.rotate_Image(fish_Touch_Default_Boss_Hp3_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                     } else if (fish_List.get(i).get_Fish_Hp() >= 1) {
-                         temp_Fish = draw.rotate_Image(fish_Touch_Default_Boss_Hp2_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                     } else {
-                         temp_Fish = draw.rotate_Image(fish_Touch_Default_Boss_Hp1_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                     }
-
-                     temp_Shadow_img = draw.rotate_Image(shadow_img[2], -fish_List.get(i).get_Fish_Angle());
-                 }
-
-
-                //이미지 크기 변경
-//                temp_Fish = Bitmap.createScaledBitmap(temp_Fish,fish_Drag_Default_img[0].getWidth(),fish_Drag_Default_img[0].getHeight(),true);
-
-
-                //그림자 그리기
-                draw.draw_Bmp(canvas, temp_Shadow_img, fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(1, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(20, _context));
-
-                draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
-
-                //이미지 크기 재 조정
-                if(fish_List.get(i).get_Fish_Speed() <= 0 && !(fish_List.get(i) instanceof Fish_Trap_Jellyfish)) {
-                    effect_Slow_img[fish_List.get(i).get_Slow_Effect()] = Bitmap.createScaledBitmap(
-                            effect_Slow_img[fish_List.get(i).get_Slow_Effect()],
-                            fish_Touch_Default_Hp1_img[0].getWidth(),
-                            fish_Touch_Default_Hp1_img[0].getHeight(), true);
-                }
-
-
-                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                /**
-                 * 물고기 터치 이펙트
-                 */
-                if(i == smallFishIndex && default_Fish_Hit_Flag) {
-
-//                    fish_List.get(fish_List.get(smallFishIndex).get_Fish_Target()).set_Hp_Minus();
-                    fish_List.get(smallFishIndex).set_Hp_Minus();            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
-                    draw.draw_Bmp(canvas, effect_Temp, fish_List.get(smallFishIndex).get_Fish_Point_X() - 15, fish_List.get(smallFishIndex).get_Fish_Point_Y());
-                    default_Fish_Hit_Flag = false;
-                }
+                         }else if(fish_List.get(i).get_Class_Num() == 2){   //보스
 
 
 
-                /**
-                 * 오징어 그리기
-                 */
-            } else if (fish_List.get(i) instanceof Fish_Touch_Squid) {
 
-//                if ((fish_List.get(i)).get_First_Test_Object()) { //첫 번째 오징어 일때
-//
-//                    draw.draw_Bmp(canvas, explain_Squid_img[fish_List.get(i).get_Draw_Fish_Status()],
-//                            fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(0, _context),
-//                            fish_List.get(i).get_Fish_Point_Y());//- convertPixelsToDp(100, _context));
-//
-//                }
+                             if (fish_List.get(i).get_Fish_Hp() >= 4) {
+                                 temp_Fish = draw.rotate_Image(fish_Touch_Default_Boss_Hp5_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                             } else if (fish_List.get(i).get_Fish_Hp() >= 3) {
+                                 temp_Fish = draw.rotate_Image(fish_Touch_Default_Boss_Hp4_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                             } else if (fish_List.get(i).get_Fish_Hp() >= 2) {
+                                 temp_Fish = draw.rotate_Image(fish_Touch_Default_Boss_Hp3_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                             } else if (fish_List.get(i).get_Fish_Hp() >= 1) {
+                                 temp_Fish = draw.rotate_Image(fish_Touch_Default_Boss_Hp2_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                             } else {
+                                 temp_Fish = draw.rotate_Image(fish_Touch_Default_Boss_Hp1_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                             }
 
-
-                //그림자 그리기
-                draw.draw_Bmp(canvas, shadow_img[4], fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(10, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(45, _context));
-
-                temp_Fish = draw.rotate_Image(fish_Touch_Squid_img[fish_List.get(i).get_Draw_Fish_Status()], 0);
-                draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());//convertPixelsToDp(100, _context));
+                             temp_Shadow_img = draw.rotate_Image(shadow_img[2], -fish_List.get(i).get_Fish_Angle());
+                         }
 
 
-                if(touch_Squid_Hit_Flag){
-                    draw.draw_Bmp(canvas, effect_Black_img[4],
-                            fish_List.get(smallFishIndex).get_Fish_Point_X() + convertPixelsToDp(random.nextInt(10), _context),
-                            fish_List.get(smallFishIndex).get_Fish_Point_Y() + convertPixelsToDp(random.nextInt(100), _context));//- convertPixelsToDp(100, _context));
-
-                    fish_List.get(smallFishIndex).set_Hp_Minus();            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
-                    touch_Squid_Hit_Flag = false;
-                }
+                        //이미지 크기 변경
+        //                temp_Fish = Bitmap.createScaledBitmap(temp_Fish,fish_Drag_Default_img[0].getWidth(),fish_Drag_Default_img[0].getHeight(),true);
 
 
+                        //그림자 그리기
+                        draw.draw_Bmp(canvas, temp_Shadow_img, fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(1, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(20, _context));
 
-                /**
-                 * 드래그로 죽이는 물고기
-                 */
-            } else if (fish_List.get(i) instanceof Fish_Drag_Default) {
+                        draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
 
-
-                /**
-                 * 드래그 물고기 설명 그림
-                 */
-//                if ((fish_List.get(i)).get_First_Test_Object()) { //첫 번째 물고기일때
-//
-//                    draw.draw_Bmp(canvas, explain_Drag_Fish_img[fish_List.get(i).get_Draw_Fish_Status()],
-//                            fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(85, _context),
-//                            fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(20, _context));
-//
-//                    // 남은 hp 그리기
-//                    paint_Temp.setTextSize(convertPixelsToDp(15, _context));
-//                    paint_Temp.setColor(Color.RED);
-//                    paint_Temp.setStrokeWidth(4);
-//                    canvas.drawText("" + fish_List.get(i).get_Fish_Hp(), fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(43, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(57, _context), paint_Temp);
-//
-//                }
-
-                //그림자 그리기
-                temp_Shadow_img = draw.rotate_Image(shadow_img[3], -fish_List.get(i).get_Fish_Angle());
-                draw.draw_Bmp(canvas, temp_Shadow_img, fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(1, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(20, _context));
+                        //이미지 크기 재 조정
+                        if(fish_List.get(i).get_Fish_Speed() <= 0 && !(fish_List.get(i) instanceof Fish_Trap_Jellyfish)) {
+                            effect_Slow_img[fish_List.get(i).get_Slow_Effect()] = Bitmap.createScaledBitmap(
+                                    effect_Slow_img[fish_List.get(i).get_Slow_Effect()],
+                                    fish_Touch_Default_Hp1_img[0].getWidth(),
+                                    fish_Touch_Default_Hp1_img[0].getHeight(), true);
+                        }
 
 
-                temp_Fish = draw.rotate_Image(fish_Drag_Default_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                /**
-                 * 드래그 터치 이펙트
-                 */
-                if(i == smallFishIndex && drag_Fish_Hit_Flag){
+                        /**
+                         * 물고기 터치 이펙트
+                         */
+                        if(i == smallFishIndex && default_Fish_Hit_Flag) {
 
-//                    pop_Temp_img = Init_Effect_Pop_damage1_Image[random.nextInt(5)];
-                    tempInt = random.nextInt(5);
-                    if(character_Damege == 1) {
-                        pop_Temp_img = effect_Pop_damage1_Image[tempInt];
-                    }else if(character_Damege == 2) {
-                        pop_Temp_img = effect_Pop_damage2_Image[tempInt];
-                    }else if(character_Damege == 3) {
-                        pop_Temp_img = effect_Pop_damage3_Image[tempInt];
-                    }else if(character_Damege == 4) {
-                        pop_Temp_img = effect_Pop_damage4_Image[tempInt];
-                    }else if(character_Damege == 5) {
-                        pop_Temp_img = effect_Pop_damage5_Image[tempInt];
-                    }else if(character_Damege == 6) {
-                        pop_Temp_img = effect_Pop_damage6_Image[tempInt];
-                    }else if(character_Damege == 7) {
-                        pop_Temp_img = effect_Pop_damage7_Image[tempInt];
-                    }else if(character_Damege == 8) {
-                        pop_Temp_img = effect_Pop_damage8_Image[tempInt];
-                    }else if(character_Damege == 9) {
-                        pop_Temp_img = effect_Pop_damage9_Image[tempInt];
-                    }else if(character_Damege >= 10) {
-                        pop_Temp_img = effect_Pop_damage10_Image[tempInt];
+        //                    fish_List.get(fish_List.get(smallFishIndex).get_Fish_Target()).set_Hp_Minus();
+                            fish_List.get(smallFishIndex).set_Hp_Minus();            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
+                            draw.draw_Bmp(canvas, effect_Temp, fish_List.get(smallFishIndex).get_Fish_Point_X() - 15, fish_List.get(smallFishIndex).get_Fish_Point_Y());
+                            default_Fish_Hit_Flag = false;
+                        }
+
+
+
+                        /**
+                         * 오징어 그리기
+                         */
+                    } else if (fish_List.get(i) instanceof Fish_Touch_Squid) {
+
+        //                if ((fish_List.get(i)).get_First_Test_Object()) { //첫 번째 오징어 일때
+        //
+        //                    draw.draw_Bmp(canvas, explain_Squid_img[fish_List.get(i).get_Draw_Fish_Status()],
+        //                            fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(0, _context),
+        //                            fish_List.get(i).get_Fish_Point_Y());//- convertPixelsToDp(100, _context));
+        //
+        //                }
+
+
+                        //그림자 그리기
+                        draw.draw_Bmp(canvas, shadow_img[4], fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(10, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(45, _context));
+
+                        temp_Fish = draw.rotate_Image(fish_Touch_Squid_img[fish_List.get(i).get_Draw_Fish_Status()], 0);
+                        draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());//convertPixelsToDp(100, _context));
+
+
+                        if(touch_Squid_Hit_Flag){
+                            draw.draw_Bmp(canvas, effect_Black_img[4],
+                                    fish_List.get(smallFishIndex).get_Fish_Point_X() + convertPixelsToDp(random.nextInt(10), _context),
+                                    fish_List.get(smallFishIndex).get_Fish_Point_Y() + convertPixelsToDp(random.nextInt(100), _context));//- convertPixelsToDp(100, _context));
+
+                            fish_List.get(smallFishIndex).set_Hp_Minus();            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
+                            touch_Squid_Hit_Flag = false;
+                        }
+
+
+
+                        /**
+                         * 드래그로 죽이는 물고기
+                         */
+                    } else if (fish_List.get(i) instanceof Fish_Drag_Default) {
+
+
+                        /**
+                         * 드래그 물고기 설명 그림
+                         */
+        //                if ((fish_List.get(i)).get_First_Test_Object()) { //첫 번째 물고기일때
+        //
+        //                    draw.draw_Bmp(canvas, explain_Drag_Fish_img[fish_List.get(i).get_Draw_Fish_Status()],
+        //                            fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(85, _context),
+        //                            fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(20, _context));
+        //
+        //                    // 남은 hp 그리기
+        //                    paint_Temp.setTextSize(convertPixelsToDp(15, _context));
+        //                    paint_Temp.setColor(Color.RED);
+        //                    paint_Temp.setStrokeWidth(4);
+        //                    canvas.drawText("" + fish_List.get(i).get_Fish_Hp(), fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(43, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(57, _context), paint_Temp);
+        //
+        //                }
+
+                        //그림자 그리기
+                        temp_Shadow_img = draw.rotate_Image(shadow_img[3], -fish_List.get(i).get_Fish_Angle());
+                        draw.draw_Bmp(canvas, temp_Shadow_img, fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(1, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(20, _context));
+
+
+                        temp_Fish = draw.rotate_Image(fish_Drag_Default_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                        draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
+
+                        /**
+                         * 드래그 터치 이펙트
+                         */
+                        if(i == smallFishIndex && drag_Fish_Hit_Flag){
+
+        //                    pop_Temp_img = Init_Effect_Pop_damage1_Image[random.nextInt(5)];
+                            tempInt = random.nextInt(5);
+                            if(character_Damege == 1) {
+                                pop_Temp_img = effect_Pop_damage1_Image[tempInt];
+                            }else if(character_Damege == 2) {
+                                pop_Temp_img = effect_Pop_damage2_Image[tempInt];
+                            }else if(character_Damege == 3) {
+                                pop_Temp_img = effect_Pop_damage3_Image[tempInt];
+                            }else if(character_Damege == 4) {
+                                pop_Temp_img = effect_Pop_damage4_Image[tempInt];
+                            }else if(character_Damege == 5) {
+                                pop_Temp_img = effect_Pop_damage5_Image[tempInt];
+                            }else if(character_Damege == 6) {
+                                pop_Temp_img = effect_Pop_damage6_Image[tempInt];
+                            }else if(character_Damege == 7) {
+                                pop_Temp_img = effect_Pop_damage7_Image[tempInt];
+                            }else if(character_Damege == 8) {
+                                pop_Temp_img = effect_Pop_damage8_Image[tempInt];
+                            }else if(character_Damege == 9) {
+                                pop_Temp_img = effect_Pop_damage9_Image[tempInt];
+                            }else if(character_Damege >= 10) {
+                                pop_Temp_img = effect_Pop_damage10_Image[tempInt];
+                            }
+
+
+                            draw.draw_Bmp(canvas, pop_Temp_img,
+                                    fish_List.get(smallFishIndex).get_Fish_Point_X() + random.nextInt(fish_Drag_Default_img[0].getWidth() - 25),
+                                    fish_List.get(smallFishIndex).get_Fish_Point_Y() + random.nextInt(fish_Drag_Default_img[0].getHeight()) - 35);
+
+                            fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege * (int)character_Drag_Damege);            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
+
+                            drag_Fish_Hit_Flag = false;
+
+                            //이미지 크기 재 조정
+                            if(fish_List.get(i).get_Fish_Speed() <= 0) {
+                                effect_Slow_img[fish_List.get(i).get_Slow_Effect()] = Bitmap.createScaledBitmap(
+                                        effect_Slow_img[fish_List.get(i).get_Slow_Effect()],
+                                        fish_Drag_Default_img[0].getWidth(),
+                                        fish_Drag_Default_img[0].getHeight(), true);
+                            }
+
+
+                        }
+
+
+
+                    }else if(fish_List.get(i) instanceof Fish_Drag_Steelbream){ //참돔
+
+                        //그림자 그리기
+                        temp_Shadow_img = draw.rotate_Image(shadow_img[3], -fish_List.get(i).get_Fish_Angle());
+                        draw.draw_Bmp(canvas, temp_Shadow_img, fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(1, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(20, _context));
+
+                        temp_Fish = draw.rotate_Image(fish_Drag_Steelbream_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
+                        draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
+
+                        /**
+                         * 참돔 터치 이펙트
+                         */
+                        if(i == smallFishIndex && drag_Steelbream_Hit_Flag){
+
+        //                    pop_Temp_img = Init_Effect_Pop_damage1_Image[random.nextInt(5)];
+
+                            pop_Temp_img = effect_Pop_Steel_img;
+
+
+                            draw.draw_Bmp(canvas, pop_Temp_img,
+                                    fish_List.get(smallFishIndex).get_Fish_Point_X() + random.nextInt(fish_Drag_Steelbream_img[0].getWidth() - 25),
+                                    fish_List.get(smallFishIndex).get_Fish_Point_Y() + random.nextInt(fish_Drag_Steelbream_img[0].getHeight()) - 35);
+
+
+                            drag_Steelbream_Hit_Flag = false;
+
+                            //이미지 크기 재 조정
+                            if(fish_List.get(i).get_Fish_Speed() <= 0) {
+                                effect_Slow_img[fish_List.get(i).get_Slow_Effect()] = Bitmap.createScaledBitmap(
+                                        effect_Slow_img[fish_List.get(i).get_Slow_Effect()],
+                                        fish_Drag_Steelbream_img[0].getWidth(),
+                                        fish_Drag_Steelbream_img[0].getHeight(), true);
+                            }
+
+
+                        }
+                    }else if(fish_List.get(i) instanceof Fish_Drag_Shark){
+
+
+                        //상어
+                        draw.draw_Bmp(canvas, fish_Drag_Shark_img[fish_List.get(i).get_Draw_Fish_Status()],
+                                fish_List.get(i).get_Fish_Point_X(),
+                                fish_List.get(i).get_Fish_Point_Y());//- convertPixelsToDp(100, _context));
+                        /**
+                         * 상어 드래그 이펙트
+                         */
+                        if(i == smallFishIndex && drag_Shark_Hit_Flag){
+
+        //                    pop_Temp_img = Init_Effect_Pop_damage1_Image[random.nextInt(5)];
+                            tempInt = random.nextInt(5);
+                            if(character_Damege == 1) {
+                                pop_Temp_img = effect_Pop_damage1_Image[tempInt];
+                            }else if(character_Damege == 2) {
+                                pop_Temp_img = effect_Pop_damage2_Image[tempInt];
+                            }else if(character_Damege == 3) {
+                                pop_Temp_img = effect_Pop_damage3_Image[tempInt];
+                            }else if(character_Damege == 4) {
+                                pop_Temp_img = effect_Pop_damage4_Image[tempInt];
+                            }else if(character_Damege == 5) {
+                                pop_Temp_img = effect_Pop_damage5_Image[tempInt];
+                            }else if(character_Damege == 6) {
+                                pop_Temp_img = effect_Pop_damage6_Image[tempInt];
+                            }else if(character_Damege == 7) {
+                                pop_Temp_img = effect_Pop_damage7_Image[tempInt];
+                            }else if(character_Damege == 8) {
+                                pop_Temp_img = effect_Pop_damage8_Image[tempInt];
+                            }else if(character_Damege == 9) {
+                                pop_Temp_img = effect_Pop_damage9_Image[tempInt];
+                            }else if(character_Damege >= 10) {
+                                pop_Temp_img = effect_Pop_damage10_Image[tempInt];
+                            }
+
+                            draw.draw_Bmp(canvas, pop_Temp_img,
+                                    fish_List.get(smallFishIndex).get_Fish_Point_X() + random.nextInt(fish_Drag_Shark_img[0].getWidth() - 25),
+                                    fish_List.get(smallFishIndex).get_Fish_Point_Y() + random.nextInt(fish_Drag_Shark_img[0].getHeight()) - 35);
+                            fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege * (int)character_Drag_Damege);            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
+                            drag_Shark_Hit_Flag = false;
+                        }
                     }
 
 
-                    draw.draw_Bmp(canvas, pop_Temp_img,
-                            fish_List.get(smallFishIndex).get_Fish_Point_X() + random.nextInt(fish_Drag_Default_img[0].getWidth() - 25),
-                            fish_List.get(smallFishIndex).get_Fish_Point_Y() + random.nextInt(fish_Drag_Default_img[0].getHeight()) - 35);
 
-                    fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege * (int)character_Drag_Damege);            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
 
-                    drag_Fish_Hit_Flag = false;
 
-                    //이미지 크기 재 조정
-                    if(fish_List.get(i).get_Fish_Speed() <= 0) {
-                        effect_Slow_img[fish_List.get(i).get_Slow_Effect()] = Bitmap.createScaledBitmap(
-                                effect_Slow_img[fish_List.get(i).get_Slow_Effect()],
-                                fish_Drag_Default_img[0].getWidth(),
-                                fish_Drag_Default_img[0].getHeight(), true);
+                    else if(fish_List.get(i) instanceof Fish_Touch_Ell){
+
+
+                        /**
+                         * 전기 뱀장어 그리기
+                         */
+        //                if ((fish_List.get(i)).get_First_Test_Object()) { //첫 번째 전기 뱀장어 일때
+        //
+        //                    draw.draw_Bmp(canvas, explain_Ell_img[fish_List.get(i).get_Draw_Fish_Status()],
+        //                            fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(0, _context),
+        //                            fish_List.get(i).get_Fish_Point_Y());//- convertPixelsToDp(100, _context));
+        //
+        //                }
+
+                        //그림자 그리기
+                        draw.draw_Bmp(canvas, shadow_img[4], fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(15, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(45, _context));
+
+
+                        if(fish_List.get(i).get_Attack_Mode()) {
+                            temp_Fish = draw.rotate_Image(fish_Touch_Ell_img[fish_List.get(i).get_Draw_Fish_Status()], 0);
+                            draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());//- convertPixelsToDp(100, _context));
+                        }else if(!fish_List.get(i).get_Attack_Mode()){
+                            temp_Fish = draw.rotate_Image(fish_Touch_Ell_Attack_img[fish_List.get(i).get_Draw_Fish_Status()], 0);
+                            draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());//- convertPixelsToDp(100, _context));
+                        }
+
+
+                        if(touch_Ell_Hit_Flag){
+                            draw.draw_Bmp(canvas, effect_Yellow_img[4],
+                                    fish_List.get(smallFishIndex).get_Fish_Point_X() + convertPixelsToDp(random.nextInt(10), _context),
+                                    fish_List.get(smallFishIndex).get_Fish_Point_Y() + convertPixelsToDp(random.nextInt(100), _context));//- convertPixelsToDp(100, _context));
+
+                            fish_List.get(smallFishIndex).set_Hp_Minus();            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
+
+                            touch_Ell_Hit_Flag = false;
+                        }
+
+
+                    }else if(fish_List.get(i) instanceof Fish_Touch_Marlin){
+                        /**
+                         * 청새치 그리기
+                         */
+
+                        draw.draw_Bmp(canvas, fish_Touch_Marlin_img[fish_List.get(i).get_Draw_Fish_Status()],
+                                fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(0, _context),
+                                fish_List.get(i).get_Fish_Point_Y());//- convertPixelsToDp(100, _context));
+
+                        //그림자 그리기
+                        draw.draw_Bmp(canvas, shadow_img[4], fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(12, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(30, _context));
+
+
+                        if(touch_Marlin_Hit_Flag){
+                            draw.draw_Bmp(canvas, effect_Blue_img[4],
+                                    fish_List.get(smallFishIndex).get_Fish_Point_X() + convertPixelsToDp(random.nextInt(10), _context),
+                                    fish_List.get(smallFishIndex).get_Fish_Point_Y() + convertPixelsToDp(random.nextInt(100), _context));//- convertPixelsToDp(100, _context));
+
+                            fish_List.get(smallFishIndex).set_Hp_Minus();            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
+
+                            touch_Marlin_Hit_Flag = false;
+                        }
+
+
+
+
+
                     }
 
 
-                }
-
-
-
-            }else if(fish_List.get(i) instanceof Fish_Drag_Steelbream){ //참돔
-
-                //그림자 그리기
-                temp_Shadow_img = draw.rotate_Image(shadow_img[3], -fish_List.get(i).get_Fish_Angle());
-                draw.draw_Bmp(canvas, temp_Shadow_img, fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(1, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(20, _context));
-
-                temp_Fish = draw.rotate_Image(fish_Drag_Steelbream_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
-
-                /**
-                 * 참돔 터치 이펙트
-                 */
-                if(i == smallFishIndex && drag_Steelbream_Hit_Flag){
-
-//                    pop_Temp_img = Init_Effect_Pop_damage1_Image[random.nextInt(5)];
-
-                    pop_Temp_img = effect_Pop_Steel_img;
-
-
-                    draw.draw_Bmp(canvas, pop_Temp_img,
-                            fish_List.get(smallFishIndex).get_Fish_Point_X() + random.nextInt(fish_Drag_Steelbream_img[0].getWidth() - 25),
-                            fish_List.get(smallFishIndex).get_Fish_Point_Y() + random.nextInt(fish_Drag_Steelbream_img[0].getHeight()) - 35);
-
-
-                    drag_Steelbream_Hit_Flag = false;
-
-                    //이미지 크기 재 조정
-                    if(fish_List.get(i).get_Fish_Speed() <= 0) {
-                        effect_Slow_img[fish_List.get(i).get_Slow_Effect()] = Bitmap.createScaledBitmap(
-                                effect_Slow_img[fish_List.get(i).get_Slow_Effect()],
-                                fish_Drag_Steelbream_img[0].getWidth(),
-                                fish_Drag_Steelbream_img[0].getHeight(), true);
+                    /**
+                     *  해파리 그리기
+                     */
+                    else if (fish_List.get(i) instanceof Fish_Trap_Jellyfish) {
+                        temp_Fish = draw.rotate_Image(fish_Trap_Jelly_img[fish_List.get(i).get_Draw_Fish_Status()], 90 - fish_List.get(i).get_Fish_Angle());
+                        draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
                     }
 
 
-                }
-            }else if(fish_List.get(i) instanceof Fish_Drag_Shark){
 
 
-                //상어
-                draw.draw_Bmp(canvas, fish_Drag_Shark_img[fish_List.get(i).get_Draw_Fish_Status()],
-                        fish_List.get(i).get_Fish_Point_X(),
-                        fish_List.get(i).get_Fish_Point_Y());//- convertPixelsToDp(100, _context));
-                /**
-                 * 상어 드래그 이펙트
-                 */
-                if(i == smallFishIndex && drag_Shark_Hit_Flag){
 
-//                    pop_Temp_img = Init_Effect_Pop_damage1_Image[random.nextInt(5)];
-                    tempInt = random.nextInt(5);
-                    if(character_Damege == 1) {
-                        pop_Temp_img = effect_Pop_damage1_Image[tempInt];
-                    }else if(character_Damege == 2) {
-                        pop_Temp_img = effect_Pop_damage2_Image[tempInt];
-                    }else if(character_Damege == 3) {
-                        pop_Temp_img = effect_Pop_damage3_Image[tempInt];
-                    }else if(character_Damege == 4) {
-                        pop_Temp_img = effect_Pop_damage4_Image[tempInt];
-                    }else if(character_Damege == 5) {
-                        pop_Temp_img = effect_Pop_damage5_Image[tempInt];
-                    }else if(character_Damege == 6) {
-                        pop_Temp_img = effect_Pop_damage6_Image[tempInt];
-                    }else if(character_Damege == 7) {
-                        pop_Temp_img = effect_Pop_damage7_Image[tempInt];
-                    }else if(character_Damege == 8) {
-                        pop_Temp_img = effect_Pop_damage8_Image[tempInt];
-                    }else if(character_Damege == 9) {
-                        pop_Temp_img = effect_Pop_damage9_Image[tempInt];
-                    }else if(character_Damege >= 10) {
-                        pop_Temp_img = effect_Pop_damage10_Image[tempInt];
+
+
+
+
+
+                    //속도가 0인 객체 위에 달팽이 [슬로우 이팩트를 그린다.]
+                    if(fish_List.get(i).get_Fish_Speed() <= 0){
+
+                        //해파리는 슬로우 안걸림
+                        if(!(fish_List.get(i) instanceof Fish_Trap_Jellyfish) || !(fish_List.get(i) instanceof Fish_Trap_Turtle)) {
+                            draw.draw_Bmp(canvas, effect_Slow_img[0],
+                                    fish_List.get(i).get_Fish_Point_X(),
+                                    fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(13, _context));
+
+
+                            draw.draw_Bmp(canvas, effect_Slow_img[fish_List.get(i).get_Slow_Effect()],
+                                    fish_List.get(i).get_Fish_Point_X(),
+                                    fish_List.get(i).get_Fish_Point_Y());
+                        }
                     }
 
-                    draw.draw_Bmp(canvas, pop_Temp_img,
-                            fish_List.get(smallFishIndex).get_Fish_Point_X() + random.nextInt(fish_Drag_Shark_img[0].getWidth() - 25),
-                            fish_List.get(smallFishIndex).get_Fish_Point_Y() + random.nextInt(fish_Drag_Shark_img[0].getHeight()) - 35);
-                    fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege * (int)character_Drag_Damege);            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
-                    drag_Shark_Hit_Flag = false;
+                    //독 상태 이상에 걸린 객체에 포이즌 마크를 표시한다.
+                    if(fish_List.get(i).get_Status_Poison()){
+                        fish_List.get(i).set_Status_Poison_AttacK();
+
+                        if(fish_List.get(i) instanceof Fish_Touch_Default) {
+                            draw.draw_Bmp(canvas, effect_Poison_img[fish_List.get(i).get_Status_Poison_AttacK()], ///중독된 물고기 hp 감속과 동시에 이미지 표현
+                                    fish_List.get(i).get_Fish_Point_X() - effect_Poison_img[0].getWidth(),
+                                    fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(13, _context));
+                        }else {
+                            draw.draw_Bmp(canvas, effect_Poison_img[fish_List.get(i).get_Status_Poison_AttacK()], ///중독된 물고기 hp 감속과 동시에 이미지 표현
+                                    fish_List.get(i).get_Fish_Point_X(),
+                                    fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(13, _context));
+                        }
+
+                        draw.draw_Bmp(canvas, effect_Poison_img[0],
+                                fish_List.get(i).get_Fish_Point_X(),
+                                fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(13, _context));
+                    }
+
+
+
+                }
+                }
+
+
+            }catch (Exception e){
+                Log.e("a",e.getMessage());
+                Log.e("a",e.toString());
+                Log.e("a","물고기 그리기 부분");
+            }
+
+        try{
+
+                //집게발 그리기
+                for(int i=0; i<skill_Crab_Claws_List.size(); i++){
+
+
+                    draw.draw_Bmp(canvas, skill_Crab_img[skill_Crab_Claws_List.get(i).get_Skill_Status()], skill_Crab_Claws_List.get(i).get_X_Point(), skill_Crab_Claws_List.get(i).get_Y_Point());
+                    skill_Crab_Claws_List.get(i).set_Skill_Move();
+
+
+                    if(skill_Crab_Claws_List.get(i).get_Live()){
+
+                        //범위 안에 드는 몬스터들의 체력을 떨군다.
+                        for(int j=0; j<fish_List.size(); j++){
+
+                            if (skill_Crab_Claws_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Crab_Claws_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
+
+                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Crab_Claws_List.get(i).get_Y_Point()
+                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Crab_Claws_List.get(i).get_Y_Point() + skill_Crab_img[0].getHeight()) {
+
+
+                                    fish_List.get(j).set_Hp_Minus(20);
+
+
+                                }
+                            } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Crab_Claws_List.get(i).get_X_Point() + skill_Crab_img[0].getWidth()
+                                    && fish_List.get(j).get_Fish_Point_X() >= skill_Crab_Claws_List.get(i).get_X_Point()
+                                    ) {
+
+                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Crab_Claws_List.get(i).get_Y_Point()
+                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Crab_Claws_List.get(i).get_Y_Point() + skill_Crab_img[0].getHeight()) {
+
+
+                                    fish_List.get(j).set_Hp_Minus(20);
+
+
+                                }
+                            }
+
+
+
+                        }
+
+
+                        for(int j=0; j<ground_List.size(); j++){
+
+                            if (skill_Crab_Claws_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Crab_Claws_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
+
+                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Crab_Claws_List.get(i).get_Y_Point()
+                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Crab_Claws_List.get(i).get_Y_Point() + skill_Crab_img[0].getHeight()) {
+                                    ground_List.get(j).set_Ground_Hp_Minus(20);
+
+                                }
+                            } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Crab_Claws_List.get(i).get_X_Point() + skill_Crab_img[0].getWidth()
+                                    && ground_List.get(j).get_Ground_Point_X() >= skill_Crab_Claws_List.get(i).get_X_Point()
+                                    ) {
+
+                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Crab_Claws_List.get(i).get_Y_Point()
+                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Crab_Claws_List.get(i).get_Y_Point() + skill_Crab_img[0].getHeight()) {
+
+                                    ground_List.get(j).set_Ground_Hp_Minus(20);
+
+                                }
+                            }
+
+
+                        }
+
+            //                skill_Crab_Claws_List.remove(i);
+                        skill_Crab_Claws_List.get(i).set_Remove();
+                    }
+                }
+
+                //지우기 컨트롤
+                for(int i=0; i<skill_Crab_Claws_List.size(); i++){
+                        if(skill_Crab_Claws_List.get(i).get_Remove()){
+                            skill_Crab_Claws_List.remove(i);
+                        }
+                }
+
+            }catch (Exception e){
+                Log.e("a",e.getMessage());
+                Log.e("a",e.toString());
+                Log.e("a","집게발 그리기 부분");
+            }
+
+        try{
+
+            //간장게장 집게발
+            for(int i=0; i<skill_Soycrab_Claws_List.size(); i++){
+
+                draw.draw_Bmp(canvas, skill_Soycrab_img[skill_Soycrab_Claws_List.get(i).get_Skill_Status()], skill_Soycrab_Claws_List.get(i).get_X_Point(), skill_Soycrab_Claws_List.get(i).get_Y_Point());
+                skill_Soycrab_Claws_List.get(i).set_Skill_Move();
+
+                if(skill_Soycrab_Claws_List.get(i).get_Live()){
+
+                    //범위 안에 드는 몬스터들의 체력을 떨군다.
+                    for(int j=0; j<fish_List.size(); j++){
+
+                        if (skill_Soycrab_Claws_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Soycrab_Claws_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
+
+                            if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Soycrab_Claws_List.get(i).get_Y_Point()
+                                    && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Soycrab_Claws_List.get(i).get_Y_Point() + skill_Soycrab_img[0].getHeight()) {
+                                fish_List.get(j).set_Hp_Minus(30);
+
+                            }
+                        } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Soycrab_Claws_List.get(i).get_X_Point() + skill_Soycrab_img[0].getWidth()
+                                && fish_List.get(j).get_Fish_Point_X() >= skill_Soycrab_Claws_List.get(i).get_X_Point()
+                                ) {
+
+                            if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Soycrab_Claws_List.get(i).get_Y_Point()
+                                    && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Soycrab_Claws_List.get(i).get_Y_Point() + skill_Soycrab_img[0].getHeight()) {
+
+                                fish_List.get(j).set_Hp_Minus(30);
+
+                            }
+                        }
+
+
+                    }
+                    for(int j=0; j<ground_List.size(); j++){
+
+
+                        if (skill_Soycrab_Claws_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Soycrab_Claws_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
+
+                            if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Soycrab_Claws_List.get(i).get_Y_Point()
+                                    && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Soycrab_Claws_List.get(i).get_Y_Point() + skill_Soycrab_img[0].getHeight()) {
+                                ground_List.get(j).set_Ground_Hp_Minus(30);
+
+                            }
+                        } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Soycrab_Claws_List.get(i).get_X_Point() + skill_Soycrab_img[0].getWidth()
+                                && ground_List.get(j).get_Ground_Point_X() >= skill_Soycrab_Claws_List.get(i).get_X_Point()
+                                ) {
+
+                            if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Soycrab_Claws_List.get(i).get_Y_Point()
+                                    && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Soycrab_Claws_List.get(i).get_Y_Point() + skill_Soycrab_img[0].getHeight()) {
+
+                                ground_List.get(j).set_Ground_Hp_Minus(30);
+
+                            }
+                        }
+
+                    }
+
+    //                skill_Soycrab_Claws_List.remove(i);
+                    skill_Soycrab_Claws_List.get(i).set_Remove();
                 }
             }
 
-
-
-
-
-            else if(fish_List.get(i) instanceof Fish_Touch_Ell){
-
-
-                /**
-                 * 전기 뱀장어 그리기
-                 */
-//                if ((fish_List.get(i)).get_First_Test_Object()) { //첫 번째 전기 뱀장어 일때
-//
-//                    draw.draw_Bmp(canvas, explain_Ell_img[fish_List.get(i).get_Draw_Fish_Status()],
-//                            fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(0, _context),
-//                            fish_List.get(i).get_Fish_Point_Y());//- convertPixelsToDp(100, _context));
-//
-//                }
-
-                //그림자 그리기
-                draw.draw_Bmp(canvas, shadow_img[4], fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(15, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(45, _context));
-
-
-                if(fish_List.get(i).get_Attack_Mode()) {
-                    temp_Fish = draw.rotate_Image(fish_Touch_Ell_img[fish_List.get(i).get_Draw_Fish_Status()], 0);
-                    draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());//- convertPixelsToDp(100, _context));
-                }else if(!fish_List.get(i).get_Attack_Mode()){
-                    temp_Fish = draw.rotate_Image(fish_Touch_Ell_Attack_img[fish_List.get(i).get_Draw_Fish_Status()], 0);
-                    draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());//- convertPixelsToDp(100, _context));
-                }
-
-
-                if(touch_Ell_Hit_Flag){
-                    draw.draw_Bmp(canvas, effect_Yellow_img[4],
-                            fish_List.get(smallFishIndex).get_Fish_Point_X() + convertPixelsToDp(random.nextInt(10), _context),
-                            fish_List.get(smallFishIndex).get_Fish_Point_Y() + convertPixelsToDp(random.nextInt(100), _context));//- convertPixelsToDp(100, _context));
-
-                    fish_List.get(smallFishIndex).set_Hp_Minus();            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
-
-                    touch_Ell_Hit_Flag = false;
-                }
-
-
-            }else if(fish_List.get(i) instanceof Fish_Touch_Marlin){
-                /**
-                 * 청새치 그리기
-                 */
-
-                draw.draw_Bmp(canvas, fish_Touch_Marlin_img[fish_List.get(i).get_Draw_Fish_Status()],
-                        fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(0, _context),
-                        fish_List.get(i).get_Fish_Point_Y());//- convertPixelsToDp(100, _context));
-
-                //그림자 그리기
-                draw.draw_Bmp(canvas, shadow_img[4], fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(12, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(30, _context));
-
-
-                if(touch_Marlin_Hit_Flag){
-                    draw.draw_Bmp(canvas, effect_Blue_img[4],
-                            fish_List.get(smallFishIndex).get_Fish_Point_X() + convertPixelsToDp(random.nextInt(10), _context),
-                            fish_List.get(smallFishIndex).get_Fish_Point_Y() + convertPixelsToDp(random.nextInt(100), _context));//- convertPixelsToDp(100, _context));
-
-                    fish_List.get(smallFishIndex).set_Hp_Minus();            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
-
-                    touch_Marlin_Hit_Flag = false;
-                }
-
-
-
-
-
-            }
-
-
-            /**
-             *  해파리 그리기
-             */
-            else if (fish_List.get(i) instanceof Fish_Trap_Jellyfish) {
-                temp_Fish = draw.rotate_Image(fish_Trap_Jelly_img[fish_List.get(i).get_Draw_Fish_Status()], 90 - fish_List.get(i).get_Fish_Angle());
-                draw.draw_Bmp(canvas, temp_Fish, fish_List.get(i).get_Fish_Point_X(), fish_List.get(i).get_Fish_Point_Y());
-            }
-
-
-
-
-
-
-
-
-
-
-            //속도가 0인 객체 위에 달팽이 [슬로우 이팩트를 그린다.]
-            if(fish_List.get(i).get_Fish_Speed() <= 0){
-
-                //해파리는 슬로우 안걸림
-                if(!(fish_List.get(i) instanceof Fish_Trap_Jellyfish) || !(fish_List.get(i) instanceof Fish_Trap_Turtle)) {
-                    draw.draw_Bmp(canvas, effect_Slow_img[0],
-                            fish_List.get(i).get_Fish_Point_X(),
-                            fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(13, _context));
-
-
-                    draw.draw_Bmp(canvas, effect_Slow_img[fish_List.get(i).get_Slow_Effect()],
-                            fish_List.get(i).get_Fish_Point_X(),
-                            fish_List.get(i).get_Fish_Point_Y());
+            //간장게장 지우기 컨트롤
+            for(int i=0; i<skill_Soycrab_Claws_List.size(); i++){
+                if(skill_Soycrab_Claws_List.get(i).get_Remove()){
+                    skill_Soycrab_Claws_List.remove(i);
                 }
             }
 
-            //독 상태 이상에 걸린 객체에 포이즌 마크를 표시한다.
-            if(fish_List.get(i).get_Status_Poison()){
-                fish_List.get(i).set_Status_Poison_AttacK();
-
-                if(fish_List.get(i) instanceof Fish_Touch_Default) {
-                    draw.draw_Bmp(canvas, effect_Poison_img[fish_List.get(i).get_Status_Poison_AttacK()], ///중독된 물고기 hp 감속과 동시에 이미지 표현
-                            fish_List.get(i).get_Fish_Point_X() - effect_Poison_img[0].getWidth(),
-                            fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(13, _context));
-                }else {
-                    draw.draw_Bmp(canvas, effect_Poison_img[fish_List.get(i).get_Status_Poison_AttacK()], ///중독된 물고기 hp 감속과 동시에 이미지 표현
-                            fish_List.get(i).get_Fish_Point_X(),
-                            fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(13, _context));
-                }
-
-                draw.draw_Bmp(canvas, effect_Poison_img[0],
-                        fish_List.get(i).get_Fish_Point_X(),
-                        fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(13, _context));
-            }
-
-
-
+        }catch (Exception e){
+            Log.e("a",e.getMessage());
+            Log.e("a",e.toString());
+            Log.e("a","간장게장스킬 그리기 부분");
         }
-        }
 
+            try {
 
+                //스톰프
+                for (int i = 0; i < skill_Stomp_List.size(); i++) {
 
+                    draw.draw_Bmp(canvas, skill_stomp_img[skill_Stomp_List.get(i).get_Skill_Status()], skill_Stomp_List.get(i).get_X_Point(), skill_Stomp_List.get(i).get_Y_Point());
+                    skill_Stomp_List.get(i).set_Skill_Move();
 
-        //집게발 그리기
-        for(int i=0; i<skill_Crab_Claws_List.size(); i++){
 
+                    if (skill_Stomp_List.get(i).get_Live()) {
+                        //범위 안에 드는 몬스터들의 체력을 떨군다.
+                        for (int j = 0; j < fish_List.size(); j++) {
 
-            draw.draw_Bmp(canvas, skill_Crab_img[skill_Crab_Claws_List.get(i).get_Skill_Status()], skill_Crab_Claws_List.get(i).get_X_Point(), skill_Crab_Claws_List.get(i).get_Y_Point());
-            skill_Crab_Claws_List.get(i).set_Skill_Move();
 
+                            if (skill_Stomp_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Stomp_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
 
-            if(skill_Crab_Claws_List.get(i).get_Live()){
+                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Stomp_List.get(i).get_Y_Point()
+                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Stomp_List.get(i).get_Y_Point() + skill_stomp_img[0].getHeight()) {
+                                    fish_List.get(j).set_Hp_Minus(80);
 
-                //범위 안에 드는 몬스터들의 체력을 떨군다.
-                for(int j=0; j<fish_List.size(); j++){
+                                }
+                            } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Stomp_List.get(i).get_X_Point() + skill_stomp_img[0].getWidth()
+                                    && fish_List.get(j).get_Fish_Point_X() >= skill_Stomp_List.get(i).get_X_Point()
+                                    ) {
 
-                    if (skill_Crab_Claws_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Crab_Claws_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
+                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Stomp_List.get(i).get_Y_Point()
+                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Stomp_List.get(i).get_Y_Point() + skill_stomp_img[0].getHeight()) {
 
-                        if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Crab_Claws_List.get(i).get_Y_Point()
-                                && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Crab_Claws_List.get(i).get_Y_Point() + skill_Crab_img[0].getHeight()) {
+                                    fish_List.get(j).set_Hp_Minus(80);
 
-
-                            fish_List.get(j).set_Hp_Minus(20);
-
-
-                        }
-                    } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Crab_Claws_List.get(i).get_X_Point() + skill_Crab_img[0].getWidth()
-                            && fish_List.get(j).get_Fish_Point_X() >= skill_Crab_Claws_List.get(i).get_X_Point()
-                            ) {
-
-                        if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Crab_Claws_List.get(i).get_Y_Point()
-                                && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Crab_Claws_List.get(i).get_Y_Point() + skill_Crab_img[0].getHeight()) {
-
-
-                            fish_List.get(j).set_Hp_Minus(20);
-
-
-                        }
-                    }
-
-
-
-                }
-
-
-                for(int j=0; j<ground_List.size(); j++){
-
-                    if (skill_Crab_Claws_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Crab_Claws_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-
-                        if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Crab_Claws_List.get(i).get_Y_Point()
-                                && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Crab_Claws_List.get(i).get_Y_Point() + skill_Crab_img[0].getHeight()) {
-                            ground_List.get(j).set_Ground_Hp_Minus(20);
-
-                        }
-                    } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Crab_Claws_List.get(i).get_X_Point() + skill_Crab_img[0].getWidth()
-                            && ground_List.get(j).get_Ground_Point_X() >= skill_Crab_Claws_List.get(i).get_X_Point()
-                            ) {
-
-                        if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Crab_Claws_List.get(i).get_Y_Point()
-                                && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Crab_Claws_List.get(i).get_Y_Point() + skill_Crab_img[0].getHeight()) {
-
-                            ground_List.get(j).set_Ground_Hp_Minus(20);
-
-                        }
-                    }
-
-
-                }
-
-//                skill_Crab_Claws_List.remove(i);
-                skill_Crab_Claws_List.get(i).set_Remove();
-            }
-        }
-
-        //지우기 컨트롤
-        for(int i=0; i<skill_Crab_Claws_List.size(); i++){
-                if(skill_Crab_Claws_List.get(i).get_Remove()){
-                    skill_Crab_Claws_List.remove(i);
-                }
-        }
-
-
-
-
-
-        //간장게장 집게발
-        for(int i=0; i<skill_Soycrab_Claws_List.size(); i++){
-
-            draw.draw_Bmp(canvas, skill_Soycrab_img[skill_Soycrab_Claws_List.get(i).get_Skill_Status()], skill_Soycrab_Claws_List.get(i).get_X_Point(), skill_Soycrab_Claws_List.get(i).get_Y_Point());
-            skill_Soycrab_Claws_List.get(i).set_Skill_Move();
-
-            if(skill_Soycrab_Claws_List.get(i).get_Live()){
-
-                //범위 안에 드는 몬스터들의 체력을 떨군다.
-                for(int j=0; j<fish_List.size(); j++){
-
-                    if (skill_Soycrab_Claws_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Soycrab_Claws_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-
-                        if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Soycrab_Claws_List.get(i).get_Y_Point()
-                                && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Soycrab_Claws_List.get(i).get_Y_Point() + skill_Soycrab_img[0].getHeight()) {
-                            fish_List.get(j).set_Hp_Minus(30);
-
-                        }
-                    } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Soycrab_Claws_List.get(i).get_X_Point() + skill_Soycrab_img[0].getWidth()
-                            && fish_List.get(j).get_Fish_Point_X() >= skill_Soycrab_Claws_List.get(i).get_X_Point()
-                            ) {
-
-                        if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Soycrab_Claws_List.get(i).get_Y_Point()
-                                && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Soycrab_Claws_List.get(i).get_Y_Point() + skill_Soycrab_img[0].getHeight()) {
-
-                            fish_List.get(j).set_Hp_Minus(30);
-
-                        }
-                    }
-
-
-                }
-                for(int j=0; j<ground_List.size(); j++){
-
-
-                    if (skill_Soycrab_Claws_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Soycrab_Claws_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-
-                        if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Soycrab_Claws_List.get(i).get_Y_Point()
-                                && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Soycrab_Claws_List.get(i).get_Y_Point() + skill_Soycrab_img[0].getHeight()) {
-                            ground_List.get(j).set_Ground_Hp_Minus(30);
-
-                        }
-                    } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Soycrab_Claws_List.get(i).get_X_Point() + skill_Soycrab_img[0].getWidth()
-                            && ground_List.get(j).get_Ground_Point_X() >= skill_Soycrab_Claws_List.get(i).get_X_Point()
-                            ) {
-
-                        if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Soycrab_Claws_List.get(i).get_Y_Point()
-                                && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Soycrab_Claws_List.get(i).get_Y_Point() + skill_Soycrab_img[0].getHeight()) {
-
-                            ground_List.get(j).set_Ground_Hp_Minus(30);
-
-                        }
-                    }
-
-                }
-
-//                skill_Soycrab_Claws_List.remove(i);
-                skill_Soycrab_Claws_List.get(i).set_Remove();
-            }
-        }
-
-        //간장게장 지우기 컨트롤
-        for(int i=0; i<skill_Soycrab_Claws_List.size(); i++){
-            if(skill_Soycrab_Claws_List.get(i).get_Remove()){
-                skill_Soycrab_Claws_List.remove(i);
-            }
-        }
-
-
-
-        //스톰프
-        for(int i=0; i<skill_Stomp_List.size(); i++){
-
-            draw.draw_Bmp(canvas, skill_stomp_img[skill_Stomp_List.get(i).get_Skill_Status()], skill_Stomp_List.get(i).get_X_Point(), skill_Stomp_List.get(i).get_Y_Point());
-            skill_Stomp_List.get(i).set_Skill_Move();
-
-
-            if(skill_Stomp_List.get(i).get_Live()) {
-                //범위 안에 드는 몬스터들의 체력을 떨군다.
-                for (int j = 0; j < fish_List.size(); j++) {
-
-
-                    if (skill_Stomp_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Stomp_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-
-                        if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Stomp_List.get(i).get_Y_Point()
-                                && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Stomp_List.get(i).get_Y_Point() + skill_stomp_img[0].getHeight()) {
-                            fish_List.get(j).set_Hp_Minus(80);
-
-                        }
-                    } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Stomp_List.get(i).get_X_Point() + skill_stomp_img[0].getWidth()
-                            && fish_List.get(j).get_Fish_Point_X() >= skill_Stomp_List.get(i).get_X_Point()
-                            ) {
-
-                        if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Stomp_List.get(i).get_Y_Point()
-                                && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Stomp_List.get(i).get_Y_Point() + skill_stomp_img[0].getHeight()) {
-
-                            fish_List.get(j).set_Hp_Minus(80);
-
-                        }
-                    }
+                                }
+                            }
 
 
 //
 
-                }
-
-
-                for (int j = 0; j < ground_List.size(); j++) {
-
-                    if (skill_Stomp_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Stomp_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-
-                        if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Stomp_List.get(i).get_Y_Point()
-                                && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Stomp_List.get(i).get_Y_Point() + skill_stomp_img[0].getHeight()) {
-                            ground_List.get(j).set_Ground_Hp_Minus(80);
-
                         }
-                    } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Stomp_List.get(i).get_X_Point() + skill_stomp_img[0].getWidth()
-                            && ground_List.get(j).get_Ground_Point_X() >= skill_Stomp_List.get(i).get_X_Point()
-                            ) {
 
-                        if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Stomp_List.get(i).get_Y_Point()
-                                && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Stomp_List.get(i).get_Y_Point() + skill_stomp_img[0].getHeight()) {
 
-                            ground_List.get(j).set_Ground_Hp_Minus(80);
+                        for (int j = 0; j < ground_List.size(); j++) {
 
-                        }
-                    }
+                            if (skill_Stomp_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Stomp_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
+
+                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Stomp_List.get(i).get_Y_Point()
+                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Stomp_List.get(i).get_Y_Point() + skill_stomp_img[0].getHeight()) {
+                                    ground_List.get(j).set_Ground_Hp_Minus(80);
+
+                                }
+                            } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Stomp_List.get(i).get_X_Point() + skill_stomp_img[0].getWidth()
+                                    && ground_List.get(j).get_Ground_Point_X() >= skill_Stomp_List.get(i).get_X_Point()
+                                    ) {
+
+                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Stomp_List.get(i).get_Y_Point()
+                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Stomp_List.get(i).get_Y_Point() + skill_stomp_img[0].getHeight()) {
+
+                                    ground_List.get(j).set_Ground_Hp_Minus(80);
+
+                                }
+                            }
 
 //
-                }
+                        }
 
 //                skill_Stomp_List.remove(i);
-                skill_Stomp_List.get(i).set_Remove();
+                        skill_Stomp_List.get(i).set_Remove();
+                    }
+                }
+
+                for (int i = 0; i < skill_Stomp_List.size(); i++) {
+                    if (skill_Stomp_List.get(i).get_Remove()) {
+                        skill_Stomp_List.remove(i);
+                    }
+                }
+
+            }catch (Exception e){
+                Log.e("a",e.getMessage());
+                Log.e("a",e.toString());
+                Log.e("a","스톰프 그리기 부분");
             }
+
+
+        try{
+
+                //가시
+                for(int i=0; i<skill_Thorn_List.size(); i++){
+
+                    draw.draw_Bmp(canvas, skill_Thorn_img[skill_Thorn_List.get(i).get_Skill_Status()], skill_Thorn_List.get(i).get_X_Point(), skill_Thorn_List.get(i).get_Y_Point());
+                    skill_Thorn_List.get(i).set_Skill_Move();
+
+
+                    if(skill_Thorn_List.get(i).get_Live()){
+                        skill_Thorn_List.get(i).set_Remove();
+        //                skill_Thorn_List.remove(i);
+                    }
+                }
+                //가시 지우기 컨트롤
+                for(int i=0; i<skill_Thorn_List.size(); i++){
+                    if(skill_Thorn_List.get(i).get_Remove()){
+                        skill_Thorn_List.remove(i);
+                    }
+                }
+
+        }catch (Exception e){
+            Log.e("a",e.getMessage());
+            Log.e("a",e.toString());
+            Log.e("a","가시 그리기 부분");
         }
 
-        for(int i=0; i<skill_Stomp_List.size(); i++){
-            if(skill_Stomp_List.get(i).get_Remove()){
-                skill_Stomp_List.remove(i);
-            }
-        }
 
-
-        //가시
-        for(int i=0; i<skill_Thorn_List.size(); i++){
-
-            draw.draw_Bmp(canvas, skill_Thorn_img[skill_Thorn_List.get(i).get_Skill_Status()], skill_Thorn_List.get(i).get_X_Point(), skill_Thorn_List.get(i).get_Y_Point());
-            skill_Thorn_List.get(i).set_Skill_Move();
-
-
-            if(skill_Thorn_List.get(i).get_Live()){
-                skill_Thorn_List.get(i).set_Remove();
-//                skill_Thorn_List.remove(i);
-            }
-        }
-        //가시 지우기 컨트롤
-        for(int i=0; i<skill_Thorn_List.size(); i++){
-            if(skill_Thorn_List.get(i).get_Remove()){
-                skill_Thorn_List.remove(i);
-            }
-        }
-
-
+try{
 
         //독구름
         for(int i=0; i<skill_poison_cloud_List.size(); i++){
@@ -4778,7 +4842,13 @@ private void button_Create_method_Init(){
             }
         }
 
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","독구름 그리기 부분");
+}
 
+try{
 
         //지진 공격
         for(int i=0; i<skill_Earthquake_List.size(); i++){
@@ -4851,7 +4921,14 @@ private void button_Create_method_Init(){
             }
         }
 
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","지진 그리기 부분");
+}
 
+
+try{
 
         //이빨 지뢰
         for(int i=0; i< skill_Teeth_Mine_List.size(); i++){
@@ -4923,8 +5000,13 @@ private void button_Create_method_Init(){
                 }
             }
 
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a"," 이빨지뢰 부분");
+}
 
-
+try{
 
         //이빨 지뢰2
         for(int i=0; i<skill_Teeth_Mine2_List.size(); i++){
@@ -5047,8 +5129,14 @@ private void button_Create_method_Init(){
                 }
             }
 
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a"," 이빨지뢰2 부분");
+}
 
 
+try{
         //버터
         for(int i=0; i<skill_Butter_List.size(); i++){
             if(skill_Butter_List.get(i).get_Skill_Status() <= 0) {
@@ -5116,7 +5204,14 @@ private void button_Create_method_Init(){
                 }
             }
 
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","버터 그리기 부분");
+}
 
+
+try{
 
         //튀김 지뢰
         for(int i=0; i<skill_Fry_List.size(); i++){
@@ -5222,8 +5317,13 @@ private void button_Create_method_Init(){
                 }
             }
 
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","튀김지뢰 그리기 부분");
+}
 
-
+try{
         //바다뱀 소환
         for(int i=0; i<skill_Sea_Snake_List.size(); i++){
 
@@ -5240,7 +5340,7 @@ private void button_Create_method_Init(){
                     if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Sea_Snake_List.get(i).get_Y_Point() + convertPixelsToDp(30, _context)
                             && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Sea_Snake_img[0].getHeight()) {
                         fish_List.get(j).set_Hp_Minus(25);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
                     }
                 } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Sea_Snake_List.get(i).get_X_Point() + skill_Sea_Snake_img[0].getWidth()
@@ -5250,7 +5350,7 @@ private void button_Create_method_Init(){
                     if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context)
                             && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Sea_Snake_img[0].getHeight()) {
                         fish_List.get(j).set_Hp_Minus(25);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                     }
                 }
 
@@ -5264,7 +5364,7 @@ private void button_Create_method_Init(){
                     if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context)
                             && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Sea_Snake_img[0].getHeight()) {
                         ground_List.get(j).set_Ground_Hp_Minus(25);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                     }
                 } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Sea_Snake_List.get(i).get_X_Point() + skill_Sea_Snake_img[0].getWidth()
                         && ground_List.get(j).get_Ground_Point_X() >= skill_Sea_Snake_List.get(i).get_X_Point()
@@ -5273,7 +5373,7 @@ private void button_Create_method_Init(){
                     if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context)
                             && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Sea_Snake_img[0].getHeight()) {
                         ground_List.get(j).set_Ground_Hp_Minus(25);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                     }
                 }
 
@@ -5297,6 +5397,15 @@ private void button_Create_method_Init(){
                 }
             }
 
+
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","바다범 그리기 부분");
+}
+
+
+try{
         //파도 소환
         for(int i=0; i<skill_Wave_List.size(); i++){
 
@@ -5314,7 +5423,7 @@ private void button_Create_method_Init(){
                     if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Wave_List.get(i).get_Y_Point()
                             && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Wave_List.get(i).get_Y_Point() + skill_wall_img[0].getHeight()) {
                         fish_List.get(j).set_Hp_Minus(10);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
                     }
                 } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Wave_List.get(i).get_X_Point() + skill_wall_img[0].getWidth()
@@ -5325,7 +5434,7 @@ private void button_Create_method_Init(){
                             && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Wave_List.get(i).get_Y_Point() + skill_wall_img[0].getHeight()) {
 
                         fish_List.get(j).set_Hp_Minus(10);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
                     }
                 }
@@ -5343,7 +5452,7 @@ private void button_Create_method_Init(){
                     if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Wave_List.get(i).get_Y_Point()
                             && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Wave_List.get(i).get_Y_Point() + skill_earthquake_img[0].getHeight()) {
                         ground_List.get(j).set_Ground_Hp_Minus(10);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
                     }
                 } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Wave_List.get(i).get_X_Point() + skill_earthquake_img[0].getWidth()
@@ -5354,7 +5463,7 @@ private void button_Create_method_Init(){
                             && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Wave_List.get(i).get_Y_Point() + skill_earthquake_img[0].getHeight()) {
 
                         ground_List.get(j).set_Ground_Hp_Minus(10);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
                     }
                 }
@@ -5376,8 +5485,13 @@ private void button_Create_method_Init(){
                 }
             }
 
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","파도소환 그리기 부분");
+}
 
-
+try{
         //벽 소환
         for(int i=0; i<skill_Wall_List.size(); i++){
 
@@ -5443,8 +5557,13 @@ private void button_Create_method_Init(){
                 }
         }
 
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","벽 그리기 부분");
+}
 
-
+try{
         //가시2 소환
         for(int i=0; i<skill_Thorn2_List.size(); i++){
 
@@ -5457,7 +5576,7 @@ private void button_Create_method_Init(){
                 if(skill_Thorn2_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Thorn2_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()){
                     if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Thorn2_List.get(i).get_Y_Point() && skill_Thorn2_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
                         fish_List.get(j).set_Hp_Minus(35);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         skill_Thorn2_List.get(i).set_Live();
                     }
                 }else if(fish_List.get(j).get_Fish_Point_X() <= skill_Thorn2_List.get(i).get_X_Point() + skill_Thorn2_img[0].getWidth()
@@ -5466,7 +5585,7 @@ private void button_Create_method_Init(){
 
                     if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Thorn2_List.get(i).get_Y_Point() && skill_Thorn2_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
                         fish_List.get(j).set_Hp_Minus(35);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         skill_Thorn2_List.get(i).set_Live();
                     }
                 }
@@ -5477,7 +5596,7 @@ private void button_Create_method_Init(){
                     if (skill_Thorn2_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Thorn2_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
                         if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Thorn2_List.get(i).get_Y_Point() && skill_Thorn2_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()) {
                             ground_List.get(j).set_Ground_Hp_Minus(10);
-                            soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                            soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                             skill_Thorn2_List.get(i).set_Live();
                         }
                     } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Thorn2_List.get(i).get_X_Point() + skill_Thorn2_img[0].getWidth()
@@ -5486,7 +5605,7 @@ private void button_Create_method_Init(){
 
                         if (ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Height_Size() >= skill_Thorn2_List.get(i).get_Y_Point() && skill_Thorn2_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()) {
                             ground_List.get(j).set_Ground_Hp_Minus(10);
-                            soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                            soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                             skill_Thorn2_List.get(i).set_Live();
                         }
                     }
@@ -5508,6 +5627,14 @@ private void button_Create_method_Init(){
                 }
             }
 
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","가시2 그리기 부분");
+}
+
+
+try{
 
         //번개 발사
         for(int i=0; i<skill_Lightning_List.size(); i++){
@@ -5531,7 +5658,7 @@ private void button_Create_method_Init(){
                 if(skill_Lightning_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Lightning_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()){
                     if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning_List.get(i).get_Y_Point() && skill_Lightning_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
                         fish_List.get(j).set_Hp_Minus(40);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         skill_Lightning_List.get(i).set_play_Attack();
                     }
                 }else if(fish_List.get(j).get_Fish_Point_X() <= skill_Lightning_List.get(i).get_X_Point() + skill_lightnign_img[0].getWidth()
@@ -5540,7 +5667,7 @@ private void button_Create_method_Init(){
 
                     if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning_List.get(i).get_Y_Point() && skill_Lightning_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
                         fish_List.get(j).set_Hp_Minus(40);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         skill_Lightning_List.get(i).set_play_Attack();
                     }
                 }
@@ -5624,7 +5751,13 @@ private void button_Create_method_Init(){
                 }
             }
 
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","번개 그리기 부분");
+}
 
+try{
         //번개2 발사
         for(int i=0; i<skill_Lightning2_List.size(); i++){
 
@@ -5647,7 +5780,7 @@ private void button_Create_method_Init(){
                 if(skill_Lightning2_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Lightning2_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()){
                     if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning2_List.get(i).get_Y_Point() && skill_Lightning2_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
                         fish_List.get(j).set_Hp_Minus(50);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         skill_Lightning2_List.get(i).set_play_Attack();
                     }
                 }else if(fish_List.get(j).get_Fish_Point_X() <= skill_Lightning2_List.get(i).get_X_Point() + skill_lightnign1_img[0].getWidth()
@@ -5656,7 +5789,7 @@ private void button_Create_method_Init(){
 
                     if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning2_List.get(i).get_Y_Point() && skill_Lightning2_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
                         fish_List.get(j).set_Hp_Minus(50);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         skill_Lightning2_List.get(i).set_play_Attack();
                     }
                 }
@@ -5740,7 +5873,13 @@ private void button_Create_method_Init(){
                 }
             }
 
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","번개2 그리기 부분");
+}
 
+try{
         //포크 소환
         for(int i=0; i<skill_Fork_List.size(); i++){
 
@@ -5777,6 +5916,14 @@ private void button_Create_method_Init(){
                 }
             }
 
+
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","포크 그리기 부분");
+}
+
+try{
         //독 폭탄
         for(int i=0; i<skill_Boom_Poison_List.size(); i++){
 
@@ -5846,16 +5993,20 @@ if(skill_Boom_Poison_List.get(i).get_Skill_Status() >= 3){
             }
 
 
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","독폭탄 그리기 부분");
+}
 
 
 
-
-
+try{
         //느려지는 구름 생성
         for(int i=0; i< skill_Slow_Cloud_List.size(); i++){
 
-            pop_Temp_img = draw.rotate_Image(skill_Slow_Cloud_img, skill_Slow_Cloud_List.get(i).getAngle());
-            draw.draw_Bmp(canvas, pop_Temp_img, skill_Slow_Cloud_List.get(i).get_X_Point(), skill_Slow_Cloud_List.get(i).get_Y_Point());
+//            pop_Temp_img = draw.rotate_Image(skill_Slow_Cloud_img, skill_Slow_Cloud_List.get(i).getAngle());
+            draw.draw_Bmp(canvas, skill_Slow_Cloud_img, skill_Slow_Cloud_List.get(i).get_X_Point(), skill_Slow_Cloud_List.get(i).get_Y_Point());
 
             skill_Slow_Cloud_List.get(i).set_Skill_Move();
 
@@ -5930,6 +6081,13 @@ if(skill_Boom_Poison_List.get(i).get_Skill_Status() >= 3){
                 }
             }
 
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","슬로우 구름 그리기 부분");
+}
+
+try{
         //레이저
         for(int i = 0; i < skill_Laser_List.size(); i++){
 
@@ -5990,38 +6148,47 @@ if(skill_Boom_Poison_List.get(i).get_Skill_Status() >= 3){
 
         }
 
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","레이저 그리기 부분");
+}
 
 
+try {
+    /**
+     * 오징어 먹물 이벤트
+     */
+    if (Background_Effect_Squid_Ink_Arr.size() > 0) {
+        for (int i = 0; i < Background_Effect_Squid_Ink_Arr.size(); i++) {
 
 
-        /**
-         * 오징어 먹물 이벤트
-         */
-        if(Background_Effect_Squid_Ink_Arr.size() > 0){
-            for(int i=0; i < Background_Effect_Squid_Ink_Arr.size(); i++){
-
-
-
-                Background_Effect_Squid_Ink_Arr.get(i).Background_Effect_Move_Pattern();    //오징어 먹묵이팩트 움직임
-                draw.draw_Bmp(canvas, effect_Background_Squid_Ink_img[Background_Effect_Squid_Ink_Arr.get(i).get_Draw_Background_Effect_Status()],
-                        Background_Effect_Squid_Ink_Arr.get(i).get_Background_Point_X(),
-                        Background_Effect_Squid_Ink_Arr.get(i).get_Background_Point_Y() + convertPixelsToDp(30, _context));
-
-            }
-
-            //먹물 시간다되면 삭제
-            for(int i=0; i < Background_Effect_Squid_Ink_Arr.size(); i++) {
-                if(!Background_Effect_Squid_Ink_Arr.get(i).up_Continue_Time()){
-                    Background_Effect_Squid_Ink_Arr.remove(i);
-                    break;
-                }
-            }
-
+            Background_Effect_Squid_Ink_Arr.get(i).Background_Effect_Move_Pattern();    //오징어 먹묵이팩트 움직임
+            draw.draw_Bmp(canvas, effect_Background_Squid_Ink_img[Background_Effect_Squid_Ink_Arr.get(i).get_Draw_Background_Effect_Status()],
+                    Background_Effect_Squid_Ink_Arr.get(i).get_Background_Point_X(),
+                    Background_Effect_Squid_Ink_Arr.get(i).get_Background_Point_Y() + convertPixelsToDp(30, _context));
 
         }
 
+        //먹물 시간다되면 삭제
+        for (int i = 0; i < Background_Effect_Squid_Ink_Arr.size(); i++) {
+            if (!Background_Effect_Squid_Ink_Arr.get(i).up_Continue_Time()) {
+                Background_Effect_Squid_Ink_Arr.remove(i);
+                break;
+            }
+        }
 
 
+    }
+
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","오징어 먹물 그리기 부분");
+}
+
+
+try{
 
         //경고 그리기
 
@@ -6075,12 +6242,16 @@ if(skill_Boom_Poison_List.get(i).get_Skill_Status() >= 3){
 //                    window_Height / 2 - convertPixelsToDp(145, _context));
 
 
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a"," 경고 그리기 부분");
+}
 
 
 
 
-
-
+try{
 
         //나인패치 적용한 hp 그리기
         if(main_Character.get_Max_Hp() == 1){
@@ -6159,7 +6330,11 @@ if(skill_Boom_Poison_List.get(i).get_Skill_Status() >= 3){
 
         }
 
-
+}catch (Exception e){
+    Log.e("a",e.getMessage());
+    Log.e("a",e.toString());
+    Log.e("a","Hp바 그리기 부분");
+}
 
         draw.draw_Bmp(canvas, nine_Patch_Hp, 20, 1); //나인패치 적용방법
 
@@ -6463,7 +6638,7 @@ if(skill_Boom_Poison_List.get(i).get_Skill_Status() >= 3){
             }else if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 6){
 //                soundPool.play(sound_Effect[6], 0.5F, 0.5F, 1, 1, 1.0F);
             }else if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 7){
-                soundPool.play(sound_Effect[7], 0.5F, 0.5F, 0, 0, 1.0F);
+                soundPool.play(sound_Effect[7], 0.2F, 0.2F, 0, 0, 1.0F);
             }
 
 
@@ -7195,7 +7370,7 @@ public void wave_Marlin(){
 
         float wave_X_Point = 30 + (float)Math.random() * (window_Width-100);         //생성될 위치
 
-        for(int i=0; i<30; i++) {
+        for(int i=30; i>=00; i--) {
             ground_drag_wave = new Ground_Drag_Wave(window_Width,
                     ground_Drag_Wave_img[0].getWidth(),
                     ground_Drag_Wave_img[0].getHeight() , 1, ground_Drag_Wave_img[1].getWidth(), ground_Drag_Wave_img[0].getHeight(), wave_X_Point, -convertPixelsToDp(500, _context) - convertPixelsToDp(i*15, _context));
@@ -7653,17 +7828,17 @@ public void skill_Fish_Attack(){
         if(main_Character instanceof Main_Character_Shellfish_Tear4 && random.nextInt(100) < st4 + 3) {
             skill_Crab_Claws = new Skill_Crab_Claws(fish_List.get(smallFishIndex).get_Fish_Point_X() - convertPixelsToDp(70, _context), fish_List.get(smallFishIndex).get_Fish_Point_Y() - convertPixelsToDp(70, _context));
             skill_Crab_Claws_List.add(skill_Crab_Claws);
-            soundPool.play(sound_Effect[9], 1F, 1F, 0, 0, 1.0F);
+            soundPool.play(sound_Effect[9], 0.2F, 0.2F, 0, 0, 1.0F);
         }else //간장게장 집게발 소환
             if(main_Character instanceof Main_Character_Shellfish_Tear5 && random.nextInt(100) < st5 + 3){
                 skill_Soycrab_Claws = new Skill_Soycrab_Claws(fish_List.get(smallFishIndex).get_Fish_Point_X() - convertPixelsToDp(70, _context), fish_List.get(smallFishIndex).get_Fish_Point_Y() - convertPixelsToDp(70, _context));
                 skill_Soycrab_Claws_List.add(skill_Soycrab_Claws);
-                soundPool.play(sound_Effect[9], 1F, 1F, 0, 0, 1.0F);
+                soundPool.play(sound_Effect[9], 0.2F, 0.2F, 0, 0, 1.0F);
             }else //레이저 소환
                 if(main_Character instanceof Main_Character_Moulluse_Tear6 && random.nextInt(100) < mt6 + 3){
                     skill_Laser = new Skill_Laser(- convertPixelsToDp(1000, _context), fish_List.get(smallFishIndex).get_Fish_Point_Y(), window_Width);
                     skill_Laser_List.add(skill_Laser);
-                    soundPool.play(sound_Effect[10], 1F, 1F, 0, 0, 1F);
+                    soundPool.play(sound_Effect[10], 0.2F, 0.2F, 0, 0, 1F);
                 }else  //가오리 독 걸기
                     if(main_Character instanceof Main_Character_Fish_Tear6 && random.nextInt(100) < ft6 + 10){
                         fish_List.get(smallFishIndex).set_Status_Poison(5);
@@ -7709,7 +7884,7 @@ public void skill_Fish_Attack(){
                                     skill_Crab_Claws = new Skill_Crab_Claws(fish_List.get(smallFishIndex).get_Fish_Point_X() + convertPixelsToDp(50, _context), fish_List.get(smallFishIndex).get_Fish_Point_Y() - convertPixelsToDp(20, _context));
 
                                     skill_Crab_Claws_List.add(skill_Crab_Claws);
-                                    soundPool.play(sound_Effect[9], 1F, 1F, 0, 0, 1.0F);
+                                    soundPool.play(sound_Effect[9], 0.2F, 0.2F, 0, 0, 1.0F);
 
                                 }else if(main_Character instanceof Main_Character_Moulluse_Tear3  && random.nextInt(100) < mt3 + 3){
                                     //슬로우 구름 생성
@@ -7794,19 +7969,19 @@ public void skill_Ground_Attack(){
             if(main_Character instanceof Main_Character_Shellfish_Tear4  && random.nextInt(100) < st4 + 3) {
                 skill_Crab_Claws = new Skill_Crab_Claws(ground_List.get(ground_Remove_Temp).get_Ground_Point_X() - convertPixelsToDp(70, _context), ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() - convertPixelsToDp(70, _context));
                 skill_Crab_Claws_List.add(skill_Crab_Claws);
-                soundPool.play(sound_Effect[9], 1F, 1F, 0, 0, 1.0F);
+                soundPool.play(sound_Effect[9], 0.2F, 0.2F, 0, 0, 1.0F);
 
 
             }else //간장게장 집게발 소환
                 if(main_Character instanceof Main_Character_Shellfish_Tear5  && random.nextInt(100) < st5 + 3){
                     skill_Soycrab_Claws = new Skill_Soycrab_Claws(ground_List.get(ground_Remove_Temp).get_Ground_Point_X() - convertPixelsToDp(70, _context), ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() - convertPixelsToDp(70, _context));
                     skill_Soycrab_Claws_List.add(skill_Soycrab_Claws);
-                    soundPool.play(sound_Effect[9], 1F, 1F, 0, 0, 1.0F);
+                    soundPool.play(sound_Effect[9], 0.2F, 0.2F, 0, 0, 1.0F);
                 }else //레이저 소환
                     if(main_Character instanceof Main_Character_Moulluse_Tear6  && random.nextInt(100) < mt6 + 3){
                         skill_Laser = new Skill_Laser(- convertPixelsToDp(1000, _context), ground_List.get(ground_Remove_Temp).get_Ground_Point_Y(), window_Width);
                         skill_Laser_List.add(skill_Laser);
-                        soundPool.play(sound_Effect[10], 1F, 1F, 0, 0, 1F);
+                        soundPool.play(sound_Effect[10], 0.2F, 0.2F, 0, 0, 1F);
                     }else  //가오리 독 걸기
                         if(main_Character instanceof Main_Character_Fish_Tear6 && random.nextInt(100) < ft6 + 10){
                             ground_List.get(ground_Remove_Temp).set_Status_Poison(5);
@@ -7853,7 +8028,7 @@ public void skill_Ground_Attack(){
 
                                         skill_Crab_Claws_List.add(skill_Crab_Claws);
 
-                                        soundPool.play(sound_Effect[9], 1F, 1F, 0, 0, 1.0F);
+                                        soundPool.play(sound_Effect[9], 0.2F, 0.2F, 0, 0, 1.0F);
 
                                     }else if(main_Character instanceof Main_Character_Moulluse_Tear3 && random.nextInt(100) < mt3 + 3){
                                         //슬로우 구름 생성
@@ -7994,7 +8169,7 @@ public void skill_Ground_Attack(){
 
 
                         //            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
                         return true;
 
@@ -8033,7 +8208,7 @@ public void skill_Ground_Attack(){
                         main_Character.set_Character_Experience(1);
 
                         //            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         return true;
 
 
@@ -8081,7 +8256,7 @@ public void skill_Ground_Attack(){
 
 
                         //            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         return true;
 
 
@@ -8122,7 +8297,7 @@ public void skill_Ground_Attack(){
 //                        if(ground_List.get(i).get_Ground_Point_Y() < 0) {
 //                            ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(100);
 //                        }
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         return true;
 
 
@@ -8159,7 +8334,7 @@ public void skill_Ground_Attack(){
                         main_Character.set_Character_Experience(1);
 //                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
 
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         return true;
 
 
@@ -8207,7 +8382,7 @@ public void skill_Ground_Attack(){
                         Score+=random.nextInt((int)character_Drag_Damege * tempInt);
                         money+=character_Randmark_Damege_Temp;
                         main_Character.set_Character_Experience((int)character_Drag_Damege * tempInt);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         return true;
 
 
@@ -8235,7 +8410,7 @@ public void skill_Ground_Attack(){
                         }
 
                         ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
-                        soundPool.play(sound_Effect[11], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
+                        soundPool.play(sound_Effect[11], 0.02F, 0.02F, 0, 0, 1.0F);   //드래그 사운드
                         Score+=random.nextInt(5);     //점수 추가
                         money+=character_Randmark_Damege_Temp;
                         main_Character.set_Character_Experience(1);  //경험치 추가
@@ -8265,7 +8440,7 @@ public void skill_Ground_Attack(){
 
 
 //                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
-                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
+                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.02F, 0.02F, 0, 0, 1.0F);   //드래그 사운드
                         tempInt = main_Character.get_Tear();
                         if(tempInt <= 0){
                             tempInt = 1;
@@ -8299,7 +8474,7 @@ public void skill_Ground_Attack(){
 
 
 //                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
-                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
+                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.02F, 0.02F, 0, 0, 1.0F);   //드래그 사운드
                         tempInt = main_Character.get_Tear();
                         if(tempInt <= 0){
                             tempInt = 1;
@@ -8356,7 +8531,7 @@ public void skill_Ground_Attack(){
 
 
                         ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Randmark_Damege_Temp);
-                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
+                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.02F, 0.02F, 0, 0, 1.0F);   //드래그 사운드
                         Score+=random.nextInt(5);     //점수 추가
                         money+=character_Randmark_Damege_Temp;
                         main_Character.set_Character_Experience(character_Randmark_Damege_Temp);  //경험치 추가
@@ -8398,7 +8573,7 @@ public void skill_Ground_Attack(){
 
 
                         //메인 캐릭터 hp 감소 루틴 추가 해야함
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.5F, 0.5F, 0, 0, 1.0F);   //물고기 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //물고기 기본 팝 사운드
                         return true;
                     }
                 }
@@ -8503,7 +8678,7 @@ public void skill_Ground_Attack(){
                     }
 
 
-                    soundPool.play(sound_Effect[random.nextInt(2)], 0.5F, 0.5F, 0, 0, 1.0F);   //물고기 기본 팝 사운드
+                    soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //물고기 기본 팝 사운드
 
 
 //                        fish_List.get(smallFishIndex).set_Hp_Minus();            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
@@ -8531,13 +8706,13 @@ public void skill_Ground_Attack(){
 
                 }else if(fish_List.get(smallFishIndex) instanceof Fish_Touch_Squid){
                     touch_Squid_Hit_Flag = true;
-                    soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                    soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                 }else if(fish_List.get(smallFishIndex) instanceof Fish_Touch_Ell){
                     touch_Ell_Hit_Flag = true;
-                    soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                    soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                 }else if(fish_List.get(smallFishIndex) instanceof Fish_Touch_Marlin){
                     touch_Marlin_Hit_Flag = true;
-                    soundPool.play(sound_Effect[random.nextInt(2)], 0.7F, 0.7F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                    soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
                 }
 
@@ -8561,7 +8736,7 @@ public void skill_Ground_Attack(){
 
 
                     if(fish_List.get(smallFishIndex).get_Fish_Class() == 3){
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.5F, 0.5F, 0, 0, 1.0F);   //물고기 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //물고기 기본 팝 사운드
                         turtle_Fish_Hit_Flag = true;
                         return true;
                     }
@@ -8584,7 +8759,7 @@ public void skill_Ground_Attack(){
 //                        fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege);            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
 
                         drag_Fish_Hit_Flag = true;  //그림은 드로우에
-                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);   //드래그 사운드
+                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.02F, 0.02F, 0, 0, 1.0F);   //드래그 사운드
 
                     }else if(fish_List.get(smallFishIndex) instanceof Fish_Drag_Steelbream){
                         //참돔은 확률로 갑옷을 깨고 대미지를 입힌다.
@@ -8595,7 +8770,7 @@ public void skill_Ground_Attack(){
                         }
 
                         drag_Steelbream_Hit_Flag = true;        //참돔
-                        soundPool.play(sound_Effect[12], 0.05F, 0.05F, 0, 0, 1.0F);
+                        soundPool.play(sound_Effect[12], 0.02F, 0.02F, 0, 0, 1.0F);
 
                     }else if(fish_List.get(smallFishIndex) instanceof Fish_Drag_Shark){
                         //상어 드래그
@@ -8604,7 +8779,7 @@ public void skill_Ground_Attack(){
                         //대미지 입힌다.
 //                        fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege);            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
 
-                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.05F, 0.05F, 0, 0, 1.0F);
+                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.02F, 0.02F, 0, 0, 1.0F);
                         drag_Shark_Hit_Flag = true;
 
 
@@ -10037,6 +10212,7 @@ public void skill_Ground_Attack(){
 
     }
     TimerTask fish_Maker, stage_Day;
+    int pref_Class = 0;
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
@@ -10075,12 +10251,257 @@ public void skill_Ground_Attack(){
         if(pref != null){
             Log.e("a","!");
             Score = pref.getInt("score", 0);
+
 //            money = pref.getInt("money", 0);
+            pref_Class = pref.getInt("pref_Class",0);
+
+            pref.getInt("hp",1);
+            day_Count = pref.getInt("day_Count",1);
+
+//            editor.putInt("landmark_hp",(int)land_Mark.get_Ground_Hp());
+//            editor.putInt("landmark_class",land_Mark.get_Class_Num()+1);
+
+            //저장된 랜드마크
+            land_Mark_Class = pref.getInt("landmark_class",1);
+            add_Ground_Land_Mark();
+
+
+
+            day_Count = day_Count-3;
+            if(day_Count < 1){
+                day_Count = 1;
+            }
+            Log.e("day", "day! = " + day_Count);
+
+            //플랑크 클래스   100000001
+            //물고기 클래스   100000100
+            //갑각류 클래스   100010000
+            //연체류 클래스   101000000
+
+            // 1 티어 플랑크톤
+            if(pref_Class == 100000001){
+                main_Character = new Main_Character_Plankton_1(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Plankton_1((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100000002){
+                    // 2 티어 플랑크톤
+                main_Character = new Main_Character_Plankton_2(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Plankton_2((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100000003){
+                // 3 티어 플랑크톤
+                main_Character = new Main_Character_Plankton_3(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Plankton_3((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100000004){
+                // 4 티어 플랑크톤
+                main_Character = new Main_Character_Plankton_4(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Plankton_4((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100000005){
+                // 5 티어 플랑크톤
+                main_Character = new Main_Character_Plankton_5(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Plankton_5((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100000100){
+                // 1 티어 물고기
+                main_Character = new Main_Character_Fish_Tear1(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Fish_Tear1((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100000200){
+                // 2 티어 물고기
+                main_Character = new Main_Character_Fish_Tear2(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Fish_Tear2((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100000300){
+                // 3 티어 물고기
+                main_Character = new Main_Character_Fish_Tear3(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Fish_Tear3((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100000400){
+                // 4 티어 물고기
+                main_Character = new Main_Character_Fish_Tear4(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Fish_Tear4((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100000500){
+                // 5 티어 물고기
+                main_Character = new Main_Character_Fish_Tear5(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Fish_Tear5((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100000600){
+                // 6 티어 물고기
+                main_Character = new Main_Character_Fish_Tear6(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Fish_Tear6((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100000700){
+                // 7 티어 물고기
+                main_Character = new Main_Character_Fish_Tear7(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Fish_Tear7((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100000800){
+                // 8 티어 물고기
+                main_Character = new Main_Character_Fish_Tear8(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Fish_Tear8((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100000900){
+                // 9 티어 물고기
+                main_Character = new Main_Character_Fish_Tear9(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Fish_Tear9((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100001000){
+                // 10 티어 물고기
+                main_Character = new Main_Character_Fish_Tear10(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Fish_Tear10((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100010000){
+                // 1 티어 갑각류
+                main_Character = new Main_Character_Shellfish_Tear1(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Shellfish_Tear1((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100020000){
+                // 2 티어 갑각류
+                main_Character = new Main_Character_Shellfish_Tear2(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Shellfish_Tear2((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100030000){
+                // 3 티어 갑각류
+                main_Character = new Main_Character_Shellfish_Tear3(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Shellfish_Tear3((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100040000){
+                // 4 티어 갑각류
+                main_Character = new Main_Character_Shellfish_Tear4(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Shellfish_Tear4((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100050000){
+                // 5 티어 갑각류
+                main_Character = new Main_Character_Shellfish_Tear5(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Shellfish_Tear5((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100060000){
+                // 6 티어 갑각류
+                main_Character = new Main_Character_Shellfish_Tear6(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Shellfish_Tear6((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100070000){
+                // 7 티어 갑각류
+                main_Character = new Main_Character_Shellfish_Tear7(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Shellfish_Tear7((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100080000){
+                // 8 티어 갑각류
+                main_Character = new Main_Character_Shellfish_Tear8(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Shellfish_Tear8((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100090000){
+                // 9 티어 갑각류
+                main_Character = new Main_Character_Shellfish_Tear9(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Shellfish_Tear9((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 100100000){
+                // 10 티어 갑각류
+                main_Character = new Main_Character_Shellfish_Tear10(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Shellfish_Tear10((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 101000000){
+                // 1 티어 연체류
+                main_Character = new Main_Character_Moulluse_Tear1(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Moulluse_Tear1((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+
+            }else if(pref_Class == 102000000){
+                // 2 티어 연체류
+                main_Character = new Main_Character_Moulluse_Tear2(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Moulluse_Tear2((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 103000000){
+                // 3 티어 연체류
+                main_Character = new Main_Character_Moulluse_Tear3(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Moulluse_Tear3((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 104000000){
+                // 4 티어 연체류
+                main_Character = new Main_Character_Moulluse_Tear4(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Moulluse_Tear4((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 105000000){
+                // 5 티어 연체류
+                main_Character = new Main_Character_Moulluse_Tear5(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Moulluse_Tear5((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 106000000){
+                // 6 티어 연체류
+                main_Character = new Main_Character_Moulluse_Tear6(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Moulluse_Tear6((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 107000000){
+                // 7 티어 연체류
+                main_Character = new Main_Character_Moulluse_Tear7(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Moulluse_Tear7((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 108000000){
+                // 8 티어 연체류
+                main_Character = new Main_Character_Moulluse_Tear8(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Moulluse_Tear8((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 109000000){
+                // 9 티어 연체류
+                main_Character = new Main_Character_Moulluse_Tear9(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Moulluse_Tear9((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }else if(pref_Class == 110000000){
+                // 10 티어 연체류
+                main_Character = new Main_Character_Moulluse_Tear10(0,0, window_Width, window_Height,0,0);
+                Init_Main_Character_Image(_context, main_Character);
+                main_Character = new Main_Character_Moulluse_Tear10((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+            }
+
+            main_Character.set_Hp(pref.getInt("hp",1));
+
+
+
+            //여기 한번더 테스팅 해보고, 진화, 혹은 퇴화 할때 드로우 에러
+
+
+
+
+
         }
-
-
-
-
 
 
 
@@ -10181,17 +10602,11 @@ public void skill_Ground_Attack(){
 //                                    add_Ground_Wave();
 //                                    add_Fish_Touch_Ell();
                         }
+//                        add_Ground_Wave();
 
-
                         add_Fish_Touch_Default();
                         add_Fish_Touch_Default();
                         add_Fish_Touch_Default();
-                        add_Fish_JellyFish();               //해파리 추가
-                        add_Fish_JellyFish();               //해파리 추가
-                        add_Fish_JellyFish();               //해파리 추가
-                        add_Fish_JellyFish();               //해파리 추가
-                        add_Fish_JellyFish();               //해파리 추가
-                        add_Fish_JellyFish();               //해파리 추가
 
 
 
@@ -11032,7 +11447,24 @@ public void skill_Ground_Attack(){
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt("score", Score);
 
+
+        Log.e("day", "day = " + day_Count);
+        editor.putInt("day_Count", day_Count);
+        editor.putInt("pref_Class", main_Character.get_Pref());
+        editor.putInt("hp", main_Character.get_Hp());
+        editor.putInt("landmark_hp",(int)land_Mark.get_Ground_Hp());
+        editor.putInt("landmark_class",land_Mark.get_Class_Num()+1);
+
+
+
+
+        //플랑크 클래스   100000001
+        //물고기 클래스   100000100
+        //갑각류 클래스   100010000
+        //연체류 클래스   101000000
+
 //        editor.putInt("money", money);
+
 
 
 

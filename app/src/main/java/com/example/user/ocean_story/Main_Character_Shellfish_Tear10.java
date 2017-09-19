@@ -15,6 +15,7 @@ public class Main_Character_Shellfish_Tear10 extends Main_Character {
      */
     Main_Character_Shellfish_Tear10(float x, float y, int window_Width_Size, int window_Height_Size,int w_Size, int h_Size) {
         super(x, y, window_Width_Size, window_Height_Size, w_Size, h_Size);
+        pref_Set = 100100000;
         this.set_Max_Hp(11);
         set_Damage(11);
     }
