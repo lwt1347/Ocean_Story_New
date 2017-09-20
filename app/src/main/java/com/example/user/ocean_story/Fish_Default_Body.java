@@ -40,7 +40,7 @@ public class Fish_Default_Body {
 
         this.window_Width = window_Width;                                       //생성될 위치 및 벽을 못 넘도록 하기 위해 사용
         this.hp = hp;
-
+        child = 0;
         //물고기의 시야 각도
         angle = (int)(Math.random() * 180) - 90;
 
@@ -58,6 +58,22 @@ public class Fish_Default_Body {
     }
 
     //********************************************************************************************//
+
+    /*
+    오브젝트 풀링을 위한 위치 재선정 - 살아났을때
+     */
+    public void set_Position(){
+        fish_Point_X = (float)(30 + Math.random() * (window_Width -100));        // x축 = 10 ~ 윈도우 널이 - 100 사이에서 생성
+        fish_Point_Y = -100 - random.nextInt(500);
+    }
+    public void set_Position(float x, float y){
+        fish_Point_X = x;       // x축 = 10 ~ 윈도우 널이 - 100 사이에서 생성
+        fish_Point_Y = y;
+    }
+
+
+
+
 
     /**
      * 가장 처음 생성된 물고기인가?
@@ -81,6 +97,11 @@ public class Fish_Default_Body {
      */
     public int get_Fish_Hp(){
         return hp;
+    }
+
+    //오브젝트 풀링 을 위한 hp 채우기
+    public void set_Fish_Hp(int param_Hp){
+        hp = param_Hp;
     }
 
     /**
@@ -174,6 +195,25 @@ public class Fish_Default_Body {
     //********************************************************************************************//
 
 
+
+    //보스 물고기 잡으면 나오는 물고기 인가?
+    // child = 0 아무것도 아님, 1일때 기본 물고기, 2일때 중간 보스 물고기
+    int child = 0;
+    public void set_Child_Fish(int param){
+        child = param;
+    }
+
+    public int get_Child_Fish(){
+        return child;
+    }
+    //true 일 때 보임
+    boolean scf_Flag = true;
+    public void set_Visible_Fish_Flag(boolean param){
+        scf_Flag = param; //새끼인지 아닌지.
+    }
+    public boolean get_Visible_Fish_Flag(){
+        return scf_Flag; //새끼인지 아닌지.
+    }
 
 
     /**

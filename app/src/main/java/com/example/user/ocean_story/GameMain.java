@@ -753,6 +753,9 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
 
+
+
+
     }
 
 
@@ -886,7 +889,11 @@ private void button_Create_method_Init(){
 
 
         //스테이지  = 1, 속도 = 1
-         fish_List.clear();
+
+        //오브젝트 풀링으로 인해 클리어 할 필요없다.
+//        fish_List.clear();
+
+
          ground_List.clear();
          Score = 0;
         land_Mark_Class = 1;
@@ -1365,6 +1372,11 @@ private void button_Create_method_Init(){
             for(int i=0; i<6; i++) {
                 ground_Drag_Lobsters_img[i] = Init_Ground_Drag_Lobsters_Image(_context, i);     //가제 이미지
             }
+
+
+
+            //오브젝트 풀링 물고기 가져오기
+            fish_Total_Production();
 
 
         }
@@ -4020,8 +4032,9 @@ try{
                  * 물고기 그리기
                  */
 
+
                 for(int i=fish_List.size() - 1; i >= 0 ; i--) {
-                if(fish_List.get(i).get_Fish_Hp() > 0){
+                if(fish_List.get(i).get_Fish_Hp() > 0 && (fish_List.get(i)).get_Visible_Fish_Flag()){
 
 
 
@@ -4091,13 +4104,13 @@ try{
 
                          }else if(fish_List.get(i).get_Class_Num() == 1){   //중간 보스
 
-                             if (fish_List.get(i).get_Fish_Hp() >= 4) {
+                             if (fish_List.get(i).get_Fish_Hp() >= 5) {
                                  temp_Fish = draw.rotate_Image(fish_Touch_Default_Middle_Hp1_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                             } else if (fish_List.get(i).get_Fish_Hp() >= 3) {
+                             } else if (fish_List.get(i).get_Fish_Hp() >= 4) {
                                  temp_Fish = draw.rotate_Image(fish_Touch_Default_Middle_Hp2_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                             } else if (fish_List.get(i).get_Fish_Hp() >= 2) {
+                             } else if (fish_List.get(i).get_Fish_Hp() >= 3) {
                                  temp_Fish = draw.rotate_Image(fish_Touch_Default_Middle_Hp3_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                             } else if (fish_List.get(i).get_Fish_Hp() >= 1) {
+                             } else if (fish_List.get(i).get_Fish_Hp() >= 2) {
                                  temp_Fish = draw.rotate_Image(fish_Touch_Default_Middle_Hp4_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
                              } else {
                                  temp_Fish = draw.rotate_Image(fish_Touch_Default_Middle_Hp5_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
@@ -4108,15 +4121,13 @@ try{
                          }else if(fish_List.get(i).get_Class_Num() == 2){   //보스
 
 
-
-
-                             if (fish_List.get(i).get_Fish_Hp() >= 4) {
+                             if (fish_List.get(i).get_Fish_Hp() >= 5) {
                                  temp_Fish = draw.rotate_Image(fish_Touch_Default_Boss_Hp5_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                             } else if (fish_List.get(i).get_Fish_Hp() >= 3) {
+                             } else if (fish_List.get(i).get_Fish_Hp() >= 4) {
                                  temp_Fish = draw.rotate_Image(fish_Touch_Default_Boss_Hp4_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                             } else if (fish_List.get(i).get_Fish_Hp() >= 2) {
+                             } else if (fish_List.get(i).get_Fish_Hp() >= 3) {
                                  temp_Fish = draw.rotate_Image(fish_Touch_Default_Boss_Hp3_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
-                             } else if (fish_List.get(i).get_Fish_Hp() >= 1) {
+                             } else if (fish_List.get(i).get_Fish_Hp() >= 2) {
                                  temp_Fish = draw.rotate_Image(fish_Touch_Default_Boss_Hp2_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
                              } else {
                                  temp_Fish = draw.rotate_Image(fish_Touch_Default_Boss_Hp1_img[fish_List.get(i).get_Draw_Fish_Status()], -fish_List.get(i).get_Fish_Angle());
@@ -6648,13 +6659,15 @@ try{
                 //모든 물고기 및 그라운드 생명체 hp - 100 해야된다.
 
                 for(int i=0; i<fish_List.size(); i++){
-                    fish_List.get(i).set_Hp_Minus(500000);
+                    if(fish_List.get(i).get_Visible_Fish_Flag()) {
+                        fish_List.get(i).set_Hp_Minus(500000);
+                    }
                 }
 
 
                 for(int i=0; i<ground_List.size(); i++){
                     if(!(ground_List.get(i) instanceof Land_Mark)) {
-                        if(!(ground_List.get(i) instanceof Ground_Drag_Clam)) {
+                        if(!(ground_List.get(i) instanceof Ground_Drag_Clam && fish_List.get(i).get_Visible_Fish_Flag())) {
                             ground_List.get(i).set_Ground_Hp_Minus(500000);
                         }
                     }
@@ -6950,14 +6963,6 @@ try{
 
 
 /**
- * 청새치 추가하기
- */
-public void add_Fish_Touch_Marlin(){
-    fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight());
-    fish_List.add(fish_Touch_Marlin);
-}
-
-/**
  * 청 새치 주의!
  */
 public void wave_Marlin(){
@@ -7009,6 +7014,216 @@ public void wave_Marlin(){
 
 
     /**
+     * 청새치 추가하기
+     */
+    public void add_Fish_Touch_Marlin(){
+        fish_Touch_Marlin = new Fish_Touch_Marlin(window_Width, 1, fish_Touch_Marlin_img[0].getWidth(), fish_Touch_Marlin_img[0].getHeight());
+        fish_List.add(fish_Touch_Marlin);
+    }
+
+
+    //중간 보스 물고기 잡을때 나올 물고기
+    public void fish_Child_Set(float x, float y){
+        for(int i=0; i<fish_List.size(); i++){
+
+            if(fish_List.get(i) instanceof Fish_Touch_Default  && fish_List.get(i).get_Child_Fish() == 1){
+                if(!(fish_List.get(i)).get_Visible_Fish_Flag()){
+                    fish_List.get(i).set_Visible_Fish_Flag(true);
+                    fish_List.get(i).set_Fish_Hp(5);
+                    fish_List.get(i).set_Position(x,y);
+                    break;
+                }
+            }
+        }
+    }
+    //보스 물고기 잡을때 나올 물고기
+    public void fish_Child_Middle_Set(float x, float y){
+        for(int i=0; i<fish_List.size(); i++){
+
+            if(fish_List.get(i) instanceof Fish_Touch_Default && fish_List.get(i).get_Child_Fish() == 2){
+                if(!(fish_List.get(i)).get_Visible_Fish_Flag()){
+                    fish_List.get(i).set_Visible_Fish_Flag(true);
+                    fish_List.get(i).set_Fish_Hp(5);
+                    fish_List.get(i).set_Position(x,y);
+                    break;
+                }
+            }
+        }
+    }
+    // 강철 참돔 잡을때 나올 물고기
+    public void fish_Child_Steel_Drag_Set(float x, float y){
+        for(int i=0; i<fish_List.size(); i++){
+
+            if(fish_List.get(i) instanceof Fish_Drag_Default){
+                if(!(fish_List.get(i)).get_Visible_Fish_Flag() && fish_List.get(i).get_Child_Fish() == 3){
+                    fish_List.get(i).set_Visible_Fish_Flag(true);
+                    fish_List.get(i).set_Position(x,y);
+                    break;
+                }
+            }
+        }
+    }
+
+
+
+    /**
+     *오브젝트의 자리에서 오브젝트를 생성할때 주의할점 그리기, 움직이기, 터치이벤트 에서 막아줘야함
+     * get_Child_Fish()
+     */
+
+
+    //오브젝트 풀링 물고기 가져오기
+    public void fish_Total_Production(){
+
+        // 기본 물고기
+//        for(int i=0; i<10; i++) {
+//            fish_Touch_Default = new Fish_Touch_Default(window_Width, random.nextInt(5) + 1, fish_Touch_Default_Hp1_img[0].getWidth() + convertPixelsToDp(15, _context), fish_Touch_Default_Hp1_img[0].getHeight());       //기본 fish_touch_default 물고기 생성
+//            fish_List.add(fish_Touch_Default);
+//        }
+//
+        //중간 보스 물고기에서 나올 물고기
+        for(int i=0; i<8; i++){
+            fish_Touch_Default = new Fish_Touch_Default(window_Width, 5, fish_Touch_Default_Hp1_img[0].getWidth() + convertPixelsToDp(15, _context), fish_Touch_Default_Hp1_img[0].getHeight());       //기본 fish_touch_default 물고기 생성
+            fish_Touch_Default.set_Child_Fish(1);
+            fish_Touch_Default.set_Visible_Fish_Flag(false);
+            fish_List.add(fish_Touch_Default);
+        }
+
+        // 기본 중간 물고기 보스
+        for(int i=0; i<4; i++){
+            fish_Touch_Default = new Fish_Touch_Default(window_Width, 5, fish_Touch_Default_Middle_Hp1_img[0].getWidth(), fish_Touch_Default_Middle_Hp1_img[0].getHeight());
+            fish_Touch_Default.set_Child_Fish(2);
+            fish_Touch_Default.set_Class_Num(1);
+            fish_Touch_Default.set_Visible_Fish_Flag(false);
+            fish_List.add(fish_Touch_Default);
+        }
+
+        // 기본 물고기 보스
+        for(int i=0; i<2; i++){
+            fish_Touch_Default = new Fish_Touch_Default(window_Width, 5, fish_Touch_Default_Boss_Hp1_img[0].getWidth(), fish_Touch_Default_Boss_Hp1_img[0].getHeight());
+            fish_Touch_Default.set_Class_Num(2);
+            fish_List.add(fish_Touch_Default);
+        }
+//
+////        // 드래그 물고기
+//        for(int i=0; i<4; i++) {
+//            fish_Drag_Default = new Fish_Drag_Default(window_Width, 30, fish_Drag_Default_img[0].getWidth(), fish_Drag_Default_img[0].getHeight());       //드래그로 잡는 fish_Touch_Default 물고기생성
+//            fish_List.add(fish_Drag_Default);
+//        }
+
+        //강철 참돔에서 나올 물고기
+        for(int i=0; i<3; i++) {
+            fish_Drag_Default = new Fish_Drag_Default(window_Width, 30, fish_Drag_Default_img[0].getWidth(), fish_Drag_Default_img[0].getHeight());       //드래그로 잡는 fish_Touch_Default 물고기생성
+            fish_Drag_Default.set_Child_Fish(3);
+            fish_Drag_Default.set_Visible_Fish_Flag(false);
+            fish_List.add(fish_Drag_Default);
+        }
+//
+//        // 오징어
+//        for(int i=0; i<3; i++){
+//            fish_Touch_Squid = new Fish_Touch_Squid(window_Width, 1 , fish_Touch_Squid_img[0].getWidth(), fish_Touch_Squid_img[0].getHeight());       //오징어 생성
+//            fish_List.add(fish_Touch_Squid);
+//        }
+//
+//        //상어
+//        for(int i=0; i<2; i++) {
+//            fish_Drag_Shark = new Fish_Drag_Shark(window_Width, 20 * day_Count, fish_Drag_Shark_img[0].getWidth(), fish_Drag_Shark_img[0].getHeight());       //드래그로 잡는 fish_Touch_Default 물고기생성
+//            fish_List.add(fish_Drag_Shark);
+//        }
+//
+//        //        //강철 참돔
+        fish_Drag_Steelbream = new Fish_Drag_Steelbream(window_Width, 1, fish_Drag_Steelbream_img[0].getWidth(), fish_Drag_Steelbream_img[0].getHeight());       //드래그로 잡는 fish_Touch_Default 물고기생성
+        fish_List.add(fish_Drag_Steelbream);
+//
+//        //전기 뱀장어
+//        fish_Touch_Ell = new Fish_Touch_Ell(window_Width, 1, fish_Touch_Ell_img[0].getWidth(), fish_Touch_Ell_img[0].getHeight());
+//        fish_List.add(fish_Touch_Ell);
+
+        //거북이 등 몇가지 추가 ..
+        그라운드 생명
+
+
+    }
+
+
+    //오브젝트 풀링 물고기 hp0 인것 선별해서 다시 충전 시키기
+    public void default_Fish_Alive(int select_Fish_Num){
+
+
+
+        //기본 물고기 피가0인 것을 되살린다.
+            if(fish_List.get(select_Fish_Num) instanceof Fish_Touch_Default){
+//                if(fish_List.get(select_Fish_Num).get_Fish_Hp() <= 0){
+                //보스 잡고 나오는 물고기 아닐때.
+
+                if(fish_List.get(select_Fish_Num).get_Class_Num() == 2){
+
+                    fish_List.get(select_Fish_Num).set_Fish_Hp(5);
+                }else if(fish_List.get(select_Fish_Num).get_Class_Num() == 1){
+                    //중간보스
+
+                    fish_List.get(select_Fish_Num).set_Fish_Hp(5);
+                }else {
+                    fish_List.get(select_Fish_Num).set_Fish_Hp(random.nextInt(5) + 1);
+                }
+            }
+
+            //드래그 물고기
+            else if(fish_List.get(select_Fish_Num) instanceof Fish_Drag_Default){
+                fish_List.get(select_Fish_Num).set_Fish_Hp(2 * day_Count);
+                fish_List.get(select_Fish_Num).set_Position();
+                if(fish_List.get(select_Fish_Num).get_Child_Fish() == 3){
+                    fish_List.get(select_Fish_Num).set_Visible_Fish_Flag(false);
+                }
+            }
+
+            //오징어
+            else if(fish_List.get(select_Fish_Num) instanceof Fish_Touch_Squid){
+                fish_List.get(select_Fish_Num).set_Fish_Hp(1);
+                fish_List.get(select_Fish_Num).set_Position();
+            }
+
+            //전기 뱀장어
+            else if(fish_List.get(select_Fish_Num) instanceof Fish_Touch_Ell){
+                fish_List.get(select_Fish_Num).set_Fish_Hp(1);
+                fish_List.get(select_Fish_Num).set_Position();
+            }
+
+            //상어
+            else if(fish_List.get(select_Fish_Num) instanceof Fish_Drag_Shark){
+                fish_List.get(select_Fish_Num).set_Fish_Hp(20 * day_Count);
+                fish_List.get(select_Fish_Num).set_Position();
+            }
+
+            //강철 참돔
+            else if(fish_List.get(select_Fish_Num) instanceof Fish_Drag_Steelbream){
+                fish_List.get(select_Fish_Num).set_Fish_Hp(1);
+                fish_List.get(select_Fish_Num).set_Position();
+            }
+
+        //충전한 것 안보이게
+        fish_List.get(select_Fish_Num).set_Position();
+        fish_List.get(select_Fish_Num).set_Visible_Fish_Flag(false);
+
+        send_Fish();
+    }
+
+
+    /**
+     * 대기 중인 물고기 내보내기
+     */
+    public void send_Fish(){
+        for(int i=0; i<fish_List.size(); i++){
+            if(fish_List.get(i).get_Child_Fish() == 0) {
+                if (fish_List.get(i).get_Visible_Fish_Flag() == false) {
+                    fish_List.get(i).set_Visible_Fish_Flag(true);
+                }
+            }
+        }
+    }
+
+
+    /**
      * 물고기 추가하기
      */
     public void add_Fish_Touch_Default(){
@@ -7028,7 +7243,7 @@ public void wave_Marlin(){
 
     public void add_Fish_Touch_Default(float x, float y){
         fish_Touch_Default = new Fish_Touch_Default(window_Width, 5, fish_Touch_Default_Hp1_img[0].getWidth(), fish_Touch_Default_Hp1_img[0].getHeight(), x, y);       //기본 fish_touch_default 물고기 생성
-        fish_Touch_Default.set_Class_NUm(0);
+        fish_Touch_Default.set_Class_Num(0);
         fish_List.add(fish_Touch_Default);
     }
 
@@ -7037,13 +7252,13 @@ public void wave_Marlin(){
      */
     public void add_Middle_Fish_Touch_Default(){
         fish_Touch_Default = new Fish_Touch_Default(window_Width, 5 , fish_Touch_Default_Middle_Hp1_img[0].getWidth(), fish_Touch_Default_Middle_Hp1_img[0].getHeight());
-        fish_Touch_Default.set_Class_NUm(1);
+        fish_Touch_Default.set_Class_Num(1);
         fish_List.add(fish_Touch_Default);                                  //물고기 리스트에 추가
     }
 
     public void add_Middle_Fish_Touch_Default(float x, float y){
         fish_Touch_Default = new Fish_Touch_Default(window_Width, 5, fish_Touch_Default_Middle_Hp1_img[0].getWidth(),fish_Touch_Default_Middle_Hp1_img[0].getHeight(),  x, y);
-        fish_Touch_Default.set_Class_NUm(1);
+        fish_Touch_Default.set_Class_Num(1);
         fish_List.add(fish_Touch_Default);
     }
 
@@ -7053,12 +7268,10 @@ public void wave_Marlin(){
     public void add_Boss_Fish_Touch_Default(){
 
         fish_Touch_Default = new Fish_Touch_Default(window_Width, 5, fish_Touch_Default_Boss_Hp1_img[0].getWidth(), fish_Touch_Default_Boss_Hp1_img[0].getHeight());
-        fish_Touch_Default.set_Class_NUm(2);
+        fish_Touch_Default.set_Class_Num(2);
 
         fish_List.add(fish_Touch_Default);                                  //물고기 리스트에 추가
     }
-
-
 
     /**
      * 오징어 추가
@@ -7074,10 +7287,19 @@ public void wave_Marlin(){
 //            if(fish_Touch_Default.get_Fish_Class() == 1) {
 //                game_thread.function_Init_Explain_Squid();
 //            }
-
         }
-
         fish_List.add(fish_Touch_Squid);
+    }
+    /**
+     * 오징어 먹물 추가
+     */
+    //먹물 표시
+    ArrayList<Background_Effect_Squid_Ink> Background_Effect_Squid_Ink_Arr = new ArrayList<Background_Effect_Squid_Ink>();
+    public void add_Fish_Touch_Squid_Ink(float xPoint, float yPoint){
+
+        fish_Touch_Squid_Ink = new Background_Effect_Squid_Ink((int)xPoint, (int)yPoint);
+        Background_Effect_Squid_Ink_Arr.add(fish_Touch_Squid_Ink);
+
     }
 
     /**
@@ -7100,24 +7322,7 @@ public void wave_Marlin(){
 //            }
         }
 
-
-
         fish_List.add(fish_Touch_Ell);
-    }
-
-
-
-
-    /**
-     * 오징어 먹물 추가
-     */
-    //먹물 표시
-    ArrayList<Background_Effect_Squid_Ink> Background_Effect_Squid_Ink_Arr = new ArrayList<Background_Effect_Squid_Ink>();
-    public void add_Fish_Touch_Squid_Ink(float xPoint, float yPoint){
-
-        fish_Touch_Squid_Ink = new Background_Effect_Squid_Ink((int)xPoint, (int)yPoint);
-        Background_Effect_Squid_Ink_Arr.add(fish_Touch_Squid_Ink);
-
     }
 
 
@@ -7173,15 +7378,6 @@ public void wave_Marlin(){
         fish_List.add(fish_Drag_Shark);
     }
 
-
-
-
-
-
-
-
-
-
     /**
      * 해파리 추가
      */
@@ -7199,6 +7395,32 @@ public void wave_Marlin(){
         fish_Trap_Turtle = new Fish_Trap_Turtle(window_Width, window_Height, 100000, fish_Turtle_img[0].getWidth(),fish_Turtle_img[0].getHeight());
         fish_List.add(fish_Trap_Turtle);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**
@@ -7489,8 +7711,15 @@ public void wave_Marlin(){
      */
 
     public synchronized void fish_Move(){
+
         for(int i=0; i<fish_List.size(); i++){
-            fish_List.get(i).fish_Object_Move();
+
+            if(fish_List.get(i).get_Fish_Hp() > 0 && fish_List.get(i).get_Visible_Fish_Flag()) {
+
+
+
+                fish_List.get(i).fish_Object_Move();
+            }
         }
     }
 
@@ -7605,7 +7834,11 @@ public void wave_Marlin(){
         try{
 
 
-        for(int i=0; i<fish_List.size();i++){
+        for(int i=0; i<fish_List.size(); i++){
+//            split_Fish_Class = ((Fish_Touch_Default)fish_List.get(i)).get_Class_Num();
+
+            //보스 새끼 물고기 일때 무시
+
 
             //청새치가 캐릭터에 부딛혔을때
             if(fish_List.get(i) instanceof Fish_Touch_Marlin){
@@ -7645,21 +7878,30 @@ public void wave_Marlin(){
 
                 split_Fish_X = fish_List.get(i).get_Fish_Point_X();
                 split_Fish_Y = fish_List.get(i).get_Fish_Point_Y();
-                split_Fish_Class = fish_List.get(i).get_Class_Num();
 
+                if(fish_List.get(i) instanceof Fish_Touch_Default) {
+                    split_Fish_Class = ((Fish_Touch_Default) fish_List.get(i)).get_Class_Num();
 
-
-                //중간 보스 및 대장 물고기를 잡으면 그 자리에서 물고기 추가
-                if(split_Fish_Class == 1){  //중간보스이면
-                    add_Fish_Touch_Default(split_Fish_X, split_Fish_Y);
-                    add_Fish_Touch_Default(split_Fish_X, split_Fish_Y);
+                    //중간 보스 및 대장 물고기를 잡으면 그 자리에서 물고기 추가
+                    if(split_Fish_Class == 1){  //중간보스이면
 //                    add_Fish_Touch_Default(split_Fish_X, split_Fish_Y);
-//                    add_Fish_Touch_Default(split_Fish_X, split_Fish_Y);
+                        fish_Child_Set(split_Fish_X, split_Fish_Y);
+                        fish_Child_Set(split_Fish_X, split_Fish_Y);
 
-                }else if(split_Fish_Class == 2){
-                    add_Middle_Fish_Touch_Default(split_Fish_X, split_Fish_Y);
-                    add_Middle_Fish_Touch_Default(split_Fish_X, split_Fish_Y);
+                    }else if(split_Fish_Class == 2){
+//                    add_Middle_Fish_Touch_Default(split_Fish_X, split_Fish_Y);
+
+                        fish_Child_Middle_Set(split_Fish_X, split_Fish_Y);
+                        fish_Child_Middle_Set(split_Fish_X, split_Fish_Y);
+//                    fish_Child_Middle_Set(split_Fish_X, split_Fish_Y);
+//                    fish_Child_Middle_Set(split_Fish_X, split_Fish_Y);
+                    }
                 }
+
+
+
+
+
 
                 //첫 번째 물고기 삭제 되면 비트맵 리 사이클, 기본 물고기
 //                if(fish_List.get(i).get_First_Test_Object() && fish_List.get(i).get_Fish_Class() == 1 && fish_List.get(i) instanceof Fish_Touch_Default && fish_List.get(i).get_Class_Num() == 0){
@@ -7676,7 +7918,9 @@ public void wave_Marlin(){
 //                        game_thread.recycle_Init_Explain_Fish_Drag();
 //                    }
 
-                fish_List.remove(i);
+//                fish_List.remove(i);
+                default_Fish_Alive(i);
+
                 break;
             }
 
@@ -7709,8 +7953,8 @@ public void wave_Marlin(){
 //                    }
 
 
-                fish_List.remove(i);
-
+//                fish_List.remove(i);
+                default_Fish_Alive(i);
 
                 break;
             }
@@ -8607,22 +8851,6 @@ public void skill_Ground_Attack(){
 
 
 
-
-
-        //이중 어딘가에 오류가 있다.
-
-
-
-
-
-
-
-
-
-
-
-
-
         //물고기 삭제 1번 먼저
         if(fish_List.size() != 0) {         //물고기가 존재할때 눌러짐
 
@@ -8633,14 +8861,16 @@ public void skill_Ground_Attack(){
             /**
              * 가장 가까운 물고기를 찾는다.
              */
-            for(int i=fish_List.size() - 1; i>=0; i--){
-
+//            for(int i=fish_List.size() - 1; i>=0; i--){
+            for(int i=0; i<fish_List.size(); i++){
 
                 //전달받은 물고기 인자가 아닐때 생깜, 방해 거북이 아닐때
-                if(fish_List.get(i).get_Fish_Class() != fish_Class && fish_List.get(i).get_Fish_Class() != 3){
+                if((fish_List.get(i).get_Fish_Class() != fish_Class && fish_List.get(i).get_Fish_Class() != 3) || fish_List.get(i).get_Fish_Hp() <= 0){
                     continue;
                 }
-
+                if(!(fish_List.get(i).get_Visible_Fish_Flag())){
+                    continue;
+                }
 
                 //y축으로 가장 가까운 적을 선택한다.
                 smallMathResult = fish_List.get(i).get_Fish_Point_Y() + fish_List.get(i).get_Height_Size();
@@ -8766,7 +8996,11 @@ public void skill_Ground_Attack(){
 
                         if(random.nextInt(100) < 2) {
                             fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege * (int)character_Drag_Damege);
-                            add_Fish_Drag_Default(fish_List.get(smallFishIndex).get_Fish_Point_X(), fish_List.get(smallFishIndex).get_Fish_Point_Y());
+//                            add_Fish_Drag_Default(fish_List.get(smallFishIndex).get_Fish_Point_X(), fish_List.get(smallFishIndex).get_Fish_Point_Y());
+                            /**
+                             *  강철참돔 제거하면 제거한자리에 드래그 물고기 생성
+                             */
+                            fish_Child_Steel_Drag_Set(fish_List.get(smallFishIndex).get_Fish_Point_X(), fish_List.get(smallFishIndex).get_Fish_Point_Y());
                         }
 
                         drag_Steelbream_Hit_Flag = true;        //참돔
@@ -10149,7 +10383,6 @@ public void skill_Ground_Attack(){
         ruby = setIntent[0];
         money = setIntent[1];
 
-        Log.e("a", money + "@@");
         character_Randmark_Damege = setIntent[2];
         character_Drag_Damege = setIntent[3];
         urchinresistance = setIntent[4];
@@ -10171,7 +10404,6 @@ public void skill_Ground_Attack(){
         mt10 = setIntent[36];
 
 
-        Log.e("a","@@@@@@@@@@@@@@@@" + ft2);
 
         for(int i=0; i<setIntent.length; i++){
             Log.e("a",setIntent[i] + "");
@@ -10571,6 +10803,14 @@ public void skill_Ground_Attack(){
 
             //게임 동작 중에만 추가한다.
             if(mRun) {
+
+
+
+//                add_Fish_Touch_Default();
+
+
+
+
 //                        add_Fish_Drag_Default();
 //                        add_Fish_Drag_Steelbream();
 //                        add_Ground_Starfish();
@@ -10583,789 +10823,790 @@ public void skill_Ground_Attack(){
 
 
 
-                if(day_Count < 10) {
-                    //기본 물고기
-                    if (day_Count >= 0) {
 
-                        if(day_Count == 0 && enumy_Appear){
-                            explain[0] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-//                                add_Fish_Drag_Shark();
+//                if(day_Count < 10) {
+//                    //기본 물고기
+//                    if (day_Count >= 0) {
 //
-//                                wave_Marlin();
-                        //청새치 웨이브
-                        if(day_Count == 1) {
-//                                    wave_Marlin();
-//                                    add_Ground_Wave();
-//                                    add_Fish_Touch_Ell();
-                        }
+//                        if(day_Count == 0 && enumy_Appear){
+//                            explain[0] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
+////                                add_Fish_Drag_Shark();
+////
+////                                wave_Marlin();
+//                        //청새치 웨이브
+//                        if(day_Count == 1) {
+////                                    wave_Marlin();
+////                                    add_Ground_Wave();
+////                                    add_Fish_Touch_Ell();
+//                        }
+////                        add_Ground_Wave();
+//
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Touch_Default();
+//
+//
+//
+//                    }
+//                    if (day_Count >= 2) {
+//                        add_Fish_Touch_Default();
+//                    }
+//                    if (day_Count >= 4) {
+//                        add_Fish_Touch_Default();
+//                    }
+//                    if (day_Count >= 6) {
+//                        add_Fish_Touch_Default();
+//                    }
+//                    if (day_Count >= 8) {
+//                        add_Boss_Fish_Touch_Default();
+//                    }
+//                    if(day_Count == 9){
+//                        enumy_Appear = true;
+//                    }
+//                }
+//
+//
+//                if(day_Count < 20){
+//                    //달팽이 추가
+//                    if(day_Count >= 10) {
+//
+//                        if(day_Count == 10 && enumy_Appear){
+//                            explain[0] = false;
+//                            explain[1] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
+//                        add_Ground_Snail();
+//                        add_Fish_Touch_Default();
+//                    }
+//                    if(day_Count >= 12) {
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Touch_Default();
+//                    }
+//                    if(day_Count >= 14) {
+//                        add_Fish_Touch_Default();
+//                    }
+//                    if(day_Count >= 16) {
+//                        add_Ground_Snail();
+//                    }
+//                    if(day_Count >= 18) {
+//                        add_Fish_Touch_Default();
+//                        add_Ground_Boss();
+//                    }
+//                    if(day_Count == 19){
+//                        enumy_Appear = true;
+//                    }
+//                }
+//
+//                if(day_Count < 30){
+//                    //드래그 물고기 추가
+//                    if(day_Count >= 20) {
+//
+//                        if(day_Count == 20 &&enumy_Appear){
+//                            explain[1] = false;
+//                            explain[2] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
+//                        add_Fish_Drag_Default();
+//                        add_Fish_Touch_Default();
+//                        add_Ground_Snail();
+//                    }
+//                    if(day_Count >= 22) {
+//                        add_Fish_Touch_Default();
+//                    }
+//                    if(day_Count >= 24) {
+//                        add_Fish_Drag_Default();
+//                        add_Ground_Snail();
+//                        add_Boss_Fish_Touch_Default();
+//                    }
+//                    if(day_Count >= 26) {
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Touch_Default();
+//                    }
+//                    if(day_Count >= 28) {
+//                        add_Fish_Drag_Default();
+//                        add_Ground_Boss();
+//                    }
+//                    if(day_Count == 29){
+//                        enumy_Appear = true;
+//                    }
+//                }
+//
+//                if(day_Count < 40){
+//                    //꽃게 추가
+//                    if(day_Count >= 30) {
+//
+//                        if(day_Count == 30 &&enumy_Appear){
+//                            explain[2] = false;
+//                            explain[3] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//                        add_Ground_Crab();
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Touch_Default();
+//                    }
+//                    if(day_Count >= 32) {
+//                        add_Fish_Drag_Default();
+//                        add_Ground_Snail();
+//                    }
+//                    if(day_Count >= 34) {
+//                        add_Ground_Crab();
+//                    }
+//                    if(day_Count >= 36) {
+//                        add_Fish_Drag_Default();
+//                        add_Fish_Touch_Default();
+//                        add_Ground_Snail();
+//                    }
+//                    if(day_Count >= 38) {
+//                        add_Fish_Drag_Default();
+//                        add_Ground_Crab();
+//                    }
+//                    if(day_Count == 39){
+//                        enumy_Appear = true;
+//                        add_Ground_Boss();
+//                    }
+//                }
+//
+//
+//
+//                if(day_Count < 50) {
+//                    //오징어 추가
+//                    if (day_Count == 40 &&day_Count >= 40) {
+//
+//                        if(enumy_Appear){
+//                            explain[3] = false;
+//                            explain[4] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
+//                        add_Fish_Touch_Squid();//오징어 추가
+//                    }
+//                    if (day_Count >= 42) {
+//                        add_Fish_Drag_Default();
+//                        add_Fish_Touch_Default();
+//                    }
+//                    if (day_Count >= 44) {
+//                        add_Fish_Touch_Default();
+//                        add_Ground_Crab();
+//                    }
+//                    if (day_Count >= 46) {
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Drag_Default();
+//                        add_Ground_Snail();
+//                    }
+//                    if (day_Count >= 48) {
+//                        add_Fish_Touch_Squid();//오징어 추가
+//                        add_Boss_Fish_Touch_Default();
+//                        add_Ground_Crab();
+//                        add_Ground_Boss();
+//                    }
+//                    if(day_Count == 49){
+//                        enumy_Appear = true;
+//                    }
+//                }
+//
+//                if(day_Count < 60) {
+//                    //성게 추가
+//                    if (day_Count >= 50) {
+//
+//                        if(day_Count == 50 &&enumy_Appear){
+//                            explain[4] = false;
+//                            explain[5] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
+//                        add_Ground_Urchin();
+//                        add_Fish_Touch_Squid();//오징어 추가
+//                        add_Fish_Drag_Default();
+//                        add_Fish_Touch_Default();
+//                        add_Ground_Snail();
+//                    }
+//                    if (day_Count >= 52) {
+//                        add_Fish_Drag_Default();
+//                        add_Fish_Touch_Default();
+//                        add_Ground_Crab();
+//                    }
+//                    if (day_Count >= 54) {
+//                        add_Ground_Urchin();
+//                    }
+//                    if (day_Count >= 56) {
+//                        add_Ground_Boss();
+//                    }
+//                    if (day_Count >= 58) {
+//                        add_Fish_Touch_Default();
+//                        add_Boss_Fish_Touch_Default();
+//                    }
+//                    if(day_Count == 59){
+//                        enumy_Appear = true;
+//                    }
+//                }
+//
+//                if(day_Count < 70) {
+//                    //전기 뱀장어 추가
+//                    if (day_Count >= 60) {
+//
+//                        if(day_Count == 60 &&enumy_Appear){
+//                            explain[5] = false;
+//                            explain[6] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
+//                        add_Fish_Touch_Ell();
+//                        add_Fish_Drag_Default();
+//                        add_Fish_Touch_Default();
+//                        add_Ground_Boss();
+//                        add_Ground_Snail();
+//                    }
+//                    if (day_Count >= 62) {
+//                        add_Fish_Touch_Squid();//오징어 추가
+//                    }
+//                    if (day_Count >= 64) {
+//                        add_Ground_Urchin();
+//                    }
+//                    if (day_Count >= 66) {
+//                        add_Fish_Drag_Default();
+//                    }
+//                    if (day_Count >= 68) {
+//                        add_Boss_Fish_Touch_Default();
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Touch_Squid();//오징어 추가
+//                        add_Ground_Crab();
+//                    }
+//                    if(day_Count == 69){
+//                        enumy_Appear = true;
+//                    }
+//                }
+//
+//                if(day_Count < 80) {
+//                    //소라게 추가
+//                    if (day_Count >= 70) {
+//
+//                        if(day_Count == 70 &&enumy_Appear){
+//                            explain[6] = false;
+//                            explain[7] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
+//                        add_Ground_Hermit();
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Touch_Squid();//오징어 추가
+//                        add_Ground_Urchin();
+//                        add_Fish_Touch_Default();
+//                    }
+//                    if (day_Count >= 72) {
+//                        add_Fish_Touch_Squid();//오징어 추가
+//                        add_Fish_Touch_Default();
+//
+//                    }
+//                    if (day_Count >= 74) {
+//                        add_Ground_Crab();
+//                    }
+//                    if (day_Count >= 76) {
+//                        add_Boss_Fish_Touch_Default();
+//                    }
+//                    if (day_Count >= 78) {
+//                        add_Ground_Boss();
+//                        add_Boss_Fish_Touch_Default();
+//                    }
+//                    if(day_Count == 79){
+//                        enumy_Appear = true;
+//                    }
+//                }
+//
+//                if(day_Count < 90) {
+//                    //청새치
+//                    if (day_Count >= 80) {
+//
+//                        if(day_Count == 80 &&enumy_Appear){
+//                            explain[7] = false;
+//                            explain[8] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//                        add_Fish_Touch_Marlin();
+//                        add_Fish_Touch_Default();
+//                        add_Boss_Fish_Touch_Default();
+//                    }
+//                    if (day_Count >= 82) {
+//                        add_Fish_Drag_Default();
+//                        add_Fish_Touch_Default();
+//                    }
+//                    if (day_Count >= 84) {
+//                        add_Fish_Touch_Marlin();
+//                        add_Ground_Crab();
+//                        add_Ground_Urchin();
+//                    }
+//
+//                    if(day_Count == 86){
+//                        wave_Marlin();
+//                    }
+//
+//                    if (day_Count >= 86) {
+//
+//                        add_Fish_Touch_Default();
+//                        add_Ground_Hermit();
+//                        add_Ground_Urchin();
+//                        add_Ground_Boss();
+//                    }
+//                    if (day_Count >= 88) {
+//                        add_Fish_Touch_Marlin();
+//                    }
+//                    if(day_Count == 89){
+//                        enumy_Appear = true;
+//                    }
+//                }
+//
+//
+//
+//                if(day_Count < 100) {
+//                    //파도 주의보
+//                    if (day_Count >= 90) {
+//
+//                        if(day_Count == 90 &&enumy_Appear){
+//                            explain[8] = false;
+//                            explain[9] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
 //                        add_Ground_Wave();
-
-                        add_Fish_Touch_Default();
-                        add_Fish_Touch_Default();
-                        add_Fish_Touch_Default();
-
-
-
-                    }
-                    if (day_Count >= 2) {
-                        add_Fish_Touch_Default();
-                    }
-                    if (day_Count >= 4) {
-                        add_Fish_Touch_Default();
-                    }
-                    if (day_Count >= 6) {
-                        add_Fish_Touch_Default();
-                    }
-                    if (day_Count >= 8) {
-                        add_Boss_Fish_Touch_Default();
-                    }
-                    if(day_Count == 9){
-                        enumy_Appear = true;
-                    }
-                }
-
-
-                if(day_Count < 20){
-                    //달팽이 추가
-                    if(day_Count >= 10) {
-
-                        if(day_Count == 10 && enumy_Appear){
-                            explain[0] = false;
-                            explain[1] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-                        add_Ground_Snail();
-                        add_Fish_Touch_Default();
-                    }
-                    if(day_Count >= 12) {
-                        add_Fish_Touch_Default();
-                        add_Fish_Touch_Default();
-                    }
-                    if(day_Count >= 14) {
-                        add_Fish_Touch_Default();
-                    }
-                    if(day_Count >= 16) {
-                        add_Ground_Snail();
-                    }
-                    if(day_Count >= 18) {
-                        add_Fish_Touch_Default();
-                        add_Ground_Boss();
-                    }
-                    if(day_Count == 19){
-                        enumy_Appear = true;
-                    }
-                }
-
-                if(day_Count < 30){
-                    //드래그 물고기 추가
-                    if(day_Count >= 20) {
-
-                        if(day_Count == 20 &&enumy_Appear){
-                            explain[1] = false;
-                            explain[2] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-                        add_Fish_Drag_Default();
-                        add_Fish_Touch_Default();
-                        add_Ground_Snail();
-                    }
-                    if(day_Count >= 22) {
-                        add_Fish_Touch_Default();
-                    }
-                    if(day_Count >= 24) {
-                        add_Fish_Drag_Default();
-                        add_Ground_Snail();
-                        add_Boss_Fish_Touch_Default();
-                    }
-                    if(day_Count >= 26) {
-                        add_Fish_Touch_Default();
-                        add_Fish_Touch_Default();
-                    }
-                    if(day_Count >= 28) {
-                        add_Fish_Drag_Default();
-                        add_Ground_Boss();
-                    }
-                    if(day_Count == 29){
-                        enumy_Appear = true;
-                    }
-                }
-
-                if(day_Count < 40){
-                    //꽃게 추가
-                    if(day_Count >= 30) {
-
-                        if(day_Count == 30 &&enumy_Appear){
-                            explain[2] = false;
-                            explain[3] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-                        add_Ground_Crab();
-                        add_Fish_Touch_Default();
-                        add_Fish_Touch_Default();
-                    }
-                    if(day_Count >= 32) {
-                        add_Fish_Drag_Default();
-                        add_Ground_Snail();
-                    }
-                    if(day_Count >= 34) {
-                        add_Ground_Crab();
-                    }
-                    if(day_Count >= 36) {
-                        add_Fish_Drag_Default();
-                        add_Fish_Touch_Default();
-                        add_Ground_Snail();
-                    }
-                    if(day_Count >= 38) {
-                        add_Fish_Drag_Default();
-                        add_Ground_Crab();
-                    }
-                    if(day_Count == 39){
-                        enumy_Appear = true;
-                        add_Ground_Boss();
-                    }
-                }
-
-
-
-                if(day_Count < 50) {
-                    //오징어 추가
-                    if (day_Count == 40 &&day_Count >= 40) {
-
-                        if(enumy_Appear){
-                            explain[3] = false;
-                            explain[4] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-                        add_Fish_Touch_Squid();//오징어 추가
-                    }
-                    if (day_Count >= 42) {
-                        add_Fish_Drag_Default();
-                        add_Fish_Touch_Default();
-                    }
-                    if (day_Count >= 44) {
-                        add_Fish_Touch_Default();
-                        add_Ground_Crab();
-                    }
-                    if (day_Count >= 46) {
-                        add_Fish_Touch_Default();
-                        add_Fish_Drag_Default();
-                        add_Ground_Snail();
-                    }
-                    if (day_Count >= 48) {
-                        add_Fish_Touch_Squid();//오징어 추가
-                        add_Boss_Fish_Touch_Default();
-                        add_Ground_Crab();
-                        add_Ground_Boss();
-                    }
-                    if(day_Count == 49){
-                        enumy_Appear = true;
-                    }
-                }
-
-                if(day_Count < 60) {
-                    //성게 추가
-                    if (day_Count >= 50) {
-
-                        if(day_Count == 50 &&enumy_Appear){
-                            explain[4] = false;
-                            explain[5] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-                        add_Ground_Urchin();
-                        add_Fish_Touch_Squid();//오징어 추가
-                        add_Fish_Drag_Default();
-                        add_Fish_Touch_Default();
-                        add_Ground_Snail();
-                    }
-                    if (day_Count >= 52) {
-                        add_Fish_Drag_Default();
-                        add_Fish_Touch_Default();
-                        add_Ground_Crab();
-                    }
-                    if (day_Count >= 54) {
-                        add_Ground_Urchin();
-                    }
-                    if (day_Count >= 56) {
-                        add_Ground_Boss();
-                    }
-                    if (day_Count >= 58) {
-                        add_Fish_Touch_Default();
-                        add_Boss_Fish_Touch_Default();
-                    }
-                    if(day_Count == 59){
-                        enumy_Appear = true;
-                    }
-                }
-
-                if(day_Count < 70) {
-                    //전기 뱀장어 추가
-                    if (day_Count >= 60) {
-
-                        if(day_Count == 60 &&enumy_Appear){
-                            explain[5] = false;
-                            explain[6] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-                        add_Fish_Touch_Ell();
-                        add_Fish_Drag_Default();
-                        add_Fish_Touch_Default();
-                        add_Ground_Boss();
-                        add_Ground_Snail();
-                    }
-                    if (day_Count >= 62) {
-                        add_Fish_Touch_Squid();//오징어 추가
-                    }
-                    if (day_Count >= 64) {
-                        add_Ground_Urchin();
-                    }
-                    if (day_Count >= 66) {
-                        add_Fish_Drag_Default();
-                    }
-                    if (day_Count >= 68) {
-                        add_Boss_Fish_Touch_Default();
-                        add_Fish_Touch_Default();
-                        add_Fish_Touch_Squid();//오징어 추가
-                        add_Ground_Crab();
-                    }
-                    if(day_Count == 69){
-                        enumy_Appear = true;
-                    }
-                }
-
-                if(day_Count < 80) {
-                    //소라게 추가
-                    if (day_Count >= 70) {
-
-                        if(day_Count == 70 &&enumy_Appear){
-                            explain[6] = false;
-                            explain[7] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-                        add_Ground_Hermit();
-                        add_Fish_Touch_Default();
-                        add_Fish_Touch_Squid();//오징어 추가
-                        add_Ground_Urchin();
-                        add_Fish_Touch_Default();
-                    }
-                    if (day_Count >= 72) {
-                        add_Fish_Touch_Squid();//오징어 추가
-                        add_Fish_Touch_Default();
-
-                    }
-                    if (day_Count >= 74) {
-                        add_Ground_Crab();
-                    }
-                    if (day_Count >= 76) {
-                        add_Boss_Fish_Touch_Default();
-                    }
-                    if (day_Count >= 78) {
-                        add_Ground_Boss();
-                        add_Boss_Fish_Touch_Default();
-                    }
-                    if(day_Count == 79){
-                        enumy_Appear = true;
-                    }
-                }
-
-                if(day_Count < 90) {
-                    //청새치
-                    if (day_Count >= 80) {
-
-                        if(day_Count == 80 &&enumy_Appear){
-                            explain[7] = false;
-                            explain[8] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-                        add_Fish_Touch_Marlin();
-                        add_Fish_Touch_Default();
-                        add_Boss_Fish_Touch_Default();
-                    }
-                    if (day_Count >= 82) {
-                        add_Fish_Drag_Default();
-                        add_Fish_Touch_Default();
-                    }
-                    if (day_Count >= 84) {
-                        add_Fish_Touch_Marlin();
-                        add_Ground_Crab();
-                        add_Ground_Urchin();
-                    }
-
-                    if(day_Count == 86){
-                        wave_Marlin();
-                    }
-
-                    if (day_Count >= 86) {
-
-                        add_Fish_Touch_Default();
-                        add_Ground_Hermit();
-                        add_Ground_Urchin();
-                        add_Ground_Boss();
-                    }
-                    if (day_Count >= 88) {
-                        add_Fish_Touch_Marlin();
-                    }
-                    if(day_Count == 89){
-                        enumy_Appear = true;
-                    }
-                }
-
-
-
-                if(day_Count < 100) {
-                    //파도 주의보
-                    if (day_Count >= 90) {
-
-                        if(day_Count == 90 &&enumy_Appear){
-                            explain[8] = false;
-                            explain[9] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-                        add_Ground_Wave();
-                        add_Fish_Touch_Default();
-                        add_Boss_Fish_Touch_Default();
-                    }
-                    if (day_Count >= 92) {
-                        add_Fish_Touch_Marlin();
-                        add_Fish_Touch_Squid();//오징어 추가
-                        add_Ground_Snail();
-                        add_Ground_Urchin();
-                    }
-                    if (day_Count >= 94) {
-                        add_Fish_Touch_Squid();//오징어 추가
-                        add_Fish_Touch_Marlin();
-                        add_Ground_Hermit();
-                    }
-                    if (day_Count >= 96) {
-                        add_Fish_Drag_Default();
-                        add_Fish_Drag_Default();
-                        add_Boss_Fish_Touch_Default();
-                    }
-                    if (day_Count >= 98) {
-                        add_Ground_Boss();
-                    }
-                    if(day_Count == 99){
-
-                        wave_Marlin();
-
-                        enumy_Appear = true;
-                    }
-
-                }
-
-                if(day_Count < 110) {
-                    //바다악어
-                    if (day_Count >= 100) {
-
-                        if(day_Count == 100 &&enumy_Appear){
-                            explain[9] = false;
-                            explain[10] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-                        add_Ground_Crocodile();
-                        add_Fish_Touch_Default();
-                        add_Fish_Drag_Default();
-                        add_Boss_Fish_Touch_Default();
-                        add_Ground_Snail();
-                    }
-                    if (day_Count >= 102) {
-                        add_Fish_Touch_Marlin();
-                        add_Fish_Touch_Marlin();
-                    }
-
-                    if(day_Count == 102){
-                        wave_Marlin();
-                    }
-
-                    if (day_Count >= 104) {
-                        add_Ground_Wave();
-                        add_Fish_Touch_Squid();//오징어 추가
-                        add_Ground_Urchin();
-
-                    }
-                    if (day_Count >= 106) {
-                        add_Ground_Snail();
-                        add_Ground_Crab();
-                    }
-                    if (day_Count >= 108) {
-                        add_Ground_Crocodile();
-                        add_Ground_Crab();
-                        add_Ground_Boss();
-                    }
-                    if(day_Count == 109){
-                        enumy_Appear = true;
-                    }
-                }
-
-
-                if(day_Count < 120) {
-                    //강철 참돔
-                    if (day_Count >= 110) {
-
-                        if(day_Count == 110 &&enumy_Appear){
-                            explain[10] = false;
-                            explain[11] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-                        add_Fish_Drag_Steelbream();
-                        add_Fish_Touch_Default();
-                        add_Fish_Drag_Default();
-                        add_Ground_Snail();
-                    }
-                    if (day_Count >= 112) {
-                        add_Ground_Snail();
-                        add_Boss_Fish_Touch_Default();
-                        add_Ground_Crab();
-                    }
-
-                    if(day_Count == 112){
-                        wave_Marlin();
-                    }
-
-                    if (day_Count >= 114) {
-                        add_Ground_Crocodile();
-                        add_Ground_Wave();
-                        add_Ground_Urchin();
-                    }
-                    if (day_Count >= 116) {
-                        add_Fish_Touch_Marlin();
-                        add_Fish_Touch_Squid();//오징어 추가
-                        add_Ground_Hermit();
-                    }
-                    if (day_Count >= 118) {
-                        add_Ground_Hermit();
-                        add_Fish_Drag_Steelbream();
-                    }
-                    if(day_Count == 119){
-                        enumy_Appear = true;
-                    }
-                }
-
-                if(day_Count < 130) {
-                    //복제 가사리
-                    if (day_Count >= 120) {
-
-                        if(day_Count == 120 &&enumy_Appear){
-                            explain[11] = false;
-                            explain[12] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-                        add_Fish_Touch_Default();
-                        add_Ground_Starfish();
-                        add_Boss_Fish_Touch_Default();
-                        add_Ground_Hermit();
-
-                        if(day_Count == 120){
-                            wave_Marlin();
-                        }
-
-                    }
-                    if (day_Count >= 122) {
-                        add_Fish_Touch_Default();
-                        add_Fish_Touch_Marlin();
-                        add_Ground_Wave();
-
-                        add_Fish_Drag_Default();
-                        add_Ground_Crocodile();
-                        add_Ground_Crab();
-                        add_Fish_Drag_Steelbream();
-                    }
-                    if (day_Count >= 124) {
-                        add_Ground_Urchin();
-                        add_Ground_Boss();
-                        add_Ground_Hermit();
-                        add_Fish_Drag_Steelbream();
-                        add_Fish_Touch_Squid();
-                    }
-                    if (day_Count >= 126) {
-                        add_Fish_Touch_Default();
-                        add_Ground_Crab();
-                        add_Fish_Drag_Default();
-                    }
-                    if (day_Count >= 128) {
-                        add_Fish_Touch_Marlin();
-                        add_Boss_Fish_Touch_Default();
-                    }
-                    if(day_Count == 129){
-                        enumy_Appear = true;
-                    }
-                }
-
-
-
-                if(day_Count < 140) {
-
-
-                    //방해 거북
-                    if (day_Count >= 130) {
-
-                        if(day_Count == 130 && enumy_Appear){
-                            explain[12] = false;
-                            explain[13] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-                        add_Ground_Urchin();
-                        add_Ground_Hermit();
-                        add_Fish_Turtle();
-                        add_Ground_Crab();
-                        add_Fish_Touch_Default();
-                    }
-                    if (day_Count >= 132) {
-                        add_Fish_Touch_Default();
-                        add_Ground_Wave();
-                        add_Fish_Drag_Default();
-                        add_Ground_Starfish();
-                    }
-                    if (day_Count >= 134) {
-                        add_Ground_Crab();
-                        add_Ground_Crocodile();
-                    }
-                    if (day_Count >= 136) {
-                        add_Fish_Touch_Squid();
-                        add_Boss_Fish_Touch_Default();
-                    }
-                    if (day_Count >= 138) {
-                        add_Fish_Touch_Default();
-                        add_Ground_Boss();
-                        add_Fish_Drag_Default();
-                    }
-                    if(day_Count == 139){
-                        enumy_Appear = true;
-                    }
-                }
-
-                if(day_Count < 150) {
-                    //불사 곰벌레
-                    if (day_Count >= 140) {
-
-                        if(day_Count == 140 && enumy_Appear){
-                            explain[13] = false;
-                            explain[14] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-                        if(day_Count == 140){
-                            wave_Marlin();
-                        }
-
-                        add_Ground_Bearbug();
-                        add_Ground_Starfish();
-                        add_Fish_Touch_Default();
-                        add_Fish_Touch_Squid();
-                    }
-                    if (day_Count >= 142) {
-                        add_Ground_Crab();
-                        add_Fish_Drag_Default();
-                        add_Ground_Hermit();
-                    }
-                    if (day_Count >= 144) {
-                        add_Ground_Urchin();
-                        add_Fish_Turtle();
-                        add_Ground_Crab();
-                        add_Fish_Touch_Default();
-                        add_Ground_Wave();
-                        add_Boss_Fish_Touch_Default();
-                    }
-                    if (day_Count >= 146) {
-                        add_Ground_Crocodile();
-                        add_Fish_Drag_Default();
-                    }
-                    if (day_Count >= 148) {
-                        add_Ground_Bearbug();
-                    }
-                    if(day_Count == 149){
-                        enumy_Appear = true;
-                    }
-                }
-
-                if(day_Count < 160) {
-                    //클로킹 오리
-                    if (day_Count >= 150) {
-
-                        if(day_Count == 150 && enumy_Appear){
-                            explain[14] = false;
-                            explain[15] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-                        add_Ground_Stingray();
-                        add_Fish_Turtle();
-                        add_Ground_Urchin();
-                        add_Ground_Boss();
-                        add_Fish_Touch_Default();
-                        add_Ground_Crocodile();
-                        add_Fish_Drag_Default();
-                    }
-                    if (day_Count >= 152) {
-                        add_Ground_Wave();
-                        add_Ground_Crab();
-                        add_Ground_Bearbug();
-                    }
-                    if (day_Count >= 154) {
-                        add_Ground_Starfish();
-                        add_Boss_Fish_Touch_Default();
-                        add_Ground_Stingray();
-                    }
-                    if (day_Count >= 156) {
-                        add_Fish_Touch_Default();
-                        add_Ground_Crab();
-                        add_Fish_Touch_Squid();
-                        add_Fish_Drag_Default();
-                    }
-                    if (day_Count >= 158) {
-                        add_Ground_Hermit();
-
-                    }
-                    if(day_Count == 158){
-                        wave_Marlin();
-                    }
-
-                    if(day_Count == 159){
-                        enumy_Appear = true;
-                    }
-                }
-
-                if(day_Count < 170){
-                    //가제 추가
-                    if (day_Count >= 160) {
-
-                        if(day_Count == 160 && enumy_Appear){
-                            explain[15] = false;
-                            explain[16] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-                        add_Ground_Lobsters();
-                        add_Ground_Wave();
-                        add_Fish_Touch_Default();
-                        add_Fish_Drag_Default();
-                        add_Fish_Touch_Squid();
-                        add_Boss_Fish_Touch_Default();
-                    }
-                    if (day_Count >= 162) {
-                        add_Ground_Urchin();
-                        add_Ground_Starfish();
-                        add_Ground_Crab();
-                        add_Ground_Hermit();
-                        add_Ground_Bearbug();
-                        add_Ground_Crocodile();
-                    }
-                    if (day_Count >= 164) {
-                        add_Ground_Stingray();
-                        add_Ground_Lobsters();
-                        add_Ground_Boss();
-                    }
-                    if (day_Count >= 166) {
-                        add_Ground_Starfish();
-                        add_Fish_Turtle();
-                    }
-
-
-                    if(day_Count == 166){
-                        wave_Marlin();
-                    }
-
-
-                    if (day_Count >= 168) {
-                        add_Ground_Boss();
-                        add_Ground_Crab();
-                    }
-                    if(day_Count == 169){
-                        enumy_Appear = true;
-                    }
-                }
-
-                if(day_Count < 180) {
-                    //드래그 상어
-                    if (day_Count >= 170) {
-
-                        if(day_Count == 170 && enumy_Appear){
-                            explain[16] = false;
-                            explain[17] = true;
-                            enumy_Appear = false;
-                            first_Explain = true;
-                        }
-
-                        add_Fish_Drag_Shark();
-                        add_Ground_Bearbug();
-                        add_Ground_Crab();
-
-                        add_Fish_Drag_Default();
-                    }
-                    if (day_Count >= 172) {
-                        add_Ground_Urchin();
-                        add_Ground_Wave();
-                        add_Boss_Fish_Touch_Default();
-                        add_Fish_Turtle();
-                        add_Ground_Stingray();
-                        add_Ground_Bearbug();
-                        add_Fish_Touch_Squid();
-                        add_Ground_Boss();
-                        add_Fish_Touch_Default();
-                        add_Fish_Drag_Default();
-                    }
-                    if (day_Count >= 174) {
-                        add_Ground_Starfish();
-                        add_Ground_Lobsters();
-                        add_Ground_Crocodile();
-                        add_Fish_Touch_Default();
-                        add_Fish_Drag_Shark();
-                    }
-
-                    if(day_Count == 175){
-                        wave_Marlin();
-                    }
-
-                    if (day_Count >= 176) {
-                        add_Ground_Urchin();
-                        add_Fish_Touch_Default();
-                        add_Fish_Drag_Default();
-                        add_Fish_Turtle();
-                        add_Ground_Crab();
-                        add_Ground_Hermit();
-                        add_Ground_Boss();
-                        add_Ground_Stingray();
-                    }
-                    if (day_Count >= 178) {
-                        add_Ground_Lobsters();
-                        add_Ground_Crab();
-                        add_Fish_Touch_Default();
-                        add_Fish_Touch_Default();
-                    }
-                    if(day_Count == 179){
-                        enumy_Appear = true;
-                    }
-                }
+//                        add_Fish_Touch_Default();
+//                        add_Boss_Fish_Touch_Default();
+//                    }
+//                    if (day_Count >= 92) {
+//                        add_Fish_Touch_Marlin();
+//                        add_Fish_Touch_Squid();//오징어 추가
+//                        add_Ground_Snail();
+//                        add_Ground_Urchin();
+//                    }
+//                    if (day_Count >= 94) {
+//                        add_Fish_Touch_Squid();//오징어 추가
+//                        add_Fish_Touch_Marlin();
+//                        add_Ground_Hermit();
+//                    }
+//                    if (day_Count >= 96) {
+//                        add_Fish_Drag_Default();
+//                        add_Fish_Drag_Default();
+//                        add_Boss_Fish_Touch_Default();
+//                    }
+//                    if (day_Count >= 98) {
+//                        add_Ground_Boss();
+//                    }
+//                    if(day_Count == 99){
+//
+//                        wave_Marlin();
+//
+//                        enumy_Appear = true;
+//                    }
+//
+//                }
+//
+//                if(day_Count < 110) {
+//                    //바다악어
+//                    if (day_Count >= 100) {
+//
+//                        if(day_Count == 100 &&enumy_Appear){
+//                            explain[9] = false;
+//                            explain[10] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
+//                        add_Ground_Crocodile();
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Drag_Default();
+//                        add_Boss_Fish_Touch_Default();
+//                        add_Ground_Snail();
+//                    }
+//                    if (day_Count >= 102) {
+//                        add_Fish_Touch_Marlin();
+//                        add_Fish_Touch_Marlin();
+//                    }
+//
+//                    if(day_Count == 102){
+//                        wave_Marlin();
+//                    }
+//
+//                    if (day_Count >= 104) {
+//                        add_Ground_Wave();
+//                        add_Fish_Touch_Squid();//오징어 추가
+//                        add_Ground_Urchin();
+//
+//                    }
+//                    if (day_Count >= 106) {
+//                        add_Ground_Snail();
+//                        add_Ground_Crab();
+//                    }
+//                    if (day_Count >= 108) {
+//                        add_Ground_Crocodile();
+//                        add_Ground_Crab();
+//                        add_Ground_Boss();
+//                    }
+//                    if(day_Count == 109){
+//                        enumy_Appear = true;
+//                    }
+//                }
+//
+//
+//                if(day_Count < 120) {
+//                    //강철 참돔
+//                    if (day_Count >= 110) {
+//
+//                        if(day_Count == 110 &&enumy_Appear){
+//                            explain[10] = false;
+//                            explain[11] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
+//                        add_Fish_Drag_Steelbream();
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Drag_Default();
+//                        add_Ground_Snail();
+//                    }
+//                    if (day_Count >= 112) {
+//                        add_Ground_Snail();
+//                        add_Boss_Fish_Touch_Default();
+//                        add_Ground_Crab();
+//                    }
+//
+//                    if(day_Count == 112){
+//                        wave_Marlin();
+//                    }
+//
+//                    if (day_Count >= 114) {
+//                        add_Ground_Crocodile();
+//                        add_Ground_Wave();
+//                        add_Ground_Urchin();
+//                    }
+//                    if (day_Count >= 116) {
+//                        add_Fish_Touch_Marlin();
+//                        add_Fish_Touch_Squid();//오징어 추가
+//                        add_Ground_Hermit();
+//                    }
+//                    if (day_Count >= 118) {
+//                        add_Ground_Hermit();
+//                        add_Fish_Drag_Steelbream();
+//                    }
+//                    if(day_Count == 119){
+//                        enumy_Appear = true;
+//                    }
+//                }
+//
+//                if(day_Count < 130) {
+//                    //복제 가사리
+//                    if (day_Count >= 120) {
+//
+//                        if(day_Count == 120 &&enumy_Appear){
+//                            explain[11] = false;
+//                            explain[12] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
+//                        add_Fish_Touch_Default();
+//                        add_Ground_Starfish();
+//                        add_Boss_Fish_Touch_Default();
+//                        add_Ground_Hermit();
+//
+//                        if(day_Count == 120){
+//                            wave_Marlin();
+//                        }
+//
+//                    }
+//                    if (day_Count >= 122) {
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Touch_Marlin();
+//                        add_Ground_Wave();
+//
+//                        add_Fish_Drag_Default();
+//                        add_Ground_Crocodile();
+//                        add_Ground_Crab();
+//                        add_Fish_Drag_Steelbream();
+//                    }
+//                    if (day_Count >= 124) {
+//                        add_Ground_Urchin();
+//                        add_Ground_Boss();
+//                        add_Ground_Hermit();
+//                        add_Fish_Drag_Steelbream();
+//                        add_Fish_Touch_Squid();
+//                    }
+//                    if (day_Count >= 126) {
+//                        add_Fish_Touch_Default();
+//                        add_Ground_Crab();
+//                        add_Fish_Drag_Default();
+//                    }
+//                    if (day_Count >= 128) {
+//                        add_Fish_Touch_Marlin();
+//                        add_Boss_Fish_Touch_Default();
+//                    }
+//                    if(day_Count == 129){
+//                        enumy_Appear = true;
+//                    }
+//                }
+//
+//
+//
+//                if(day_Count < 140) {
+//
+//
+//                    //방해 거북
+//                    if (day_Count >= 130) {
+//
+//                        if(day_Count == 130 && enumy_Appear){
+//                            explain[12] = false;
+//                            explain[13] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
+//                        add_Ground_Urchin();
+//                        add_Ground_Hermit();
+//                        add_Fish_Turtle();
+//                        add_Ground_Crab();
+//                        add_Fish_Touch_Default();
+//                    }
+//                    if (day_Count >= 132) {
+//                        add_Fish_Touch_Default();
+//                        add_Ground_Wave();
+//                        add_Fish_Drag_Default();
+//                        add_Ground_Starfish();
+//                    }
+//                    if (day_Count >= 134) {
+//                        add_Ground_Crab();
+//                        add_Ground_Crocodile();
+//                    }
+//                    if (day_Count >= 136) {
+//                        add_Fish_Touch_Squid();
+//                        add_Boss_Fish_Touch_Default();
+//                    }
+//                    if (day_Count >= 138) {
+//                        add_Fish_Touch_Default();
+//                        add_Ground_Boss();
+//                        add_Fish_Drag_Default();
+//                    }
+//                    if(day_Count == 139){
+//                        enumy_Appear = true;
+//                    }
+//                }
+//
+//                if(day_Count < 150) {
+//                    //불사 곰벌레
+//                    if (day_Count >= 140) {
+//
+//                        if(day_Count == 140 && enumy_Appear){
+//                            explain[13] = false;
+//                            explain[14] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
+//                        if(day_Count == 140){
+//                            wave_Marlin();
+//                        }
+//
+//                        add_Ground_Bearbug();
+//                        add_Ground_Starfish();
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Touch_Squid();
+//                    }
+//                    if (day_Count >= 142) {
+//                        add_Ground_Crab();
+//                        add_Fish_Drag_Default();
+//                        add_Ground_Hermit();
+//                    }
+//                    if (day_Count >= 144) {
+//                        add_Ground_Urchin();
+//                        add_Fish_Turtle();
+//                        add_Ground_Crab();
+//                        add_Fish_Touch_Default();
+//                        add_Ground_Wave();
+//                        add_Boss_Fish_Touch_Default();
+//                    }
+//                    if (day_Count >= 146) {
+//                        add_Ground_Crocodile();
+//                        add_Fish_Drag_Default();
+//                    }
+//                    if (day_Count >= 148) {
+//                        add_Ground_Bearbug();
+//                    }
+//                    if(day_Count == 149){
+//                        enumy_Appear = true;
+//                    }
+//                }
+//
+//                if(day_Count < 160) {
+//                    //클로킹 오리
+//                    if (day_Count >= 150) {
+//
+//                        if(day_Count == 150 && enumy_Appear){
+//                            explain[14] = false;
+//                            explain[15] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
+//                        add_Ground_Stingray();
+//                        add_Fish_Turtle();
+//                        add_Ground_Urchin();
+//                        add_Ground_Boss();
+//                        add_Fish_Touch_Default();
+//                        add_Ground_Crocodile();
+//                        add_Fish_Drag_Default();
+//                    }
+//                    if (day_Count >= 152) {
+//                        add_Ground_Wave();
+//                        add_Ground_Crab();
+//                        add_Ground_Bearbug();
+//                    }
+//                    if (day_Count >= 154) {
+//                        add_Ground_Starfish();
+//                        add_Boss_Fish_Touch_Default();
+//                        add_Ground_Stingray();
+//                    }
+//                    if (day_Count >= 156) {
+//                        add_Fish_Touch_Default();
+//                        add_Ground_Crab();
+//                        add_Fish_Touch_Squid();
+//                        add_Fish_Drag_Default();
+//                    }
+//                    if (day_Count >= 158) {
+//                        add_Ground_Hermit();
+//
+//                    }
+//                    if(day_Count == 158){
+//                        wave_Marlin();
+//                    }
+//
+//                    if(day_Count == 159){
+//                        enumy_Appear = true;
+//                    }
+//                }
+//
+//                if(day_Count < 170){
+//                    //가제 추가
+//                    if (day_Count >= 160) {
+//
+//                        if(day_Count == 160 && enumy_Appear){
+//                            explain[15] = false;
+//                            explain[16] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
+//                        add_Ground_Lobsters();
+//                        add_Ground_Wave();
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Drag_Default();
+//                        add_Fish_Touch_Squid();
+//                        add_Boss_Fish_Touch_Default();
+//                    }
+//                    if (day_Count >= 162) {
+//                        add_Ground_Urchin();
+//                        add_Ground_Starfish();
+//                        add_Ground_Crab();
+//                        add_Ground_Hermit();
+//                        add_Ground_Bearbug();
+//                        add_Ground_Crocodile();
+//                    }
+//                    if (day_Count >= 164) {
+//                        add_Ground_Stingray();
+//                        add_Ground_Lobsters();
+//                        add_Ground_Boss();
+//                    }
+//                    if (day_Count >= 166) {
+//                        add_Ground_Starfish();
+//                        add_Fish_Turtle();
+//                    }
+//
+//
+//                    if(day_Count == 166){
+//                        wave_Marlin();
+//                    }
+//
+//
+//                    if (day_Count >= 168) {
+//                        add_Ground_Boss();
+//                        add_Ground_Crab();
+//                    }
+//                    if(day_Count == 169){
+//                        enumy_Appear = true;
+//                    }
+//                }
+//
+//                if(day_Count < 180) {
+//                    //드래그 상어
+//                    if (day_Count >= 170) {
+//
+//                        if(day_Count == 170 && enumy_Appear){
+//                            explain[16] = false;
+//                            explain[17] = true;
+//                            enumy_Appear = false;
+//                            first_Explain = true;
+//                        }
+//
+//                        add_Fish_Drag_Shark();
+//                        add_Ground_Bearbug();
+//                        add_Ground_Crab();
+//
+//                        add_Fish_Drag_Default();
+//                    }
+//                    if (day_Count >= 172) {
+//                        add_Ground_Urchin();
+//                        add_Ground_Wave();
+//                        add_Boss_Fish_Touch_Default();
+//                        add_Fish_Turtle();
+//                        add_Ground_Stingray();
+//                        add_Ground_Bearbug();
+//                        add_Fish_Touch_Squid();
+//                        add_Ground_Boss();
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Drag_Default();
+//                    }
+//                    if (day_Count >= 174) {
+//                        add_Ground_Starfish();
+//                        add_Ground_Lobsters();
+//                        add_Ground_Crocodile();
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Drag_Shark();
+//                    }
+//
+//                    if(day_Count == 175){
+//                        wave_Marlin();
+//                    }
+//
+//                    if (day_Count >= 176) {
+//                        add_Ground_Urchin();
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Drag_Default();
+//                        add_Fish_Turtle();
+//                        add_Ground_Crab();
+//                        add_Ground_Hermit();
+//                        add_Ground_Boss();
+//                        add_Ground_Stingray();
+//                    }
+//                    if (day_Count >= 178) {
+//                        add_Ground_Lobsters();
+//                        add_Ground_Crab();
+//                        add_Fish_Touch_Default();
+//                        add_Fish_Touch_Default();
+//                    }
+//                    if(day_Count == 179){
+//                        enumy_Appear = true;
+//                    }
+//                }
 
 
 
@@ -11373,7 +11614,7 @@ public void skill_Ground_Attack(){
 //                        add_Ground_Lobsters();
 //                        add_Fish_Drag_Shark();
 
-                add_Fish_JellyFish();               //해파리 추가
+//                add_Fish_JellyFish();               //해파리 추가
 //                        add_Ground_Bearbug();               //곰벌레 추가
 //                        add_Ground_Stingray();              //가오리 추가
 
