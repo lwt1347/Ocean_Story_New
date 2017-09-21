@@ -46,6 +46,11 @@ public class Ground_Touch_Snail extends Ground_Default_Body {
         pregnant_Flag = false;
         pregnant_Time = 0;
     }
+    //달팽이 위치
+    public void set_Position(float X_Point, float y_Point){
+        ground_Point_X = X_Point;
+        ground_Point_Y = y_Point;
+    }
 
 
     /**
@@ -70,12 +75,12 @@ public class Ground_Touch_Snail extends Ground_Default_Body {
 
         if(class_Num == 1){ // 중간 보스 일때
             pregnant_Time++;
-            if(pregnant_Time > 75){
+            if(pregnant_Time > 120){
                 pregnant_Flag = true;
             }
         }else if(class_Num == 2){   //보스 일떄
             pregnant_Time++;
-            if(pregnant_Time > 150){
+            if(pregnant_Time > 200){
                 pregnant_Flag = true;
             }
         }

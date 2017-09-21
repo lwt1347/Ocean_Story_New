@@ -193,6 +193,37 @@ public class Ground_Default_Body {
 
 
     //********************************************************************************************//
+    /*
+    오브젝트 풀링을 위한 위치 재선정 - 살아났을때
+     */
+    public void set_Position(){
+
+        ground_Point_X = 30 + (float)Math.random() * (window_Width);         //생성될 위치
+        ground_Point_Y = -100 - random.nextInt(100);
+    }
+    public void set_Position(float x, float y){
+        ground_Point_X = x;       // x축 = 10 ~ 윈도우 널이 - 100 사이에서 생성
+        ground_Point_Y = y;
+    }
+
+    //보스 달팽이 인가?
+    // child = 0 아무것도 아님, 1일때 기본 달팽이, 2일때 중간 보스 달팽이
+    int child = 0;
+    public void set_Child_Ground(int param){
+        child = param;
+    }
+
+    public int get_Child_Ground(){
+        return child;
+    }
+    //true 일 때 보임
+    boolean scf_Flag = true;
+    public void set_Visible_Ground_Flag(boolean param){
+        scf_Flag = param;
+    }
+    public boolean get_Visible_Ground_Flag(){
+        return scf_Flag;
+    }
 
 
     /**
@@ -205,6 +236,10 @@ public class Ground_Default_Body {
     public void set_Ground_Hp_Minus(int damage){
         hp = hp-damage;                           //체력깍기
     }
+    public void set_Ground_Hp(int param){
+        hp = param;
+    }
+
 
     public void ground_Object_Move(){               //오버라이드 인터페이스
 

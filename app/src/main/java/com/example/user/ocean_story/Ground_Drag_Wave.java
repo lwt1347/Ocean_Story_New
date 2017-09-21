@@ -28,6 +28,10 @@ public class Ground_Drag_Wave extends Ground_Default_Body{
         ground_Class = 2;           //파도 2번
     }
 
+    public void set_Position(){
+
+    }
+
     /**
      * 반환
      */

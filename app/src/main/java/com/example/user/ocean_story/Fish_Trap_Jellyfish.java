@@ -11,7 +11,7 @@ public class Fish_Trap_Jellyfish extends Fish_Default_Body {
 
     private boolean move_Point;         //true 이면 왼쪽에서 오른쪽으로
     private int angle_Temp;             //오른쪽에서 생성되는 경우 방향이 달라지기때문에
-
+    private int w_Height;
     /**
      * 기본 생성자
      * 윈도우 크기와 hp 를 받아와 물고기를 생성한다.
@@ -33,11 +33,25 @@ public class Fish_Trap_Jellyfish extends Fish_Default_Body {
             fish_Point_X = window_Width-1;
             angle += 90;
         }
-
+        w_Height = window_Height;
         fish_Point_Y = 300 + (float)Math.random() * (window_Height - 500);
-
     }
 
+
+    //생성 위치 오버라이드
+    public void set_Position(){
+        angle = 30 + (int)Math.random() * 40;
+        angle_Temp = angle;
+        if(Math.random() < 0.5) {       //왼쪽에서 오른쪽으로
+            move_Point = true;
+            fish_Point_X = 1;
+        }else {
+            move_Point = false;
+            fish_Point_X = window_Width-1;
+            angle += 90;
+        }
+        fish_Point_Y = 300 + (float)Math.random() * (w_Height - 500);
+    }
     //********************************************************************************************//
 
     /**

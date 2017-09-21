@@ -29,8 +29,8 @@ public class Ground_Touch_Starfish extends Ground_Default_Body {
 
         //불가사리 생성될때 방향
         if(Math.random() < 0.5){
-            angle_X_Speed = 3;
-        }else angle_X_Speed = -3;
+            angle_X_Speed = 2;
+        }else angle_X_Speed = -2;
 
         ground_Class = 1;   //불가사리 = 1
     }
@@ -110,7 +110,7 @@ public class Ground_Touch_Starfish extends Ground_Default_Body {
         if(Math.random() < 0.01) {
 
             //속도 변화 주기
-            speed = 1 + (float)Math.random() * 2;
+            speed = (float)Math.random() * 2;
             if(Math.random() < 0.5){
                 angle_X_Speed = angle_X_Speed*-1;
             }
@@ -122,14 +122,14 @@ public class Ground_Touch_Starfish extends Ground_Default_Body {
         }
 
         ground_Draw_Status++;
-        if(ground_Draw_Status > 14){
+        if(ground_Draw_Status > 28){
             ground_Draw_Status = 0;
         }
 
     }
     public int get_Draw_Ground_Status()          // 그라운드 드로우할 그림 int형 반환
     {
-        return ground_Draw_Status/4;              // 그라운드 이미지 2번씩 송출
+        return ground_Draw_Status/8;              // 그라운드 이미지 2번씩 송출
     }
     //********************************************************************************************//
 }

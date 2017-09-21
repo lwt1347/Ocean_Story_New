@@ -15,6 +15,7 @@ public class Ground_Trap_Urchin extends Ground_Default_Body {
      */
     //성게는 나와서 일정 시간이 흐르면 어택모드로 들어간다.
     boolean attack_Mode = false;
+    float y;
 
     int live_Time = 0;  //성게가 존재할 시간.
     float angle = 0;    //성게 각도
@@ -29,7 +30,20 @@ public class Ground_Trap_Urchin extends Ground_Default_Body {
 
         ground_Class = 10;           //성게 10번
         angle = 1 + (float)Math.random() * 359;
+        y = y_Point;
     }
+
+    //성게 위치
+    public void set_Position(){
+        live_Time = 0;
+        attack_Mode = false;
+        angle = 1 + (float)Math.random() * 359;
+        ground_Point_X = 30 + (float)Math.random() * (window_Width);         //생성될 위치
+        ground_Point_Y = 50 + (float)Math.random() * (y-150);       //성게는 y 축도 랜덤으로 생성한다.
+
+    }
+
+
 
     @Override
     public void ground_Object_Move() {

@@ -17,6 +17,7 @@ public class Ground_Touch_Crocodile extends Ground_Default_Body {
      * @param param_Width_Size
      * @param param_Height_Size
      */
+    float w_Height;
     Ground_Touch_Crocodile(float window_Width, float window_Height, int width, int height, int hp, int param_Width_Size, int param_Height_Size) {
         super(window_Width, width, height, hp, param_Width_Size, param_Height_Size);
 
@@ -24,14 +25,30 @@ public class Ground_Touch_Crocodile extends Ground_Default_Body {
 
         if(Math.random() < 0.5){
             direction = 1;  //오른쪽에서 왼쪽으로 진행
-            ground_Point_X = width + width;
+            ground_Point_X = window_Width;
         }else {
             direction = 2;  //왼쪽에서 오른쪽으로 진행
             ground_Point_X = 0 - width;
         }
         Random random = new Random();
         ground_Point_Y = random.nextFloat() * window_Height;
+        w_Height = window_Height;
+    }
 
+    //악어 위치 초기화
+    public void set_Position(){
+
+        ground_Class = 1;   //달팽이, 악어 = 1
+
+        if(Math.random() < 0.5){
+            direction = 1;  //오른쪽에서 왼쪽으로 진행
+            ground_Point_X = window_Width;
+        }else {
+            direction = 2;  //왼쪽에서 오른쪽으로 진행
+            ground_Point_X = 0 - width;
+        }
+        Random random = new Random();
+        ground_Point_Y = random.nextFloat() * w_Height;
     }
 
     int direction = 0;

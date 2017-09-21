@@ -267,6 +267,18 @@ public class Fish_Default_Body {
     public void set_Hp_Minus(int damage){
         hp = hp - damage;
     }
+    /**
+     * 물고기 상어한테 잡아 먹혔을때
+     */
+    boolean set_Pregnant = true;
+    public void set_Production(boolean param){
+        //새끼 생성하지 않는다.
+        set_Pregnant = param;
+    }
+    public boolean get_Production(){
+        return set_Pregnant;
+    }
+
 
     /**
      * 중독
