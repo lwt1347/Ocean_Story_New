@@ -7080,7 +7080,7 @@ public void wave_Marlin(){
     //오브젝트 풀링 물고기 가져오기
     public void fish_Total_Production(){
 
-        // 기본 물고기
+//         기본 물고기
         for(int i=0; i<10; i++) {
             fish_Touch_Default = new Fish_Touch_Default(window_Width, random.nextInt(5) + 1, fish_Touch_Default_Hp1_img[0].getWidth() + convertPixelsToDp(15, _context), fish_Touch_Default_Hp1_img[0].getHeight());       //기본 fish_touch_default 물고기 생성
             fish_List.add(fish_Touch_Default);
@@ -7421,7 +7421,7 @@ public void wave_Marlin(){
 
         ground_List.add(ground_Drag_Clam); //꽃게
 
-//        성게
+////        성게
         for(int i=0; i<5; i++){
             ground_trap_urchin = new Ground_Trap_Urchin(
                     window_Width,
@@ -7437,10 +7437,10 @@ public void wave_Marlin(){
 
 
     // 파도
-        for(int i=20; i>=0; i--) {
+        for(int i=0; i<20; i++) {
             ground_drag_wave = new Ground_Drag_Wave(window_Width,
                     ground_Drag_Wave_img[0].getWidth(),
-                    ground_Drag_Wave_img[0].getHeight() , 1, ground_Drag_Wave_img[1].getWidth(), ground_Drag_Wave_img[0].getHeight(), wave_X_Point, -convertPixelsToDp(500, _context) - convertPixelsToDp(i*15, _context));
+                    ground_Drag_Wave_img[0].getHeight() , 1, ground_Drag_Wave_img[1].getWidth(), ground_Drag_Wave_img[0].getHeight(), wave_X_Point, -convertPixelsToDp(500, _context) + convertPixelsToDp(i*15, _context));
 
             ground_List.add(ground_drag_wave); //파도
         }
@@ -7525,6 +7525,8 @@ public void wave_Marlin(){
             //파도
             if(ground_List.get(select_Ground_Num) instanceof Ground_Drag_Wave){
                 ground_List.get(select_Ground_Num).set_Ground_Hp(1);
+                Log.e("@","파도");
+                wave_Count ++;
             }
 
 
@@ -7544,41 +7546,38 @@ public void wave_Marlin(){
     /**
      * 대기 중인 그라운드 보내기
      */
+    int wave_Set_X_Temp = 0;
     public void send_Ground(){
+
+
+
         for(int i=0; i<ground_List.size(); i++){
+
 
             if(ground_List.get(i).get_Child_Ground() == 0) {
 
-                //파도는 다 모이면 다시 생성한다
-                if(ground_List.get(i) instanceof Ground_Drag_Wave && ground_List.get(i).get_Visible_Ground_Flag() == false){
-                    wave_Count ++;
-                    Log.e("@","@" + wave_Count);
-                    if(wave_Count >= 20){
-                        Log.e("@","##");
-
-                        wave_X_Point = 30 + (float)Math.random() * (window_Width-100);
-                        for(int j=ground_List.size()-1; j>=0; j--){
-
-                            if(ground_List.get(j) instanceof Ground_Drag_Wave){
-                                ground_List.get(j).set_Position(wave_X_Point, -convertPixelsToDp(500, _context) + convertPixelsToDp(j*15, _context));
-                                ground_List.get(j).set_Visible_Ground_Flag(true);
-                            }
-//                            for(int i=20; i>=0; i--) {
-//                                ground_drag_wave = new Ground_Drag_Wave(window_Width,
-//                                        ground_Drag_Wave_img[0].getWidth(),
-//                                        ground_Drag_Wave_img[0].getHeight() , 1, ground_Drag_Wave_img[1].getWidth(), ground_Drag_Wave_img[0].getHeight(), wave_X_Point, -convertPixelsToDp(500, _context) - convertPixelsToDp(i*15, _context));
-                        }
-
-                    }
-                    continue;
-                }
-
-                if (ground_List.get(i).get_Visible_Ground_Flag() == false && ground_List.get(i).get_Child_Ground() == 0) {
+                if (!(ground_List.get(i) instanceof Ground_Drag_Wave) && ground_List.get(i).get_Visible_Ground_Flag() == false && ground_List.get(i).get_Child_Ground() == 0) {
                     ground_List.get(i).set_Visible_Ground_Flag(true);
                 }
             }
         }
-        wave_Count = 0;
+
+        if(wave_Count == 20){
+            Log.e("@","씨발");
+            wave_X_Point = 30 + (float)Math.random() * (window_Width-100);
+
+            for(int i=0; i<ground_List.size(); i++){
+                if(ground_List.get(i) instanceof Ground_Drag_Wave){
+                    ground_List.get(i).set_Position(wave_X_Point, -convertPixelsToDp(500, _context) + convertPixelsToDp(wave_Set_X_Temp*15, _context));
+                    ground_List.get(i).set_Visible_Ground_Flag(true);
+                    wave_Set_X_Temp++;
+                }
+            }
+            wave_Set_X_Temp = 0;
+            wave_Count = 0;
+        }
+
+
     }
 
 
