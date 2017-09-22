@@ -29,8 +29,14 @@ public class Ground_Drag_Wave extends Ground_Default_Body{
     }
 
     public void set_Position(){
-
+        ground_Point_X = 0;
+        ground_Point_Y = -1000;
     }
+
+    public void set_Ground_Hp_Minus(int param){
+        hp--;
+    }
+
 
     /**
      * 반환

@@ -48,7 +48,7 @@ public class Ground_Trap_Urchin extends Ground_Default_Body {
     @Override
     public void ground_Object_Move() {
         //성게는 움직이지 않고 시간이 흐르면 삭제 되야한다.
-        live_Time++;
+        live_Time+=1 + random.nextInt(3);
         if(live_Time > 300){
             hp = 0;
         }
