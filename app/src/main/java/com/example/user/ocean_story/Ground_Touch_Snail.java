@@ -36,7 +36,7 @@ public class Ground_Touch_Snail extends Ground_Default_Body {
     //********************************************************************************************//
 
     //기본인가, 중보스인가, 보스인가.
-    public void set_Class_NUm(int param_Class_Num){
+    public void set_Class_Num(int param_Class_Num){
         //class_Num = 1 중간보스
         //class_Num = 2 보스
         class_Num = param_Class_Num;
@@ -75,12 +75,12 @@ public class Ground_Touch_Snail extends Ground_Default_Body {
 
         if(class_Num == 1){ // 중간 보스 일때
             pregnant_Time++;
-            if(pregnant_Time > 120){
+            if(pregnant_Time > 75){
                 pregnant_Flag = true;
             }
         }else if(class_Num == 2){   //보스 일떄
             pregnant_Time++;
-            if(pregnant_Time > 200){
+            if(pregnant_Time > 150){
                 pregnant_Flag = true;
             }
         }
