@@ -40,8 +40,8 @@ public class Ground_Trap_Urchin extends Ground_Default_Body {
         angle = 1 + (float)Math.random() * 359;
         ground_Point_X = 30 + (float)Math.random() * (window_Width);         //생성될 위치
         ground_Point_Y = 50 + (float)Math.random() * (y-150);       //성게는 y 축도 랜덤으로 생성한다.
-
     }
+
 
 
 

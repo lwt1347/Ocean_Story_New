@@ -121,6 +121,9 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        //데이터 저장
+
+
         Log.e("a","back");
     }
 

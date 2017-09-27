@@ -205,6 +205,11 @@ public class Ground_Default_Body {
         ground_Point_X = x;       // x축 = 10 ~ 윈도우 널이 - 100 사이에서 생성
         ground_Point_Y = y;
     }
+    //위치 초기화
+    public void set_Position_Init(){
+        ground_Point_X = 0;
+        ground_Point_Y = 0;
+    }
 
     //보스 달팽이 인가?
     // child = 0 아무것도 아님, 1일때 기본 달팽이, 2일때 중간 보스 달팽이

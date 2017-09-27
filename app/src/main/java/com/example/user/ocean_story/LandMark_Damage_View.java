@@ -44,7 +44,7 @@ public class LandMark_Damage_View {
             change_Flag = !change_Flag;
             change_Time = 0;
         }
-        if(live_Time == 30){
+        if(live_Time == 25){
             live_Flag = true;
         }
 
@@ -68,7 +68,9 @@ public class LandMark_Damage_View {
     public boolean get_Live_Flag(){
         return live_Flag;
     }
-
+    public int get_Live_Time(){
+        return live_Time;
+    }
 
 }
 

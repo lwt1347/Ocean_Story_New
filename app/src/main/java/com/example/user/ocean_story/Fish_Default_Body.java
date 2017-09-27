@@ -70,6 +70,11 @@ public class Fish_Default_Body {
         fish_Point_X = x;       // x축 = 10 ~ 윈도우 널이 - 100 사이에서 생성
         fish_Point_Y = y;
     }
+    //성게 위치 초기화
+    public void set_Position_Init(){
+        fish_Point_X = 0;
+        fish_Point_Y = 0;
+    }
 
 
 
