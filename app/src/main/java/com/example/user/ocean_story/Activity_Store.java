@@ -97,7 +97,7 @@ public class Activity_Store extends Activity {
 
 
         //수정 사항 : 시작과 동시에 소수점 찍히는거 제거, 스크롤 변경후 숫자 작아지는것
-        info_Price[2] = 1;
+        info_Price[2] = 10;
         for(int i=0; i<info[2]-1; i++){
             info_Price[2] *= 1.01;
         }

@@ -72,7 +72,7 @@ public class Main_Character {
     }
 
     public void set_Hp_Add(){
-        main_Character_Hp++;
+        main_Character_Hp = get_Max_Hp();
     }
 
     public int get_Max_Hp(){
@@ -196,6 +196,15 @@ public class Main_Character {
         }
     }
 
+    /**
+     * 적군을 멈추게 함
+     */
+    public void stop_Enemy(Fish_Default_Body fish_Touch_Default){
+        fish_Touch_Default.set_Fish_Speed(0);
+    }
+    public void stop_Enemy(Ground_Default_Body ground_Default_Body){
+        ground_Default_Body.set_Ground_Speed(0);
+    }
 
 //        if(revolution_Character) {
 //            revolution_Character = false;

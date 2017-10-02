@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class GameActivity extends AppCompatActivity {
 
 
@@ -123,9 +125,11 @@ public class GameActivity extends AppCompatActivity {
         super.onBackPressed();
         //데이터 저장
 
-
         Log.e("a","back");
     }
+
+
+
 
 
 

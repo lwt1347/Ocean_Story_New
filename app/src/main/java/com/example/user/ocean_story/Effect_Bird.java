@@ -11,7 +11,7 @@ public class Effect_Bird {
     float x_Point = 0;
     float y_Point = 0;
     boolean attack = false;
-    int speed = 3;
+    int speed = 100;
     int speed_Temp = 0;
 
     Effect_Bird(){

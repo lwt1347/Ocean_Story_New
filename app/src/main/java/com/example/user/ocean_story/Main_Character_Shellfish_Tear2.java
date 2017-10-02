@@ -20,15 +20,7 @@ public class Main_Character_Shellfish_Tear2 extends Main_Character {
         set_Damage(3);
     }
 
-    /**
-     * 적군을 멈추게 함
-     */
-    public void stop_Enemy(Fish_Default_Body fish_Touch_Default){
-        fish_Touch_Default.set_Fish_Speed(0);
-    }
-    public void stop_Enemy(Ground_Default_Body ground_Default_Body){
-        ground_Default_Body.set_Ground_Speed(0);
-    }
+
 
 
 

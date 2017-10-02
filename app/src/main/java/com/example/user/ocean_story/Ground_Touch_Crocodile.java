@@ -48,7 +48,7 @@ public class Ground_Touch_Crocodile extends Ground_Default_Body {
             ground_Point_X = 0 - width;
         }
         Random random = new Random();
-        ground_Point_Y = random.nextFloat() * w_Height;
+        ground_Point_Y = random.nextFloat() * (w_Height - 30);
     }
 
     int direction = 0;
