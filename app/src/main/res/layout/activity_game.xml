@@ -35,16 +35,18 @@
         android:layout_alignLeft="@+id/pause_Button"
         android:layout_alignStart="@+id/pause_Button"
         android:layout_below="@+id/pause_Button"
-        android:background="@drawable/button_option" />
+        android:background="@drawable/button_option"
+        android:onClick="onButtonOption" />
 
     <Button
         android:id="@+id/dictionary_Button"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:background="@drawable/button_dictionary"
-        android:layout_below="@+id/option_Button"
         android:layout_alignLeft="@+id/option_Button"
-        android:layout_alignStart="@+id/option_Button" />
+        android:layout_alignStart="@+id/option_Button"
+        android:layout_below="@+id/option_Button"
+        android:background="@drawable/button_dictionary"
+        android:onClick="onButtonDictionary" />
 
     <Button
         android:id="@+id/next_Stage"

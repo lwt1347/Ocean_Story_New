@@ -34,6 +34,19 @@
             android:theme="@android:style/Theme.Dialog"
             />
 
+
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".dictionary_Panel"
+            android:theme="@android:style/Theme.Dialog"
+            />
+
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".option_Panel"
+            android:theme="@android:style/Theme.Dialog"
+            />
+
         <activity
             android:name=".Activity_Store"></activity>
 

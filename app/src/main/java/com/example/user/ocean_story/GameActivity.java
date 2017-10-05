@@ -8,11 +8,14 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -30,6 +33,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
 
 
@@ -73,6 +77,11 @@ public class GameActivity extends AppCompatActivity {
 //        }
 
         intent = new Intent(this, menu_Sliding_Panel.class);
+
+        _context_Send = this;
+
+        ad = (AudioManager)getSystemService(AUDIO_SERVICE);
+
     }
 
 
@@ -89,7 +98,7 @@ public class GameActivity extends AppCompatActivity {
         Log.e("e", "ee");
 
 
-
+            intent = new Intent(this, menu_Sliding_Panel.class);
             //intent.putExtra("a", mRun);
             startActivityForResult(intent, 0); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출
 
@@ -129,6 +138,105 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
+    AudioManager ad = null;
+    int b_Vol = 0;
+    int e_Vol = 0;
+    boolean sound = true;   //t = 사운드 온, f = 음소거
+    boolean tuto = true;   //t = 튜토리얼 온, f = 튜토 x
+
+    public void set_Sound(boolean set){
+        sound = set;
+    }
+    public void set_Tuto(boolean set){
+        tuto = set;
+    }
+
+
+
+    //음향 설정 시크바 컨트롤
+    public static Context _context_Send;
+
+    public void set_Back_Sound(int volume){
+        Log.e("@","v = " + volume);
+        if(volume < 0){
+            volume = 0;
+        }
+        ad.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
+        b_Vol = volume;
+    }
+    public void set_Effect_Sound(int volume){
+        if(volume >= 10){
+            volume = 10;
+        }
+//        ad.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
+        gameMain.set_Volume(volume);
+        e_Vol = volume;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+
+
+
+        //볼륨 이벤트
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+
+
+
+
+                if(b_Vol > 0){
+                    b_Vol--;
+                }
+                gameMain.set_Volume_Down(e_Vol);
+                ad.setStreamVolume(AudioManager.STREAM_MUSIC, b_Vol, 0);
+                Log.e("@","D = " + b_Vol);
+            break;
+
+            case KeyEvent.KEYCODE_VOLUME_UP:
+
+
+                if(b_Vol < 10){
+                    b_Vol++;
+                }
+                ad.setStreamVolume(AudioManager.STREAM_MUSIC, b_Vol, 0);
+                gameMain.set_Volume_Up(e_Vol);
+                Log.e("@","U = " + b_Vol);
+
+                break;
+        }
+
+//        ((AudioManager)getSystemService(AUDIO_SERVICE)).
+//                setStreamVolume(AudioManager.STREAM_MUSIC, 5, AudioManager.FLAG_SHOW_UI);
+
+        return true;
+//        return super.onKeyDown(keyCode, event);
+    }
+
+
+
+
+
+
+    /**
+     * 사전 버튼
+     */
+    public void onButtonDictionary(View view){
+        if(gameMain.get_m_Run()) {
+
+            intent = new Intent(this, dictionary_Panel.class);
+
+
+            //intent.putExtra("a", mRun);
+            startActivityForResult(intent, 0); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출
+
+            //퍼지 버튼 눌렀을때 이미지 변경
+
+            gameMain.m_Run_False(true);
+
+        }
+    }
 
 
 
@@ -210,6 +318,24 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
+    /**
+     *  옵션 버튼
+     */
+
+    public void onButtonOption(View view){
+        if(gameMain.get_m_Run()) {
+
+            intent = new Intent(this, option_Panel.class);
+
+            //intent.putExtra("a", mRun);
+            startActivityForResult(intent, 0); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출
+
+
+
+            gameMain.m_Run_False(true);
+
+        }
+    }
 
 
 

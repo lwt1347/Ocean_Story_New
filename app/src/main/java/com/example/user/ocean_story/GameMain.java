@@ -26,11 +26,13 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
+import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.lang.reflect.Array;
 import java.text.DecimalFormat;
@@ -41,6 +43,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static android.content.Context.AUDIO_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -93,6 +96,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     boolean warning_Wave_Flag = false;
 
 
+
     /**
      * 터치 이벤트시 발생하면 draw 에서 그리기 위한 flag 변수들
      */
@@ -130,7 +134,13 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private boolean Extraction = false;
 
 
-
+    //사운드
+    //기본 터치 팝 사운드
+    float pop_Touch = 0.4f;
+    //드래그 팝 사운드
+    float pop_Drag = 0.2f;
+    //외적 사운드
+    float pop_Effect = 0.5f;
 
 
     private Game_Thread game_thread;                    //스레드 돌릴 클래스 선언
@@ -764,17 +774,103 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         /**
          *  배경음악 사운드풀로 안되서
          */
+        ((GameActivity) _context).setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
         background_Sound = MediaPlayer.create(_context, R.raw.background_music_1);
         background_Sound.setLooping(true);
-        background_Sound.setVolume(1f,1f);
+
+        background_Sound.setVolume(0.5f,0.5f);
         background_Sound.start();
 
 
 
 
+//        soundPool.play(R.raw.background_music_1, 1.0f, 1.0f, 0, -1, 1.0F);   //달팽이 기본 팝 사운드
+
+
 
 
     }
+
+        //pop_Drag2 pop_Touch4 pop_Effect5
+    public void set_Volume(int vol){
+        if(vol == 10){
+            pop_Touch = 1.0f;
+            pop_Drag = 0.4f;
+            pop_Effect = 1.0f;
+
+        }else if(vol == 9){
+            pop_Touch = 0.9f;
+            pop_Drag = 0.36f;
+            pop_Effect = 0.9f;
+        }else if(vol == 8){
+            pop_Touch = 0.8f;
+            pop_Drag = 0.32f;
+            pop_Effect = 0.8f;
+        }else if(vol == 7){
+            pop_Touch = 0.7f;
+            pop_Drag = 0.28f;
+            pop_Effect = 0.7f;
+        }else if(vol == 6){
+            pop_Touch = 0.6f;
+            pop_Drag = 0.24f;
+            pop_Effect = 0.6f;
+        }else if(vol == 5){
+            pop_Touch = 0.5f;
+            pop_Drag = 0.20f;
+            pop_Effect = 0.5f;
+        }else if(vol == 4){
+            pop_Touch = 0.4f;
+            pop_Drag = 0.16f;
+            pop_Effect = 0.4f;
+        }else if(vol == 3){
+            pop_Touch = 0.3f;
+            pop_Drag = 0.12f;
+            pop_Effect = 0.3f;
+        }else if(vol == 2){
+            pop_Touch = 0.2f;
+            pop_Drag = 0.08f;
+            pop_Effect = 0.2f;
+        }else if(vol == 1){
+            pop_Touch = 0.1f;
+            pop_Drag = 0.04f;
+            pop_Effect = 0.1f;
+        }else if(vol == 0){
+            pop_Touch = 0.0f;
+            pop_Drag = 0.0f;
+            pop_Effect = 0.0f;
+        }
+    }
+
+    public void set_Volume_Up(int vol){
+
+            pop_Touch+=0.1;
+            pop_Drag+=0.04;     //젤 작음
+            pop_Effect+=0.1; //젤큼
+
+        if(pop_Effect >= 1){
+            pop_Touch = 0.9f;
+            pop_Drag = 0.4f;
+            pop_Effect = 1.0f;
+        }
+
+        Log.e("@", "pop_Touch = " + pop_Touch + ", pop_Drag = " + pop_Drag + ", pop_Effect = " + pop_Effect);
+    }
+    public void set_Volume_Down(int vol){
+
+            pop_Touch-=0.1;
+            pop_Drag-=0.04;     //젤 작음
+            pop_Effect-=0.1; //젤큼
+
+        if(pop_Drag <= 0.1){
+            pop_Touch = 0.0f;
+            pop_Drag = 0.0f;
+            pop_Effect = 0.0f;
+        }
+
+        Log.e("@", "pop_Touch = " + pop_Touch + ", pop_Drag = " + pop_Drag + ", pop_Effect = " + pop_Effect);
+    }
+
 
 
 
@@ -1076,6 +1172,12 @@ private void button_Create_method_Init(){
 
         //스테이지
 
+
+
+        //튜토리얼
+        first_Text_Explain_Index = 0;
+        first_Text_Explain_Flag = true;
+        tutorial_Flag = true;
 
     }
 
@@ -5687,7 +5789,7 @@ try{
                     if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Sea_Snake_List.get(i).get_Y_Point() + convertPixelsToDp(30, _context)
                             && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Sea_Snake_img[0].getHeight()) {
                         fish_List.get(j).set_Hp_Minus(25);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
                     }
                 } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Sea_Snake_List.get(i).get_X_Point() + skill_Sea_Snake_img[0].getWidth()
@@ -5697,7 +5799,7 @@ try{
                     if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context)
                             && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Sea_Snake_img[0].getHeight()) {
                         fish_List.get(j).set_Hp_Minus(25);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                     }
                 }
 
@@ -5714,7 +5816,7 @@ try{
                     if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context)
                             && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Sea_Snake_img[0].getHeight()) {
                         ground_List.get(j).set_Ground_Hp_Minus(25);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                     }
                 } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Sea_Snake_List.get(i).get_X_Point() + skill_Sea_Snake_img[0].getWidth()
                         && ground_List.get(j).get_Ground_Point_X() >= skill_Sea_Snake_List.get(i).get_X_Point()
@@ -5723,7 +5825,7 @@ try{
                     if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context)
                             && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Sea_Snake_img[0].getHeight()) {
                         ground_List.get(j).set_Ground_Hp_Minus(25);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                     }
                 }
 
@@ -5776,7 +5878,7 @@ try{
                     if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Wave_List.get(i).get_Y_Point()
                             && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Wave_List.get(i).get_Y_Point() + skill_wall_img[0].getHeight()) {
                         fish_List.get(j).set_Hp_Minus(10);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
                     }
                 } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Wave_List.get(i).get_X_Point() + skill_wall_img[0].getWidth()
@@ -5787,7 +5889,7 @@ try{
                             && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Wave_List.get(i).get_Y_Point() + skill_wall_img[0].getHeight()) {
 
                         fish_List.get(j).set_Hp_Minus(10);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
                     }
                 }
@@ -5809,7 +5911,7 @@ try{
                     if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Wave_List.get(i).get_Y_Point()
                             && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Wave_List.get(i).get_Y_Point() + skill_earthquake_img[0].getHeight()) {
                         ground_List.get(j).set_Ground_Hp_Minus(10);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
                     }
                 } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Wave_List.get(i).get_X_Point() + skill_earthquake_img[0].getWidth()
@@ -5820,7 +5922,7 @@ try{
                             && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Wave_List.get(i).get_Y_Point() + skill_earthquake_img[0].getHeight()) {
 
                         ground_List.get(j).set_Ground_Hp_Minus(10);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
                     }
                 }
@@ -5945,7 +6047,7 @@ try{
                 if(skill_Thorn2_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Thorn2_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size() + convertPixelsToDp(10, _context)){
                     if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Thorn2_List.get(i).get_Y_Point() && skill_Thorn2_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()+ convertPixelsToDp(10, _context)){
                         fish_List.get(j).set_Hp_Minus(10);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         skill_Thorn2_List.get(i).set_Live();
 
                     }
@@ -5955,7 +6057,7 @@ try{
 
                     if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Thorn2_List.get(i).get_Y_Point() && skill_Thorn2_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()+ convertPixelsToDp(10, _context)){
                         fish_List.get(j).set_Hp_Minus(10);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         skill_Thorn2_List.get(i).set_Live();
 
                     }
@@ -5972,7 +6074,7 @@ try{
                     if (skill_Thorn2_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Thorn2_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size() + convertPixelsToDp(10, _context)) {
                         if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Thorn2_List.get(i).get_Y_Point() && skill_Thorn2_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()+ convertPixelsToDp(10, _context)) {
                             ground_List.get(j).set_Ground_Hp_Minus(10);
-                            soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                            soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                             skill_Thorn2_List.get(i).set_Live();
 
                         }
@@ -5982,7 +6084,7 @@ try{
 
                         if (ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Height_Size() >= skill_Thorn2_List.get(i).get_Y_Point() && skill_Thorn2_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()+ convertPixelsToDp(10, _context)) {
                             ground_List.get(j).set_Ground_Hp_Minus(10);
-                            soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                            soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                             skill_Thorn2_List.get(i).set_Live();
 
                         }
@@ -6039,7 +6141,7 @@ try{
                 if(skill_Lightning_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Lightning_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()){
                     if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning_List.get(i).get_Y_Point() && skill_Lightning_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
                         fish_List.get(j).set_Hp_Minus(40);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         skill_Lightning_List.get(i).set_play_Attack();
                     }
                 }else if(fish_List.get(j).get_Fish_Point_X() <= skill_Lightning_List.get(i).get_X_Point() + skill_lightnign_img[0].getWidth()
@@ -6048,7 +6150,7 @@ try{
 
                     if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning_List.get(i).get_Y_Point() && skill_Lightning_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
                         fish_List.get(j).set_Hp_Minus(40);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         skill_Lightning_List.get(i).set_play_Attack();
                     }
                 }
@@ -6173,7 +6275,7 @@ try{
                 if(skill_Lightning2_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Lightning2_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()){
                     if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning2_List.get(i).get_Y_Point() && skill_Lightning2_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
                         fish_List.get(j).set_Hp_Minus(50);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         skill_Lightning2_List.get(i).set_play_Attack();
                     }
                 }else if(fish_List.get(j).get_Fish_Point_X() <= skill_Lightning2_List.get(i).get_X_Point() + skill_lightnign1_img[0].getWidth()
@@ -6182,7 +6284,7 @@ try{
 
                     if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning2_List.get(i).get_Y_Point() && skill_Lightning2_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
                         fish_List.get(j).set_Hp_Minus(50);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         skill_Lightning2_List.get(i).set_play_Attack();
                     }
                 }
@@ -6878,9 +6980,18 @@ try{
         if(first_Explain) {
             m_Run_False();
         }
+
+
+
 }catch (Exception e){
     Log.e("물고기 설명창", "물고기 설명창");
 }
+
+
+
+
+
+
 
     /*
     등장 설명창, 진화 할 때 컨트롤
@@ -6888,11 +6999,15 @@ try{
 try{
 
 
+
+
     if(!mRun) {
 
         if(!pause_State) {
             draw.draw_Bmp(canvas, backGroundImg_black, 0, 0);
         }
+
+
 
         //새로운 적군 등장 할 때
         if(first_Explain){
@@ -6919,7 +7034,7 @@ try{
 
 
             button_Create_method_Init();
-            soundPool.play(sound_Effect[8], 1F, 1F, 0, 0, 1.0F);
+            soundPool.play(sound_Effect[8], pop_Effect, pop_Effect, 0, 0, 1.0F);
             confirm_Button_3.setImages(upimage, downimage);
             confirm_Button_3.draw(canvas);
 
@@ -7108,7 +7223,7 @@ try{
 
 
 
-            soundPool.play(sound_Effect[8], 1F, 1F, 0, 0, 1.0F);
+            soundPool.play(sound_Effect[8], pop_Effect, pop_Effect, 0, 0, 1.0F);
             confirm_Button_1.setImages(upimage, downimage);
             confirm_Button_1.draw(canvas);
 
@@ -7166,8 +7281,13 @@ try{
 
             //진화의 버튼 뒤쪽의 이펙트
 
-
-
+            //처음 한번만, 텍스트 설명창
+            if(tutorial_Flag) {
+                if(main_Character instanceof Main_Character_Plankton_1){
+                    m_Run_False();
+                    first_Text_Explain_Flag = true;
+                }
+            }
 
 
         }
@@ -7209,13 +7329,13 @@ try{
                     window_Height/2 - convertPixelsToDp(380, _context));
 
             if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 0){
-                soundPool.play(sound_Effect[4], 0.2F, 0.2F, 0, 0, 1.0F);
+                soundPool.play(sound_Effect[4], pop_Drag, pop_Drag, 0, 0, 1.0F);
             }else if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 4){
 //                soundPool.play(sound_Effect[5], 0.5F, 0.5F, 1, 1, 1.0F);
             }else if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 6){
 //                soundPool.play(sound_Effect[6], 0.5F, 0.5F, 1, 1, 1.0F);
             }else if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 7){
-                soundPool.play(sound_Effect[7], 0.2F, 0.2F, 0, 0, 1.0F);
+                soundPool.play(sound_Effect[7], pop_Drag, pop_Drag, 0, 0, 1.0F);
             }
 
 
@@ -7253,6 +7373,92 @@ try{
             }catch (Exception e){
                 Log.e("@","상어친구 그리기");
             }
+
+
+            try{
+                if(first_Text_Explain_Flag){
+//
+                    if(first_Text_Explain_Index == 0) {
+                        image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_m0);
+                        explain_Window_ima = image.getBitmap();
+
+                        draw.draw_Bmp(canvas, explain_Window_ima,
+                                window_Width / 2 - convertPixelsToDp(105, _context),
+                                window_Height / 2 - convertPixelsToDp(25, _context));
+                    }else if(first_Text_Explain_Index == 1){
+                        image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_m1);
+                        explain_Window_ima = image.getBitmap();
+
+                        draw.draw_Bmp(canvas, explain_Window_ima,
+                                window_Width / 2 - convertPixelsToDp(115, _context),
+                                window_Height / 2 + convertPixelsToDp(35, _context));
+                    }else if(first_Text_Explain_Index == 2){
+                        image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_m2);
+                        explain_Window_ima = image.getBitmap();
+
+                        draw.draw_Bmp(canvas, explain_Window_ima,
+                                window_Width / 2 - convertPixelsToDp(110, _context),
+                                window_Height / 2 + convertPixelsToDp(25, _context));
+                    }else if(first_Text_Explain_Index == 3){
+                        image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_m3);
+                        explain_Window_ima = image.getBitmap();
+
+                        draw.draw_Bmp(canvas, explain_Window_ima,
+                                window_Width  - convertPixelsToDp(275, _context),
+                                convertPixelsToDp(30, _context));
+                    }else if(first_Text_Explain_Index == 4){
+                        image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_m4);
+                        explain_Window_ima = image.getBitmap();
+
+                        draw.draw_Bmp(canvas, explain_Window_ima,
+                                window_Width - convertPixelsToDp(275, _context),
+                                convertPixelsToDp(70, _context));
+                    }else if(first_Text_Explain_Index == 5){
+                        image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_m5);
+                        explain_Window_ima = image.getBitmap();
+
+                        draw.draw_Bmp(canvas, explain_Window_ima,
+                                window_Width - convertPixelsToDp(290, _context),
+                                convertPixelsToDp(100, _context));
+                    }else if(first_Text_Explain_Index == 6){
+                        image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_m6);
+                        explain_Window_ima = image.getBitmap();
+
+                        draw.draw_Bmp(canvas, explain_Window_ima,
+                                window_Width - convertPixelsToDp(265, _context),
+                                convertPixelsToDp(140, _context));
+                    }else if(first_Text_Explain_Index == 7){
+                        image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_m7);
+                        explain_Window_ima = image.getBitmap();
+
+                        draw.draw_Bmp(canvas, explain_Window_ima,
+                                window_Width - convertPixelsToDp(275, _context),
+                                convertPixelsToDp(170, _context));
+                    }else if(first_Text_Explain_Index == 8){
+                        image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_m8);
+                        explain_Window_ima = image.getBitmap();
+
+                        draw.draw_Bmp(canvas, explain_Window_ima,
+                                window_Width - convertPixelsToDp(320, _context),
+                                convertPixelsToDp(200, _context));
+                    }else if(first_Text_Explain_Index == 9){
+                        image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_m9);
+                        explain_Window_ima = image.getBitmap();
+
+                        draw.draw_Bmp(canvas, explain_Window_ima,
+                                window_Width / 2 - convertPixelsToDp(explain_Window_ima.getWidth()/4, _context),
+                                window_Height / 2 - convertPixelsToDp(95, _context));
+                    }
+
+
+
+
+                    m_Run_False();
+                }
+            }catch (Exception e){
+                Log.e("@","텍스트 설명창");
+            }
+
 
         }catch (Exception e){
 
@@ -9827,17 +10033,17 @@ public void skill_Fish_Attack(){
         if((main_Character instanceof Main_Character_Shellfish_Tear4 || skill_Shellfish_Extract_Nomar[3]) && random.nextInt(100) < st4 + 3) {
             skill_Crab_Claws = new Skill_Crab_Claws(fish_List.get(smallFishIndex).get_Fish_Point_X() - convertPixelsToDp(70, _context), fish_List.get(smallFishIndex).get_Fish_Point_Y() - convertPixelsToDp(70, _context));
             skill_Crab_Claws_List.add(skill_Crab_Claws);
-            soundPool.play(sound_Effect[9], 0.2F, 0.2F, 0, 0, 1.0F);
+            soundPool.play(sound_Effect[9], pop_Drag, pop_Drag, 0, 0, 1.0F);
         }else //간장게장 집게발 소환
             if((main_Character instanceof Main_Character_Shellfish_Tear5 || skill_Shellfish_Extract_Nomar[4]) && random.nextInt(100) < st5 + 3){
                 skill_Soycrab_Claws = new Skill_Soycrab_Claws(fish_List.get(smallFishIndex).get_Fish_Point_X() - convertPixelsToDp(70, _context), fish_List.get(smallFishIndex).get_Fish_Point_Y() - convertPixelsToDp(70, _context));
                 skill_Soycrab_Claws_List.add(skill_Soycrab_Claws);
-                soundPool.play(sound_Effect[9], 0.2F, 0.2F, 0, 0, 1.0F);
+                soundPool.play(sound_Effect[9], pop_Drag, pop_Drag, 0, 0, 1.0F);
             }else //레이저 소환
                 if((main_Character instanceof Main_Character_Moulluse_Tear6 || skill_Mollus_Extract_Nomar[5] )&& random.nextInt(100) < mt6 + 3){
                     skill_Laser = new Skill_Laser(- convertPixelsToDp(1000, _context), fish_List.get(smallFishIndex).get_Fish_Point_Y(), window_Width);
                     skill_Laser_List.add(skill_Laser);
-                    soundPool.play(sound_Effect[10], 0.2F, 0.2F, 0, 0, 1F);
+                    soundPool.play(sound_Effect[10], pop_Drag, pop_Drag, 0, 0, 1F);
                 }else  //가오리 독 걸기
                     if((main_Character instanceof Main_Character_Fish_Tear6 || skill_Fish_Extract_Nomar[5]) && random.nextInt(100) < ft6 + 10){
                         fish_List.get(smallFishIndex).set_Status_Poison(5);
@@ -9896,7 +10102,7 @@ public void skill_Fish_Attack(){
                                     skill_Crab_Claws = new Skill_Crab_Claws(fish_List.get(smallFishIndex).get_Fish_Point_X() + convertPixelsToDp(50, _context), fish_List.get(smallFishIndex).get_Fish_Point_Y() - convertPixelsToDp(20, _context));
 
                                     skill_Crab_Claws_List.add(skill_Crab_Claws);
-                                    soundPool.play(sound_Effect[9], 0.2F, 0.2F, 0, 0, 1.0F);
+                                    soundPool.play(sound_Effect[9], pop_Drag, pop_Drag, 0, 0, 1.0F);
 
                                 }else if((main_Character instanceof Main_Character_Moulluse_Tear3 || skill_Mollus_Extract_Nomar[2])  && random.nextInt(100) < mt3 + 3){
                                     //슬로우 구름 생성
@@ -10010,19 +10216,19 @@ public void skill_Ground_Attack(){
             if((main_Character instanceof Main_Character_Shellfish_Tear4 || skill_Shellfish_Extract_Nomar[3]) && random.nextInt(100) < st4 + 3) {
                 skill_Crab_Claws = new Skill_Crab_Claws(ground_List.get(ground_Remove_Temp).get_Ground_Point_X() - convertPixelsToDp(70, _context), ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() - convertPixelsToDp(70, _context));
                 skill_Crab_Claws_List.add(skill_Crab_Claws);
-                soundPool.play(sound_Effect[9], 0.2F, 0.2F, 0, 0, 1.0F);
+                soundPool.play(sound_Effect[9], pop_Drag, pop_Drag, 0, 0, 1.0F);
 
 
             }else //간장게장 집게발 소환
                 if((main_Character instanceof Main_Character_Shellfish_Tear5 || skill_Shellfish_Extract_Nomar[4])  && random.nextInt(100) < st5 + 3){
                     skill_Soycrab_Claws = new Skill_Soycrab_Claws(ground_List.get(ground_Remove_Temp).get_Ground_Point_X() - convertPixelsToDp(70, _context), ground_List.get(ground_Remove_Temp).get_Ground_Point_Y() - convertPixelsToDp(70, _context));
                     skill_Soycrab_Claws_List.add(skill_Soycrab_Claws);
-                    soundPool.play(sound_Effect[9], 0.2F, 0.2F, 0, 0, 1.0F);
+                    soundPool.play(sound_Effect[9], pop_Drag, pop_Drag, 0, 0, 1.0F);
                 }else //레이저 소환
                     if((main_Character instanceof Main_Character_Moulluse_Tear6 || skill_Mollus_Extract_Nomar[5]) && random.nextInt(100) < mt6 + 3){
                         skill_Laser = new Skill_Laser(- convertPixelsToDp(1000, _context), ground_List.get(ground_Remove_Temp).get_Ground_Point_Y(), window_Width);
                         skill_Laser_List.add(skill_Laser);
-                        soundPool.play(sound_Effect[10], 0.2F, 0.2F, 0, 0, 1F);
+                        soundPool.play(sound_Effect[10], pop_Drag, pop_Drag, 0, 0, 1F);
                     }else  //가오리 독 걸기
                         if((main_Character instanceof Main_Character_Fish_Tear6 || skill_Fish_Extract_Nomar[5]) && random.nextInt(100) < ft6 + 10){
                             ground_List.get(ground_Remove_Temp).set_Status_Poison(5);
@@ -10079,7 +10285,7 @@ public void skill_Ground_Attack(){
 
                                         skill_Crab_Claws_List.add(skill_Crab_Claws);
 
-                                        soundPool.play(sound_Effect[9], 0.2F, 0.2F, 0, 0, 1.0F);
+                                        soundPool.play(sound_Effect[9], pop_Drag, pop_Drag, 0, 0, 1.0F);
 
                                     }else if((main_Character instanceof Main_Character_Moulluse_Tear3 || skill_Mollus_Extract_Nomar[2]) && random.nextInt(100) < mt3 + 3){
                                         //슬로우 구름 생성
@@ -10258,7 +10464,7 @@ public void skill_Ground_Attack(){
 
 
                         //            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Drag, pop_Drag, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
                         return true;
 
@@ -10297,7 +10503,7 @@ public void skill_Ground_Attack(){
                         main_Character.set_Character_Experience(1);
 
                         //            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Drag, pop_Drag, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         return true;
 
 
@@ -10345,7 +10551,7 @@ public void skill_Ground_Attack(){
 
 
                         //            delete_Ground_Select(ground_Remove_Temp);   //피가 감소된 객체 0일때 삭제
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Drag, pop_Drag, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         return true;
 
 
@@ -10386,7 +10592,7 @@ public void skill_Ground_Attack(){
 //                        if(ground_List.get(i).get_Ground_Point_Y() < 0) {
 //                            ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(100);
 //                        }
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Drag, pop_Drag, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         return true;
 
 
@@ -10423,7 +10629,7 @@ public void skill_Ground_Attack(){
                         main_Character.set_Character_Experience(1);
 //                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
 
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Drag, pop_Drag, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         return true;
 
 
@@ -10471,7 +10677,7 @@ public void skill_Ground_Attack(){
                         Score+=random.nextInt((int)character_Drag_Damege * tempInt);
                         money+=character_Randmark_Damege_Temp;
                         main_Character.set_Character_Experience((int)character_Drag_Damege * tempInt);
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Drag, pop_Drag, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                         return true;
 
 
@@ -10499,7 +10705,7 @@ public void skill_Ground_Attack(){
                         }
 
                         ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
-                        soundPool.play(sound_Effect[11], 0.02F, 0.02F, 0, 0, 1.0F);   //드래그 사운드
+                        soundPool.play(sound_Effect[11], pop_Drag/5, pop_Drag/5, 0, 0, 1.0F);   //드래그 사운드
                         Score+=random.nextInt(5);     //점수 추가
                         money+=character_Randmark_Damege_Temp;
                         main_Character.set_Character_Experience(1);  //경험치 추가
@@ -10529,7 +10735,7 @@ public void skill_Ground_Attack(){
 
 
 //                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
-                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.02F, 0.02F, 0, 0, 1.0F);   //드래그 사운드
+                        soundPool.play(sound_Effect[2 + random.nextInt(2)], pop_Drag/5, pop_Drag/5, 0, 0, 1.0F);   //드래그 사운드
                         tempInt = main_Character.get_Tear();
                         if(tempInt <= 0){
                             tempInt = 1;
@@ -10563,7 +10769,7 @@ public void skill_Ground_Attack(){
 
 
 //                        ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
-                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.02F, 0.02F, 0, 0, 1.0F);   //드래그 사운드
+                        soundPool.play(sound_Effect[2 + random.nextInt(2)], pop_Drag/5, pop_Drag/5, 0, 0, 1.0F);   //드래그 사운드
                         tempInt = main_Character.get_Tear();
                         if(tempInt <= 0){
                             tempInt = 1;
@@ -10620,7 +10826,7 @@ public void skill_Ground_Attack(){
 
 
                         ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Randmark_Damege_Temp);
-                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.02F, 0.02F, 0, 0, 1.0F);   //드래그 사운드
+                        soundPool.play(sound_Effect[2 + random.nextInt(2)], pop_Drag/5, pop_Drag/5, 0, 0, 1.0F);   //드래그 사운드
                         Score+=random.nextInt(5);     //점수 추가
                         money+=character_Randmark_Damege_Temp;
                         main_Character.set_Character_Experience(character_Randmark_Damege_Temp);  //경험치 추가
@@ -10662,7 +10868,7 @@ public void skill_Ground_Attack(){
 
 
                         //메인 캐릭터 hp 감소 루틴 추가 해야함
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //물고기 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Drag, pop_Drag, 0, 0, 1.0F);   //물고기 기본 팝 사운드
                         return true;
                     }
                 }
@@ -10753,7 +10959,7 @@ public void skill_Ground_Attack(){
                     }
 
 
-                    soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //물고기 기본 팝 사운드
+                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Drag, pop_Drag, 0, 0, 1.0F);   //물고기 기본 팝 사운드
 
 
 //                        fish_List.get(smallFishIndex).set_Hp_Minus();            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
@@ -10781,13 +10987,13 @@ public void skill_Ground_Attack(){
 
                 }else if(fish_List.get(smallFishIndex) instanceof Fish_Touch_Squid){
                     touch_Squid_Hit_Flag = true;
-                    soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Drag, pop_Drag, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                 }else if(fish_List.get(smallFishIndex) instanceof Fish_Touch_Ell){
                     touch_Ell_Hit_Flag = true;
-                    soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Drag, pop_Drag, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                 }else if(fish_List.get(smallFishIndex) instanceof Fish_Touch_Marlin){
                     touch_Marlin_Hit_Flag = true;
-                    soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
+                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Drag, pop_Drag, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
                 }
 
@@ -10811,7 +11017,7 @@ public void skill_Ground_Attack(){
 
 
                     if(fish_List.get(smallFishIndex).get_Fish_Class() == 3){
-                        soundPool.play(sound_Effect[random.nextInt(2)], 0.2F, 0.2F, 0, 0, 1.0F);   //물고기 기본 팝 사운드
+                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Drag, pop_Drag, 0, 0, 1.0F);   //물고기 기본 팝 사운드
                         turtle_Fish_Hit_Flag = true;
                         return true;
                     }
@@ -10834,7 +11040,7 @@ public void skill_Ground_Attack(){
 //                        fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege);            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
 
                         drag_Fish_Hit_Flag = true;  //그림은 드로우에
-                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.02F, 0.02F, 0, 0, 1.0F);   //드래그 사운드
+                        soundPool.play(sound_Effect[2 + random.nextInt(2)], pop_Drag, pop_Drag, 0, 0, 1.0F);   //드래그 사운드
 
                     }else if(fish_List.get(smallFishIndex) instanceof Fish_Drag_Steelbream){
                         //참돔은 확률로 갑옷을 깨고 대미지를 입힌다.
@@ -10849,7 +11055,7 @@ public void skill_Ground_Attack(){
                         }
 
                         drag_Steelbream_Hit_Flag = true;        //참돔
-                        soundPool.play(sound_Effect[12], 0.02F, 0.02F, 0, 0, 1.0F);
+                        soundPool.play(sound_Effect[12], pop_Drag, pop_Drag, 0, 0, 1.0F);
 
                     }else if(fish_List.get(smallFishIndex) instanceof Fish_Drag_Shark){
                         //상어 드래그
@@ -10858,7 +11064,7 @@ public void skill_Ground_Attack(){
                         //대미지 입힌다.
 //                        fish_List.get(smallFishIndex).set_Hp_Minus(character_Damege);            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
 
-                        soundPool.play(sound_Effect[2 + random.nextInt(2)], 0.02F, 0.02F, 0, 0, 1.0F);
+                        soundPool.play(sound_Effect[2 + random.nextInt(2)], pop_Drag, pop_Drag, 0, 0, 1.0F);
                         drag_Shark_Hit_Flag = true;
 
 
@@ -10968,12 +11174,56 @@ public void skill_Ground_Attack(){
     private boolean revolution_Button_Activation_Down = false;
     private boolean revolution_Button_Activation_Up = false;
 
+    boolean up = false;
+    boolean down = false;
+
+
+
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
+
+
 
         touchx = (int) event.getX();
         touchy = (int) event.getY();
         try {
+
+
+        if(!mRun){
+            if(tutorial_Flag) {
+                if (first_Text_Explain_Flag) {
+                    //가장 첫번째 텍스트 설명창일때 아무대나 터치해도 넘어감
+
+                    switch (event.getAction()) {
+
+
+                        case MotionEvent.ACTION_UP:
+                            if(down)
+                            up = true;
+                            break;
+                        case MotionEvent.ACTION_DOWN:
+
+                            down = true;
+                            break;
+
+                    }
+
+                    if(up && down){
+                        first_Text_Explain_Index++;
+
+                        m_Run_True();
+                        if (first_Text_Explain_Index > 8) {
+
+                            first_Text_Explain_Flag = false;
+                        }
+                        down = false;
+                        up = false;
+                    }
+                }
+            }
+        }
 
 
         if (!mRun && !pause_State) {
@@ -10982,6 +11232,9 @@ public void skill_Ground_Attack(){
             switch (event.getAction()) {
 
                 case MotionEvent.ACTION_UP:
+
+
+
 
                     confirm_Button_1.setPress(false);    //버튼 상태 초기화
                     confirm_Button_2.setPress(false);    //버튼 상태 초기화
@@ -12293,6 +12546,8 @@ public void skill_Ground_Attack(){
                      */
                     revolution_Button_Activation = true;
 
+
+
                 }
 
 
@@ -12588,6 +12843,13 @@ public void skill_Ground_Attack(){
 
     //설명창 띄어주기 위함.
     boolean first_Explain = false;
+
+    //가장 처름 설명서
+
+    boolean first_Text_Explain_Flag = false;
+    boolean tutorial_Flag = false;
+    int first_Text_Explain_Index = 0;
+
     boolean explain[] = new boolean[50];
     double setIntent[] = new double[100];
 
@@ -12685,8 +12947,13 @@ public void skill_Ground_Attack(){
 
         sound_Effect[15] = soundPool.load(_context, R.raw.warning, 1);     ///경고음
 
+        sound_Effect[49] = soundPool.load(_context, R.raw.background_music_1, 1);     ///배경음
 
 
+        //가장 처름 설명서
+        //튜토리얼
+        first_Text_Explain_Flag = true;
+        tutorial_Flag = true;
 
     }
     TimerTask fish_Maker, stage_Day;
