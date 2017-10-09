@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
@@ -60,6 +61,15 @@ public class menu_Sliding_Panel extends Activity {
 
 
     }
+    //종료하기
+    public void onButtonExit(View view){
+
+        intent = new Intent(getApplicationContext(), GameActivity.class);
+        intent.putExtra("key",3);
+        setResult(0, intent);
+        finish();
+    }
+
 
 
 }

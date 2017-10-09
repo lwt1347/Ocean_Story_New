@@ -1,5 +1,6 @@
 package com.example.user.ocean_story;
 
+import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -33,7 +34,6 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
 
 
@@ -81,6 +81,8 @@ public class GameActivity extends AppCompatActivity {
         _context_Send = this;
 
         ad = (AudioManager)getSystemService(AUDIO_SERVICE);
+
+
 
     }
 
@@ -135,6 +137,10 @@ public class GameActivity extends AppCompatActivity {
         //데이터 저장
 
         Log.e("a","back");
+
+        //음악끄기
+        gameMain.exit();
+
     }
 
 
@@ -142,13 +148,15 @@ public class GameActivity extends AppCompatActivity {
     int b_Vol = 0;
     int e_Vol = 0;
     boolean sound = true;   //t = 사운드 온, f = 음소거
-    boolean tuto = true;   //t = 튜토리얼 온, f = 튜토 x
+    int tuto = 0;   //0 = 튜토리얼 온, 1 = 튜토 x
 
     public void set_Sound(boolean set){
         sound = set;
+        gameMain.sound_Tuto_Value(e_Vol, b_Vol, tuto);
     }
-    public void set_Tuto(boolean set){
+    public void set_Tuto(int set){
         tuto = set;
+        gameMain.sound_Tuto_Value(e_Vol, b_Vol, tuto);
     }
 
 
@@ -156,42 +164,52 @@ public class GameActivity extends AppCompatActivity {
     //음향 설정 시크바 컨트롤
     public static Context _context_Send;
 
-    public void set_Back_Sound(int volume){
+    public void set_Back_Sound(int volume, int e_Vol_T, int tuto){
         Log.e("@","v = " + volume);
         if(volume < 0){
             volume = 0;
         }
         ad.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
         b_Vol = volume;
+
+        gameMain.sound_Tuto_Value(e_Vol_T, b_Vol, tuto);
+
     }
-    public void set_Effect_Sound(int volume){
+    public void set_Effect_Sound(int volume, int b_Vol_T, int tuto){
         if(volume >= 10){
             volume = 10;
         }
 //        ad.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
         gameMain.set_Volume(volume);
         e_Vol = volume;
+
+        gameMain.sound_Tuto_Value(e_Vol, b_Vol_T, tuto);
     }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
 
-
+// ((GameActivity)gameActivity._context_Send).set_Effect_Sound(progress, sound_Check_B);
 
         //볼륨 이벤트
         switch (keyCode) {
             case KeyEvent.KEYCODE_VOLUME_DOWN:
 
 
-
-
                 if(b_Vol > 0){
                     b_Vol--;
                 }
+                if(e_Vol > 0){
+                    e_Vol--;
+                }
+
+
                 gameMain.set_Volume_Down(e_Vol);
                 ad.setStreamVolume(AudioManager.STREAM_MUSIC, b_Vol, 0);
                 Log.e("@","D = " + b_Vol);
+
             break;
 
             case KeyEvent.KEYCODE_VOLUME_UP:
@@ -200,15 +218,34 @@ public class GameActivity extends AppCompatActivity {
                 if(b_Vol < 10){
                     b_Vol++;
                 }
+                if(e_Vol < 10){
+                    e_Vol++;
+                }
+
                 ad.setStreamVolume(AudioManager.STREAM_MUSIC, b_Vol, 0);
                 gameMain.set_Volume_Up(e_Vol);
                 Log.e("@","U = " + b_Vol);
+
+                break;
+
+            case KeyEvent.KEYCODE_BACK:
+
+                intent = new Intent(this, menu_Sliding_Panel.class);
+                //intent.putExtra("a", mRun);
+                startActivityForResult(intent, 0); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출
+
+                //퍼지 버튼 눌렀을때 이미지 변경
+                button_Pause.setBackgroundResource(R.drawable.pause_2);
+
+                gameMain.m_Run_False(true);
 
                 break;
         }
 
 //        ((AudioManager)getSystemService(AUDIO_SERVICE)).
 //                setStreamVolume(AudioManager.STREAM_MUSIC, 5, AudioManager.FLAG_SHOW_UI);
+//        e_Vol = 5;
+        gameMain.sound_Tuto_Value(e_Vol, b_Vol, tuto);
 
         return true;
 //        return super.onKeyDown(keyCode, event);
@@ -305,6 +342,9 @@ public class GameActivity extends AppCompatActivity {
             } else if (key == 2) {  //다시 시작
                 gameMain.m_Run_True();
                 gameMain.re_Start();
+            } else if(key == 3){ //종료
+                gameMain.exit();
+                finish();
             }
 
         }catch (Exception e){

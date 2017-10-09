@@ -746,6 +746,10 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
         _context = context;
 
+        //임시저장
+
+        pref = _context.getSharedPreferences("pref", Activity.MODE_APPEND);
+        editor = pref.edit();
 
         //화면 껏다 켯을때 컨트롤
         km = (KeyguardManager) _context.getSystemService(Context.KEYGUARD_SERVICE);
@@ -854,7 +858,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             pop_Effect = 1.0f;
         }
 
-        Log.e("@", "pop_Touch = " + pop_Touch + ", pop_Drag = " + pop_Drag + ", pop_Effect = " + pop_Effect);
+
+
     }
     public void set_Volume_Down(int vol){
 
@@ -868,9 +873,18 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             pop_Effect = 0.0f;
         }
 
-        Log.e("@", "pop_Touch = " + pop_Touch + ", pop_Drag = " + pop_Drag + ", pop_Effect = " + pop_Effect);
-    }
 
+    }
+    public void sound_Tuto_Value(int es, int bs, int tuto){
+
+        editor.putInt("es", es);
+        editor.putInt("bs", bs);
+        editor.putInt("tuto", tuto);
+        editor.commit();
+
+        Log.e("@", "es = " + es + ", bs = " + bs);
+
+    }
 
 
 
@@ -1171,16 +1185,28 @@ private void button_Create_method_Init(){
 
 
         //스테이지
+        if(pref.getInt("tuto", 0) == 0){
+            tutorial_Flag = true;
+            first_Text_Explain_Flag = true;
+            first_Text_Explain_Index = 0;
+        }
+        //사운드
+
+        gameActivity.set_Back_Sound(pref.getInt("bs",0), pref.getInt("es",0), pref.getInt("tuto", 0) );
+        gameActivity.set_Effect_Sound(pref.getInt("es",0), pref.getInt("bs",0), pref.getInt("tuto", 0) );
 
 
 
-        //튜토리얼
-        first_Text_Explain_Index = 0;
-        first_Text_Explain_Flag = true;
-        tutorial_Flag = true;
 
     }
 
+    //게임 종료, 소라 제거
+    public void exit(){
+//        background_Sound.pause();
+//        background_Sound.release();
+        background_Sound.stop();
+
+    }
 
 
 
@@ -12952,8 +12978,13 @@ public void skill_Ground_Attack(){
 
         //가장 처름 설명서
         //튜토리얼
-        first_Text_Explain_Flag = true;
-        tutorial_Flag = true;
+        //튜토리얼
+
+
+
+
+
+
 
     }
     TimerTask fish_Maker, stage_Day;
@@ -13010,6 +13041,9 @@ public void skill_Ground_Attack(){
 
 //            editor.putInt("landmark_hp",(int)land_Mark.get_Ground_Hp());
 //            editor.putInt("landmark_class",land_Mark.get_Class_Num()+1);
+
+
+
 
             //저장된 랜드마크
             land_Mark_Class = pref.getInt("landmark_class",1);
@@ -14256,6 +14290,8 @@ public void skill_Ground_Attack(){
 
 
 
+    SharedPreferences.Editor editor;
+    SharedPreferences pref;
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         //Log.i("[뷰]", "파괴");
@@ -14266,8 +14302,8 @@ public void skill_Ground_Attack(){
         m_Run_False();
 
         ///값 저장
-        SharedPreferences pref = _context.getSharedPreferences("pref", Activity.MODE_APPEND);
-        SharedPreferences.Editor editor = pref.edit();
+
+
         editor.putInt("score", Score);
 
 

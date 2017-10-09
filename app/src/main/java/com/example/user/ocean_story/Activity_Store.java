@@ -2,6 +2,7 @@ package com.example.user.ocean_story;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,6 +12,7 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -57,10 +59,22 @@ public class Activity_Store extends Activity {
     //sql 라이트
     SQLiteDatabase database;
 
+    SharedPreferences.Editor editor;
+    SharedPreferences pref;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store);
+
+
+        //음향
+        pref = this.getSharedPreferences("pref", Activity.MODE_APPEND);
+        editor = pref.edit();
+
+        vol_E = pref.getInt("es",0);
+        set_Sound(vol_E);
+
 
         f = NumberFormat.getInstance();
 
@@ -1009,10 +1023,13 @@ public class Activity_Store extends Activity {
 
 
                 if(buy_Flag){
-                    soundPool.play(sound_Effect[0], 0.7F, 0.7F, 0, 0, 1.0F);   //성공
+
+                    soundPool.play(sound_Effect[0], sound, sound, 0, 0, 1.0F);   //성공
                 }else {
-                    soundPool.play(sound_Effect[1], 0.7F, 0.7F, 0, 0, 1.0F);   //실패
+
+                    soundPool.play(sound_Effect[1], sound, sound, 0, 0, 1.0F);   //실패
                 }
+
                         buy_Flag = false;
 
 
@@ -1037,13 +1054,86 @@ public class Activity_Store extends Activity {
             item =  (Activity_Store_Item)adapter.getItem(position);
 
 
+
+
             return view;
         }
     }
 
 
 
+        /**
+         * 터치 이팩트 사운드
+         */
+        public float sound = 0.0f;
+        int vol_E = 0;
+        public void set_Sound(int vol){
 
+            if(vol == 10){
+                sound = 1.0f;
+            }else if(vol == 9){
+                sound = 0.9f;
+            }else if(vol == 8){
+                sound = 0.8f;
+            }else if(vol == 7){
+                sound = 0.7f;
+            }else if(vol == 6){
+                sound = 0.6f;
+            }else if(vol == 5){
+                sound = 0.5f;
+            }else if(vol == 4){
+                sound = 0.4f;
+            }else if(vol == 3){
+                sound = 0.3f;
+            }else if(vol == 2){
+                sound = 0.2f;
+            }else if(vol == 1){
+                sound = 0.1f;
+            }else if(vol == 0){
+                sound = 0.0f;
+            }
+
+            editor.putInt("es", vol_E);
+            editor.putInt("bs", vol_E);
+
+            editor.commit();
+
+        }
+
+        @Override
+        public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+            //볼륨 이벤트
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_VOLUME_DOWN:
+
+                    if(vol_E > 0){
+                        vol_E--;
+                    }
+
+                    set_Sound(vol_E);
+
+                    break;
+
+                case KeyEvent.KEYCODE_VOLUME_UP:
+
+                    if(vol_E < 10){
+                        vol_E++;
+                    }
+
+                    set_Sound(vol_E);
+
+                    break;
+
+                case KeyEvent.KEYCODE_BACK:
+
+                    finish();
+                    break;
+            }
+
+            return true;
+    //        return super.onKeyDown(keyCode, event);
+        }
 
 
 }

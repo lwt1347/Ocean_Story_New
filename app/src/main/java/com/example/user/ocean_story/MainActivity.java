@@ -1,6 +1,7 @@
 package com.example.user.ocean_story;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -13,6 +14,7 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -52,6 +54,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
+        //음향
+        pref = this.getSharedPreferences("pref", Activity.MODE_APPEND);
+        editor = pref.edit();
+
+        vol_E = pref.getInt("es",0);
+        set_Sound(vol_E);
+
+
+
 
         setContentView(R.layout.activity_main);
 
@@ -64,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         //음향
         sound_Effect[0] = soundPool.load(this, R.raw.up, 1);      //팝1
+
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -218,6 +230,85 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    /**
+     * 터치 이팩트 사운드
+     */
+    public float sound = 0.0f;
+    int vol_E = 0;
+    SharedPreferences.Editor editor;
+    SharedPreferences pref;
+    public void set_Sound(int vol){
+
+        if(vol == 10){
+            sound = 1.0f;
+        }else if(vol == 9){
+            sound = 0.9f;
+        }else if(vol == 8){
+            sound = 0.8f;
+        }else if(vol == 7){
+            sound = 0.7f;
+        }else if(vol == 6){
+            sound = 0.6f;
+        }else if(vol == 5){
+            sound = 0.5f;
+        }else if(vol == 4){
+            sound = 0.4f;
+        }else if(vol == 3){
+            sound = 0.3f;
+        }else if(vol == 2){
+            sound = 0.2f;
+        }else if(vol == 1){
+            sound = 0.1f;
+        }else if(vol == 0){
+            sound = 0.0f;
+        }
+
+        editor.putInt("es", vol_E);
+        editor.putInt("bs", vol_E);
+
+
+        editor.commit();
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        //볼륨 이벤트
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+
+                if(vol_E > 0){
+                    vol_E--;
+                }
+
+                set_Sound(vol_E);
+
+                break;
+
+            case KeyEvent.KEYCODE_VOLUME_UP:
+
+                if(vol_E < 10){
+                    vol_E++;
+                }
+
+                set_Sound(vol_E);
+
+                break;
+
+            case KeyEvent.KEYCODE_BACK:
+
+                finish();
+                break;
+        }
+
+        return true;
+        //        return super.onKeyDown(keyCode, event);
+    }
+
+
+
     /**
      * Game_Start 버튼 클릭 이벤트
      */
@@ -235,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
 
         startActivityForResult(intent, 1001);
 
-        soundPool.play(sound_Effect[0], 0.7F, 0.7F, 0, 0, 1.0F);   //성공
+        soundPool.play(sound_Effect[0], sound, sound, 0, 0, 1.0F);   //성공
 
 
     }
@@ -259,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
 //        recycleView(findViewById(R.layout.activity_store));
 
 
-        soundPool.play(sound_Effect[0], 0.7F, 0.7F, 0, 0, 1.0F);   //성공
+        soundPool.play(sound_Effect[0], sound, sound, 0, 0, 1.0F);   //성공
 
 
     }

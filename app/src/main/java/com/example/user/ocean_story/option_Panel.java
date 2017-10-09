@@ -3,10 +3,13 @@ package com.example.user.ocean_story;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.CheckBox;
@@ -21,8 +24,8 @@ public class option_Panel extends Activity {
 
     //인텐트 객체
     Intent intent;
-    SeekBar b_Sound;
-    SeekBar e_Sound;
+    public static SeekBar b_Sound;
+    public static SeekBar e_Sound;
 
     CheckBox checkBox1;
     CheckBox checkBox2;
@@ -30,6 +33,24 @@ public class option_Panel extends Activity {
 
     GameActivity gameActivity;
 
+    int sound_Check_E = 0;
+    int sound_Check_B = 0;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+
+                finish();
+
+                break;
+
+        }
+
+        return true;
+    }
+    int check;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,15 +65,45 @@ public class option_Panel extends Activity {
         checkBox1 = (CheckBox)findViewById(R.id.checkBox);
         checkBox2 = (CheckBox)findViewById(R.id.checkBox2);
 
+
+        SharedPreferences.Editor editor;
+        SharedPreferences pref;
+
+        //설정 에서 토토리얼 모드 인지 아닌지.
+        pref = this.getSharedPreferences("pref", Activity.MODE_APPEND);
+        editor = pref.edit();
+        check = pref.getInt("tuto",0);
+
+        if(check == 0){
+            checkBox2.setChecked(true);
+        }else {
+            checkBox2.setChecked(false);
+        }
+
+        sound_Check_E = pref.getInt("es",0);
+        sound_Check_B = pref.getInt("bs",0);
+
+        e_Sound.setProgress(sound_Check_E);
+        b_Sound.setProgress(sound_Check_B);
+
+        if(b_Sound.getProgress() == 0 && e_Sound.getProgress() == 0){
+            checkBox1.setChecked(true);
+        }
+
         /**
          * 사운드 백그라운드, 이펙트
          */
         b_Sound.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                ((GameActivity)gameActivity._context_Send).set_Back_Sound(progress);
+                ((GameActivity)gameActivity._context_Send).set_Back_Sound(progress, sound_Check_E, check);
+                sound_Check_B = progress;
                 if(progress > 0){
+                    //음소거
                     checkBox1.setChecked(false);
+                }
+                if(progress == 0 && e_Sound.getProgress() == 0){
+                    checkBox1.setChecked(true);
                 }
             }
 
@@ -69,9 +120,14 @@ public class option_Panel extends Activity {
         e_Sound.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                ((GameActivity)gameActivity._context_Send).set_Effect_Sound(progress);
+                ((GameActivity)gameActivity._context_Send).set_Effect_Sound(progress, sound_Check_B, check);
+                sound_Check_E = progress;
                 if(progress > 0){
+                    //음소거
                     checkBox1.setChecked(false);
+                }
+                if(progress == 0 && b_Sound.getProgress() == 0){
+                    checkBox1.setChecked(true);
                 }
             }
 
@@ -98,8 +154,8 @@ public class option_Panel extends Activity {
 
                         Log.e("@","a");
                         ((GameActivity)gameActivity._context_Send).set_Sound(false);
-                        ((GameActivity)gameActivity._context_Send).set_Effect_Sound(0);
-                        ((GameActivity)gameActivity._context_Send).set_Back_Sound(0);
+                        ((GameActivity)gameActivity._context_Send).set_Effect_Sound(0, 0, check);
+                        ((GameActivity)gameActivity._context_Send).set_Back_Sound(0, 0, check);
                         b_Sound.setProgress(0);
                         e_Sound.setProgress(0);
                     } else {
@@ -115,11 +171,12 @@ public class option_Panel extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    ((GameActivity)gameActivity._context_Send).set_Tuto(false);
+
+                    ((GameActivity)gameActivity._context_Send).set_Tuto(0);
                     Log.e("@","a");
 
                 } else {
-                    ((GameActivity)gameActivity._context_Send).set_Tuto(true);
+                    ((GameActivity)gameActivity._context_Send).set_Tuto(1);
                     Log.e("@","b");
 
                 }
