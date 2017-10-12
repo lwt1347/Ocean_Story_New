@@ -50,6 +50,18 @@ public class option_Panel extends Activity {
 
         return true;
     }
+
+
+    //확인 버튼
+    public void confirm(View v){
+
+        intent = new Intent(getApplicationContext(), GameActivity.class);
+        intent.putExtra("key",1);
+        setResult(0, intent);
+
+        finish();
+    }
+
     int check;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -11,6 +11,16 @@
     >
 
 
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_confirm"
+        android:onClick="confirm"
+        android:layout_marginBottom="27dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="200dp"

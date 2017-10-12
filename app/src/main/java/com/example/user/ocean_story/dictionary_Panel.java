@@ -26,6 +26,10 @@ public class dictionary_Panel extends Activity {
     //오른쪽 왼쪽
     int page_Num = 0;
 
+    //설명창 보여줄지 말지 정보
+    int[] explain_Info = new int[40];
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +37,10 @@ public class dictionary_Panel extends Activity {
         setContentView(R.layout.dictionary);      //일시정지 눌렀을때 뜨는 xml 화면
 
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        intent = this.getIntent();
+        explain_Info = intent.getIntArrayExtra("explain");
+
 //        android:background="@drawable/menu_background"
 
         //Intent intent = getIntent();
@@ -65,6 +73,12 @@ public class dictionary_Panel extends Activity {
 
         btn_mc = (Button)findViewById(R.id.button5);
         btn_mc.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_right_mc));
+
+        //몬스터 종류 알아보기
+
+
+
+        set_Card_Monster_Image();
     }
 
     Button btn_m_s_1;
@@ -109,6 +123,14 @@ public class dictionary_Panel extends Activity {
 
 
     public void card_1(View v){
+
+        if(explain_Info[0] != 1 && page_Num == 0){
+            return;
+        }else if(explain_Info[9] != 1 && page_Num == 1) {
+            return;
+        }else if(explain_Info[18] != 1 && page_Num == 2) {
+            return;
+        }
 //        btn_m_s_1.setBackgroundDrawable(getResources().getDrawable(R.drawable.effect_bird_1));
         //몬스터 설명창
         if(mc_Flag) {
@@ -135,6 +157,14 @@ public class dictionary_Panel extends Activity {
 
     }
     public void card_2(View v){
+        if(explain_Info[1] != 1 && page_Num == 0){
+            return;
+        }else if(explain_Info[10] != 1 && page_Num == 1) {
+            return;
+        }else if(explain_Info[19] != 1 && page_Num == 2) {
+            return;
+        }
+
         //몬스터 설명창
         if(mc_Flag) {
             if (page_Num == 0) {
@@ -159,6 +189,12 @@ public class dictionary_Panel extends Activity {
 
     }
     public void card_3(View v){
+
+        if(explain_Info[2] != 1 && page_Num == 0){
+            return;
+        }else if(explain_Info[11] != 1 && page_Num == 1) {
+            return;
+        }
         //몬스터 설명창
         if(mc_Flag) {
             if (page_Num == 0) {
@@ -186,6 +222,11 @@ public class dictionary_Panel extends Activity {
         }
     }
     public void card_4(View v){
+        if(explain_Info[3] != 1 && page_Num == 0){
+            return;
+        }else if(explain_Info[12] != 1 && page_Num == 1) {
+            return;
+        }
         //몬스터 설명창
         if(mc_Flag) {
             if (page_Num == 0) {
@@ -212,6 +253,11 @@ public class dictionary_Panel extends Activity {
         }
     }
     public void card_5(View v){
+        if(explain_Info[4] != 1 && page_Num == 0){
+            return;
+        }else if(explain_Info[13] != 1 && page_Num == 1) {
+            return;
+        }
         //몬스터 설명창
         if(mc_Flag) {
             if (page_Num == 0) {
@@ -238,6 +284,11 @@ public class dictionary_Panel extends Activity {
         }
     }
     public void card_6(View v){
+        if(explain_Info[5] != 1 && page_Num == 0){
+            return;
+        }else if(explain_Info[14] != 1 && page_Num == 1) {
+            return;
+        }
         //몬스터 설명창
         if(mc_Flag) {
             if (page_Num == 0) {
@@ -264,6 +315,11 @@ public class dictionary_Panel extends Activity {
         }
     }
     public void card_7(View v){
+        if(explain_Info[6] != 1 && page_Num == 0){
+            return;
+        }else if(explain_Info[15] != 1 && page_Num == 1) {
+            return;
+        }
         //몬스터 설명창
         if(mc_Flag) {
             if (page_Num == 0) {
@@ -290,6 +346,11 @@ public class dictionary_Panel extends Activity {
         }
     }
     public void card_8(View v){
+        if(explain_Info[7] != 1 && page_Num == 0){
+            return;
+        }else if(explain_Info[16] != 1 && page_Num == 1) {
+            return;
+        }
         //몬스터 설명창
         if(mc_Flag) {
             if (page_Num == 0) {
@@ -317,6 +378,11 @@ public class dictionary_Panel extends Activity {
         Log.e("@",""+page_Num);
     }
     public void card_9(View v){
+        if(explain_Info[8] != 1 && page_Num == 0){
+            return;
+        }else if(explain_Info[17] != 1 && page_Num == 1) {
+            return;
+        }
         //몬스터 설명창
         if(mc_Flag) {
             if (page_Num == 0) {
@@ -373,7 +439,11 @@ public class dictionary_Panel extends Activity {
         }
     }
     public void confirm(View v){
-            Log.e("@","@@@");
+        intent = new Intent(getApplicationContext(), GameActivity.class);
+        intent.putExtra("key",1);
+        setResult(0, intent);
+
+            finish();
     }
     public void confirm_explain(View v){
         set_abled_Button();
@@ -419,37 +489,148 @@ public class dictionary_Panel extends Activity {
 
 
     public void set_Card_Monster_Image(){
+
+
+
+
         if(page_Num == 0){
-            btn_m_s_1.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a1));
-            btn_m_s_2.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a2));
-            btn_m_s_3.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a3));
-            btn_m_s_4.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a4));
-            btn_m_s_5.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a5));
-            btn_m_s_6.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a6));
-            btn_m_s_7.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a7));
-            btn_m_s_8.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a8));
-            btn_m_s_9.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a9));
+            //몬스터 카드
+            if(explain_Info[0] == 0) {
+                //색 변경
+                btn_m_s_1.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a1_shadow));
+            }else if(explain_Info[0] == 1){
+                btn_m_s_1.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a1));
+            }
+
+            if(explain_Info[1] == 0) {
+                btn_m_s_2.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a2_shadow));
+            }else if(explain_Info[1] == 1) {
+                btn_m_s_2.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a2));
+            }
+
+            if(explain_Info[2] == 0) {
+                btn_m_s_3.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a3_shadow));
+            }else if(explain_Info[2] == 1) {
+                btn_m_s_3.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a3));
+            }
+
+            if(explain_Info[3] == 0) {
+                btn_m_s_4.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a4_shadow));
+            }else if(explain_Info[3] == 1) {
+                btn_m_s_4.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a4));
+            }
+
+            if(explain_Info[4] == 0) {
+                btn_m_s_5.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a5_shadow));
+            }else if(explain_Info[4] == 1) {
+                btn_m_s_5.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a5));
+            }
+
+            if(explain_Info[5] == 0) {
+                btn_m_s_6.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a6_shadow));
+            }else if(explain_Info[5] == 1) {
+                btn_m_s_6.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a6));
+            }
+
+            if(explain_Info[6] == 0) {
+            btn_m_s_7.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a7_shadow));
+            }else if(explain_Info[6] == 1) {
+                btn_m_s_7.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a7));
+            }
+
+            if(explain_Info[7] == 0) {
+                btn_m_s_8.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a8_shadow));
+            }else if(explain_Info[7] == 1) {
+                btn_m_s_8.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a8));
+            }
+
+            if(explain_Info[8] == 0) {
+                btn_m_s_9.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a9_shadow));
+            }else if(explain_Info[8] == 1) {
+                btn_m_s_9.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_a9));
+            }
 
         }else if(page_Num == 1){
-            btn_m_s_1.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b1));
-            btn_m_s_2.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b2));
-            btn_m_s_3.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b3));
-            btn_m_s_4.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b4));
-            btn_m_s_5.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b5));
-            btn_m_s_6.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b6));
-            btn_m_s_7.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b7));
-            btn_m_s_8.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b8));
-            btn_m_s_9.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b9));
+
+            if(explain_Info[9] == 0) {
+                btn_m_s_1.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b1_shadow));
+            }else if(explain_Info[9] == 1) {
+                btn_m_s_1.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b1));
+            }
+
+            if(explain_Info[10] == 0) {
+                btn_m_s_2.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b2_shadow));
+            }else if(explain_Info[10] == 1) {
+                btn_m_s_2.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b2));
+            }
+
+            if(explain_Info[11] == 0) {
+                btn_m_s_3.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b3_shadow));
+            }else if(explain_Info[11] == 1) {
+                btn_m_s_3.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b3));
+            }
+
+            if(explain_Info[12] == 0) {
+                btn_m_s_4.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b4_shadow));
+            }else if(explain_Info[12] == 1) {
+                btn_m_s_4.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b4));
+            }
+
+            if(explain_Info[13] == 0) {
+                btn_m_s_5.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b5_shadow));
+            }else if(explain_Info[13] == 1) {
+                btn_m_s_5.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b5));
+            }
+
+            if(explain_Info[14] == 0) {
+                btn_m_s_6.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b6_shadow));
+            }else if(explain_Info[14] == 1) {
+                btn_m_s_6.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b6));
+            }
+
+            if(explain_Info[15] == 0) {
+                btn_m_s_7.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b7_shadow));
+            }else if(explain_Info[15] == 1) {
+                btn_m_s_7.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b7));
+            }
+
+            if(explain_Info[16] == 0) {
+                btn_m_s_8.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b8_shadow));
+            }else if(explain_Info[16] == 1) {
+                btn_m_s_8.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b8));
+            }
+
+            if(explain_Info[17] == 0) {
+                btn_m_s_9.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b9_shadow));
+            }else if(explain_Info[17] == 1) {
+                btn_m_s_9.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_b9));
+            }
+
         }else if(page_Num == 2){
-            btn_m_s_1.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_c1));
+
+            if(explain_Info[18] == 0) {
+                btn_m_s_1.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_c1_shadow));
+            }else if(explain_Info[18] == 1) {
+                btn_m_s_1.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_monster_c1));
+            }
+
             btn_m_s_2.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_question));
+            btn_m_s_2.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_question));
+
             btn_m_s_3.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_question));
+
             btn_m_s_4.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_question));
+
             btn_m_s_5.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_question));
+
             btn_m_s_6.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_question));
+
             btn_m_s_7.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_question));
+
             btn_m_s_8.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_question));
+
             btn_m_s_9.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_question));
+
 
         }
     }

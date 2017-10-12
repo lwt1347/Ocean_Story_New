@@ -1205,6 +1205,7 @@ private void button_Create_method_Init(){
 //        background_Sound.pause();
 //        background_Sound.release();
         background_Sound.stop();
+//        gameActivity.finish();
 
     }
 
@@ -3444,6 +3445,28 @@ private void button_Create_method_Init(){
             sent_Item[29] = mtb8;
             sent_Item[30] = mtb9;
             sent_Item[31] = mtb10;
+
+            //몬스터 설명창
+            sent_Item[32] = monster_Explain_Db[0];
+            sent_Item[33] = monster_Explain_Db[1];
+            sent_Item[34] = monster_Explain_Db[2];
+            sent_Item[35] = monster_Explain_Db[3];
+            sent_Item[36] = monster_Explain_Db[4];
+            sent_Item[37] = monster_Explain_Db[5];
+            sent_Item[38] = monster_Explain_Db[6];
+            sent_Item[39] = monster_Explain_Db[7];
+            sent_Item[40] = monster_Explain_Db[8];
+            sent_Item[41] = monster_Explain_Db[9];
+            sent_Item[42] = monster_Explain_Db[10];
+            sent_Item[43] = monster_Explain_Db[11];
+            sent_Item[44] = monster_Explain_Db[12];
+            sent_Item[45] = monster_Explain_Db[13];
+            sent_Item[46] = monster_Explain_Db[14];
+            sent_Item[47] = monster_Explain_Db[15];
+            sent_Item[48] = monster_Explain_Db[16];
+            sent_Item[49] = monster_Explain_Db[17];
+            sent_Item[50] = monster_Explain_Db[18];
+            sent_Item[51] = monster_Explain_Db[19];
 
 
             intent_Item.putExtra("item", sent_Item); //키 밸류       배열로 하나의 값만 보낸다.
@@ -7046,6 +7069,10 @@ try{
 //                    Log.e("a","aa" + i);
                     image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_a1 + i);
                     explain_Window_ima = image.getBitmap();
+//                    Log.e("@", "@#@# = " + i);
+
+                    //몬스터 설명창 다음부터 생략
+                    monster_Explain_Db[i] = 1;
 
                     break;
                 }
@@ -8208,78 +8235,79 @@ public void wave_Marlin(){
             if (fish_List.get(i).get_Child_Fish() == 0) {
                 if (fish_List.get(i).get_Visible_Fish_Flag() == false) {
 
-                    if(day_Count == 1){
+                    if(day_Count == 1 && (monster_Explain_Db[0] == 0)){
                         explain[0] = true;
                         first_Explain = true;
-                    }else if(day_Count == 7){
+                     }else if(day_Count == 7 && (monster_Explain_Db[1] == 0)){
+
                         explain[0] = false;
                         explain[1] = true;
                         first_Explain = true;
-                    }else if(day_Count == 11){ //드래그 물고기
+                    }else if(day_Count == 11 && (monster_Explain_Db[2] == 0)){ //드래그 물고기
                         explain[1] = false;
                         explain[2] = true;
                         first_Explain = true;
-                    }else if(day_Count == 19){ //꽃게
+                    }else if(day_Count == 19 && (monster_Explain_Db[3] == 0)){ //꽃게
                         explain[2] = false;
                         explain[3] = true;
                         first_Explain = true;
-                    }else if(day_Count == 24){ //오징어
+                    }else if(day_Count == 24 && (monster_Explain_Db[4] == 0)){ //오징어
                         explain[3] = false;
                         explain[4] = true;
                         first_Explain = true;
-                    }else if(day_Count == 30){ //성게
+                    }else if(day_Count == 30 && (monster_Explain_Db[5] == 0)){ //성게
                         explain[4] = false;
                         explain[5] = true;
                         first_Explain = true;
-                    }else if(day_Count == 35){ //가오리
+                    }else if(day_Count == 35 && (monster_Explain_Db[6] == 0)){ //가오리
                         explain[5] = false;
                         explain[6] = true;
                         first_Explain = true;
-                    }else if(day_Count == 40){ //강철참돔
+                    }else if(day_Count == 40 && (monster_Explain_Db[7] == 0)){ //강철참돔
                         explain[6] = false;
                         explain[7] = true;
                         first_Explain = true;
-                    }else if(day_Count == 45){ //무적소라게
+                    }else if(day_Count == 45 && (monster_Explain_Db[8] == 0)){ //무적소라게
                         explain[7] = false;
                         explain[8] = true;
                         first_Explain = true;
-                    }else if(day_Count == 50){ // 조개
+                    }else if(day_Count == 50 && (monster_Explain_Db[9] == 0)){ // 조개
                         explain[8] = false;
                         explain[9] = true;
                         first_Explain = true;
-                    }else if(day_Count == 55){ // 악어
+                    }else if(day_Count == 55 && (monster_Explain_Db[10] == 0)){ // 악어
                         explain[9] = false;
                         explain[10] = true;
                         first_Explain = true;
-                    }else if(day_Count == 60){ // 뱀장어
+                    }else if(day_Count == 60 && (monster_Explain_Db[11] == 0)){ // 뱀장어
                         explain[10] = false;
                         explain[11] = true;
                         first_Explain = true;
-                    }else if(day_Count == 64){ // 파도
+                    }else if(day_Count == 64 && (monster_Explain_Db[12] == 0)){ // 파도
                         explain[11] = false;
                         explain[12] = true;
                         first_Explain = true;
-                    }else if(day_Count == 70){ //거북이
+                    }else if(day_Count == 70 && (monster_Explain_Db[13] == 0)){ //거북이
                         explain[12] = false;
                         explain[13] = true;
                         first_Explain = true;
-                    }else if(day_Count == 75){ // 가재
+                    }else if(day_Count == 75 && (monster_Explain_Db[14] == 0)){ // 가재
                         explain[13] = false;
                         explain[14] = true;
                         first_Explain = true;
-                    }else if(day_Count == 80){ // 청새치
+                    }else if(day_Count == 80 && (monster_Explain_Db[15] == 0)){ // 청새치
                         explain[14] = false;
                         explain[15] = true;
                         first_Explain = true;
-                    }else if(day_Count == 90){ // 불가사리
+                    }else if(day_Count == 90 && (monster_Explain_Db[16] == 0)){ // 불가사리
                         explain[15] = false;
                         explain[16] = true;
                         first_Explain = true;
-                    }else if(day_Count == 100){ // 곰벌레
+                    }else if(day_Count == 100 && (monster_Explain_Db[17] == 0)){ // 곰벌레
                         explain[16] = false;
                         explain[17] = true;
                         first_Explain = true;
-                    }else if(day_Count == 110){ // 상어
+                    }else if(day_Count == 110 && (monster_Explain_Db[18] == 0)){ // 상어
                         explain[17] = false;
                         explain[18] = true;
                         first_Explain = true;
@@ -8531,9 +8559,11 @@ public void wave_Marlin(){
                                 ground_List.get(i).set_Visible_Ground_Flag(true);
                                 count_Monster_Ground[0]++;
 
-                                explain[0] = false;
-                                explain[1] = true;
-                                first_Explain = true;
+//                                if(monster_Explain_Db[1] == 0) {
+//                                    explain[0] = false;
+//                                    explain[1] = true;
+//                                    first_Explain = true;
+//                                }
 
                             }
                         }
@@ -12879,6 +12909,8 @@ public void skill_Ground_Attack(){
     boolean explain[] = new boolean[50];
     double setIntent[] = new double[100];
 
+    int monster_Explain_Db[] = new int[20];
+
     DecimalFormat df = new DecimalFormat("#,##0");
     /**
      * 오버라이드 된것 시작과 동시에 구성, 교체
@@ -12939,8 +12971,17 @@ public void skill_Ground_Attack(){
         mtb9 = setIntent[65];
         mtb10 = setIntent[66];
 
+        //몬스터 설명창
+        //몬스터 설명창
+        int monster_Explain_Db_Temp = 0;
+        for(int i=67; i<87; i++){
+            monster_Explain_Db[monster_Explain_Db_Temp] = (int)setIntent[i];
+            Log.e("@", "setIntent = " + monster_Explain_Db[monster_Explain_Db_Temp] + " , " + monster_Explain_Db_Temp);
+            monster_Explain_Db_Temp++;
+        }
+
         for(int i=0; i<setIntent.length; i++){
-            Log.e("a",setIntent[i] + "");
+            Log.e("a",setIntent[i] + "@" + i);
         }
 
 //
@@ -12990,8 +13031,11 @@ public void skill_Ground_Attack(){
     TimerTask fish_Maker, stage_Day;
     int pref_Class = 0;
 
+    //monster_Explain_Db
+    public int[] monster_Explain_Get(){
 
-
+        return monster_Explain_Db;
+    }
 
 
     @Override
@@ -14288,13 +14332,27 @@ public void skill_Ground_Attack(){
     }
 
 
+    /**
+     * 서페이스뷰 파괴 하기 위한 run 종료
+     */
+    public void set_Distroy_Run_False(){
+        distroy_Run = false;
+
+    }
 
 
     SharedPreferences.Editor editor;
     SharedPreferences pref;
+
+
+
+
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        //Log.i("[뷰]", "파괴");
+
+
+
+        Log.i("[뷰]", "파괴@@@@@@@@@@@@@2");
 
         soundPool.release();
 

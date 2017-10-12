@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -190,6 +191,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
+        Log.e("@","!@#!@#!");
 
 // ((GameActivity)gameActivity._context_Send).set_Effect_Sound(progress, sound_Check_B);
 
@@ -259,14 +261,18 @@ public class GameActivity extends AppCompatActivity {
     /**
      * 사전 버튼
      */
+    int[] explain_Info = new int[40];
     public void onButtonDictionary(View view){
+
+        explain_Info = gameMain.monster_Explain_Get();
+
         if(gameMain.get_m_Run()) {
 
-            intent = new Intent(this, dictionary_Panel.class);
+            intent = new Intent(getApplicationContext(), dictionary_Panel.class);
 
-
+            intent.putExtra("explain", explain_Info);
             //intent.putExtra("a", mRun);
-            startActivityForResult(intent, 0); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출
+            startActivityForResult(intent, 1002); //-
 
             //퍼지 버튼 눌렀을때 이미지 변경
 
@@ -332,7 +338,7 @@ public class GameActivity extends AppCompatActivity {
 
             //퍼지 버튼 원상태
             button_Pause.setBackgroundResource(R.drawable.pause_1);
-            Toast.makeText(getApplicationContext(), "a", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "a", Toast.LENGTH_SHORT).show();
 
 
 
@@ -342,19 +348,21 @@ public class GameActivity extends AppCompatActivity {
             } else if (key == 2) {  //다시 시작
                 gameMain.m_Run_True();
                 gameMain.re_Start();
-            } else if(key == 3){ //종료
+            }
+            else if(key == 3){ //종료
                 gameMain.exit();
+                gameMain.set_Distroy_Run_False();
+                gameMain.m_Run_False();
+
                 finish();
+
             }
 
         }catch (Exception e){
             gameMain.m_Run_False(true);
             Intent intent = new Intent(this, menu_Sliding_Panel.class);
             startActivityForResult(intent, 0); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출
-
         }
-
-
     }
 
 
