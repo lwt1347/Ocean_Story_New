@@ -1050,10 +1050,11 @@ private void button_Create_method_Init(){
 
     //값 전달
     Intent intent_Item = new Intent();
-    double sent_Item[] = new double[66];
+    double sent_Item[] = new double[91];
     public void re_Start(){
 
-
+        //플랑크노 1티어
+        character_Explain_DB[0] = 1;
 
         /**
          *  money
@@ -3467,6 +3468,44 @@ private void button_Create_method_Init(){
             sent_Item[49] = monster_Explain_Db[17];
             sent_Item[50] = monster_Explain_Db[18];
             sent_Item[51] = monster_Explain_Db[19];
+
+            sent_Item[52] = character_Explain_DB[0];
+            sent_Item[53] = character_Explain_DB[1];
+            sent_Item[54] = character_Explain_DB[2];
+            sent_Item[55] = character_Explain_DB[3];
+            sent_Item[56] = character_Explain_DB[4];
+            sent_Item[57] = character_Explain_DB[5];
+            sent_Item[58] = character_Explain_DB[6];
+            sent_Item[59] = character_Explain_DB[7];
+            sent_Item[60] = character_Explain_DB[8];
+            sent_Item[61] = character_Explain_DB[9];
+            sent_Item[62] = character_Explain_DB[10];
+            sent_Item[63] = character_Explain_DB[11];
+            sent_Item[64] = character_Explain_DB[12];
+            sent_Item[65] = character_Explain_DB[13];
+            sent_Item[66] = character_Explain_DB[14];
+            sent_Item[67] = character_Explain_DB[15];
+            sent_Item[68] = character_Explain_DB[16];
+            sent_Item[69] = character_Explain_DB[17];
+            sent_Item[70] = character_Explain_DB[18];
+            sent_Item[71] = character_Explain_DB[19];
+            sent_Item[72] = character_Explain_DB[20];
+            sent_Item[73] = character_Explain_DB[21];
+            sent_Item[74] = character_Explain_DB[22];
+            sent_Item[75] = character_Explain_DB[23];
+            sent_Item[76] = character_Explain_DB[24];
+            sent_Item[77] = character_Explain_DB[25];
+            sent_Item[78] = character_Explain_DB[26];
+            sent_Item[79] = character_Explain_DB[27];
+            sent_Item[80] = character_Explain_DB[28];
+            sent_Item[81] = character_Explain_DB[29];
+            sent_Item[82] = character_Explain_DB[30];
+            sent_Item[83] = character_Explain_DB[31];
+            sent_Item[84] = character_Explain_DB[32];
+            sent_Item[85] = character_Explain_DB[33];
+            sent_Item[86] = character_Explain_DB[34];
+
+
 
 
             intent_Item.putExtra("item", sent_Item); //키 밸류       배열로 하나의 값만 보낸다.
@@ -7339,6 +7378,7 @@ try{
                 if(main_Character instanceof Main_Character_Plankton_1){
                     m_Run_False();
                     first_Text_Explain_Flag = true;
+                    gameActivity.set_Tuto(1);
                 }
             }
 
@@ -11273,6 +11313,8 @@ public void skill_Ground_Attack(){
                         if (first_Text_Explain_Index > 8) {
 
                             first_Text_Explain_Flag = false;
+
+
                         }
                         down = false;
                         up = false;
@@ -11455,18 +11497,28 @@ public void skill_Ground_Attack(){
                                 game_thread.function_Explain_Window_Shellfish_Tear_1();
                                 main_Character = new Main_Character_Shellfish_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
 
+
+                                character_Explain_DB[15] = 1;
+
                             } else if (rand_Temp3 <= 50) {
                                 game_thread.function_Explain_Window_Fish_Tear_1();
                                 main_Character = new Main_Character_Fish_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
 
+                                character_Explain_DB[5] = 1;
 
                             } else if(rand_Temp3 <= 75){
                                 //메모리 관리
                                 game_thread.function_Explain_Window_Moulluse_Tear_1();
                                 main_Character = new Main_Character_Moulluse_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                character_Explain_DB[25] = 1;
+
                             } else {
                                 game_thread.function_Explain_Window_Plankton_Tear_2();
                                 main_Character = new Main_Character_Plankton_2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+
+                                character_Explain_DB[1] = 1;
+
                             }
                             Log.e("a","asdasdsad###");
 
@@ -11486,21 +11538,25 @@ public void skill_Ground_Attack(){
                                     game_thread.function_Explain_Window_Shellfish_Tear_2();
                                     main_Character = new Main_Character_Shellfish_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
 
+                                    character_Explain_DB[16] = 1;
+
                                 } else if (rand_Temp3 <= 50) {
                                     game_thread.function_Explain_Window_Fish_Tear_2();
                                     main_Character = new Main_Character_Fish_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
 
 //                                    game_thread.function_Skill_Thorn_img();
-
+                                    character_Explain_DB[6] = 1;
 
                                 } else if(rand_Temp3 <= 75){
                                     //메모리 관리
                                     game_thread.function_Explain_Window_Moulluse_Tear_2();
                                     main_Character = new Main_Character_Moulluse_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    character_Explain_DB[26] = 1;
 
                                 } else {
                                     game_thread.function_Explain_Window_Plankton_Tear_3();
                                     main_Character = new Main_Character_Plankton_3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    character_Explain_DB[2] = 1;
                                 }
                                 main_Character.set_Tear(2);
 
@@ -11553,25 +11609,26 @@ public void skill_Ground_Attack(){
                                 if (rand_Temp3 <= 25) {
                                     game_thread.function_Explain_Window_Shellfish_Tear_3();
                                     main_Character = new Main_Character_Shellfish_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[17] = 1;
 
 
                                 } else if (rand_Temp3 <= 50) {
                                     game_thread.function_Explain_Window_Fish_Tear_3();
                                     main_Character = new Main_Character_Fish_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[7] = 1;
 //                                    game_thread.function_Skill_Teeth_mine_img();
 
                                 } else if(rand_Temp3 <= 75){
                                     //메모리 관리
                                     game_thread.function_Explain_Window_Moulluse_Tear_3();
                                     main_Character = new Main_Character_Moulluse_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[27] = 1;
 //                                    game_thread.function_Skill_Slow_Cloud_img();
 
                                 } else {
                                     game_thread.function_Explain_Window_Plankton_Tear_4();
                                     main_Character = new Main_Character_Plankton_4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    character_Explain_DB[3] = 1;
                                 }
                                 main_Character.set_Tear(3);
 
@@ -11637,25 +11694,26 @@ public void skill_Ground_Attack(){
                                 if (rand_Temp3 <= 25) {
                                     game_thread.function_Explain_Window_Shellfish_Tear_4();
                                     main_Character = new Main_Character_Shellfish_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[18] = 1;
 //                                    game_thread.function_Skill_Crab_img();
 
                                 } else if (rand_Temp3 <= 50) {
                                     game_thread.function_Explain_Window_Fish_Tear_4();
                                     main_Character = new Main_Character_Fish_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[8] = 1;
 //                                    game_thread.function_Skill_earthquake_img();
 
                                 } else if(rand_Temp3 <= 75){
                                     //메모리 관리
                                     game_thread.function_Explain_Window_Moulluse_Tear_4();
                                     main_Character = new Main_Character_Moulluse_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[28] = 1;
 //                                    game_thread.function_Skill_Butter_img();
 
                                 } else {
                                     game_thread.function_Explain_Window_Plankton_Tear_5();
                                     main_Character = new Main_Character_Plankton_5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+                                    character_Explain_DB[4] = 1;
                                 }
                                 main_Character.set_Tear(4);
 
@@ -11725,20 +11783,20 @@ public void skill_Ground_Attack(){
                                 if (rand_Temp3 <= 33) {
                                     game_thread.function_Explain_Window_Shellfish_Tear_5();
                                     main_Character = new Main_Character_Shellfish_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[19] = 1;
 //                                    game_thread.function_Skill_Soycrab_img();
 
                                 } else if (rand_Temp3 <= 66) {
                                     game_thread.function_Explain_Window_Fish_Tear_5();
                                     main_Character = new Main_Character_Fish_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[9] = 1;
 //                                    game_thread.function_Skill_Teeth_mine2_img();
 
                                 } else {
                                     //메모리 관리
                                     game_thread.function_Explain_Window_Moulluse_Tear_5();
                                     main_Character = new Main_Character_Moulluse_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[29] = 1;
 //                                    game_thread.function_Skill_Fork_img();
 
                                 }
@@ -11814,19 +11872,19 @@ public void skill_Ground_Attack(){
                                 if (rand_Temp3 <= 33) {
                                     game_thread.function_Explain_Window_Shellfish_Tear_6();
                                     main_Character = new Main_Character_Shellfish_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[20] = 1;
 //                                    game_thread.function_Skill_Thorn2_img();
 
                                 } else if (rand_Temp3 <= 66) {
                                     game_thread.function_Explain_Window_Fish_Tear_6();
                                     main_Character = new Main_Character_Fish_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[10] = 1;
 
                                 } else {
                                     //메모리 관리
                                     game_thread.function_Explain_Window_Moulluse_Tear_6();
                                     main_Character = new Main_Character_Moulluse_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[30] = 1;
 //                                    game_thread.function_Skill_Laser_img();
 
                                 }
@@ -11901,20 +11959,20 @@ public void skill_Ground_Attack(){
                                 if (rand_Temp3 <= 33) {
                                     game_thread.function_Explain_Window_Shellfish_Tear_7();
                                     main_Character = new Main_Character_Shellfish_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[21] = 1;
 //                                    game_thread.function_Skill_fry_img();
 
                                 } else if (rand_Temp3 <= 66) {
                                     game_thread.function_Explain_Window_Fish_Tear_7();
                                     main_Character = new Main_Character_Fish_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[11] = 1;
 //                                    game_thread.function_Skill_lightnign_img();
 
                                 } else {
                                     //메모리 관리
                                     game_thread.function_Explain_Window_Moulluse_Tear_7();
                                     main_Character = new Main_Character_Moulluse_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[31] = 1;
 
                                 }
                                 main_Character.set_Tear(7);
@@ -11981,20 +12039,20 @@ public void skill_Ground_Attack(){
                                 if (rand_Temp3 <= 33) {
                                     game_thread.function_Explain_Window_Shellfish_Tear_8();
                                     main_Character = new Main_Character_Shellfish_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[22] = 1;
 //                                    game_thread.function_Skill_Crab_img();
 
                                 } else if (rand_Temp3 <= 66) {
                                     game_thread.function_Explain_Window_Fish_Tear_8();
                                     main_Character = new Main_Character_Fish_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[12] = 1;
 //                                    game_thread.function_Skill_lightnign1_img();
 
                                 } else {
                                     //메모리 관리
                                     game_thread.function_Explain_Window_Moulluse_Tear_8();
                                     main_Character = new Main_Character_Moulluse_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[32] = 1;
 //                                    game_thread.function_Skill_Boom_Poison_img();
 
                                 }
@@ -12055,20 +12113,20 @@ public void skill_Ground_Attack(){
                                 if (rand_Temp3 <= 33) {
                                     game_thread.function_Explain_Window_Shellfish_Tear_9();
                                     main_Character = new Main_Character_Shellfish_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[23] = 1;
 //                                    game_thread.function_Skill_Wave_img();
 
                                 } else if (rand_Temp3 <= 66) {
                                     game_thread.function_Explain_Window_Fish_Tear_9();
                                     main_Character = new Main_Character_Fish_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[13] = 1;
 //                                    game_thread.function_Skill_Sea_Snake_img();
 
                                 } else {
                                     //메모리 관리
                                     game_thread.function_Explain_Window_Moulluse_Tear_9();
                                     main_Character = new Main_Character_Moulluse_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[33] = 1;
 //                                    game_thread.function_Skill_wall_img();
                                 }
                                 main_Character.set_Tear(9);
@@ -12128,20 +12186,20 @@ public void skill_Ground_Attack(){
                                 if (rand_Temp3 <= 33) {
                                     game_thread.function_Explain_Window_Shellfish_Tear_10();
                                     main_Character = new Main_Character_Shellfish_Tear10(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[24] = 1;
 //                                    game_thread.function_Skill_stomp_img();
 
                                 } else if (rand_Temp3 <= 66) {
                                     game_thread.function_Explain_Window_Fish_Tear_10();
                                     main_Character = new Main_Character_Fish_Tear10(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[14] = 1;
 //                                    game_thread.function_Skill_Thorn_img();
 
                                 } else {
                                     //메모리 관리
                                     game_thread.function_Explain_Window_Moulluse_Tear_10();
                                     main_Character = new Main_Character_Moulluse_Tear10(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-
+                                    character_Explain_DB[34] = 1;
 //                                    game_thread.function_Skill_Poison123_img();
 
                                 }
@@ -12909,7 +12967,10 @@ public void skill_Ground_Attack(){
     boolean explain[] = new boolean[50];
     double setIntent[] = new double[100];
 
+    //몬스터 도감
     int monster_Explain_Db[] = new int[20];
+    //캐릭터 도감
+    int character_Explain_DB[] = new int[35];
 
     DecimalFormat df = new DecimalFormat("#,##0");
     /**
@@ -12984,6 +13045,12 @@ public void skill_Ground_Attack(){
             Log.e("a",setIntent[i] + "@" + i);
         }
 
+        int character_Explain_DB_Temp = 0;
+        for(int i = 87; i<122; i++){
+            character_Explain_DB[character_Explain_DB_Temp] = (int)setIntent[i];
+            character_Explain_DB_Temp++;
+        }
+
 //
 //        money = 100;
 
@@ -13033,8 +13100,10 @@ public void skill_Ground_Attack(){
 
     //monster_Explain_Db
     public int[] monster_Explain_Get(){
-
         return monster_Explain_Db;
+    }
+    public int[] character_Explain_Get(){
+        return character_Explain_DB;
     }
 
 

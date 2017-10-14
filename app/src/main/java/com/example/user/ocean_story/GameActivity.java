@@ -261,16 +261,23 @@ public class GameActivity extends AppCompatActivity {
     /**
      * 사전 버튼
      */
-    int[] explain_Info = new int[40];
+    int[] monster_Explain_Info = new int[40];
+    int[] character_Explain_Info = new int[40];
+
+
     public void onButtonDictionary(View view){
 
-        explain_Info = gameMain.monster_Explain_Get();
+        monster_Explain_Info = gameMain.monster_Explain_Get();
+        character_Explain_Info = gameMain.character_Explain_Get();
+
 
         if(gameMain.get_m_Run()) {
 
             intent = new Intent(getApplicationContext(), dictionary_Panel.class);
 
-            intent.putExtra("explain", explain_Info);
+            intent.putExtra("mexplain", monster_Explain_Info);
+            intent.putExtra("cexplain", character_Explain_Info);
+
             //intent.putExtra("a", mRun);
             startActivityForResult(intent, 1002); //-
 
