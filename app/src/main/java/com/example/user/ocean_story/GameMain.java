@@ -7594,23 +7594,31 @@ try{
      * 게임이 동작하는 구간
      */
         //기기마다 다른 프레인 속도를 가지고 있기 때문에 아래의 3변수를 통해 [프레임 스키핑]을 비슷하게 구현한다. [프레임 스키핑이 아니나 간편하게 같은 효과를 낼 수 있다.]
-    long now_Time = 0;
-    long add_Time = 0;
-    int time_Sleep = 0;
+    long endTime = 0;
+    long delta = 0;
+    long targetFrameInterval = 1000L/20L;
+        long frame = 20L;
+        long frame_Start = 0;
+//    long time_Sleep = 0;
 
     public synchronized void run() {
+
         while (distroy_Run){    //일시정지 하고 나서 계속 돌린다.
-            now_Time = System.currentTimeMillis();
-            add_Time = System.currentTimeMillis() - now_Time;
-            time_Sleep += add_Time;
-            while (mRun && time_Sleep >= 3 ) {
+
+//            time_Sleep += add_Time;
+            while (mRun) {
 
 
-                    //퍼즈 걸도록 mRun 컨트롤
+
+
+
+                //퍼즈 걸도록 mRun 컨트롤
 
                     //canvas = null;
                     try {
-                        time_Sleep -= 3;
+//                        time_Sleep = 5;
+                        frame_Start = System.currentTimeMillis();
+
 
                         canvas = mSurfaceHolder.lockCanvas(null);
 //                    synchronized (mSurfaceHolder) {
@@ -7664,6 +7672,13 @@ try{
 
 
 //                    }
+                        //기기마다 다른 프레인 속도를 가지고 있기 때문에 아래의 3변수를 통해 [프레임 스키핑]을 비슷하게 구현한다. [프레임 스키핑이 아니나 간편하게 같은 효과를 낼 수 있다.]
+                        endTime = System.currentTimeMillis();
+                        delta = endTime - frame_Start;
+                        if(targetFrameInterval-delta > frame ){
+                            Thread.sleep(targetFrameInterval-delta);
+                        }
+
 
                     } catch (Exception e) {
 
@@ -7853,6 +7868,10 @@ try{
      * */
     public int convertPixelsToDp(float px, Context context) {
         int value = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, context.getResources().getDisplayMetrics());
+        return value;
+    }
+    public double convertPixelsToDp_A(float px, Context context) {
+        double value = (double) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, context.getResources().getDisplayMetrics());
         return value;
     }
 
@@ -11232,6 +11251,8 @@ public void skill_Ground_Attack(){
     int dm_Temp = 0;
     int x_Dm_T = 0;
     int y_Dm_T = 0;
+//    x_Dm_T = (temp_Fish.getWidth() * dm.widthPixels)/convertPixelsToDp(450, _context);
+//    y_Dm_T = (temp_Fish.getHeight() * dm.heightPixels)/convertPixelsToDp(450, _context);
     //메인 캐릭터 진화 할때 새로 그리기 #Score 진화할 점수 #character_img 캐릭터 이미지 배열
     private void main_Character_Draw(Bitmap[] character_img){
 //        dm_Temp  = (dm.widthPixels + dm.heightPixels)/convertPixelsToDp(130, _context);
@@ -11252,9 +11273,6 @@ public void skill_Ground_Attack(){
                     temp_Fish = draw.reverse_Image(character_img[main_Character.get_Main_Character_Mode_Status() + 1]);
 
 
-                x_Dm_T = (temp_Fish.getWidth() * dm.widthPixels)/convertPixelsToDp(700, _context);
-                y_Dm_T = (temp_Fish.getHeight() * dm.heightPixels)/convertPixelsToDp(700, _context);
-                    temp_Fish = Bitmap.createScaledBitmap(temp_Fish, x_Dm_T, y_Dm_T, false); //배경 화면 어둡게
 
                     draw.draw_Bmp(canvas, temp_Fish, main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y());
 
@@ -11262,9 +11280,6 @@ public void skill_Ground_Attack(){
             }else {
 //                temp_Fish = Bitmap.createScaledBitmap(character_img[main_Character.get_Main_Character_Mode_Status()+1], dm.widthPixels/convertPixelsToDp(6, _context), dm.heightPixels/convertPixelsToDp(6, _context), false);
                 temp_Fish = character_img[main_Character.get_Main_Character_Mode_Status()+1];
-                x_Dm_T = (temp_Fish.getWidth() * dm.widthPixels)/convertPixelsToDp(700, _context);
-                y_Dm_T = (temp_Fish.getHeight() * dm.heightPixels)/convertPixelsToDp(700, _context);
-                temp_Fish = Bitmap.createScaledBitmap(temp_Fish, x_Dm_T, y_Dm_T, false); //배경 화면 어둡게
                 draw.draw_Bmp(canvas, temp_Fish, main_Character.get_Main_Character_Point_X(),main_Character.get_Main_Character_Point_Y());
 
 
@@ -11277,17 +11292,11 @@ public void skill_Ground_Attack(){
             if(!main_Character.get_Direct_Status()) {
                 temp_Fish = draw.reverse_Image(character_img[main_Character.get_Main_Character_Mode_Status()]);
 
-                x_Dm_T = (temp_Fish.getWidth() * dm.widthPixels)/convertPixelsToDp(700, _context);
-                y_Dm_T = (temp_Fish.getHeight() * dm.heightPixels)/convertPixelsToDp(700, _context);
-                temp_Fish = Bitmap.createScaledBitmap(temp_Fish, x_Dm_T, y_Dm_T, false); //배경 화면 어둡게
 //                temp_Fish = Bitmap.createScaledBitmap(temp_Fish, dm.widthPixels/convertPixelsToDp(6, _context), dm.heightPixels/convertPixelsToDp(6, _context), false);
                 draw.draw_Bmp(canvas, temp_Fish, main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y());
             }else {
 //                temp_Fish = Bitmap.createScaledBitmap(character_img[main_Character.get_Main_Character_Mode_Status()], dm.widthPixels/convertPixelsToDp(6, _context), dm.heightPixels/convertPixelsToDp(6, _context), false);
                 temp_Fish = character_img[main_Character.get_Main_Character_Mode_Status()];
-                x_Dm_T = (temp_Fish.getWidth() * dm.widthPixels)/convertPixelsToDp(700, _context);
-                y_Dm_T = (temp_Fish.getHeight() * dm.heightPixels)/convertPixelsToDp(700, _context);
-                temp_Fish = Bitmap.createScaledBitmap(temp_Fish, x_Dm_T, y_Dm_T, false); //배경 화면 어둡게
                 draw.draw_Bmp(canvas, temp_Fish, main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y());
             }
         }
