@@ -29,6 +29,7 @@ public class option_Panel extends Activity {
 
     CheckBox checkBox1;
     CheckBox checkBox2;
+    CheckBox checkBox3;
 
 
     GameActivity gameActivity;
@@ -63,6 +64,7 @@ public class option_Panel extends Activity {
     }
 
     int check;
+    int vive;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +78,7 @@ public class option_Panel extends Activity {
 
         checkBox1 = (CheckBox)findViewById(R.id.checkBox);
         checkBox2 = (CheckBox)findViewById(R.id.checkBox2);
+        checkBox3 = (CheckBox)findViewById(R.id.checkBox3);
 
 
         SharedPreferences.Editor editor;
@@ -85,11 +88,18 @@ public class option_Panel extends Activity {
         pref = this.getSharedPreferences("pref", Activity.MODE_APPEND);
         editor = pref.edit();
         check = pref.getInt("tuto",0);
+        vive = pref.getInt("vive",0);
 
         if(check == 0){
             checkBox2.setChecked(true);
         }else {
             checkBox2.setChecked(false);
+        }
+
+        if(vive == 0){
+            checkBox3.setChecked(true);
+        }else {
+            checkBox3.setChecked(false);
         }
 
         sound_Check_E = pref.getInt("es",0);
@@ -189,6 +199,24 @@ public class option_Panel extends Activity {
 
                 } else {
                     ((GameActivity)gameActivity._context_Send).set_Tuto(1);
+                    Log.e("@","b");
+
+                }
+
+            }
+        });
+
+        checkBox3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+
+                    ((GameActivity)gameActivity._context_Send).set_Vive(0);
+                    Log.e("@","a");
+
+                } else {
+                    ((GameActivity)gameActivity._context_Send).set_Vive(1);
                     Log.e("@","b");
 
                 }

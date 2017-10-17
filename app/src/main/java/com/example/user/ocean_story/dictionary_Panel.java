@@ -399,7 +399,7 @@ public class dictionary_Panel extends Activity {
         if(mc_Flag) {
             if(m_Explain_Info[6] != 1 && page_Num == 0){
                 return;
-            }else if(m_Explain_Info[15] != 1 && page_Num == 2) {
+            }else if(m_Explain_Info[15] != 1 && page_Num == 1) {
                 return;
             }
             if (page_Num == 0) {

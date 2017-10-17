@@ -40,11 +40,11 @@ public class LandMark_Damage_View {
 
         point_y-=7;
 
-        if(change_Time == 10){
+        if(change_Time == 7){
             change_Flag = !change_Flag;
             change_Time = 0;
         }
-        if(live_Time == 25){
+        if(live_Time == 14){
             live_Flag = true;
         }
 

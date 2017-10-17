@@ -18,8 +18,8 @@
 
     <Button
         android:id="@+id/pause_Button"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
@@ -30,38 +30,38 @@
 
     <Button
         android:id="@+id/option_Button"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignLeft="@+id/pause_Button"
-        android:layout_alignStart="@+id/pause_Button"
-        android:layout_below="@+id/pause_Button"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:background="@drawable/button_option"
-        android:onClick="onButtonOption" />
+        android:onClick="onButtonOption"
+        android:layout_below="@+id/pause_Button"
+        android:layout_alignLeft="@+id/pause_Button"
+        android:layout_alignStart="@+id/pause_Button" />
 
     <Button
         android:id="@+id/dictionary_Button"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignLeft="@+id/option_Button"
-        android:layout_alignStart="@+id/option_Button"
-        android:layout_below="@+id/option_Button"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:background="@drawable/button_dictionary"
-        android:onClick="onButtonDictionary" />
+        android:onClick="onButtonDictionary"
+        android:layout_below="@+id/option_Button"
+        android:layout_alignLeft="@+id/option_Button"
+        android:layout_alignStart="@+id/option_Button" />
 
     <Button
         android:id="@+id/next_Stage"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignLeft="@+id/dictionary_Button"
-        android:layout_alignStart="@+id/dictionary_Button"
-        android:layout_below="@+id/dictionary_Button"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:background="@drawable/button_next_stage"
-        android:onClick="onButtonNextStage" />
+        android:onClick="onButtonNextStage"
+        android:layout_below="@+id/dictionary_Button"
+        android:layout_alignLeft="@+id/dictionary_Button"
+        android:layout_alignStart="@+id/dictionary_Button" />
 
     <Button
         android:id="@+id/call_FriendShark_Button"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:background="@drawable/button_friend_shark"
         android:onClick="onButtonFriendSharkCall"
         android:layout_below="@+id/next_Stage"
@@ -70,15 +70,13 @@
 
     <Button
         android:id="@+id/heal_Button"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignEnd="@+id/call_FriendShark_Button"
-        android:layout_alignLeft="@+id/call_FriendShark_Button"
-        android:layout_alignRight="@+id/call_FriendShark_Button"
-        android:layout_alignStart="@+id/call_FriendShark_Button"
-        android:layout_below="@+id/call_FriendShark_Button"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:background="@drawable/button_heal"
-        android:onClick="onButtonHeal" />
+        android:onClick="onButtonHeal"
+        android:layout_below="@+id/call_FriendShark_Button"
+        android:layout_alignLeft="@+id/call_FriendShark_Button"
+        android:layout_alignStart="@+id/call_FriendShark_Button" />
 
 
 </RelativeLayout>

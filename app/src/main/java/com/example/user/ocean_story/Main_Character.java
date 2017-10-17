@@ -254,9 +254,12 @@ public class Main_Character {
     /**
      * 캐릭터 hp 감소
      */
+
     public void set_Hp_Minus(){
         main_Character_Hp --;
     }
+
+
     /**
      * 캐릭터 hp 지정
      */

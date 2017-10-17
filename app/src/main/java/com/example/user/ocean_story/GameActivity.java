@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -84,7 +86,25 @@ public class GameActivity extends AppCompatActivity {
         ad = (AudioManager)getSystemService(AUDIO_SERVICE);
 
 
+        vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 
+        SharedPreferences pref;
+        //설정 에서 토토리얼 모드 인지 아닌지.
+        pref = this.getSharedPreferences("pref", Activity.MODE_APPEND);
+        tuto = pref.getInt("tuto",0);
+        vive = pref.getInt("vive",0);
+        b_Vol = pref.getInt("bs",0);
+        e_Vol = pref.getInt("es",0);
+
+    }
+
+    //진동
+    Vibrator vibrator;
+    public void set_Vibrator(){
+
+        if(vive == 0) {
+            vibrator.vibrate(250);
+        }
     }
 
 
@@ -145,19 +165,25 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
+
     AudioManager ad = null;
     int b_Vol = 0;
     int e_Vol = 0;
     boolean sound = true;   //t = 사운드 온, f = 음소거
     int tuto = 0;   //0 = 튜토리얼 온, 1 = 튜토 x
+    int vive = 0;   //0 = 진동 on
 
     public void set_Sound(boolean set){
         sound = set;
-        gameMain.sound_Tuto_Value(e_Vol, b_Vol, tuto);
+        gameMain.sound_Tuto_Value(e_Vol, b_Vol, tuto, vive);
     }
     public void set_Tuto(int set){
         tuto = set;
-        gameMain.sound_Tuto_Value(e_Vol, b_Vol, tuto);
+        gameMain.sound_Tuto_Value(e_Vol, b_Vol, tuto, vive);
+    }
+    public void set_Vive(int set){
+        vive = set;
+        gameMain.sound_Tuto_Value(e_Vol, b_Vol, tuto, vive);
     }
 
 
@@ -173,7 +199,7 @@ public class GameActivity extends AppCompatActivity {
         ad.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
         b_Vol = volume;
 
-        gameMain.sound_Tuto_Value(e_Vol_T, b_Vol, tuto);
+        gameMain.sound_Tuto_Value(e_Vol_T, b_Vol, tuto, vive);
 
     }
     public void set_Effect_Sound(int volume, int b_Vol_T, int tuto){
@@ -184,7 +210,7 @@ public class GameActivity extends AppCompatActivity {
         gameMain.set_Volume(volume);
         e_Vol = volume;
 
-        gameMain.sound_Tuto_Value(e_Vol, b_Vol_T, tuto);
+        gameMain.sound_Tuto_Value(e_Vol, b_Vol_T, tuto, vive);
     }
 
 
@@ -247,7 +273,7 @@ public class GameActivity extends AppCompatActivity {
 //        ((AudioManager)getSystemService(AUDIO_SERVICE)).
 //                setStreamVolume(AudioManager.STREAM_MUSIC, 5, AudioManager.FLAG_SHOW_UI);
 //        e_Vol = 5;
-        gameMain.sound_Tuto_Value(e_Vol, b_Vol, tuto);
+        gameMain.sound_Tuto_Value(e_Vol, b_Vol, tuto, vive);
 
         return true;
 //        return super.onKeyDown(keyCode, event);
