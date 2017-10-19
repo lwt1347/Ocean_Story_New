@@ -381,12 +381,13 @@ public class GameActivity extends AppCompatActivity {
             } else if (key == 2) {  //다시 시작
                 gameMain.m_Run_True();
                 gameMain.re_Start();
+
             }
             else if(key == 3){ //종료
+                gameMain.re_Start();
                 gameMain.exit();
                 gameMain.set_Distroy_Run_False();
                 gameMain.m_Run_False();
-
                 finish();
 
             }

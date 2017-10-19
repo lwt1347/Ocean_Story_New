@@ -21,8 +21,8 @@ public class Fish_Trap_Turtle extends Fish_Default_Body {
      * @param window_Width
      * @param hp
      */
-    Fish_Trap_Turtle(int window_Width, int window_Height, int hp, int param_Width_Size, int param_Height_Size, int y_Minus_Temp) {
-        super(window_Width, hp, param_Width_Size, param_Height_Size);
+    Fish_Trap_Turtle(int window_Width, int window_Height, int hp, int param_Width_Size, int param_Height_Size, int y_Minus_Temp, int t_Speed) {
+        super(window_Width, hp, param_Width_Size, param_Height_Size, t_Speed);
         angle = 30 + (int)Math.random() * 40;
         angle_Temp = angle;
         fish_Class = 3;

@@ -23,7 +23,7 @@ public class Ground_Trap_Urchin extends Ground_Default_Body {
 
 
     Ground_Trap_Urchin(float window_Width, int width, int height, float y_Point, int hp, int param_Width_Size, int param_Height_Size) {
-        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size);
+        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size, 10000);
 
         ground_Point_Y = 50 + (float)Math.random() * (y_Point-150);       //성게는 y 축도 랜덤으로 생성한다.
 

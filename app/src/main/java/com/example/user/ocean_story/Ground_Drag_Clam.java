@@ -19,7 +19,7 @@ public class Ground_Drag_Clam  extends Ground_Default_Body{
     float x;
     float y;
     Ground_Drag_Clam(float window_Width, int width, int height, int hp,int param_Width_Size, int param_Height_Size, float yPoint, float xPoint) {
-        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size);
+        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size, 10000);
 
         x = xPoint;
         y = yPoint;

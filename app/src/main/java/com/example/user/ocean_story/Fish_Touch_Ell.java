@@ -13,8 +13,8 @@ public class Fish_Touch_Ell extends Fish_Default_Body  {
     private boolean attack_Mode;
     private int attack_Time;
 
-    Fish_Touch_Ell(int window_Width, int hp, int param_Width_Size, int param_Height_Size) {
-        super(window_Width, hp, param_Width_Size, param_Height_Size);
+    Fish_Touch_Ell(int window_Width, int hp, int param_Width_Size, int param_Height_Size, int t_Speed) {
+        super(window_Width, hp, param_Width_Size, param_Height_Size, t_Speed);
         fish_Class = 1;
         attack_Mode = true;
         attack_Time = 0;

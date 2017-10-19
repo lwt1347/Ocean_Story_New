@@ -21,8 +21,8 @@ public class Ground_Touch_Hermit extends Ground_Default_Body {
      * @param width
      * @param height
      */
-    Ground_Touch_Hermit(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size) {
-        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size);
+    Ground_Touch_Hermit(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size, int t_Speed) {
+        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size, t_Speed);
         ground_Class = 1;   //달팽이 = 1
     }
 
@@ -65,7 +65,7 @@ public class Ground_Touch_Hermit extends Ground_Default_Body {
         if(Math.random() < 0.01) {
 
             //속도 변화 주기
-            speed = 2 + (float)Math.random() * 3;
+            speed = (2f + ((float)Math.random() * 3)/2) * temp_Speed;
             immortal = false;
         }
 

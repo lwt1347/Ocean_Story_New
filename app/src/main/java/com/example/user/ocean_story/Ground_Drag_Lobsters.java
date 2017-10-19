@@ -19,8 +19,8 @@ public class Ground_Drag_Lobsters extends Ground_Default_Body{
      * @param height
      * @param hp
      */
-    Ground_Drag_Lobsters(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size) {
-        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size);
+    Ground_Drag_Lobsters(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size, int t_Speed) {
+        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size, t_Speed);
 
         //꽃게 생성될때 방향
         if(Math.random() < 0.5){
@@ -58,7 +58,7 @@ public class Ground_Drag_Lobsters extends Ground_Default_Body{
             if(Math.random() < 0.01) {
 
                 //속도 변화 주기
-                speed = 2 + (float)Math.random() * 3;
+                speed = (2f + ((float)Math.random() * 3)/2) * temp_Speed;
                 if(Math.random() < 0.5){
                     angle_X_Speed = angle_X_Speed*-1;
                 }

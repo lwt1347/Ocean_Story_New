@@ -14,8 +14,8 @@ public class Fish_Drag_Default extends Fish_Default_Body{
      * @param window_Width
      * @param hp
      */
-    Fish_Drag_Default(int window_Width, int hp, int param_Width_Size, int param_Height_Size) {
-        super(window_Width, hp, param_Width_Size, param_Height_Size);
+    Fish_Drag_Default(int window_Width, int hp, int param_Width_Size, int param_Height_Size, int t_Speed) {
+        super(window_Width, hp, param_Width_Size, param_Height_Size, t_Speed);
         fish_Class = 2;
     }
 

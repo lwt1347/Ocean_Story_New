@@ -19,8 +19,8 @@ public class Ground_Drag_Wave extends Ground_Default_Body{
      * @param height
      * @param hp
      */
-    Ground_Drag_Wave(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size, float x_Point, float y_Point) {
-        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size);
+    Ground_Drag_Wave(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size, float x_Point, float y_Point, int t_Speed) {
+        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size, t_Speed);
 
         ground_Point_X = x_Point;//생성될 위치
         ground_Point_Y = y_Point;

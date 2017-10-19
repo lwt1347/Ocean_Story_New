@@ -13,15 +13,15 @@ public class Fish_Touch_Marlin extends Fish_Default_Body  {
     private boolean attack_Mode;
     private int attack_Time;
 
-    Fish_Touch_Marlin(int window_Width, int hp, int param_Width_Size, int param_Height_Size) {
-        super(window_Width, hp, param_Width_Size, param_Height_Size);
+    Fish_Touch_Marlin(int window_Width, int hp, int param_Width_Size, int param_Height_Size, int t_Speed) {
+        super(window_Width, hp, param_Width_Size, param_Height_Size, t_Speed);
         fish_Class = 1;
         attack_Mode = true;
         attack_Time = 0;
     }
 
-    Fish_Touch_Marlin(int window_Width, int hp, int param_Width_Size, int param_Height_Size, int y) {
-        super(window_Width, hp, param_Width_Size, param_Height_Size);
+    Fish_Touch_Marlin(int window_Width, int hp, int param_Width_Size, int param_Height_Size, int y, int t_Speed) {
+        super(window_Width, hp, param_Width_Size, param_Height_Size, t_Speed);
         fish_Point_Y = y;
         fish_Class = 1;
         attack_Mode = true;

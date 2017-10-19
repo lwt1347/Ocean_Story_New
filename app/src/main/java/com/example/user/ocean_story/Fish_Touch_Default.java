@@ -17,8 +17,8 @@ public class Fish_Touch_Default extends Fish_Default_Body {
      * @param window_Width
      * @param hp
      */
-    Fish_Touch_Default(int window_Width, int hp, int param_Width_Size, int param_Height_Size) {
-        super(window_Width, hp, param_Width_Size, param_Height_Size);
+    Fish_Touch_Default(int window_Width, int hp, int param_Width_Size, int param_Height_Size, int t_Speed) {
+        super(window_Width, hp, param_Width_Size, param_Height_Size, t_Speed);
 
         fish_Class = 1;
         class_Num = 0;  //기본 물고기
@@ -30,8 +30,8 @@ public class Fish_Touch_Default extends Fish_Default_Body {
 
 
 
-    Fish_Touch_Default(int window_Width, int hp, int param_Width_Size,int param_Height_Size, float X_Point, float y_Point) {
-        super(window_Width, hp, param_Width_Size, param_Height_Size);
+    Fish_Touch_Default(int window_Width, int hp, int param_Width_Size,int param_Height_Size, float X_Point, float y_Point, int t_Speed) {
+        super(window_Width, hp, param_Width_Size, param_Height_Size, t_Speed);
         fish_Class = 1;
 
         fish_Point_X = X_Point;

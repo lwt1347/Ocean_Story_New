@@ -20,6 +20,10 @@ public class Ground_Default_Body {
     protected int ground_Class = 0;                     //그라운드 생명체의 종류를 알아옴
 
     protected float speed = 1;
+
+    //가변 스피드 변수
+    float temp_Speed = 0;
+
     protected float window_Width = 0;               // 윈도우 크기를 가져와 물고기 생성할 위치 조절
     protected float ground_Point_X;                 // 바닥 생명체 생성될 좌표
     protected float ground_Point_Y;
@@ -34,7 +38,7 @@ public class Ground_Default_Body {
      * 기본 생성자
      */
 
-    Ground_Default_Body(float window_Width, int width, int height, double hp, int param_Width_Size, int param_Height_Size){
+    Ground_Default_Body(float window_Width, int width, int height, double hp, int param_Width_Size, int param_Height_Size, int t_Speed){
 
         //width height 를 이미지의 넓이를 파라미터로 가져온다.
         this.width = width;
@@ -50,6 +54,11 @@ public class Ground_Default_Body {
         //이미지 크기
         width_Size = param_Width_Size;
         height_Size = param_Height_Size;
+
+        //가변 스피드
+        temp_Speed = t_Speed/950;
+        speed = 2f * temp_Speed;
+        status_Poison = false;
     }
 
 
@@ -236,7 +245,8 @@ public class Ground_Default_Body {
      */
 
     public void set_Ground_Hp_Minus(){
-        hp--;                           //체력깍기
+        hp--;
+        //체력깍기
     }
     public void set_Ground_Hp_Minus(int damage){
         hp = hp-damage;                           //체력깍기
@@ -249,6 +259,15 @@ public class Ground_Default_Body {
     public void ground_Object_Move(){               //오버라이드 인터페이스
 
     }
+
+    /**
+     * 상태 초기화
+     */
+    public void init_Status(){
+        status_Poison = false;
+    }
+
+
 
     /**
      * 중독

@@ -24,8 +24,8 @@ public class Ground_Touch_Starfish extends Ground_Default_Body {
      * @param width
      * @param height
      */
-    Ground_Touch_Starfish(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size) {
-        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size);
+    Ground_Touch_Starfish(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size, int t_Speed) {
+        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size, t_Speed);
 
         //불가사리 생성될때 방향
         if(Math.random() < 0.5){
@@ -35,8 +35,8 @@ public class Ground_Touch_Starfish extends Ground_Default_Body {
         ground_Class = 1;   //불가사리 = 1
     }
     //불가사리 복제
-    Ground_Touch_Starfish(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size, float X_Point, float y_Point) {
-        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size);
+    Ground_Touch_Starfish(float window_Width, int width, int height, int hp, int param_Width_Size, int param_Height_Size, float X_Point, float y_Point, int t_Speed) {
+        super(window_Width, width, height, hp, param_Width_Size, param_Height_Size, t_Speed);
 
         //불가사리 생성될때 방향
         if(Math.random() < 0.5){
@@ -110,7 +110,7 @@ public class Ground_Touch_Starfish extends Ground_Default_Body {
         if(Math.random() < 0.01) {
 
             //속도 변화 주기
-            speed = (float)Math.random() * 2;
+            speed = (2f + ((float)Math.random() * 3)/2) * temp_Speed;
             if(Math.random() < 0.5){
                 angle_X_Speed = angle_X_Speed*-1;
             }

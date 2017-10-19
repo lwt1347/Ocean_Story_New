@@ -21,12 +21,13 @@ public class Fish_Default_Body {
     protected int fish_Class;                   // 가장 가까운 물고기 객체를 찾기위해서, 물고기마다 터치 방식이 다름으로 객체 번호로 식별한다.
                                                 // 기본 물고기 = 1, 드래그 물고기 = 2
 
-    protected float fish_Speed = 1;              // 물고기 y축 스피드
+    protected float fish_Speed;              // 물고기 y축 스피드
     protected float fish_Point_X;                // 물고기 생성될 좌표
     protected float fish_Point_Y;
     private float _Fish_Speed;
     private int poison_Damage = 1;      //독대미지
-
+    //가변 스피드 변수
+    float temp_Speed = 0;
 
     private boolean status_Poison = false;              //중독상태 인지 아닌지 반환한다.
     //********************************************************************************************//
@@ -36,7 +37,7 @@ public class Fish_Default_Body {
      * 윈도우 크기와 hp 를 받아와 물고기를 생성한다.
      */
 
-    Fish_Default_Body(int window_Width, int hp, int param_Width_Size, int param_Height_Size){
+    Fish_Default_Body(int window_Width, int hp, int param_Width_Size, int param_Height_Size, int t_Speed){
 
         this.window_Width = window_Width;                                       //생성될 위치 및 벽을 못 넘도록 하기 위해 사용
         this.hp = hp;
@@ -55,6 +56,11 @@ public class Fish_Default_Body {
         //물고기 이미지 사이즈
         width_Size = param_Width_Size;
         height_Size = param_Height_Size;
+
+        //가변 스피드
+        temp_Speed = t_Speed/950;
+        fish_Speed = 2f * temp_Speed;
+
     }
 
     //********************************************************************************************//
@@ -272,6 +278,15 @@ public class Fish_Default_Body {
     public void set_Hp_Minus(int damage){
         hp = hp - damage;
     }
+
+    /**
+     * 상태 초기화
+     */
+    public void init_Status(){
+        status_Poison = false;
+    }
+
+
     /**
      * 물고기 상어한테 잡아 먹혔을때
      */
@@ -301,17 +316,18 @@ public class Fish_Default_Body {
     /**
      * 물고기 패턴 변경
      */
+
     protected void fish_Pattern_Change(){
         angle = (int)(Math.random() * 180) - 90;
         angle_X_Speed = (int)(Math.random() * 3);
 
         //각도에 따라 속도 조절
         if(angle < -45){
-            fish_Speed = 2 + (float)Math.random() * 3;
+            fish_Speed = (2f  + ((float)Math.random() * 3)/2) * temp_Speed;
         }else if(angle < 45){
-            fish_Speed = 2 + (float)Math.random() * 5;
+            fish_Speed = (2f + ((float)Math.random() * 5)/2) * temp_Speed;
         }else {
-            fish_Speed = 2 + (float)Math.random() * 3;
+            fish_Speed = (2f + ((float)Math.random() * 3)/2) * temp_Speed;
         }
 
     }
