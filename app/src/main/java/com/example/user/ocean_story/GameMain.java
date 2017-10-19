@@ -1154,10 +1154,10 @@ private void button_Create_method_Init(){
         first_Ell = true;
 
 //        game_thread.function_Skill_Thorn_img();
-        main_Character = new Main_Character_Moulluse_Tear7(0,0, window_Width, window_Height,0,0);
+        main_Character = new Main_Character_Plankton_1(0,0, window_Width, window_Height,0,0);
         //메인 캐릭터
         Init_Main_Character_Image(_context, main_Character);
-        main_Character = new Main_Character_Moulluse_Tear7((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+        main_Character = new Main_Character_Plankton_1((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
 //        game_thread.function_Skill_Soycrab_img();
 
 
@@ -3409,7 +3409,17 @@ private void button_Create_method_Init(){
 
 
 
+    //랜드마크 부서 질때마다 스테이지 진행
+    boolean land_Mark_dist_1 = true;
+    boolean land_Mark_dist_2 = false;
+    public void stage_Jump(){
+        stage_Call_Revolution();
+        stage_Call_Revolution();
+        stage_Call_Revolution();
+        stage_Call_Revolution();
+        stage_Call_Revolution();
 
+    }
 
 
 
@@ -3420,7 +3430,11 @@ private void button_Create_method_Init(){
     //배경 이펙트 객체 1개로 처리하기 위해서, 각자 다르게 보여주기 위한 이미지 배열 컨트롤
     int effect_Background_Two_1_img_Control_Temp = 0;
     LandMark_Damage_View landMark_Damage_View;
-        ArrayList<LandMark_Damage_View> landMark_Damage_View_List = new ArrayList<LandMark_Damage_View>();
+    ArrayList<LandMark_Damage_View> landMark_Damage_View_List = new ArrayList<LandMark_Damage_View>();
+
+
+
+
 
     public synchronized void doDraw(Canvas canvas) {
 
@@ -3578,6 +3592,7 @@ Log.e("@","배경 이미지!@#");
             if(ground_List.get(i) instanceof Land_Mark){
 
 
+                //랜드마크 대미지 그리기
                 if(land_Mark_Hit_Flag){
                     landMark_Damage_View = new LandMark_Damage_View(touchx,touchy);
                     landMark_Damage_View.set_Damage(character_Randmark_Damege_Temp);
@@ -3585,16 +3600,44 @@ Log.e("@","배경 이미지!@#");
                     Log.e("a",ground_List.get(i).get_Ground_Hp() + "");
                 }
 
+                if(land_Mark_dist_2){
+                    stage_Jump();
+                    Log.e("@", "@ 점프");
+                }
+
                 if(land_Mark.get_Class_Num() == 0) {
                     if (ground_List.get(i).get_Ground_Hp() > 30000) {
-
                         draw.draw_Bmp(canvas, land_Mark1_img[0], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
-
+                        land_Mark_dist_1 = true;
+                        land_Mark_dist_2 = false;
                     } else if (ground_List.get(i).get_Ground_Hp() > 20000) {
                         draw.draw_Bmp(canvas, land_Mark1_img[1], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+
+                        if(land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = false;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
+
+
                     } else if (ground_List.get(i).get_Ground_Hp() > 10000) {
                         draw.draw_Bmp(canvas, land_Mark1_img[2], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+
+                        if(!land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = true;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                     } else {
+
+                        if(land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = false;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                         draw.draw_Bmp(canvas, land_Mark1_img[3], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
                     }
                     if (land_Mark_Hit_Flag) {
@@ -3614,13 +3657,33 @@ Log.e("@","배경 이미지!@#");
                     }
                      }else if(land_Mark.get_Class_Num() == 1){
                     if (ground_List.get(i).get_Ground_Hp() > 300000) {
+                        land_Mark_dist_1 = true;
+                        land_Mark_dist_2 = false;
                         draw.draw_Bmp(canvas, land_Mark2_img[0], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
                     } else if (ground_List.get(i).get_Ground_Hp() > 200000) {
                         draw.draw_Bmp(canvas, land_Mark2_img[1], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        if(land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = false;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                     } else if (ground_List.get(i).get_Ground_Hp() > 100000) {
                         draw.draw_Bmp(canvas, land_Mark2_img[2], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        if(!land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = true;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                     } else{
                         draw.draw_Bmp(canvas, land_Mark2_img[3], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        if(land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = false;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                     }
                     if (land_Mark_Hit_Flag) {
                         draw.draw_Bmp(canvas, land_Mark_Drag_img[random.nextInt(3)],
@@ -3637,13 +3700,34 @@ Log.e("@","배경 이미지!@#");
                     }
                 }else if(land_Mark.get_Class_Num() == 2){
                     if (ground_List.get(i).get_Ground_Hp() > 3000000) {
+                        land_Mark_dist_1 = true;
+                        land_Mark_dist_2 = false;
                         draw.draw_Bmp(canvas, land_Mark3_img[0], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+
                     } else if (ground_List.get(i).get_Ground_Hp() > 2000000) {
                         draw.draw_Bmp(canvas, land_Mark3_img[1], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        if(land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = false;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                     } else if (ground_List.get(i).get_Ground_Hp() > 1000000) {
                         draw.draw_Bmp(canvas, land_Mark3_img[2], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        if(!land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = true;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                     } else {
                         draw.draw_Bmp(canvas, land_Mark3_img[3], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        if(land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = false;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                     }
                     if (land_Mark_Hit_Flag) {
                         draw.draw_Bmp(canvas, land_Mark_Drag_img[random.nextInt(3)],
@@ -3658,13 +3742,33 @@ Log.e("@","배경 이미지!@#");
                     }
                 }else if(land_Mark.get_Class_Num() == 3){
                     if (ground_List.get(i).get_Ground_Hp() > 30000000) {
+                        land_Mark_dist_1 = true;
+                        land_Mark_dist_2 = false;
                         draw.draw_Bmp(canvas, land_Mark4_img[0], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
                     } else if (ground_List.get(i).get_Ground_Hp() > 20000000) {
+                        if(land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = false;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                         draw.draw_Bmp(canvas, land_Mark4_img[1], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
                     } else if (ground_List.get(i).get_Ground_Hp() > 10000000) {
                         draw.draw_Bmp(canvas, land_Mark4_img[2], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        if(!land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = true;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                     } else {
                         draw.draw_Bmp(canvas, land_Mark4_img[3], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        if(land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = false;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                     }
                     if (land_Mark_Hit_Flag) {
                         draw.draw_Bmp(canvas, land_Mark_Drag_img[random.nextInt(3)],
@@ -3679,12 +3783,32 @@ Log.e("@","배경 이미지!@#");
                 }else if(land_Mark.get_Class_Num() == 4){
                     if (ground_List.get(i).get_Ground_Hp() > 300000000) {
                         draw.draw_Bmp(canvas, land_Mark5_img[0], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        land_Mark_dist_1 = true;
+                        land_Mark_dist_2 = false;
                     } else if (ground_List.get(i).get_Ground_Hp() > 200000000) {
                         draw.draw_Bmp(canvas, land_Mark5_img[1], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        if(land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = false;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                     } else if (ground_List.get(i).get_Ground_Hp() > 100000000) {
                         draw.draw_Bmp(canvas, land_Mark5_img[2], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        if(!land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = true;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                     } else  {
                         draw.draw_Bmp(canvas, land_Mark5_img[3], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        if(land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = false;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                     }
                     if (land_Mark_Hit_Flag) {
                         draw.draw_Bmp(canvas, land_Mark_Drag_img[random.nextInt(3)],
@@ -3701,12 +3825,32 @@ Log.e("@","배경 이미지!@#");
                 }else if(land_Mark.get_Class_Num() == 5){
                     if (ground_List.get(i).get_Ground_Hp() > 3000000000.0) {
                         draw.draw_Bmp(canvas, land_Mark6_img[0], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        land_Mark_dist_1 = true;
+                        land_Mark_dist_2 = false;
                     } else if (ground_List.get(i).get_Ground_Hp() > 2000000000.0) {
                         draw.draw_Bmp(canvas, land_Mark6_img[1], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        if(land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = false;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                     } else if (ground_List.get(i).get_Ground_Hp() > 1000000000.0) {
                         draw.draw_Bmp(canvas, land_Mark6_img[2], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        if(!land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = true;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                     } else  {
                         draw.draw_Bmp(canvas, land_Mark6_img[3], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
+                        if(land_Mark_dist_1){
+                            land_Mark_dist_2 = true;
+                            land_Mark_dist_1 = false;
+                        }else {
+                            land_Mark_dist_2 = false;
+                        }
                     }
                     if (land_Mark_Hit_Flag) {
                         draw.draw_Bmp(canvas, land_Mark_Drag_img[random.nextInt(3)],
@@ -3745,6 +3889,12 @@ Log.e("@","배경 이미지!@#");
                 }catch (Exception e){
                     Log.e("@","딱따구리");
                 }
+
+
+
+
+
+
 
                 break;
             }
@@ -10321,7 +10471,7 @@ public void skill_Fish_Attack(){
                                         skill_Slow_Cloud_List.add(skill_Slow_Cloud);
                                     }
 
-                                }else if((main_Character instanceof Main_Character_Moulluse_Tear7 || skill_Mollus_Extract_Nomar[6]) && random.nextInt(100) < mt7 + 100){
+                                }else if((main_Character instanceof Main_Character_Moulluse_Tear7 || skill_Mollus_Extract_Nomar[6]) && random.nextInt(100) < mt7 + 10){
                                     //독 주입 [해파리]
                                     fish_List.get(smallFishIndex).set_Status_Poison(10);
 //                                    Log.e("@","독공격@");
@@ -10504,7 +10654,7 @@ public void skill_Ground_Attack(){
                                             skill_Slow_Cloud_List.add(skill_Slow_Cloud);
                                         }
 
-                                    }else if((main_Character instanceof Main_Character_Moulluse_Tear7 || skill_Mollus_Extract_Nomar[6]) && random.nextInt(100) < mt7 + 100){
+                                    }else if((main_Character instanceof Main_Character_Moulluse_Tear7 || skill_Mollus_Extract_Nomar[6]) && random.nextInt(100) < mt7 + 10){
                                         //독 주입 [해파리]
                                         ground_List.get(ground_Remove_Temp).set_Status_Poison(10);
 //                                        Log.e("@","독공격");
@@ -14505,7 +14655,7 @@ public void skill_Ground_Attack(){
 //
 //                    add_Ground_Urchin();                //성게추가
 
-                //조개 하마리 이상 금지
+                //조개 한마리 이상 금지
                 if(!ground_List.contains(ground_Drag_Clam)){
 //                            add_Ground_Clam();                  //조개 추가
                 }
