@@ -48,7 +48,7 @@ public class Fish_Default_Body {
         // 물고기 생성 좌표
         fish_Point_X = (float)(30 + Math.random() * (window_Width -100));        // x축 = 10 ~ 윈도우 널이 - 100 사이에서 생성
 //        fish_Point_Y = (float) Math.random() * 30 - 30;
-        fish_Point_Y = -200 - random.nextInt(500);
+        fish_Point_Y = -100 - random.nextInt(500);
 
         //처음 생성되는 물고기
         first_Test_Object = false;
@@ -59,7 +59,13 @@ public class Fish_Default_Body {
 
         //가변 스피드
         temp_Speed = t_Speed/950;
+        if(temp_Speed < 0){
+            temp_Speed *= -1;
+        }
         fish_Speed = 2f * temp_Speed;
+        if(fish_Speed < 0){
+            fish_Speed *= -1;
+        }
 
     }
 

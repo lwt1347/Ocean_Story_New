@@ -1,5 +1,7 @@
 package com.example.user.ocean_story;
 
+import android.util.Log;
+
 /**
  * Created by Lee on 2017-07-02.
  */
@@ -57,9 +59,6 @@ public class Fish_Touch_Marlin extends Fish_Default_Body  {
         if(fish_Point_X <= 30 || fish_Point_X >= window_Width - 150){
             angle_X_Speed = angle_X_Speed*-1;
         }
-
-
-
     }
 
 

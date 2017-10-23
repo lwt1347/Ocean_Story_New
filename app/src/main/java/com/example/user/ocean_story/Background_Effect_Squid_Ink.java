@@ -28,6 +28,10 @@ public class Background_Effect_Squid_Ink extends Background_Effect_Control {
             return true;
         }
     }
+    //먹물 시간 초과 시키기
+    public void set_Up_Continue_Time(){
+        continue_Time = 300;
+    }
 
 
     boolean pattern_Flag = true;

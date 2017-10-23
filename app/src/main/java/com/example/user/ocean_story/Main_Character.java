@@ -328,13 +328,13 @@ public class Main_Character {
 
         if(random.nextFloat() < 0.01){
             direct_Flag_Stop_X = false;
-            if(random.nextFloat() < 0.001){
+            if(random.nextFloat() < 0.1){
                 direct_Flag_X = !direct_Flag_X;
             }
         }
         if(random.nextFloat() < 0.01){
             direct_Flag_Stop_X = true;
-            if(random.nextFloat() < 0.001){
+            if(random.nextFloat() < 0.1){
                 direct_Flag_X = !direct_Flag_X;
             }
         }
@@ -349,7 +349,7 @@ public class Main_Character {
         }
 
 
-        if(0 >= main_Character_Point_Y){
+        if(window_H_Size/5 >= main_Character_Point_Y){
             direct_Flag_Y = true;
         }else if(main_Character_Point_Y >= window_H_Size - 150){
             direct_Flag_Y = false;
@@ -357,13 +357,13 @@ public class Main_Character {
 
         if(random.nextFloat() < 0.01){
             direct_Flag_Stop_Y = false;
-            if(random.nextFloat() < 0.001){
+            if(random.nextFloat() < 0.1){
                 direct_Flag_Y = !direct_Flag_Y;
             }
         }
         if(random.nextFloat() < 0.01){
             direct_Flag_Stop_Y = true;
-            if(random.nextFloat() < 0.001){
+            if(random.nextFloat() < 0.1){
                 direct_Flag_Y = !direct_Flag_Y;
             }
         }
@@ -406,27 +406,27 @@ public class Main_Character {
      */
     public int get_Revolrution_Step(){
         if(tear == 0){
-            return 300;
+            return 1000;
         }else if(tear == 1){
-            return 900;
+            return 3000;
         }else if(tear == 2){
-            return 2000;
+            return 6000;
         }else if(tear == 3){
-            return 5000;
+            return 12000;
         }else if(tear == 4){
-            return 9000;
+            return 24000;
         }else if(tear == 5){
-            return 13000;
+            return 30000;
         }else if(tear == 6){
-            return 200000;
+            return 50000;
         }else if(tear == 7){
-            return 300000;
+            return 80000;
         }else if(tear == 8){
-            return 500000;
+            return 100000;
         }else if(tear == 9){
-            return 600000;
+            return 120000;
         }else if(tear == 10){
-            return 1000000;
+            return 150000;
         }
 
         return 5000000;

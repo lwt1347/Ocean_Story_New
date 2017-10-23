@@ -49,12 +49,12 @@ public class Ground_Trap_Urchin extends Ground_Default_Body {
     public void ground_Object_Move() {
         //성게는 움직이지 않고 시간이 흐르면 삭제 되야한다.
         live_Time += 1 + random.nextInt(5);
-        if(live_Time > 700){
+        if(live_Time > 900){
             hp = 0;
         }
 
         //150이 흐른 후에 어택모드로 들어간다.
-        if(live_Time >= 350){
+        if(live_Time >= 450){
             attack_Mode = true;
         }
 

@@ -13,6 +13,7 @@ public class Fish_Touch_Squid  extends Fish_Default_Body  {
     Fish_Touch_Squid(int window_Width, int hp, int param_Width_Size, int param_Height_Size, int t_Speed) {
         super(window_Width, hp, param_Width_Size, param_Height_Size, t_Speed);
         fish_Class = 1;
+        fish_Point_Y = -400 - random.nextInt(200);
     }
 
     public void fish_Object_Move(){
@@ -46,6 +47,15 @@ public class Fish_Touch_Squid  extends Fish_Default_Body  {
             fish_Draw_Status = 0;
         }
     }
+
+    /**
+     * 오징어 먹물 생성 때문에 더 위로
+     */
+    public void set_Position(){
+        fish_Point_X = (float)(30 + Math.random() * (window_Width -100));        // x축 = 10 ~ 윈도우 널이 - 100 사이에서 생성
+        fish_Point_Y = -200 - random.nextInt(400);
+    }
+
     /**
      * 물고기 헤엄칠때 드로우할 그림 int 형 반환
      */

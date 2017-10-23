@@ -54,7 +54,7 @@ public class Fish_Touch_Ell extends Fish_Default_Body  {
         if(fish_Draw_Status > 14){
             fish_Draw_Status = 0;
         }
-        if(attack_Time >= 50){
+        if(attack_Time >= 50 && fish_Point_Y > 0){
             attack_Time = 0;
             attack_Mode = !attack_Mode;
         }

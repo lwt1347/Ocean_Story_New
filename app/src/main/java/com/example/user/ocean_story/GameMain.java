@@ -1068,6 +1068,8 @@ private void button_Create_method_Init(){
 
 
 
+
+
         //플랑크노 1티어
         character_Explain_DB[0] = 1;
 
@@ -5056,8 +5058,8 @@ try{
 
                         if(touch_Marlin_Hit_Flag){
                             draw.draw_Bmp(canvas, effect_Blue_img[4],
-                                    fish_List.get(smallFishIndex).get_Fish_Point_X() + convertPixelsToDp(random.nextInt(10), _context),
-                                    fish_List.get(smallFishIndex).get_Fish_Point_Y() + convertPixelsToDp(random.nextInt(100), _context));//- convertPixelsToDp(100, _context));
+                                    fish_List.get(smallFishIndex).get_Fish_Point_X() - convertPixelsToDp(12, _context) + random.nextInt(fish_Touch_Marlin_img[0].getWidth()/2),
+                                    fish_List.get(smallFishIndex).get_Fish_Point_Y() + random.nextInt(fish_Touch_Marlin_img[0].getHeight()/2));//- convertPixelsToDp(100, _context));
 
                             fish_List.get(smallFishIndex).set_Hp_Minus();            //풍타디 처럼 물고기 hp 깍으면 색깔 변경
 
@@ -8785,12 +8787,14 @@ public void wave_Marlin(){
                             count_Monster_Fish[7]++;
                         }
                     }
-                    if(day_Count >= 84){
+
+                    if(day_Count >= 85) {
                         if (fish_List.get(i) instanceof Fish_Touch_Marlin && count_Monster_Fish[7] < 5) {
                             fish_List.get(i).set_Visible_Fish_Flag(true);
                             count_Monster_Fish[7]++;
                         }
                     }
+
                     if(day_Count == 88){
                         if (fish_List.get(i) instanceof Fish_Touch_Marlin && count_Monster_Fish[7] < 10) {
                             fish_List.get(i).set_Visible_Fish_Flag(true);
@@ -8943,7 +8947,7 @@ public void wave_Marlin(){
                         }
 
                         //성게
-                        if(day_Count == 30){
+                        if(day_Count >= 30 && day_Count % 2 == 0 ){
                             if (ground_List.get(i) instanceof Ground_Trap_Urchin && count_Monster_Ground[3] < 1) {
                                 ground_List.get(i).set_Visible_Ground_Flag(true);
                                 ((Ground_Trap_Urchin)ground_List.get(i)).set_Position();
@@ -8957,14 +8961,14 @@ public void wave_Marlin(){
                                 count_Monster_Ground[3]++;
                             }
                         }
-                        if(day_Count == 32){
+                        if(day_Count >= 32 && day_Count % 3 == 0 ){
                             if (ground_List.get(i) instanceof Ground_Trap_Urchin && count_Monster_Ground[3] < 2) {
                                 ground_List.get(i).set_Visible_Ground_Flag(true);
                                 ((Ground_Trap_Urchin)ground_List.get(i)).set_Position();
                                 count_Monster_Ground[3]++;
                             }
                         }
-                        if(day_Count >= 33){
+                        if(day_Count >= 33 && day_Count % 7 == 0  ){
                             if (ground_List.get(i) instanceof Ground_Trap_Urchin && count_Monster_Ground[3] < 3) {
                                 ground_List.get(i).set_Visible_Ground_Flag(true);
                                 ((Ground_Trap_Urchin)ground_List.get(i)).set_Position();
@@ -8978,7 +8982,7 @@ public void wave_Marlin(){
                                 count_Monster_Ground[3]++;
                             }
                         }
-                        if(day_Count == 35){
+                        if(day_Count >= 35  && day_Count % 11 == 0 ){
                             if (ground_List.get(i) instanceof Ground_Trap_Urchin && count_Monster_Ground[3] < 5) {
                                 ground_List.get(i).set_Visible_Ground_Flag(true);
                                 ((Ground_Trap_Urchin)ground_List.get(i)).set_Position();
