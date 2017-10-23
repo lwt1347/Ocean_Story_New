@@ -388,3 +388,449 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
+
+
+
+
+
+
+//
+// if(ground_List.get(i) instanceof Ground_Drag_Crab) {
+//         draw.draw_Bmp(canvas, pop_Temp_img,
+//         ground_List.get(i).get_Ground_Point_X() - convertPixelsToDp(12, _context),
+//         ground_List.get(i).get_Ground_Point_Y() - convertPixelsToDp(12, _context));
+//         }else {
+//         draw.draw_Bmp(canvas, pop_Temp_img,
+//         ground_List.get(i).get_Ground_Point_X() - convertPixelsToDp(12, _context),
+//         ground_List.get(i).get_Ground_Point_Y());
+//         }
+//
+//
+//
+//
+//
+////광고 진화.
+//public void set_Ruby_Revolution(){
+//        //진화 하기
+//
+//        int rand_Temp3 = random.nextInt(100);   //종류 선택
+//        //진화 확률 = 0티어 플랑크톤 일때 100 %
+//        //1티어 일때 90%, 2티어 80%, 3티어 70%, 4티어 60%, 5티어 50%, 6티어 40%, 7티어 30%, 6티어 20%, 9티어, 10%
+//
+//        if((main_Character.get_Tear() == 0)){
+//
+//        Log.e("a","asdasdsad@@@");
+//
+//        //메모리 관리 기법
+//
+//        //0티어 진화
+//        if (rand_Temp3 <= 25) {
+//        game_thread.function_Explain_Window_Shellfish_Tear_1();
+//        main_Character = new Main_Character_Shellfish_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//
+//        character_Explain_DB[15] = 1;
+//
+//        } else if (rand_Temp3 <= 50) {
+//        game_thread.function_Explain_Window_Fish_Tear_1();
+//        main_Character = new Main_Character_Fish_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//        character_Explain_DB[5] = 1;
+//
+//        } else if(rand_Temp3 <= 75){
+//        //메모리 관리
+//        game_thread.function_Explain_Window_Moulluse_Tear_1();
+//        main_Character = new Main_Character_Moulluse_Tear1(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//        character_Explain_DB[25] = 1;
+//
+//        } else {
+//        game_thread.function_Explain_Window_Plankton_Tear_2();
+//        main_Character = new Main_Character_Plankton_2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//        character_Explain_DB[1] = 1;
+//
+//        }
+//        Log.e("a","asdasdsad###");
+//
+//        main_Character.set_Tear(1);
+//        }
+//
+//        else if((main_Character.get_Tear() == 1) ){
+//
+//        //메모리 관리 기법
+//        explain_Window_MainCharacker.recycle();
+//        explain_Window_MainCharacker = null;
+//
+//        if (rand_Temp3 <= 25) {
+//        game_thread.function_Explain_Window_Shellfish_Tear_2();
+//        main_Character = new Main_Character_Shellfish_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+//        character_Explain_DB[16] = 1;
+//
+//        } else if (rand_Temp3 <= 50) {
+//        game_thread.function_Explain_Window_Fish_Tear_2();
+//        main_Character = new Main_Character_Fish_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//
+////                                    game_thread.function_Skill_Thorn_img();
+//        character_Explain_DB[6] = 1;
+//
+//        } else if(rand_Temp3 <= 75){
+//        //메모리 관리
+//        game_thread.function_Explain_Window_Moulluse_Tear_2();
+//        main_Character = new Main_Character_Moulluse_Tear2(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[26] = 1;
+//
+//        } else {
+//        game_thread.function_Explain_Window_Plankton_Tear_3();
+//        main_Character = new Main_Character_Plankton_3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[2] = 1;
+//        }
+//        main_Character.set_Tear(2);
+//
+//
+//
+//        }
+//
+//
+//        else if((main_Character.get_Tear() == 2) ){
+//
+//        //메모리 관리 기법
+//        explain_Window_MainCharacker.recycle();
+//        explain_Window_MainCharacker = null;
+//
+//        if (rand_Temp3 <= 25) {
+//        game_thread.function_Explain_Window_Shellfish_Tear_3();
+//        main_Character = new Main_Character_Shellfish_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[17] = 1;
+//
+//
+//        } else if (rand_Temp3 <= 50) {
+//        game_thread.function_Explain_Window_Fish_Tear_3();
+//        main_Character = new Main_Character_Fish_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[7] = 1;
+////                                    game_thread.function_Skill_Teeth_mine_img();
+//
+//        } else if(rand_Temp3 <= 75){
+//        //메모리 관리
+//        game_thread.function_Explain_Window_Moulluse_Tear_3();
+//        main_Character = new Main_Character_Moulluse_Tear3(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[27] = 1;
+////                                    game_thread.function_Skill_Slow_Cloud_img();
+//
+//        } else {
+//        game_thread.function_Explain_Window_Plankton_Tear_4();
+//        main_Character = new Main_Character_Plankton_4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[3] = 1;
+//        }
+//        main_Character.set_Tear(3);
+//
+//
+//
+//        }
+//
+//
+//        else if((main_Character.get_Tear() == 3) ){
+//
+//        //메모리 관리 기법
+//        explain_Window_MainCharacker.recycle();
+//        explain_Window_MainCharacker = null;
+//
+//
+//        if (rand_Temp3 <= 25) {
+//        game_thread.function_Explain_Window_Shellfish_Tear_4();
+//        main_Character = new Main_Character_Shellfish_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[18] = 1;
+////                                    game_thread.function_Skill_Crab_img();
+//
+//        } else if (rand_Temp3 <= 50) {
+//        game_thread.function_Explain_Window_Fish_Tear_4();
+//        main_Character = new Main_Character_Fish_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[8] = 1;
+////                                    game_thread.function_Skill_earthquake_img();
+//
+//        } else if(rand_Temp3 <= 75){
+//        //메모리 관리
+//        game_thread.function_Explain_Window_Moulluse_Tear_4();
+//        main_Character = new Main_Character_Moulluse_Tear4(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[28] = 1;
+////                                    game_thread.function_Skill_Butter_img();
+//
+//        } else {
+//        game_thread.function_Explain_Window_Plankton_Tear_5();
+//        main_Character = new Main_Character_Plankton_5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[4] = 1;
+//        }
+//        main_Character.set_Tear(4);
+//
+//
+//        }
+//
+//
+//        else if((main_Character.get_Tear() == 4) ){
+//
+//        //메모리 관리 기법
+//        explain_Window_MainCharacker.recycle();
+//        explain_Window_MainCharacker = null;
+//
+//
+//        if (rand_Temp3 <= 33) {
+//        game_thread.function_Explain_Window_Shellfish_Tear_5();
+//        main_Character = new Main_Character_Shellfish_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[19] = 1;
+////                                    game_thread.function_Skill_Soycrab_img();
+//
+//        } else if (rand_Temp3 <= 66) {
+//        game_thread.function_Explain_Window_Fish_Tear_5();
+//        main_Character = new Main_Character_Fish_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[9] = 1;
+////                                    game_thread.function_Skill_Teeth_mine2_img();
+//
+//        } else {
+//        //메모리 관리
+//        game_thread.function_Explain_Window_Moulluse_Tear_5();
+//        main_Character = new Main_Character_Moulluse_Tear5(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[29] = 1;
+////                                    game_thread.function_Skill_Fork_img();
+//
+//        }
+//        main_Character.set_Tear(5);
+//
+//
+//        }
+//
+//
+//        else if((main_Character.get_Tear() == 5) ){
+//
+//        //메모리 관리 기법
+//        explain_Window_MainCharacker.recycle();
+//        explain_Window_MainCharacker = null;
+//
+//
+//        if (rand_Temp3 <= 33) {
+//        game_thread.function_Explain_Window_Shellfish_Tear_6();
+//        main_Character = new Main_Character_Shellfish_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[20] = 1;
+////                                    game_thread.function_Skill_Thorn2_img();
+//
+//        } else if (rand_Temp3 <= 66) {
+//        game_thread.function_Explain_Window_Fish_Tear_6();
+//        main_Character = new Main_Character_Fish_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[10] = 1;
+//
+//        } else {
+//        //메모리 관리
+//        game_thread.function_Explain_Window_Moulluse_Tear_6();
+//        main_Character = new Main_Character_Moulluse_Tear6(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[30] = 1;
+////                                    game_thread.function_Skill_Laser_img();
+//
+//        }
+//        main_Character.set_Tear(6);
+//
+//
+//        }
+//
+//
+//
+//        else if((main_Character.get_Tear() == 6) ){
+//
+//        //메모리 관리 기법
+//        explain_Window_MainCharacker.recycle();
+//        explain_Window_MainCharacker = null;
+//
+//
+//        if (rand_Temp3 <= 33) {
+//        game_thread.function_Explain_Window_Shellfish_Tear_7();
+//        main_Character = new Main_Character_Shellfish_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[21] = 1;
+////                                    game_thread.function_Skill_fry_img();
+//
+//        } else if (rand_Temp3 <= 66) {
+//        game_thread.function_Explain_Window_Fish_Tear_7();
+//        main_Character = new Main_Character_Fish_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[11] = 1;
+////                                    game_thread.function_Skill_lightnign_img();
+//
+//        } else {
+//        //메모리 관리
+//        game_thread.function_Explain_Window_Moulluse_Tear_7();
+//        main_Character = new Main_Character_Moulluse_Tear7(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[31] = 1;
+//
+//        }
+//        main_Character.set_Tear(7);
+//
+//
+//        }
+//
+//
+//
+//        else if((main_Character.get_Tear() == 7) ){
+//
+//        //메모리 관리 기법
+//        explain_Window_MainCharacker.recycle();
+//        explain_Window_MainCharacker = null;
+//
+//
+//        if (rand_Temp3 <= 33) {
+//        game_thread.function_Explain_Window_Shellfish_Tear_8();
+//        main_Character = new Main_Character_Shellfish_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[22] = 1;
+////                                    game_thread.function_Skill_Crab_img();
+//
+//        } else if (rand_Temp3 <= 66) {
+//        game_thread.function_Explain_Window_Fish_Tear_8();
+//        main_Character = new Main_Character_Fish_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[12] = 1;
+////                                    game_thread.function_Skill_lightnign1_img();
+//
+//        } else {
+//        //메모리 관리
+//        game_thread.function_Explain_Window_Moulluse_Tear_8();
+//        main_Character = new Main_Character_Moulluse_Tear8(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[32] = 1;
+////                                    game_thread.function_Skill_Boom_Poison_img();
+//
+//        }
+//        main_Character.set_Tear(8);
+//
+//
+//        }
+//
+//
+//        else if((main_Character.get_Tear() == 8) ){
+//        //메모리 관리 기법
+//        explain_Window_MainCharacker.recycle();
+//        explain_Window_MainCharacker = null;
+//
+//        if (rand_Temp3 <= 33) {
+//        game_thread.function_Explain_Window_Shellfish_Tear_9();
+//        main_Character = new Main_Character_Shellfish_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[23] = 1;
+////                                    game_thread.function_Skill_Wave_img();
+//
+//        } else if (rand_Temp3 <= 66) {
+//        game_thread.function_Explain_Window_Fish_Tear_9();
+//        main_Character = new Main_Character_Fish_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[13] = 1;
+////                                    game_thread.function_Skill_Sea_Snake_img();
+//
+//        } else {
+//        //메모리 관리
+//        game_thread.function_Explain_Window_Moulluse_Tear_9();
+//        main_Character = new Main_Character_Moulluse_Tear9(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[33] = 1;
+////                                    game_thread.function_Skill_wall_img();
+//        }
+//        main_Character.set_Tear(9);
+//
+//
+//        }
+//
+//
+//
+//        else if((main_Character.get_Tear() == 9) ){
+//        //메모리 관리 기법
+//        explain_Window_MainCharacker.recycle();
+//        explain_Window_MainCharacker = null;
+//
+//        if (rand_Temp3 <= 33) {
+//        game_thread.function_Explain_Window_Shellfish_Tear_10();
+//        main_Character = new Main_Character_Shellfish_Tear10(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[24] = 1;
+////                                    game_thread.function_Skill_stomp_img();
+//
+//        } else if (rand_Temp3 <= 66) {
+//        game_thread.function_Explain_Window_Fish_Tear_10();
+//        main_Character = new Main_Character_Fish_Tear10(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[14] = 1;
+////                                    game_thread.function_Skill_Thorn_img();
+//
+//        } else {
+//        //메모리 관리
+//        game_thread.function_Explain_Window_Moulluse_Tear_10();
+//        main_Character = new Main_Character_Moulluse_Tear10(main_Character.get_Main_Character_Point_X(), main_Character.get_Main_Character_Point_Y(), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
+//        character_Explain_DB[34] = 1;
+////                                    game_thread.function_Skill_Poison123_img();
+//
+//        }
+//        main_Character.set_Tear(10);
+//
+//        }
+//        }
+
+
+
+
+
+//else if(confirm_Button_card_2.touch(touchx, touchy)){
+//        //루비로 사기
+//        if(ruby >= card_Ruby) {
+//        ruby = ruby-card_Ruby;
+//
+//        set_Ruby_Revolution();
+//
+//        //매인 캐릭터가 진화할때마다 메인 캐릭터의 이미지를 변화 시켜준다.
+//        Init_Main_Character_Image(_context, main_Character);
+//
+//        main_Character.set_Main_Character_Mode_Status_Init();
+//        main_Character.set_Hp_Init();
+//
+//        m_Run_True();   //게임 재게
+//        revolution_Flag_Confirm = true;
+//
+//        }
+//        }
+//        else if (confirm_Button_card_3.touch(touchx, touchy)) {
+//        //광고 눌렀을때
+//
+//        }
+
+    //루비로 진화 하기 버튼
+//    int card_Ruby = 5; 1044
+//    int card_Ruby_Position = 11;
+
+
+//upimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.explain_window_revolrution_card_1);  //7405
+//        downimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.explain_window_revolrution_card_1);
+//
+//        confirm_Button_card_1.setImages(upimage, downimage);
+//        confirm_Button_card_1.draw(canvas);
+//
+//        upimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.explain_window_revolrution_card_3);
+//        downimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.explain_window_revolrution_card_3);
+//
+//
+//
+//        confirm_Button_card_2.setImages(upimage, downimage);
+//        confirm_Button_card_2.draw(canvas);
+//
+//        upimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.explain_window_revolrution_card_2);
+//        downimage = BitmapFactory.decodeResource(_context.getResources(), R.drawable.explain_window_revolrution_card_3);
+//
+//        confirm_Button_card_3.setImages(upimage, downimage);
+//        confirm_Button_card_3.draw(canvas);
+//
+//
+//        //루비개수
+//        paint_Temp.setTextSize(convertPixelsToDp(25, _context));
+//        paint_Temp.setStyle(Paint.Style.FILL);
+//        paint_Temp.setColor(Color.BLACK);
+//
+//
+//
+//        if(main_Character.get_Tear() == 0){
+//        card_Ruby = 5;
+//        }else{
+//        card_Ruby = main_Character.get_Tear() * 5 + 5;
+//        }
+//        if(card_Ruby < 10){
+//        card_Ruby_Position = 5;
+//        }else {
+//        card_Ruby_Position = 11;
+//        }
+//
+//        canvas.drawText(card_Ruby +"", window_Width / 2 - convertPixelsToDp(card_Ruby_Position, _context), window_Height / 2 + convertPixelsToDp(7, _context), paint_Temp);
+//
+//        revolution_Flag = false;
