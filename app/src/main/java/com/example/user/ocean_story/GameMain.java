@@ -1671,6 +1671,9 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
             //오브젝트 풀링 물고기 가져오기
+            fish_List.clear();
+            ground_List.clear();
+
             fish_Total_Production();
             ground_Total_Production();
 
@@ -7846,10 +7849,10 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         public synchronized void run() {
 
             while (distroy_Run){    //일시정지 하고 나서 계속 돌린다.
-
+//Log.e("@","1");
 //            time_Sleep += add_Time;
                 while (mRun) {
-
+//                    Log.e("@","2");
 
 
 
@@ -9175,9 +9178,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
             if (wave_Count >= 20) {
                 wave_X_Point = 30 + (float) Math.random() * (window_Width - 100);
+
+                Log.e("@", ground_List.size() + " = i");
                 for (int i = 0; i < ground_List.size(); i++) {
                     if (ground_List.get(i) instanceof Ground_Drag_Wave) {
-                        ground_List.get(i).set_Position(wave_X_Point, -convertPixelsToDp(500, _context) + convertPixelsToDp(wave_Set_X_Temp * 15, _context));
+                        ground_List.get(i).set_Position(wave_X_Point, -convertPixelsToDp(700, _context) + convertPixelsToDp(wave_Set_X_Temp * 15, _context));
                         ground_List.get(i).set_Visible_Ground_Flag(true);
                         wave_Set_X_Temp++;
                     }
@@ -9385,7 +9390,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         for(int i=0; i<20; i++) {
             ground_drag_wave = new Ground_Drag_Wave(window_Width,
                     ground_Drag_Wave_img[0].getWidth(),
-                    ground_Drag_Wave_img[0].getHeight() , 1, ground_Drag_Wave_img[1].getWidth(), ground_Drag_Wave_img[0].getHeight(), wave_X_Point, -convertPixelsToDp(500, _context) + convertPixelsToDp(i*15, _context), dm.heightPixels);
+                    ground_Drag_Wave_img[0].getHeight() , 1, ground_Drag_Wave_img[1].getWidth(), ground_Drag_Wave_img[0].getHeight(), wave_X_Point, -convertPixelsToDp(700, _context) + convertPixelsToDp(i*15, _context), dm.heightPixels);
             ground_drag_wave.set_Visible_Ground_Flag(false);
             ground_List.add(ground_drag_wave); //파도
         }
@@ -9544,7 +9549,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             wave_X_Point = 30 + (float)Math.random() * (window_Width-100);
             for(int i=0; i<ground_List.size(); i++){
                 if(ground_List.get(i) instanceof Ground_Drag_Wave){
-                    ground_List.get(i).set_Position(wave_X_Point, -convertPixelsToDp(500, _context) + convertPixelsToDp(wave_Set_X_Temp*15, _context));
+                    ground_List.get(i).set_Position(wave_X_Point, -convertPixelsToDp(700, _context) + convertPixelsToDp(wave_Set_X_Temp*15, _context));
                     ground_List.get(i).set_Visible_Ground_Flag(true);
                     wave_Set_X_Temp++;
                 }
@@ -9910,7 +9915,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         for(int i=30; i>=00; i--) {
             ground_drag_wave = new Ground_Drag_Wave(window_Width,
                     ground_Drag_Wave_img[0].getWidth(),
-                    ground_Drag_Wave_img[0].getHeight() , 1, ground_Drag_Wave_img[1].getWidth(), ground_Drag_Wave_img[0].getHeight(), wave_X_Point, -convertPixelsToDp(500, _context) - convertPixelsToDp(i*15, _context), dm.heightPixels);
+                    ground_Drag_Wave_img[0].getHeight() , 1, ground_Drag_Wave_img[1].getWidth(), ground_Drag_Wave_img[0].getHeight(), wave_X_Point, -convertPixelsToDp(700, _context) - convertPixelsToDp(i*15, _context), dm.heightPixels);
 
             ground_List.add(ground_drag_wave); //파도
         }
@@ -9980,7 +9985,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             game_thread.function_Land_Mark_5();
             land_Mark = new Land_Mark(window_Width, land_Mark5_img[0].getWidth(), land_Mark5_img[0].getHeight(), 400, (window_Width / 2) - (land_Mark5_img[0].getWidth() / 2), (window_Height / 2) - (land_Mark5_img[0].getHeight() / 2));
             effect_Bird.position((window_Width / 2) - (land_Mark5_img[0].getWidth() / 2)+ convertPixelsToDp(55, _context), (window_Height / 2) - (land_Mark5_img[0].getHeight() / 2) + convertPixelsToDp(30, _context));
-        }else if(land_Mark_Class == 6){
+        }else {
             game_thread.function_Land_Mark_6();
             land_Mark = new Land_Mark(window_Width, land_Mark6_img[0].getWidth(), land_Mark6_img[0].getHeight(), 400, (window_Width / 2) - (land_Mark6_img[0].getWidth() / 2), (window_Height / 2) - (land_Mark6_img[0].getHeight() / 2));
             effect_Bird.position((window_Width / 2) - (land_Mark6_img[0].getWidth() / 2), (window_Height / 2) - (land_Mark6_img[0].getHeight() / 2) + convertPixelsToDp(30, _context));
@@ -13519,7 +13524,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         return character_Explain_DB;
     }
 
-
+    boolean start = true;
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
@@ -13527,10 +13532,17 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         window_Width = width; //화면의 크기
         window_Height = height;
 
+        if(game_thread != null) {
+            game_thread.interrupt();
+            game_thread = null;
+        }
         game_thread = new Game_Thread(/*holder*/);  //쓰레드가 홈버튼을 누름으로 인해 파괴 된다면 다시 생성
         game_thread.start(); //게임
+        start = false;
 
 
+//        이부분이 추가되면 홈 버튼 했다가도 불러와진다. 그러나 recycle 함수 오류를 잡아야 할 듯.
+        distroy_Run = true;
 
 
 
