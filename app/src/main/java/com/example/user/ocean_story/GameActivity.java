@@ -293,10 +293,11 @@ public class GameActivity extends AppCompatActivity {
         if(!home_Chaeck) {
 
 
-
             Log.e("@", "Home키 !!");
 //            gameMain.set_Home_Restart(false);
             gameMain.set_Home_Setting();
+
+
         }
         home_Chaeck = false;
     }

@@ -1266,6 +1266,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
 
+
     }
 
 
@@ -3556,6 +3557,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
                     if(revolution_Button_Activation ){
+
                         m_Run_False();
                         revolution_Button_Activation = false;
                         //            진화버튼 제거
@@ -3576,7 +3578,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                     if(pause_State){
                         pause_State = false;
                     }
-
+                    home_Revolution_Flag = false;
 
                     /**
                      *  배경이미지
@@ -7388,7 +7390,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                         if(revolution_Flag && !pause_State) {
 
                             Log.e("a","@@@");
-
+                            home_Revolution_Flag = true;
+//                            revolution_Flag -> 돌아오면 false 로 바뀜
 
                             stage_Call_Revolution();
                             Log.e("@","@ 진화의 버튼 눌러짐");
@@ -7446,6 +7449,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                             revolution_Flag = false;
 
                         }
+
+
 
                     }
 
@@ -7909,11 +7914,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 //                    send_Fish();
 //                    send_Ground();
 
-                        Log.e("@", home_Restart_Flag + "@#");
+
                         //홈 버튼 누르고 복귀시에 한 번 그리고 정지 시키기 위함
                         if(home_Restart_Flag) {
                             m_Run_False();
                         }
+
 
                         //문어 공격 스피드에 따라서 터치 이벤트 제어
                         if (main_Character.get_Attack_Cool_time() != 0) {
@@ -11730,6 +11736,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
                             //확인 버튼
                             revolution_Flag_Confirm = false; //변신창 확인 누르먄 재시작
+
                             //추출버튼
                             Extraction = true;
 
@@ -11760,6 +11767,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 //확인 버튼
                             revolution_Flag_Confirm = false; //변신창 확인 누르먄 재시작
+
                             m_Run_True();   //게임 재게
 
 
@@ -11777,6 +11785,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
                             //확인 버튼
                             revolution_Flag_Confirm = false; //변신창 확인 누르먄 재시작
+
                             m_Run_True();   //게임 재게
 
 
@@ -11791,6 +11800,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
                             //확인 버튼
                             revolution_Flag_Confirm = false; //변신창 확인 누르먄 재시작
+
                             m_Run_True();   //게임 재게
 
                         }
@@ -13536,12 +13546,26 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     boolean home_Restart_Flag = false;
     public void set_Home_Restart(boolean flag){
         home_Restart_Flag = flag;
+
+        //복귀시 진화의창이 꺼진다.
+        if(home_Revolution_Flag){   //back 버튼
+            m_Run_False();
+            revolution_Flag = true;
+            pause_State = false;
+//            home_Revolution_Flag = false;
+        }
+
     }
+    //홈 버튼 복귀시에 진화의창이 떠있지 앉는다.
+    boolean home_Revolution_Flag = false;
+
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
         Log.e("[뷰]", "교체");
+
+
 
 
 
@@ -13574,6 +13598,15 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
                 m_Run_True();
+
+            //복귀시 진화의창이 꺼진다.
+            if(home_Revolution_Flag){   //home 버튼
+                m_Run_False();
+
+                revolution_Flag = true;
+                pause_State = false;
+            }
+
 
 
             return;
