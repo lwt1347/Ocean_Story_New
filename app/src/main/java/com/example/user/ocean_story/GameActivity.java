@@ -127,7 +127,7 @@ public class GameActivity extends AppCompatActivity {
 
             //퍼지 버튼 눌렀을때 이미지 변경
             button_Pause.setBackgroundResource(R.drawable.pause_2);
-
+            gameMain.set_Home_Restart(true);
             gameMain.m_Run_False(true);
 
         }
@@ -267,7 +267,11 @@ public class GameActivity extends AppCompatActivity {
 
                 gameMain.m_Run_False(true);
 
+                Log.e("@", "back");
+                home_Chaeck = true;
                 break;
+
+
         }
 
 //        ((AudioManager)getSystemService(AUDIO_SERVICE)).
@@ -275,14 +279,27 @@ public class GameActivity extends AppCompatActivity {
 //        e_Vol = 5;
         gameMain.sound_Tuto_Value(e_Vol, b_Vol, tuto, vive);
 
+
+
         return true;
 //        return super.onKeyDown(keyCode, event);
     }
 
+    boolean home_Chaeck = false;
+
+    @Override
+    protected void onUserLeaveHint() {
+        super.onUserLeaveHint();
+        if(!home_Chaeck) {
 
 
 
-
+            Log.e("@", "Home키 !!");
+//            gameMain.set_Home_Restart(false);
+            gameMain.set_Home_Setting();
+        }
+        home_Chaeck = false;
+    }
 
     /**
      * 사전 버튼
@@ -308,7 +325,7 @@ public class GameActivity extends AppCompatActivity {
             startActivityForResult(intent, 1002); //-
 
             //퍼지 버튼 눌렀을때 이미지 변경
-
+            gameMain.set_Home_Restart(true);
             gameMain.m_Run_False(true);
 
         }
@@ -378,10 +395,12 @@ public class GameActivity extends AppCompatActivity {
 
             if (key == 1) {
                 gameMain.m_Run_True(); //게임 재게
+                gameMain.set_Home_Restart(false);
             } else if (key == 2) {  //다시 시작
-                gameMain.m_Run_True();
-                gameMain.re_Start();
 
+                gameMain.re_Start();
+                gameMain.set_Home_Restart(false);
+                gameMain.m_Run_True();
             }
             else if(key == 3){ //종료
                 gameMain.re_Start();
@@ -413,7 +432,7 @@ public class GameActivity extends AppCompatActivity {
             startActivityForResult(intent, 0); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출
 
 
-
+            gameMain.set_Home_Restart(true);
             gameMain.m_Run_False(true);
 
         }

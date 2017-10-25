@@ -7909,6 +7909,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 //                    send_Fish();
 //                    send_Ground();
 
+                        Log.e("@", home_Restart_Flag + "@#");
+                        //홈 버튼 누르고 복귀시에 한 번 그리고 정지 시키기 위함
+                        if(home_Restart_Flag) {
+                            m_Run_False();
+                        }
 
                         //문어 공격 스피드에 따라서 터치 이벤트 제어
                         if (main_Character.get_Attack_Cool_time() != 0) {
@@ -13525,10 +13530,55 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     boolean start = true;
+
+
+    //일시정지, 설정, 사전 등이 눌려 있을때 홈 버튼 갔다 와도 실행 안되도록
+    boolean home_Restart_Flag = false;
+    public void set_Home_Restart(boolean flag){
+        home_Restart_Flag = flag;
+    }
+
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
-        //Log.i("[뷰]", "교체");
+        Log.e("[뷰]", "교체");
+
+
+
+        if(home_Set_Flag){
+
+//            홈 갔다 오는 부분 되지만..
+//            가시 같은 스킬 없어지는듯.
+//            퍼지나, 진화의 창 떴을때 홈 버튼 갔다 돌아오면 진화의 창 없어지고, 퍼지 가 뜬 상태에서 실행됨.
+
+            game_thread.function_Skill_Crab_img();
+            game_thread.function_Skill_Soycrab_img();
+            game_thread.function_Skill_Laser_img();
+            game_thread.function_Skill_Thorn_img();
+            game_thread.function_Skill_Poison123_img();
+            game_thread.function_Skill_earthquake_img();
+            game_thread.function_Skill_Teeth_mine_img();
+            game_thread.function_Skill_Teeth_mine2_img();
+            game_thread.function_Skill_Sea_Snake_img();
+            game_thread.function_Skill_Slow_Cloud_img();
+            game_thread.function_Skill_Boom_Poison_img();
+            game_thread.function_Skill_Wave_img();
+            game_thread.function_Skill_wall_img();
+            game_thread.function_Skill_Thorn2_img();
+            game_thread.function_Skill_lightnign_img();
+            game_thread.function_Skill_lightnign1_img();
+            game_thread.function_Skill_stomp_img();
+            game_thread.function_Skill_fry_img();
+            game_thread.function_Skill_Butter_img();
+            game_thread.function_Skill_Fork_img();
+
+
+                m_Run_True();
+
+
+            return;
+        }
+
         window_Width = width; //화면의 크기
         window_Height = height;
 
@@ -13850,9 +13900,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
             //여기 한번더 테스팅 해보고, 진화, 혹은 퇴화 할때 드로우 에러
-
-
-
             //스킬 이미지 로드 하기
             game_thread.function_Skill_Crab_img();
             game_thread.function_Skill_Soycrab_img();
@@ -13874,6 +13921,9 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             game_thread.function_Skill_fry_img();
             game_thread.function_Skill_Butter_img();
             game_thread.function_Skill_Fork_img();
+
+
+
 
 
         }
@@ -14838,15 +14888,21 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     SharedPreferences.Editor editor;
     SharedPreferences pref;
 
-
+    boolean home_Set_Flag = false;
+    public void set_Home_Setting(){
+        home_Set_Flag = true;
+    }
 
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
 
+        if(home_Set_Flag){
+            m_Run_False();
+            return;
+        }
 
-
-        Log.i("[뷰]", "파괴@@@@@@@@@@@@@2");
+        Log.e("[뷰]", "파괴@@@@@@@@@@@@@2");
 
         soundPool.release();
 
