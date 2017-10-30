@@ -1,5 +1,7 @@
 package com.example.user.ocean_story;
 
+import android.util.Log;
+
 import java.util.Random;
 
 /**
@@ -254,8 +256,9 @@ public class Main_Character {
     /**
      * 캐릭터 hp 감소
      */
-
+    boolean hit_Flag = false;
     public void set_Hp_Minus(){
+        hit_Flag = true;
         main_Character_Hp --;
     }
 
@@ -397,6 +400,30 @@ public class Main_Character {
             character_Draw_Status = 0;
         }
     }
+
+    /**
+     *  처맞았을때 효과 [피격 효과]
+     */
+    int blood = -1;
+    public int get_Character_Hit(){
+
+        if(hit_Flag){
+            blood++;
+            if(blood > 9){
+                blood = -1;
+                hit_Flag = false;
+            }
+            Log.e("@",blood/3 +  " #");
+            return blood/3;
+        }
+        return -1;
+
+
+
+
+
+    }
+
 
     //********************************************************************************************//
 

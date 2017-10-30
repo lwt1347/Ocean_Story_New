@@ -370,6 +370,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     private Bitmap main_Character_Img[] = new Bitmap[6];        //메인 캐릭터
     private Bitmap main_Character_Img_1[] = new Bitmap[6];        //메인 캐릭터
 
+    private Bitmap main_Character_Blood_Img[] = new Bitmap[6];        //메인 캐릭터
+
+    //게임오버 이미지
+    private Bitmap gameover_Img = null;
+
+
     //회전 물고기 비트맵 템프 변수
     private Bitmap temp_Fish = null;
 
@@ -1048,7 +1054,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
     public void re_Start(){
 
-
+        gameover_Flag = false;
 
         //모든 캐릭터
         for(int i=0; i<fish_List.size(); i++){
@@ -1163,8 +1169,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         //메인 캐릭터
         Init_Main_Character_Image(_context, main_Character);
         main_Character = new Main_Character_Plankton_1((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
-//        game_thread.function_Skill_Soycrab_img();
-
+//        game_thread.function_Skill_Thorn2_img();
+//        game_thread.function_Skill_Butter_img();
 
 
         //재시작 하면 초기화
@@ -1225,9 +1231,14 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 //        background_Sound.release();
         background_Sound.stop();
 //        gameActivity.finish();
-
     }
+    public void bg_Sound(){
+        background_Sound = MediaPlayer.create(_context, R.raw.background_music_1);
+        background_Sound.setLooping(true);
 
+        background_Sound.setVolume(0.5f,0.5f);
+        background_Sound.start();
+    }
 
 
 
@@ -1321,6 +1332,16 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             effect_Slow_img[2] = image.getBitmap();
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.effect_slow_4);
             effect_Slow_img[3] = image.getBitmap();
+
+            /**
+             * 처 맞을때 효과
+             */
+            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.character_blood_1);
+            main_Character_Blood_Img[0] = image.getBitmap();
+            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.character_blood_2);
+            main_Character_Blood_Img[1] = image.getBitmap();
+            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.character_blood_3);
+            main_Character_Blood_Img[2] = image.getBitmap();
 
 
             /**
@@ -1505,8 +1526,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.shadow_turtle);
             shadow_img[7] = image.getBitmap();
 
-
-
+            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.gameover_massage);
+            gameover_Img = image.getBitmap();
 
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.ground_drag_wave_s);
             ground_Drag_Wave_img[0] =  image.getBitmap();
@@ -4135,6 +4156,14 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
                     draw_Main_Character_Draw();  //메인 캐릭터 기본 이미지
                     main_Character.character_Move();    //메인 캐릭터 움직임 효과
+
+
+                    // 피 효과 그리기
+                    if(main_Character.get_Character_Hit() >= 0){
+
+                        draw.draw_Bmp(canvas, main_Character_Blood_Img[main_Character.get_Character_Hit()],  main_Character.get_Main_Character_Point_X() + (main_Character_Img[0].getWidth()/4) + random.nextInt((main_Character_Img[0].getWidth()/2)) , main_Character.get_Main_Character_Point_Y() + random.nextInt((main_Character_Img[0].getHeight()/2)));
+                    }
+
                 }catch (Exception e){
                     Log.e("메인 캐릭터", "메인 캐릭터");
                 }
@@ -4603,16 +4632,16 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
                             //속도가 0인 객체 위에 달팽이 [슬로우 이팩트를 그린다.]
-                            if(ground_List.get(i).get_Ground_Speed() <= 0 && !(ground_List.get(i) instanceof Land_Mark)){
-                                draw.draw_Bmp(canvas, effect_Slow_img[0],
-                                        ground_List.get(i).get_Ground_Point_X(),
-                                        ground_List.get(i).get_Ground_Point_Y() - convertPixelsToDp(13, _context));
+                            if(ground_List.get(i).get_Ground_Speed() <= 0 && (!(ground_List.get(i) instanceof Land_Mark))){
 
+                                    draw.draw_Bmp(canvas, effect_Slow_img[0],
+                                            ground_List.get(i).get_Ground_Point_X(),
+                                            ground_List.get(i).get_Ground_Point_Y() - convertPixelsToDp(13, _context));
 
+                                    draw.draw_Bmp(canvas, effect_Slow_img[ground_List.get(i).get_Slow_Effect()],
+                                            ground_List.get(i).get_Ground_Point_X(),
+                                            ground_List.get(i).get_Ground_Point_Y());
 
-                                draw.draw_Bmp(canvas, effect_Slow_img[ground_List.get(i).get_Slow_Effect()],
-                                        ground_List.get(i).get_Ground_Point_X(),
-                                        ground_List.get(i).get_Ground_Point_Y());
                             }
 
                             //독 상태 이상에 걸린 객체에 포이즌 마크를 표시한다.
@@ -6352,7 +6381,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                     for(int i=0; i<skill_Thorn2_List.size(); i++){
 
                         draw.draw_Bmp(canvas, skill_Thorn2_img[skill_Thorn2_List.get(i).get_Skill_Status()], skill_Thorn2_List.get(i).get_X_Point(), skill_Thorn2_List.get(i).get_Y_Point());
-                        skill_Thorn2_List.get(i).set_Skill_Move(convertPixelsToDp(30, _context));
+                        skill_Thorn2_List.get(i).set_Skill_Move(convertPixelsToDp(45, _context));
 
 
 
@@ -6364,6 +6393,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                             }
                             if(skill_Thorn2_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Thorn2_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size() + convertPixelsToDp(10, _context)){
                                 if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Thorn2_List.get(i).get_Y_Point() && skill_Thorn2_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()+ convertPixelsToDp(10, _context)){
+
                                     fish_List.get(j).set_Hp_Minus(10);
                                     soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                                     skill_Thorn2_List.get(i).set_Live();
@@ -6386,6 +6416,10 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
                             if(!ground_List.get(j).get_Visible_Ground_Flag()){
+                                continue;
+                            }
+                            //조개 통과
+                            if(ground_List.get(j) instanceof Ground_Drag_Clam){
                                 continue;
                             }
                             if(!(ground_List.get(j) instanceof Land_Mark)) {
@@ -7096,6 +7130,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
 
+
                 try{
 
                     //나인패치 적용한 hp 그리기
@@ -7184,7 +7219,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                 try{
 
 
-
+//                    nine_Patch_Hp = Bitmap.createScaledBitmap(nine_Patch_Hp, (dm.widthPixels)/10*8, -convertPixelsToDp(50, _context), false); //배경 화면 어둡게
                     draw.draw_Bmp(canvas, nine_Patch_Hp, 20, 1); //나인패치 적용방법
 
 
@@ -7465,7 +7500,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
 
 
-
                         //추출 창
 //            explain_Window_Extraction
                         m_Run_False(); //게임 멈춤
@@ -7684,13 +7718,13 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                                 window_Height/2 - convertPixelsToDp(380, _context));
 
                         if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 0){
-                            soundPool.play(sound_Effect[4], pop_Drag, pop_Drag, 0, 0, 1.0F);
+                            soundPool.play(sound_Effect[4], pop_Drag/2, pop_Drag/2, 0, 0, 1.0F);
                         }else if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 4){
 //                soundPool.play(sound_Effect[5], 0.5F, 0.5F, 1, 1, 1.0F);
                         }else if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 6){
 //                soundPool.play(sound_Effect[6], 0.5F, 0.5F, 1, 1, 1.0F);
                         }else if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 7){
-                            soundPool.play(sound_Effect[7], pop_Drag, pop_Drag, 0, 0, 1.0F);
+                            soundPool.play(sound_Effect[7], pop_Drag/2, pop_Drag/2, 0, 0, 1.0F);
                         }
 
 
@@ -7788,14 +7822,14 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
                             draw.draw_Bmp(canvas, explain_Window_ima,
                                     window_Width - convertPixelsToDp(275, _context),
-                                    convertPixelsToDp(170, _context));
+                                    convertPixelsToDp(185, _context));
                         }else if(first_Text_Explain_Index == 8){
                             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_m8);
                             explain_Window_ima = image.getBitmap();
 
                             draw.draw_Bmp(canvas, explain_Window_ima,
                                     window_Width - convertPixelsToDp(320, _context),
-                                    convertPixelsToDp(200, _context));
+                                    convertPixelsToDp(220, _context));
                         }else if(first_Text_Explain_Index == 9){
                             image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.explain_window_m9);
                             explain_Window_ima = image.getBitmap();
@@ -7826,10 +7860,32 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         }
 
 
+        /**
+         * 게임 오버 글자 크기 변경 함수
+         */
+        int gameover_Text_Temp = 0;
+        int gameover_Text_Time = 0;
+
+        public int gameover_Test_Size_Change(){
+
+            if(gameover_Text_Time%2 == 0) {
+                if (gameover_Text_Time < 20) {
+                    gameover_Text_Temp += 5;
+                } else {
+                    gameover_Text_Temp -= 5;
+                }
+            }
+
+
+            gameover_Text_Time++;
+            if(gameover_Text_Time >= 40){
+                gameover_Text_Time = 0;
+            }
 
 
 
-
+            return convertPixelsToDp(gameover_Text_Temp, _context);
+        }
 
 
 
@@ -7850,6 +7906,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         long frame = 20L;
         long frame_Start = 0;
 //    long time_Sleep = 0;
+
+
 
         public synchronized void run() {
 
@@ -7887,7 +7945,26 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                         /**
                          * 그림 그리기 구간
                          */
-                        doDraw(canvas);
+                        if(!gameover_Flag) {
+                            doDraw(canvas);
+                        }
+
+                            try{
+                                //게임 오버 이팩트
+                                if(main_Character.get_Hp() <= 0){
+                                    draw.draw_Bmp(canvas, backGroundImg_black,0, 0);
+                                    gameover_Img = Bitmap.createScaledBitmap(gameover_Img, dm.widthPixels/2 + gameover_Test_Size_Change(), dm.heightPixels/8 + gameover_Test_Size_Change(), false);
+                                    draw.draw_Bmp(canvas, gameover_Img, window_Width/2 - gameover_Img.getWidth()/2, window_Height/2 - gameover_Img.getHeight()/2);
+
+//                            일때 클릭하면 일시정지창, 다시하기가 꺼진
+                                    gameover_Flag = true;
+                                    stage_Day.cancel();
+                                }
+                            }catch (Exception e){
+                                Log.e("a",e.getMessage());
+                                Log.e("a",e.toString());
+                                Log.e("a"," 게임 오버 이벤트");
+                            }
 
 //                        Thread.sleep(15);
 
@@ -10478,8 +10555,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                                         skill_Teeth_Mine = new Skill_Teeth_Mine(0,0);
                                         skill_Teeth_Mine.set_Position(window_Width, window_Height);
 
-                                        //이빨 지뢰 10개 이하
-                                        if(skill_Teeth_Mine_List.size() < 10){
+                                        //이빨 지뢰 5개 이하
+                                        if(skill_Teeth_Mine_List.size() < 5){
                                             skill_Teeth_Mine_List.add(skill_Teeth_Mine);
                                         }else {
                                             skill_Teeth_Mine_List.remove(0);
@@ -10563,9 +10640,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                                         }
 
                                     }else if((main_Character instanceof Main_Character_Shellfish_Tear6 || skill_Shellfish_Extract_Nomar[5]) && random.nextInt(100) < st6 + 20){
-                                        //가시2 소환
-                                        skill_Thorn2 = new Skill_Thorn2(30 + random.nextFloat() * (window_Width - 30), window_Height);
-                                        skill_Thorn2_List.add(skill_Thorn2);
+                                        //가시2 소환 7개 이하일때
+                                        if(skill_Thorn2_List.size() <= 7) {
+                                            skill_Thorn2 = new Skill_Thorn2(30 + random.nextFloat() * (window_Width - 30), window_Height);
+                                            skill_Thorn2_List.add(skill_Thorn2);
+                                        }
                                     }else if((main_Character instanceof Main_Character_Fish_Tear7 || skill_Fish_Extract_Nomar[6]) && random.nextInt(100) < ft7 + 3){
                                         //번개 소환
                                         skill_Lightning = new Skill_Lightning(30 + random.nextFloat() * (window_Width - 30), window_Height);
@@ -10664,7 +10743,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                                             //이빨 지뢰 소환
                                             skill_Teeth_Mine = new Skill_Teeth_Mine(0,0);
                                             skill_Teeth_Mine.set_Position(window_Width, window_Height);
-                                            if(skill_Teeth_Mine_List.size() < 10){
+                                            //이빨 지뢰 7개 이하
+                                            if(skill_Teeth_Mine_List.size() < 5){
                                                 skill_Teeth_Mine_List.add(skill_Teeth_Mine);
                                             }else {
                                                 skill_Teeth_Mine_List.remove(0);
@@ -10750,8 +10830,10 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
                                         }else if((main_Character instanceof Main_Character_Shellfish_Tear6 || skill_Shellfish_Extract_Nomar[5]) && random.nextInt(100) < st6 + 20){
                                             //가시2 소환
-                                            skill_Thorn2 = new Skill_Thorn2(30 + random.nextFloat() * (window_Width - 30), window_Height);
-                                            skill_Thorn2_List.add(skill_Thorn2);
+                                            if(skill_Thorn2_List.size() <= 7) {
+                                                skill_Thorn2 = new Skill_Thorn2(30 + random.nextFloat() * (window_Width - 30), window_Height);
+                                                skill_Thorn2_List.add(skill_Thorn2);
+                                            }
                                         }else if((main_Character instanceof Main_Character_Fish_Tear7 || skill_Fish_Extract_Nomar[6]) && random.nextInt(100) < ft7 + 3){
                                             //번개 소환
                                             skill_Lightning = new Skill_Lightning(30 + random.nextFloat() * (window_Width - 30), window_Height);
@@ -11206,9 +11288,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                         //드래그된 조게의 체력을 깍는다.
                         if(main_Character.get_Damage() > 1) {
                             character_Damege = 1 + random.nextInt(main_Character.get_Damage());
+
                         }
 
                         ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus(character_Damege);
+
+                        main_Character.set_Hp_Minus();
 
                         return true;
 
@@ -11601,7 +11686,10 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     boolean down = false;
 
 
-
+    /**
+     * 게임 오버시 게임 조절
+     */
+    boolean gameover_Flag = false;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -11613,6 +11701,13 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         touchy = (int) event.getY();
         try {
 
+            if(gameover_Flag){
+
+                //게임 오버 했을때 뜰 창
+                gameActivity.popup_Menu();
+
+                return true;
+            }
 
             if(!mRun){
                 if(tutorial_Flag) {
@@ -12728,6 +12823,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                 revolution_Button_Activation_Down = true;
             } else if (revolution_Button.touch(touchx, touchy) && event.getAction() == MotionEvent.ACTION_UP) {
                 revolution_Button_Activation_Up = true;
+                soundPool.play(sound_Effect[16], pop_Drag, pop_Drag, 0, 0, 1.0F);
             }
 
             if (!revolution_Button.touch(touchx, touchy)) {
@@ -13514,6 +13610,9 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 
         sound_Effect[15] = soundPool.load(_context, R.raw.warning, 1);     ///경고음
 
+        //진화 버튼 눌렀을때
+        sound_Effect[16] = soundPool.load(_context, R.raw.up, 1);     ///경고음
+
         sound_Effect[49] = soundPool.load(_context, R.raw.background_music_1, 1);     ///배경음
 
 
@@ -13574,6 +13673,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 //            홈 갔다 오는 부분 되지만..
 //            가시 같은 스킬 없어지는듯.
 //            퍼지나, 진화의 창 떴을때 홈 버튼 갔다 돌아오면 진화의 창 없어지고, 퍼지 가 뜬 상태에서 실행됨.
+            background_Sound = MediaPlayer.create(_context, R.raw.background_music_1);
+            background_Sound.setLooping(true);
+
+            background_Sound.setVolume(0.5f,0.5f);
+            background_Sound.start();
+            Log.e("@@@@@@@@","@@@@@@@@@@@@@@@@qor");
 
             game_thread.function_Skill_Crab_img();
             game_thread.function_Skill_Soycrab_img();
@@ -15009,6 +15114,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
 //        explain_Window_ima.recycle();     //재시작 떄문에 일단 리사이클 안함
         gold_img.recycle();
         ruby_img.recycle();
+
+        gameover_Img.recycle();
 
         explain_Window_Revoluition.recycle();
         explain_Window_Extraction.recycle();  //추출창

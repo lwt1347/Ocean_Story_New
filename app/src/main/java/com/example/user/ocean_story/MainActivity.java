@@ -22,6 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import static android.R.attr.key;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -54,17 +58,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
+
+//        ad = (AudioManager)getSystemService(AUDIO_SERVICE);
         //음향
         pref = this.getSharedPreferences("pref", Activity.MODE_APPEND);
         editor = pref.edit();
 
-        vol_E = pref.getInt("es",0);
+        vol_E = pref.getInt("3079D7D2B9C6AB20E98F623393188D67",0);
         set_Sound(vol_E);
 
-
-
-
         setContentView(R.layout.activity_main);
+
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("").build();
+        mAdView.loadAd(adRequest);
 
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
@@ -250,12 +257,17 @@ public class MainActivity extends AppCompatActivity {
 
             selectData();
 
+
+
         }
     }catch (Exception e){
         Log.e("onActivityResult", "onActivityResult");
     }
 
+
+
     }
+
 
 
     /**
@@ -357,15 +369,27 @@ public class MainActivity extends AppCompatActivity {
 
         startActivityForResult(intent, 1001);
 
+    }
 
 
+    /**
+     *  옵션 버튼
+     */
+    Intent intent;
+    public void onButtonOption(View view){
+
+
+            intent = new Intent(this, option_Panel.class);
+            //intent.putExtra("a", mRun);
+            startActivityForResult(intent, 0); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출
 
     }
+
     /**
      * 어항가기
      */
     public void onButtonFishbowl(View view){
-
+        soundPool.play(sound_Effect[0], sound, sound, 0, 0, 1.0F);   //성공
     }
 
     /**
@@ -385,6 +409,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
 
 }

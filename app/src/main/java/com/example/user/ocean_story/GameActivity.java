@@ -19,6 +19,10 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 import java.util.stream.Stream;
 
 public class GameActivity extends AppCompatActivity {
@@ -28,6 +32,9 @@ public class GameActivity extends AppCompatActivity {
     //SurfaceView surfaceView;
     GameMain gameMain; // 게임 화면
     Button button_Pause;
+    Button button_Shark;
+    Button button_NextStage;
+    Button button_Heal;
 
 
     //효과음
@@ -50,10 +57,13 @@ public class GameActivity extends AppCompatActivity {
 
         //퍼지 버튼
         button_Pause = (Button)findViewById(R.id.pause_Button);
-
+        button_Shark =  (Button)findViewById(R.id.call_FriendShark_Button);
+        button_NextStage = (Button)findViewById(R.id.next_Stage);
+        button_Heal = (Button)findViewById(R.id.heal_Button);
 
         //음향
         sound_Effect[0] = soundPool.load(this, R.raw.effect_window_sound, 1);      //팝1
+
 
 
         //_gGameMain.setZOrderOnTop(false);
@@ -110,6 +120,27 @@ public class GameActivity extends AppCompatActivity {
 
 
     Intent intent;
+
+    /**
+     * 게임 오버 당시 팝업될 창
+     */
+    public void popup_Menu(){
+        if(gameMain.get_m_Run()) {
+            Log.e("e", "ee");
+
+
+            intent = new Intent(this, menu_Sliding_Panel.class);
+            //intent.putExtra("a", mRun);
+            startActivityForResult(intent, 0); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출
+
+            //퍼지 버튼 눌렀을때 이미지 변경
+            button_Pause.setBackgroundResource(R.drawable.pause_2);
+            gameMain.set_Home_Restart(true);
+            gameMain.m_Run_False(true);
+
+        }
+    }
+
     /**
      * 퍼지 버튼
      */
@@ -265,6 +296,9 @@ public class GameActivity extends AppCompatActivity {
                 //퍼지 버튼 눌렀을때 이미지 변경
                 button_Pause.setBackgroundResource(R.drawable.pause_2);
 
+
+
+
                 gameMain.m_Run_False(true);
 
                 Log.e("@", "back");
@@ -287,6 +321,10 @@ public class GameActivity extends AppCompatActivity {
 
     boolean home_Chaeck = false;
 
+    boolean background_Sound_Cont = true;
+
+
+
     @Override
     protected void onUserLeaveHint() {
         super.onUserLeaveHint();
@@ -296,6 +334,13 @@ public class GameActivity extends AppCompatActivity {
             Log.e("@", "Home키 !!");
 //            gameMain.set_Home_Restart(false);
             gameMain.set_Home_Setting();
+
+            //설정창, 옵션창, 일시정치 창, 이 아닐때
+            if(background_Sound_Cont){
+                //배경음 종료
+                gameMain.exit();
+            }
+            background_Sound_Cont = true;
 
 
         }
@@ -329,6 +374,7 @@ public class GameActivity extends AppCompatActivity {
             gameMain.set_Home_Restart(true);
             gameMain.m_Run_False(true);
 
+            background_Sound_Cont = false;
         }
     }
 
@@ -344,9 +390,29 @@ public class GameActivity extends AppCompatActivity {
         if(gameMain.get_m_Run()) {
 //            Toast.makeText(getApplicationContext(), "상어 친구 호출", Toast.LENGTH_SHORT).show();
             gameMain.shark_Friend_Call();
+
+
+            button_Shark.setBackgroundResource(R.drawable.friend_shark_button_2);
+            button_Shark.setEnabled(false);
+
+            android.os.Handler h = new android.os.Handler();
+            h.postDelayed(shark_Task, 10000);
+
+            background_Sound_Cont = false;
+
         }
 
     }
+
+    private Runnable shark_Task = new Runnable() {
+        @Override public void run() {
+            // 실제 동작
+            button_Shark.setBackgroundResource(R.drawable.friend_shark_button_1);
+            button_Shark.setEnabled(true);
+        }
+    };
+
+
 
     /**
      * 넥스트 페이지
@@ -356,9 +422,24 @@ public class GameActivity extends AppCompatActivity {
         if(gameMain.get_m_Run()) {
             Toast.makeText(getApplicationContext(), "넥스트 스테이지", Toast.LENGTH_SHORT).show();
             gameMain.next_Stage_Call();
+
+            button_NextStage.setBackgroundResource(R.drawable.next_button_2);
+            button_NextStage.setEnabled(false);
+
+            android.os.Handler h = new android.os.Handler();
+            h.postDelayed(nextstage_Task, 2000);
+            background_Sound_Cont = false;
+
         }
     }
 
+    private Runnable nextstage_Task = new Runnable() {
+        @Override public void run() {
+            // 실제 동작
+            button_NextStage.setBackgroundResource(R.drawable.next_button_1);
+            button_NextStage.setEnabled(true);
+        }
+    };
 
     /**
      * 힐
@@ -368,8 +449,23 @@ public class GameActivity extends AppCompatActivity {
         if(gameMain.get_m_Run()) {
             Toast.makeText(getApplicationContext(), "힐", Toast.LENGTH_SHORT).show();
             gameMain.Heal_Call();
+
+            button_Heal.setBackgroundResource(R.drawable.heal_button_2);
+            button_Heal.setEnabled(false);
+
+            android.os.Handler h = new android.os.Handler();
+            h.postDelayed(heal_Task, 10000);
+            background_Sound_Cont = false;
         }
     }
+
+    private Runnable heal_Task = new Runnable() {
+        @Override public void run() {
+            // 실제 동작
+            button_Heal.setBackgroundResource(R.drawable.heal_button_1);
+            button_Heal.setEnabled(true);
+        }
+    };
 
 
     /**
@@ -397,11 +493,26 @@ public class GameActivity extends AppCompatActivity {
             if (key == 1) {
                 gameMain.m_Run_True(); //게임 재게
                 gameMain.set_Home_Restart(false);
+                gameMain.exit();
+                gameMain.bg_Sound();
             } else if (key == 2) {  //다시 시작
 
                 gameMain.re_Start();
                 gameMain.set_Home_Restart(false);
                 gameMain.m_Run_True();
+
+                button_Shark.setEnabled(true);
+                button_Shark.setBackgroundResource(R.drawable.friend_shark_button_1);
+
+                button_Heal.setEnabled(true);
+                button_Heal.setBackgroundResource(R.drawable.heal_button_1);
+
+                button_NextStage.setEnabled(true);
+                button_NextStage.setBackgroundResource(R.drawable.next_button_1);
+
+                background_Sound_Cont = false;
+                gameMain.exit();
+                gameMain.bg_Sound();
             }
             else if(key == 3){ //종료
                 gameMain.re_Start();
@@ -435,6 +546,8 @@ public class GameActivity extends AppCompatActivity {
 
             gameMain.set_Home_Restart(true);
             gameMain.m_Run_False(true);
+
+            background_Sound_Cont = false;
 
         }
     }

@@ -30,6 +30,10 @@ public class Ground_Drag_Clam  extends Ground_Default_Body{
 
     }
 
+    public void set_Ground_Speed(int param_Speed){
+//        speed = param_Speed;
+    }
+
     public void set_Position(){
 
         ground_Point_X = 100 + random.nextFloat() * (x- 150);

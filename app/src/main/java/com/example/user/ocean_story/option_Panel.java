@@ -118,15 +118,15 @@ public class option_Panel extends Activity {
         b_Sound.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                ((GameActivity)gameActivity._context_Send).set_Back_Sound(progress, sound_Check_E, check);
-                sound_Check_B = progress;
-                if(progress > 0){
-                    //음소거
-                    checkBox1.setChecked(false);
-                }
-                if(progress == 0 && e_Sound.getProgress() == 0){
-                    checkBox1.setChecked(true);
-                }
+                    ((GameActivity) gameActivity._context_Send).set_Back_Sound(progress, sound_Check_E, check);
+                    sound_Check_B = progress;
+                    if (progress > 0) {
+                        //음소거
+                        checkBox1.setChecked(false);
+                    }
+                    if (progress == 0 && e_Sound.getProgress() == 0) {
+                        checkBox1.setChecked(true);
+                    }
             }
 
             @Override

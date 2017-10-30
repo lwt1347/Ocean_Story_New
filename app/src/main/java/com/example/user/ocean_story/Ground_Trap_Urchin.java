@@ -43,6 +43,9 @@ public class Ground_Trap_Urchin extends Ground_Default_Body {
     }
 
 
+    public void set_Ground_Speed(int param_Speed){
+//        speed = param_Speed;
+    }
 
 
     @Override

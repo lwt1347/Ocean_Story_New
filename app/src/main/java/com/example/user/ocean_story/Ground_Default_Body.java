@@ -209,6 +209,7 @@ public class Ground_Default_Body {
 
         ground_Point_X = 30 + (float)Math.random() * (window_Width);         //생성될 위치
         ground_Point_Y = -100 - random.nextInt(100);
+
     }
     public void set_Position(float x, float y){
         ground_Point_X = x;       // x축 = 10 ~ 윈도우 널이 - 100 사이에서 생성
