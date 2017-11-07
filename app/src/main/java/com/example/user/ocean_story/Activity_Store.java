@@ -24,18 +24,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+
+
 
 /**
  * Created by Lee on 2017-07-31.
  */
 
-public class Activity_Store extends Activity {
+public class Activity_Store extends Activity{
     Item_Adapter adapter;
-
-
 
 
     double info [] = new double[50];
@@ -76,6 +80,13 @@ public class Activity_Store extends Activity {
         set_Sound(vol_E);
 
 
+        //배너 광고 띄우기
+        Firebase.setAndroidContext(this);
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("3079D7D2B9C6AB20E98F623393188D67").build();
+        mAdView.loadAd(adRequest);
+
+
         f = NumberFormat.getInstance();
 
         Intent intent = getIntent();
@@ -107,6 +118,8 @@ public class Activity_Store extends Activity {
 //        adapter.addItem(new Activity_Store_Item("dragdamage", "드래그 대미지 증가"));
 //        adapter.addItem(new Activity_Store_Item("score", "점수"));
 //        adapter.addItem(new Activity_Store_Item("money", "돈"));
+
+
         adapter.addItem(new Activity_Store_Item("ruby", 0, 10000000, R.drawable.store_explain_ruby, R.drawable.button_store_buy, 1));
 
 

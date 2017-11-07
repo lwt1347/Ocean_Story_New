@@ -35,12 +35,15 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.google.android.gms.ads.AdRequest;
+
 /**
  * Created by USER on 2017-01-21.
  * 게임의 모든 화면
  */
 
-public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
+public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
+
 
 
     /**
@@ -730,6 +733,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
     Skill_Lightning2 skill_Lightning2;
     ArrayList<Skill_Lightning2>skill_Lightning2_List = new ArrayList<Skill_Lightning2>();
     Matrix sideInversion;
+
+
+
+    //광고 변수
+
     /**
      * 기본 생성자
      */
@@ -749,6 +757,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         //화면 껏다 켯을때 컨트롤
         km = (KeyguardManager) _context.getSystemService(Context.KEYGUARD_SERVICE);
         gameActivity = (GameActivity) _context;
+
 
 
 
@@ -1317,6 +1326,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
             dm = _context.getApplicationContext().getResources().getDisplayMetrics();
             backGroundImg = Bitmap.createScaledBitmap(backGroundImg, dm.widthPixels, dm.heightPixels, false);
             backGroundImg_black = Bitmap.createScaledBitmap(backGroundImg_black, dm.widthPixels, dm.heightPixels, false); //배경 화면 어둡게
+
 
 
 
@@ -7718,13 +7728,13 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
                                 window_Height/2 - convertPixelsToDp(380, _context));
 
                         if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 0){
-                            soundPool.play(sound_Effect[4], pop_Drag/2, pop_Drag/2, 0, 0, 1.0F);
+                            soundPool.play(sound_Effect[4], pop_Drag/15, pop_Drag/15, 0, 0, 1.0F);
                         }else if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 4){
 //                soundPool.play(sound_Effect[5], 0.5F, 0.5F, 1, 1, 1.0F);
                         }else if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 6){
 //                soundPool.play(sound_Effect[6], 0.5F, 0.5F, 1, 1, 1.0F);
                         }else if(background_Effect_Friend_Shark_Call.get_Draw_Background_Effect_Status() == 7){
-                            soundPool.play(sound_Effect[7], pop_Drag/2, pop_Drag/2, 0, 0, 1.0F);
+                            soundPool.play(sound_Effect[7], pop_Drag/15, pop_Drag/15, 0, 0, 1.0F);
                         }
 
 
@@ -9558,7 +9568,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         //조개
         else if(ground_List.get(select_Ground_Num) instanceof Ground_Drag_Clam){
             ground_List.get(select_Ground_Num).set_Ground_Hp(5000);
-            ruby += 1;
+//            ruby += 1;
         }
 
         //성게
@@ -13566,13 +13576,13 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback{
         int monster_Explain_Db_Temp = 0;
         for(int i=67; i<87; i++){
             monster_Explain_Db[monster_Explain_Db_Temp] = (int)setIntent[i];
-            Log.e("@", "setIntent = " + monster_Explain_Db[monster_Explain_Db_Temp] + " , " + monster_Explain_Db_Temp);
+//            Log.e("@", "setIntent = " + monster_Explain_Db[monster_Explain_Db_Temp] + " , " + monster_Explain_Db_Temp);
             monster_Explain_Db_Temp++;
         }
 
-        for(int i=0; i<setIntent.length; i++){
-            Log.e("a",setIntent[i] + "@" + i);
-        }
+//        for(int i=0; i<setIntent.length; i++){
+//            Log.e("a",setIntent[i] + "@" + i);
+//        }
 
         int character_Explain_DB_Temp = 0;
         for(int i = 87; i<122; i++){

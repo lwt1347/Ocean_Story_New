@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
@@ -12,6 +14,8 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -20,14 +24,27 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import static android.R.attr.key;
+
+import com.firebase.client.Firebase;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
-public class MainActivity extends AppCompatActivity {
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
+public class MainActivity extends AppCompatActivity implements RewardedVideoAdListener{
+
+    public static MainActivity mainActivity;
+    RewardedVideoAd mRewardedVideoAd;
 
     double info[] = new double[150];
 
@@ -51,7 +68,62 @@ public class MainActivity extends AppCompatActivity {
 
     int dbset;
 
+    private void loadRewardedVideoAd() {
+        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+                new AdRequest.Builder().addTestDevice("3079D7D2B9C6AB20E98F623393188D67").build());
+    }
 
+    // 현재시간을 msec 으로 구한다.
+    long now;
+    // 현재시간을 date 변수에 저장한다.
+    Date date;
+    // 시간을 나타냇 포맷을 정한다 ( yyyy/MM/dd 같은 형태로 변형 가능 )
+    SimpleDateFormat sdfNow = new SimpleDateFormat("dd");
+//    yyyy/MM/dd HH:mm:ss
+    // nowDate 변수에 값을 저장한다.
+    String formatDate;
+    TextView time_Text;
+
+//    private class Timer_Text extends Thread {
+//        public void run() {
+//            while(true) {
+//                try {
+//                    sleep(1000);
+//
+//                    now = System.currentTimeMillis();
+//                    date = new Date(now);
+//                    formatDate = sdfNow.format(date);
+//
+//                    Message msg = handler.obtainMessage();
+//                    handler.sendMessage(msg);
+//                    Log.e("@","2");
+//
+//                } catch (Exception e) {
+//                    Log.e("@", "!");
+//                }
+//            }
+//        }
+//    }
+//
+//    final Handler handler = new Handler()
+//    {
+//        public void handleMessage(Message msg)
+//
+//        {
+//            Log.e("@","3");
+//            time_Text.setText(formatDate);
+//            Log.e("@","4");
+//
+//        }
+//
+//    };
+
+
+    int advertisement_Count = 25;
+    int day_1 = 0;
+    int day_2 = 0;
+
+    boolean advertisement_Count_Flag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,14 +136,77 @@ public class MainActivity extends AppCompatActivity {
         pref = this.getSharedPreferences("pref", Activity.MODE_APPEND);
         editor = pref.edit();
 
-        vol_E = pref.getInt("3079D7D2B9C6AB20E98F623393188D67",0);
+        advertisement_Count = pref.getInt("advertisement", 25);
+
+        day_1 = pref.getInt("day_1",0);
+        day_2 = 0;//현재
+
+        now = System.currentTimeMillis();
+        date = new Date(now);
+        formatDate = sdfNow.format(date);
+        day_2 = Integer.parseInt(formatDate); //현재 날짜
+//        time_Text.setText(day_2 + "");
+
+        //날짜가 달라지면
+
+        if(day_1 != day_2){
+            //하루 경과 할 때
+            advertisement_Count = 25;
+            editor.putInt("advertisement", advertisement_Count);
+            editor.commit();
+        }
+        Log.e("@", "d1 = "+day_1);
+        Log.e("@", "d2 = "+day_2);
+
+
+
+
+
+        vol_E = pref.getInt("es",0);
         set_Sound(vol_E);
+
+
 
         setContentView(R.layout.activity_main);
 
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("").build();
-        mAdView.loadAd(adRequest);
+        time_Text = (TextView)findViewById(R.id.text_Time);
+//        Timer_Text timer_text = new Timer_Text();
+//        timer_text.start();
+        time_Text.setText("오늘 남은 횟수 : " + advertisement_Count);
+
+
+
+
+
+        try {
+            //배너 광고 띄우기
+            Firebase.setAndroidContext(this);
+            AdView mAdView = (AdView) findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().addTestDevice("3079D7D2B9C6AB20E98F623393188D67").build();
+            mAdView.loadAd(adRequest);
+        }catch (Exception e){
+            Log.e("@","배너 광고");
+        }
+
+        try {
+
+            ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+            if (ai.metaData != null) {
+                int metaData = ai.metaData.getInt("com.google.android.gms.version");
+                Log.e("metaData",metaData+"");
+            }
+
+            mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+            mRewardedVideoAd.setRewardedVideoAdListener(this);
+
+            loadRewardedVideoAd();
+
+
+            Log.e("@","성공");
+        }catch (Exception e){
+            Log.e("@",e.toString());
+        }
+
 
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
@@ -107,12 +242,13 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+
         Log.e("aa","dbset = "+dbset);
         if(dbset == 0) {
             //데이터 베이스 생성시에 한번만 실행해야 한다.
             String sql = "create table maincharacterinfo(_id integer PRIMARY KEY autoincrement, ruby integer,money double,structuredamage integer, dragdamage integer, urchinresistance integer,  lightningresistance integer, crocodileresistance integer, ft1 integer, ft2 integer, ft3 integer, ft4 integer, ft5 integer, ft6 integer, ft7 integer, ft8 integer, ft9 integer, ft10 integer, st1 integer, st2 integer, st3 integer, st4 integer, st5 integer, st6 integer, st7 integer, st8 integer, st9 integer, st10 integer, mt1 integer, mt2 integer, mt3 integer, mt4 integer, mt5 integer, mt6 integer, mt7 integer, mt8 integer, mt9 integer, mt10 integer, ftb1 integer, ftb2 integer, ftb3 integer, ftb4 integer, ftb5 integer, ftb6 integer, ftb7 integer, ftb8 integer, ftb9 integer, ftb10 integer, stb1 integer, stb2 integer, stb3 integer, stb4 integer, stb5 integer, stb6 integer, stb7 integer, stb8 integer, stb9 integer, stb10 integer, mtb1 integer, mtb2 integer, mtb3 integer, mtb4 integer, mtb5 integer, mtb6 integer, mtb7 integer, mtb8 integer, mtb9 integer, mtb10 integer, me1 integer , me2 integer, me3 integer, me4 integer, me5 integer, me6 integer, me7 integer, me8 integer, me9 integer, me10 integer, me11 integer, me12 integer, me13 integer, me14 integer, me15 integer, me16 integer, me17 integer, me18 integer, me19 integer, me20 integer, ce1 integer, ce2 integer, ce3 integer, ce4 integer, ce5 integer, ce6 integer, ce7 integer, ce8 integer, ce9 integer, ce10 integer, ce11 integer, ce12 integer, ce13 integer, ce14 integer, ce15 integer, ce16 integer, ce17 integer, ce18 integer, ce19 integer, ce20 integer, ce21 integer, ce22 integer, ce23 integer, ce24 integer, ce25 integer, ce26 integer, ce27 integer, ce28 integer, ce29 integer, ce30 integer, ce31 integer, ce32 integer, ce33 integer, ce34 integer, ce35 integer)";
             database.execSQL(sql);
-            insertData(1000, 0, 1, 1, 1, 1, 1,
+            insertData(0, 0, 1, 1, 1, 1, 1,
                     1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                     1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                     1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -170,6 +306,7 @@ public class MainActivity extends AppCompatActivity {
                     ce31, ce32, ce33, ce34, ce35,};
 
             database.execSQL(sql, params);
+
         }
     }
 
@@ -206,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
 //            Toast.makeText(getApplicationContext(), "??", Toast.LENGTH_SHORT).show();
 //            int num = data.getIntExtra("hap", 0);
 //            info = data.getIntArrayExtra("info");
-            Log.e("@", "@" + info[0] + "씨발");
+//            Log.e("@", "@" + info[0] + "씨발");
             double get_Item[] = data.getDoubleArrayExtra("item");
 //            Toast.makeText(getApplicationContext(), "" + get_Item[0], Toast.LENGTH_SHORT).show();
 //            Toast.makeText(getApplicationContext(), "" + get_Item[1], Toast.LENGTH_SHORT).show();
@@ -386,10 +523,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * 어항가기
+     * 루비 받기
      */
-    public void onButtonFishbowl(View view){
+    public void onButtonGetRuby(View view){
+
+
+
         soundPool.play(sound_Effect[0], sound, sound, 0, 0, 1.0F);   //성공
+        if(advertisement_Count > 0) {
+            try {
+                if (mRewardedVideoAd.isLoaded()) {
+                    mRewardedVideoAd.show();
+                }
+            } catch (Exception e) {
+                Log.e("@", "동영상 광고");
+            }
+        }
+
     }
 
     /**
@@ -410,6 +560,151 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 도감 보기
+     */
+
+    //몬스터 도감
+    int monster_Explain_Db[] = new int[20];
+    //캐릭터 도감
+    int character_Explain_DB[] = new int[35];
+
+    public void onButtonDiction(View view){
+        soundPool.play(sound_Effect[0], sound, sound, 0, 0, 1.0F);
+
+        intent = new Intent(getApplicationContext(), dictionary_Panel.class);
+
+        //몬스터 설명창
+        int monster_Explain_Db_Temp = 0;
+        for(int i=67; i<87; i++){
+            monster_Explain_Db[monster_Explain_Db_Temp] = (int)info[i];
+//            Log.e("@", "setIntent = " + monster_Explain_Db[monster_Explain_Db_Temp] + " , " + monster_Explain_Db_Temp);
+            monster_Explain_Db_Temp++;
+        }
+
+//        for(int i=0; i<setIntent.length; i++){
+//            Log.e("a",setIntent[i] + "@" + i);
+//        }
+
+        int character_Explain_DB_Temp = 0;
+        for(int i = 87; i<122; i++){
+            character_Explain_DB[character_Explain_DB_Temp] = (int)info[i];
+            character_Explain_DB_Temp++;
+        }
+
+
+        intent.putExtra("mexplain", monster_Explain_Db);
+        intent.putExtra("cexplain", character_Explain_DB);
+
+        //intent.putExtra("a", mRun);
+        startActivityForResult(intent, 1002); //-
+
+
+    }
+
+
+
+    @Override
+    public void onRewardedVideoAdLoaded() {
+//        Toast.makeText(this, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
+        Log.e("@","onRewardedVideoAdLoaded");
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+//        Toast.makeText(this, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
+        Log.e("@","onRewardedVideoAdOpened");
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+//        Toast.makeText(this, "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
+        Log.e("@","onRewardedVideoStarted");
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+//        Toast.makeText(this, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
+        Log.e("@","onRewardedVideoAdClosed");
+    }
+
+    Random random;
+    int ruby_Count = 0;
+    @Override
+    public void onRewarded(RewardItem rewardItem) {
+//        Toast.makeText(this, "onRewarded! currency: " + rewardItem.getType() + "  amount: " +
+//                rewardItem.getAmount(), Toast.LENGTH_SHORT).show();
+        // Reward the user.
+
+        Log.e("@","onRewarded" + rewardItem.getAmount());
+
+        if(database != null){
+
+            random = new Random();
+            ruby_Count = 1 + random.nextInt(10);
+            info[0] += ruby_Count;
+            String sql = "UPDATE maincharacterinfo SET ruby= '" + info[0] + "'";
+
+
+            database.execSQL(sql);
+
+            intent = new Intent(getApplicationContext(), ruby_Panel.class);
+            intent.putExtra( "rubycount" , ruby_Count);
+            startActivity(intent);
+
+            advertisement_Count--;
+
+            editor.putInt("advertisement", advertisement_Count);
+            editor.commit();
+
+            editor.putInt("day_1", day_2);
+            editor.commit();
+
+
+            time_Text.setText("남은 횟수 : " + advertisement_Count);
+        }
+
+
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+//        Toast.makeText(this, "onRewardedVideoAdLeftApplication",
+//                Toast.LENGTH_SHORT).show();
+        Log.e("@","onRewardedVideoAdLeftApplication");
+    }
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int i) {
+        Toast.makeText(this, "인터넷 연결을 해주세요. 혹은, 시스템 문제 일수도. ㅠㅠ", Toast.LENGTH_SHORT).show();
+        Log.e("@","onRewardedVideoAdFailedToLoad");
+    }
+
+    @Override
+    public void onResume() {
+
+        mRewardedVideoAd.resume(this);
+        super.onResume();
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        mRewardedVideoAd.setRewardedVideoAdListener(this);
+
+        loadRewardedVideoAd();
+        Log.e("@","onResume");
+    }
+
+    @Override
+    public void onPause() {
+        mRewardedVideoAd.pause(this);
+        super.onPause();
+        Log.e("@","onPause");
+    }
+
+    @Override
+    public void onDestroy() {
+        mRewardedVideoAd.destroy(this);
+        super.onDestroy();
+        Log.e("@","onDestroy");
+    }
 
 
 }

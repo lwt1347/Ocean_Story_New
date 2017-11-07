@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1045101581365",
+    "firebase_url": "https://growplankton.firebaseio.com",
+    "project_id": "growplankton",
+    "storage_bucket": "growplankton.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045101581365:android:abd505ffc525347c",
+        "android_client_info": {
+          "package_name": "com.example.user.ocean_story"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1045101581365-t87esugghucdbio6f8mf04s4o89fgpbe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDATgW5J9LIDXRhjVLNa05OWkf-kCgdd0M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
