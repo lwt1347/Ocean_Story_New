@@ -30,8 +30,11 @@ public class Effect_Bird {
     }
 
     //공격속도
-    public void set_Speed(int speed){
-        this.speed = speed;
+    public void set_Speed(int temp){
+        speed = speed - temp;
+        if(speed < 1){
+            speed = 1;
+        }
     }
     public int get_Speed(){
         return speed;

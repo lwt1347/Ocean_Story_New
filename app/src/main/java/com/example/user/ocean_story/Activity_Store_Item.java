@@ -19,7 +19,9 @@ public class Activity_Store_Item {
     double resId3;
     double lever;
 
+    public Activity_Store_Item() {
 
+    }
 
     public Activity_Store_Item(String name, double lever, double cost, int resId, int resId2, double resId3) {
         this.name = name;

@@ -34,6 +34,7 @@ public class option_Panel extends Activity {
 
     GameActivity gameActivity;
 
+
     int sound_Check_E = 0;
     int sound_Check_B = 0;
 
@@ -79,6 +80,7 @@ public class option_Panel extends Activity {
         checkBox1 = (CheckBox)findViewById(R.id.checkBox);
         checkBox2 = (CheckBox)findViewById(R.id.checkBox2);
         checkBox3 = (CheckBox)findViewById(R.id.checkBox3);
+
 
 
         SharedPreferences.Editor editor;
@@ -224,6 +226,18 @@ public class option_Panel extends Activity {
             }
         });
 
+
+    }
+
+
+    @Override
+    protected void onUserLeaveHint() {
+
+
+
+        super.onUserLeaveHint();
+
+        ((GameActivity) gameActivity._context_Send).sound_Exit();
 
     }
 

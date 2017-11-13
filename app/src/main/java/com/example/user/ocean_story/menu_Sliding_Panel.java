@@ -17,7 +17,7 @@ public class menu_Sliding_Panel extends Activity {
 
     //인텐트 객체
     Intent intent;
-
+    GameActivity gameActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +70,16 @@ public class menu_Sliding_Panel extends Activity {
         finish();
     }
 
+    @Override
+    protected void onUserLeaveHint() {
+
+
+
+        super.onUserLeaveHint();
+        ((GameActivity)gameActivity._context_Send).sound_Exit();
+
+
+    }
 
 
 }

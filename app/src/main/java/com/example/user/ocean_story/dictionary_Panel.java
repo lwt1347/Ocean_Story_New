@@ -958,5 +958,16 @@ public class dictionary_Panel extends Activity {
         }
     }
 
+    GameActivity gameActivity;
+    @Override
+    protected void onUserLeaveHint() {
+
+
+
+        super.onUserLeaveHint();
+        ((GameActivity)gameActivity._context_Send).sound_Exit();
+
+
+    }
 
 }

@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
 
         vol_E = pref.getInt("es",0);
-        set_Sound(vol_E);
+        set_Sound(vol_E, pref.getInt("bs",0));
 
 
 
@@ -246,9 +246,9 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         Log.e("aa","dbset = "+dbset);
         if(dbset == 0) {
             //데이터 베이스 생성시에 한번만 실행해야 한다.
-            String sql = "create table maincharacterinfo(_id integer PRIMARY KEY autoincrement, ruby integer,money double,structuredamage integer, dragdamage integer, urchinresistance integer,  lightningresistance integer, crocodileresistance integer, ft1 integer, ft2 integer, ft3 integer, ft4 integer, ft5 integer, ft6 integer, ft7 integer, ft8 integer, ft9 integer, ft10 integer, st1 integer, st2 integer, st3 integer, st4 integer, st5 integer, st6 integer, st7 integer, st8 integer, st9 integer, st10 integer, mt1 integer, mt2 integer, mt3 integer, mt4 integer, mt5 integer, mt6 integer, mt7 integer, mt8 integer, mt9 integer, mt10 integer, ftb1 integer, ftb2 integer, ftb3 integer, ftb4 integer, ftb5 integer, ftb6 integer, ftb7 integer, ftb8 integer, ftb9 integer, ftb10 integer, stb1 integer, stb2 integer, stb3 integer, stb4 integer, stb5 integer, stb6 integer, stb7 integer, stb8 integer, stb9 integer, stb10 integer, mtb1 integer, mtb2 integer, mtb3 integer, mtb4 integer, mtb5 integer, mtb6 integer, mtb7 integer, mtb8 integer, mtb9 integer, mtb10 integer, me1 integer , me2 integer, me3 integer, me4 integer, me5 integer, me6 integer, me7 integer, me8 integer, me9 integer, me10 integer, me11 integer, me12 integer, me13 integer, me14 integer, me15 integer, me16 integer, me17 integer, me18 integer, me19 integer, me20 integer, ce1 integer, ce2 integer, ce3 integer, ce4 integer, ce5 integer, ce6 integer, ce7 integer, ce8 integer, ce9 integer, ce10 integer, ce11 integer, ce12 integer, ce13 integer, ce14 integer, ce15 integer, ce16 integer, ce17 integer, ce18 integer, ce19 integer, ce20 integer, ce21 integer, ce22 integer, ce23 integer, ce24 integer, ce25 integer, ce26 integer, ce27 integer, ce28 integer, ce29 integer, ce30 integer, ce31 integer, ce32 integer, ce33 integer, ce34 integer, ce35 integer)";
+            String sql = "create table maincharacterinfo(_id integer PRIMARY KEY autoincrement, ruby integer,money double,structuredamage integer, dragdamage integer, bird integer, urchinresistance integer,  lightningresistance integer, crocodileresistance integer, steel integer, ft1 integer, ft2 integer, ft3 integer, ft4 integer, ft5 integer, ft6 integer, ft7 integer, ft8 integer, ft9 integer, ft10 integer, st1 integer, st2 integer, st3 integer, st4 integer, st5 integer, st6 integer, st7 integer, st8 integer, st9 integer, st10 integer, mt1 integer, mt2 integer, mt3 integer, mt4 integer, mt5 integer, mt6 integer, mt7 integer, mt8 integer, mt9 integer, mt10 integer, ftb1 integer, ftb2 integer, ftb3 integer, ftb4 integer, ftb5 integer, ftb6 integer, ftb7 integer, ftb8 integer, ftb9 integer, ftb10 integer, stb1 integer, stb2 integer, stb3 integer, stb4 integer, stb5 integer, stb6 integer, stb7 integer, stb8 integer, stb9 integer, stb10 integer, mtb1 integer, mtb2 integer, mtb3 integer, mtb4 integer, mtb5 integer, mtb6 integer, mtb7 integer, mtb8 integer, mtb9 integer, mtb10 integer, me1 integer , me2 integer, me3 integer, me4 integer, me5 integer, me6 integer, me7 integer, me8 integer, me9 integer, me10 integer, me11 integer, me12 integer, me13 integer, me14 integer, me15 integer, me16 integer, me17 integer, me18 integer, me19 integer, me20 integer, ce1 integer, ce2 integer, ce3 integer, ce4 integer, ce5 integer, ce6 integer, ce7 integer, ce8 integer, ce9 integer, ce10 integer, ce11 integer, ce12 integer, ce13 integer, ce14 integer, ce15 integer, ce16 integer, ce17 integer, ce18 integer, ce19 integer, ce20 integer, ce21 integer, ce22 integer, ce23 integer, ce24 integer, ce25 integer, ce26 integer, ce27 integer, ce28 integer, ce29 integer, ce30 integer, ce31 integer, ce32 integer, ce33 integer, ce34 integer, ce35 integer)";
             database.execSQL(sql);
-            insertData(0, 0, 1, 1, 1, 1, 1,
+            insertData(0, 0, 1, 1, 1, 1, 1, 1, 1,
                     1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                     1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                     1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
      * 데이터 베이스
      */
     //값 집어넣기
-    public void insertData(int ruby,  double money, int structuredamage, int dragdamage, int urchinresistance, int lightningresistance, int crocodileresistance,
+    public void insertData(int ruby,  double money, int structuredamage, int dragdamage, int bird, int urchinresistance, int lightningresistance, int crocodileresistance, int steel,
                            int ft1 ,int ft2, int ft3, int ft4, int ft5, int ft6, int ft7, int ft8, int ft9, int ft10,
                            int st1, int st2, int st3, int st4, int st5, int st6, int st7, int st8, int st9, int st10,
                            int mt1, int mt2, int mt3, int mt4, int mt5, int mt6, int mt7, int mt8, int mt9, int mt10,
@@ -289,9 +289,9 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             //b = 스킬 추출
             //me = 몬스터 설명창 설명 띄우줄지 말지 0 -> 띄어줌
             //ce = 캐릭터 설명창
-            String sql = "insert into maincharacterinfo(ruby, money, structuredamage, dragdamage, urchinresistance, lightningresistance, crocodileresistance, ft1, ft2, ft3, ft4, ft5, ft6, ft7, ft8, ft9, ft10, st1, st2, st3, st4, st5, st6, st7, st8, st9, st10, mt1, mt2, mt3, mt4, mt5, mt6, mt7, mt8, mt9, mt10, ftb1, ftb2, ftb3, ftb4, ftb5, ftb6, ftb7, ftb8, ftb9, ftb10, stb1, stb2, stb3, stb4, stb5, stb6, stb7, stb8, stb9, stb10, mtb1, mtb2, mtb3, mtb4, mtb5, mtb6, mtb7, mtb8, mtb9, mtb10, me1, me2, me3, me4, me5, me6, me7, me8, me9, me10, me11, me12, me13, me14, me15, me16, me17, me18, me19, me20, ce1, ce2, ce3, ce4, ce5, ce6, ce7, ce8, ce9, ce10, ce11, ce12, ce13, ce14, ce15, ce16, ce17, ce18, ce19, ce20, ce21, ce22, ce23, ce24, ce25, ce26, ce27, ce28, ce29, ce30, ce31, ce32, ce33, ce34, ce35) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "insert into maincharacterinfo(ruby, money, structuredamage, dragdamage, bird, urchinresistance, lightningresistance, crocodileresistance, steel, ft1, ft2, ft3, ft4, ft5, ft6, ft7, ft8, ft9, ft10, st1, st2, st3, st4, st5, st6, st7, st8, st9, st10, mt1, mt2, mt3, mt4, mt5, mt6, mt7, mt8, mt9, mt10, ftb1, ftb2, ftb3, ftb4, ftb5, ftb6, ftb7, ftb8, ftb9, ftb10, stb1, stb2, stb3, stb4, stb5, stb6, stb7, stb8, stb9, stb10, mtb1, mtb2, mtb3, mtb4, mtb5, mtb6, mtb7, mtb8, mtb9, mtb10, me1, me2, me3, me4, me5, me6, me7, me8, me9, me10, me11, me12, me13, me14, me15, me16, me17, me18, me19, me20, ce1, ce2, ce3, ce4, ce5, ce6, ce7, ce8, ce9, ce10, ce11, ce12, ce13, ce14, ce15, ce16, ce17, ce18, ce19, ce20, ce21, ce22, ce23, ce24, ce25, ce26, ce27, ce28, ce29, ce30, ce31, ce32, ce33, ce34, ce35) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            Object[] params = { ruby, money, structuredamage, dragdamage, urchinresistance, lightningresistance, crocodileresistance,
+            Object[] params = { ruby, money, structuredamage, dragdamage, bird, urchinresistance, lightningresistance, crocodileresistance, steel,
                     ft1, ft2, ft3, ft4, ft5, ft6, ft7, ft8, ft9, ft10,
                     st1, st2, st3, st4, st5, st6, st7, st8, st9, st10,
                     mt1, mt2, mt3, mt4, mt5, mt6, mt7, mt8, mt9, mt10,
@@ -313,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     //값 가져오기
     public void selectData(){
         if(database != null){
-            String sql = "select ruby, money, structuredamage, dragdamage, urchinresistance, lightningresistance, crocodileresistance, ft1, ft2, ft3, ft4, ft5, ft6, ft7, ft8, ft9, ft10, st1, st2, st3, st4, st5, st6, st7, st8, st9, st10, mt1, mt2, mt3, mt4, mt5, mt6, mt7, mt8, mt9, mt10, ftb1, ftb2, ftb3, ftb4, ftb5, ftb6, ftb7, ftb8, ftb9, ftb10, stb1, stb2, stb3, stb4, stb5, stb6, stb7, stb8, stb9, stb10, mtb1, mtb2, mtb3, mtb4, mtb5, mtb6, mtb7, mtb8, mtb9, mtb10, me1, me2, me3, me4, me5, me6, me7, me8, me9, me10, me11, me12, me13, me14, me15, me16, me17, me18, me19, me20, ce1, ce2, ce3, ce4, ce5, ce6, ce7, ce8, ce9, ce10, ce11, ce12, ce13, ce14, ce15, ce16, ce17, ce18, ce19, ce20, ce21, ce22, ce23, ce24, ce25, ce26, ce27, ce28, ce29, ce30, ce31, ce32, ce33, ce34, ce35 from maincharacterinfo";
+            String sql = "select ruby, money, structuredamage, dragdamage, bird, urchinresistance, lightningresistance, crocodileresistance, steel, ft1, ft2, ft3, ft4, ft5, ft6, ft7, ft8, ft9, ft10, st1, st2, st3, st4, st5, st6, st7, st8, st9, st10, mt1, mt2, mt3, mt4, mt5, mt6, mt7, mt8, mt9, mt10, ftb1, ftb2, ftb3, ftb4, ftb5, ftb6, ftb7, ftb8, ftb9, ftb10, stb1, stb2, stb3, stb4, stb5, stb6, stb7, stb8, stb9, stb10, mtb1, mtb2, mtb3, mtb4, mtb5, mtb6, mtb7, mtb8, mtb9, mtb10, me1, me2, me3, me4, me5, me6, me7, me8, me9, me10, me11, me12, me13, me14, me15, me16, me17, me18, me19, me20, ce1, ce2, ce3, ce4, ce5, ce6, ce7, ce8, ce9, ce10, ce11, ce12, ce13, ce14, ce15, ce16, ce17, ce18, ce19, ce20, ce21, ce22, ce23, ce24, ce25, ce26, ce27, ce28, ce29, ce30, ce31, ce32, ce33, ce34, ce35 from maincharacterinfo";
 
             Cursor cursor = database.rawQuery(sql, null);
             Log.e("e", " : " + cursor.getCount());
@@ -412,9 +412,11 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
      */
     public float sound = 0.0f;
     int vol_E = 0;
+    int vol_B = 0;
+
     SharedPreferences.Editor editor;
     SharedPreferences pref;
-    public void set_Sound(int vol){
+    public void set_Sound(int vol, int bs){
 
         if(vol == 10){
             sound = 1.0f;
@@ -439,9 +441,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         }else if(vol == 0){
             sound = 0.0f;
         }
-
+        vol_E = vol;
+        vol_B = bs;
         editor.putInt("es", vol_E);
-        editor.putInt("bs", vol_E);
+        editor.putInt("bs", vol_B);
 
 
         editor.commit();
@@ -459,9 +462,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
                 if(vol_E > 0){
                     vol_E--;
+                    vol_B--;
                 }
 
-                set_Sound(vol_E);
+                set_Sound(vol_E,vol_B);
 
                 break;
 
@@ -469,9 +473,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
                 if(vol_E < 10){
                     vol_E++;
+                    vol_B++;
                 }
 
-                set_Sound(vol_E);
+                set_Sound(vol_E,vol_B);
 
                 break;
 
@@ -534,10 +539,16 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             try {
                 if (mRewardedVideoAd.isLoaded()) {
                     mRewardedVideoAd.show();
+                }else {
+
+                    Toast.makeText(this, "시스템(인터넷)의 문제로 다시 한번 클릭해 주세요. ", Toast.LENGTH_SHORT).show();
+
                 }
             } catch (Exception e) {
                 Log.e("@", "동영상 광고");
             }
+        }else {
+            Toast.makeText(this, "광고 횟수가 남아 있지 않습니다.", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -576,7 +587,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
         //몬스터 설명창
         int monster_Explain_Db_Temp = 0;
-        for(int i=67; i<87; i++){
+        for(int i=69; i<89; i++){
             monster_Explain_Db[monster_Explain_Db_Temp] = (int)info[i];
 //            Log.e("@", "setIntent = " + monster_Explain_Db[monster_Explain_Db_Temp] + " , " + monster_Explain_Db_Temp);
             monster_Explain_Db_Temp++;
@@ -587,7 +598,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 //        }
 
         int character_Explain_DB_Temp = 0;
-        for(int i = 87; i<122; i++){
+        for(int i = 89; i<124; i++){
             character_Explain_DB[character_Explain_DB_Temp] = (int)info[i];
             character_Explain_DB_Temp++;
         }
@@ -630,6 +641,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
     Random random;
     int ruby_Count = 0;
+    int random_T = 0;
     @Override
     public void onRewarded(RewardItem rewardItem) {
 //        Toast.makeText(this, "onRewarded! currency: " + rewardItem.getType() + "  amount: " +
@@ -641,7 +653,25 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         if(database != null){
 
             random = new Random();
-            ruby_Count = 1 + random.nextInt(10);
+
+            random_T = random.nextInt(100);
+
+            if(random_T > 60){
+                ruby_Count = 1;
+            }else if(random_T > 40){
+                ruby_Count = 2;
+            }else if(random_T > 20){
+                ruby_Count = 3;
+            }else if(random_T > 10){
+                ruby_Count = 4;
+            }else {
+                ruby_Count = 5;
+            }
+
+//            ruby_Count = 1 + random.nextInt(5);
+
+
+
             info[0] += ruby_Count;
             String sql = "UPDATE maincharacterinfo SET ruby= '" + info[0] + "'";
 
@@ -661,6 +691,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             editor.commit();
 
 
+
             time_Text.setText("남은 횟수 : " + advertisement_Count);
         }
 
@@ -671,12 +702,13 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     public void onRewardedVideoAdLeftApplication() {
 //        Toast.makeText(this, "onRewardedVideoAdLeftApplication",
 //                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "인터넷 연결을 해주세요. 혹은, 시스템 문제 일수도. ㅠㅠ", Toast.LENGTH_SHORT).show();
         Log.e("@","onRewardedVideoAdLeftApplication");
     }
 
     @Override
     public void onRewardedVideoAdFailedToLoad(int i) {
-        Toast.makeText(this, "인터넷 연결을 해주세요. 혹은, 시스템 문제 일수도. ㅠㅠ", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "인터넷 연결을 해주세요. 혹은, 시스템 문제 일수도. ㅠㅠ", Toast.LENGTH_SHORT).show();
         Log.e("@","onRewardedVideoAdFailedToLoad");
     }
 

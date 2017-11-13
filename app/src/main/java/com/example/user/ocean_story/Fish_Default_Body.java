@@ -1,5 +1,7 @@
 package com.example.user.ocean_story;
 
+import android.util.Log;
+
 import java.util.Random;
 
 /**
@@ -21,7 +23,7 @@ public class Fish_Default_Body {
     protected int fish_Class;                   // 가장 가까운 물고기 객체를 찾기위해서, 물고기마다 터치 방식이 다름으로 객체 번호로 식별한다.
                                                 // 기본 물고기 = 1, 드래그 물고기 = 2
 
-    protected float fish_Speed;              // 물고기 y축 스피드
+    protected float fish_Speed = 1;              // 물고기 y축 스피드
     protected float fish_Point_X;                // 물고기 생성될 좌표
     protected float fish_Point_Y;
     private float _Fish_Speed;
@@ -58,7 +60,10 @@ public class Fish_Default_Body {
         height_Size = param_Height_Size;
 
         //가변 스피드
-        temp_Speed = t_Speed/950;
+        Log.e("@",t_Speed + ", t_Speed");
+        temp_Speed = (float) (t_Speed/950.0);
+        Log.e("@",temp_Speed + ", temp_Speed");
+
         if(temp_Speed < 0){
             temp_Speed *= -1;
         }
@@ -66,6 +71,8 @@ public class Fish_Default_Body {
         if(fish_Speed < 0){
             fish_Speed *= -1;
         }
+
+
 
     }
 
@@ -76,8 +83,10 @@ public class Fish_Default_Body {
      */
     public void set_Position(){
         fish_Point_X = (float)(30 + Math.random() * (window_Width -100));        // x축 = 10 ~ 윈도우 널이 - 100 사이에서 생성
-        fish_Point_Y = -100 - random.nextInt(500);
+        fish_Point_Y = -100 - random.nextInt(700);
+//        fish_Point_Y = 30;
     }
+
     public void set_Position(float x, float y){
         fish_Point_X = x;       // x축 = 10 ~ 윈도우 널이 - 100 사이에서 생성
         fish_Point_Y = y;
@@ -238,6 +247,7 @@ public class Fish_Default_Body {
      * 물고기 움직이는 함수
      */
     public void fish_Object_Move(){
+
         fish_Point_Y += fish_Speed;
 
 
@@ -265,13 +275,16 @@ public class Fish_Default_Body {
         if(fish_Draw_Status > 7){
             fish_Draw_Status = 0;
         }
+
     }
 
     /**
      * 물고기 속도 조절
      */
     public void set_Fish_Speed(int param_Speed){
+
         fish_Speed = param_Speed;
+
     }
 
 
@@ -335,6 +348,9 @@ public class Fish_Default_Body {
         }else {
             fish_Speed = (2f + ((float)Math.random() * 3)/2) * temp_Speed;
         }
+
+        Log.e("@",fish_Speed + ", fish_Speed");
+//        fish_Speed = 2;
 
     }
 

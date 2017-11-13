@@ -159,44 +159,7 @@ public class Main_Character {
     }
     private boolean revolution_Character = true;   //진화가 한 번만 이루어지도록
 
-    /**
-     * 모양 변화
-     */
-    int upgrade_Experience = 0;
-    int up_Score = 0;
-    public boolean set_Character_Upgrade(){
 
-        if(tear == 0){
-            up_Score = 100;
-        }else if(tear == 1){
-            up_Score = 300;
-        }else if(tear == 2){
-            up_Score = 600;
-        }else if(tear == 3){
-            up_Score = 1600;
-        }else if(tear == 4){
-            up_Score = 3000;
-        }else if(tear == 5){
-            up_Score = 4300;
-        }else if(tear == 6){
-            up_Score = 5000;
-        }else if(tear == 7){
-            up_Score = 6000;
-        }else if(tear == 8){
-            up_Score = 13000;
-        }else if(tear == 9){
-            up_Score = 20000;
-        }else if(tear == 10){
-            up_Score = 30000;
-        }
-
-        if(up_Score <= upgrade_Experience){
-            upgrade_Experience = 0;
-            return true;
-        }else {
-            return false;
-        }
-    }
 
     /**
      * 적군을 멈추게 함
@@ -259,7 +222,7 @@ public class Main_Character {
     boolean hit_Flag = false;
     public void set_Hp_Minus(){
         hit_Flag = true;
-        main_Character_Hp --;
+//        main_Character_Hp --;
     }
 
 
@@ -426,37 +389,74 @@ public class Main_Character {
 
 
     //********************************************************************************************//
+    /**
+     * 모양 변화
+     */
+    int upgrade_Experience = 0;
+    int up_Score = 0;
+    public boolean set_Character_Upgrade(){
 
+        if(tear == 0){
+            up_Score = 1000;
+        }else if(tear == 1){
+            up_Score = 3000;
+        }else if(tear == 2){
+            up_Score = 5000;
+        }else if(tear == 3){
+            up_Score = 13300;
+        }else if(tear == 4){
+            up_Score = 23300;
+        }else if(tear == 5){
+            up_Score = 33300;
+        }else if(tear == 6){
+            up_Score = 50000;
+        }else if(tear == 7){
+            up_Score = 100000;
+        }else if(tear == 8){
+            up_Score = 130000;
+        }else if(tear == 9){
+            up_Score = 300000;
+        }else if(tear == 10){
+            up_Score = 600000;
+        }
+
+        if(up_Score <= upgrade_Experience){
+            upgrade_Experience = 0;
+            return true;
+        }else {
+            return false;
+        }
+    }
 
     /**
      * 티어당 진화 할 점수
      */
     public int get_Revolrution_Step(){
         if(tear == 0){
-            return 1000;
-        }else if(tear == 1){
             return 3000;
+        }else if(tear == 1){
+            return 9000;
         }else if(tear == 2){
-            return 6000;
+            return 15000;
         }else if(tear == 3){
-            return 12000;
+            return 40000;
         }else if(tear == 4){
-            return 24000;
+            return 70000;
         }else if(tear == 5){
-            return 30000;
-        }else if(tear == 6){
-            return 50000;
-        }else if(tear == 7){
-            return 80000;
-        }else if(tear == 8){
             return 100000;
-        }else if(tear == 9){
-            return 120000;
-        }else if(tear == 10){
+        }else if(tear == 6){
             return 150000;
+        }else if(tear == 7){
+            return 300000;
+        }else if(tear == 8){
+            return 500000;
+        }else if(tear == 9){
+            return 1000000;
+        }else if(tear == 10){
+            return 2000000;
         }
 
-        return 5000000;
+        return 50000000;
     }
 
 

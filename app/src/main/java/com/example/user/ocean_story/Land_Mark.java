@@ -42,14 +42,16 @@ public class Land_Mark extends Ground_Default_Body {
         if(param_Class_Num == 1){
             this.hp = 40000;
         }else if(param_Class_Num == 2){
-            this.hp = 400000;
+            this.hp = 200000;
         }else if(param_Class_Num == 3){
-            this.hp = 4000000;
+            this.hp = 1000000;
         }else if(param_Class_Num == 4){
-            this.hp = 40000000;
+            this.hp = 5000000;
         }else if(param_Class_Num == 5){
-            this.hp = 400000000;
+            this.hp = 25000000;
         }else if(param_Class_Num == 6){
+            this.hp = 125000000.0;
+        }else if(param_Class_Num == 7){
             this.hp = 4000000000.0;
         }
 

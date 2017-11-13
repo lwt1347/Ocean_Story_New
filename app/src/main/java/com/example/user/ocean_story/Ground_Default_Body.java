@@ -208,7 +208,7 @@ public class Ground_Default_Body {
     public void set_Position(){
 
         ground_Point_X = 30 + (float)Math.random() * (window_Width);         //생성될 위치
-        ground_Point_Y = -100 - random.nextInt(100);
+        ground_Point_Y = -100 - random.nextInt(700);
 
     }
     public void set_Position(float x, float y){

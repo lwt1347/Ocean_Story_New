@@ -15,6 +15,7 @@ public class Main_Character_Plankton_2 extends Main_Character {
         super(x, y, window_Width_Size, window_Height_Size, w_Size, h_Size);
         pref_Set = 100000002;
         this.set_Max_Hp(2);
+        set_Damage(2);
     }
 
 //곰팡이 생성
