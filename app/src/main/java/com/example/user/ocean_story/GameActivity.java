@@ -367,7 +367,7 @@ public class GameActivity extends AppCompatActivity {
         if(gameMain.get_m_Run()) {
 
             intent = new Intent(getApplicationContext(), dictionary_Panel.class);
-
+            direction = true;
             intent.putExtra("mexplain", monster_Explain_Info);
             intent.putExtra("cexplain", character_Explain_Info);
 
@@ -526,9 +526,18 @@ public class GameActivity extends AppCompatActivity {
 //                gameMain.bg_Sound();
             } else if (key == 2) {  //다시 시작
 
+//                finish 가 없음으로 영구추출 정보가 db에 저장되지 않는다.
+//                소비된 루비는 저장된다. 알아 볼것
+
+                gameMain.set_Best_Point();
+                gameMain.set_Best_Point_2();
+
+
                 gameMain.re_Start();
                 gameMain.set_Home_Restart(false);
                 gameMain.m_Run_True();
+
+
 
                 button_Shark.setEnabled(true);
                 button_Shark.setBackgroundResource(R.drawable.friend_shark_button_1);
@@ -540,6 +549,10 @@ public class GameActivity extends AppCompatActivity {
                 button_NextStage.setBackgroundResource(R.drawable.next_button_1);
 
                 background_Sound_Cont = false;
+
+
+
+
 //                gameMain.exit();
 //                gameMain.bg_Sound();
             }
@@ -552,22 +565,39 @@ public class GameActivity extends AppCompatActivity {
 
             }
 
+
         }catch (Exception e){
+
             gameMain.m_Run_False(true);
-            Intent intent = new Intent(this, menu_Sliding_Panel.class);
+
+            if(option){
+                Intent intent = new Intent(this, option_Panel.class);
+            }else if(direction){
+                Intent intent = new Intent(this, dictionary_Panel.class);
+            }else{
+                Intent intent = new Intent(this, menu_Sliding_Panel.class);
+            }
             startActivityForResult(intent, 0); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출
+            background_Sound_Cont = false;
         }
+        option = false;
+        pause = false;
+        direction = false;
     }
 
+    boolean option = false;
+    boolean pause = false;
+    boolean direction = false;
 
     /**
      *  옵션 버튼
      */
-
     public void onButtonOption(View view){
         if(gameMain.get_m_Run()) {
 
             intent = new Intent(this, option_Panel.class);
+
+            option = true;
 
             //intent.putExtra("a", mRun);
             startActivityForResult(intent, 0); //-> 일시정지 창을 팝업한다. Menu_Sliding_Panel 호출

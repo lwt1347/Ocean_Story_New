@@ -16,6 +16,7 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     private int sound_Effect[] = new int[10];
 
     //sql 라이트
-    SQLiteDatabase database;
+    static SQLiteDatabase database;
 
     private void recycleView(View view) {
         if(view != null) {
@@ -162,8 +163,8 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
 
 
-        vol_E = pref.getInt("es",0);
-        set_Sound(vol_E, pref.getInt("bs",0));
+        vol_E = pref.getInt("es",1);
+        set_Sound(vol_E, pref.getInt("bs",1));
 
 
 
@@ -184,6 +185,9 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             AdView mAdView = (AdView) findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder().addTestDevice("3079D7D2B9C6AB20E98F623393188D67").build();
             mAdView.loadAd(adRequest);
+
+            MultiDex.install(this);
+
         }catch (Exception e){
             Log.e("@","배너 광고");
         }
@@ -238,7 +242,6 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
         if(database != null){
             //db 오픈 되있음.
-
 
         }
 
@@ -340,6 +343,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     try {
         // 넘어갔던 화면에서 되돌아 왔을 때
         if (resultCode == RESULT_OK) { // 정상 반환일 경우에만 동작하겠다
+            Log.e("정상 반환","정상 반환");
 //            Toast.makeText(getApplicationContext(), "??", Toast.LENGTH_SHORT).show();
 //            int num = data.getIntExtra("hap", 0);
 //            info = data.getIntArrayExtra("info");
@@ -387,8 +391,9 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                     + ", ce31 = '" + get_Item_Integer[82] + "'"+ ", ce32 = '" + get_Item_Integer[83] + "'"+ ", ce33 = '" + get_Item_Integer[84] + "'"+ ", ce34 = '" + get_Item_Integer[85] + "'"+ ", ce35 = '" + get_Item_Integer[86] + "'";
 
 
-            database.execSQL(sql);
+            save_Db(sql);
 
+            Log.e("onActivityResult", "db 저장 1= " + get_Item_Integer[14] + ", 2= " + get_Item_Integer[3] + ", = " + get_Item_Integer[13]);
 
 //            }
 
@@ -401,8 +406,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         Log.e("onActivityResult", "onActivityResult");
     }
 
+    }
 
-
+    public void save_Db(String sql){
+        database.execSQL(sql);
     }
 
 

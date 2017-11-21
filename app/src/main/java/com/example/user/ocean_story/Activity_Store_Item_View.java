@@ -88,12 +88,15 @@ public class Activity_Store_Item_View extends LinearLayout{
 
     //이미지 뷰에 이미지 설정
     public void setImage(int resid, int resid2){
-        imageView.setImageResource(resid);
-        textView6.setBackgroundResource(resid2);
+        try {
+            imageView.setImageResource(resid);
+            textView6.setBackgroundResource(resid2);
 
-        imageView2.setBackgroundResource(R.drawable.store_explain_gold);
-        imageView3.setBackgroundResource(R.drawable.store_explain_level);
+            imageView2.setBackgroundResource(R.drawable.store_explain_gold);
+            imageView3.setBackgroundResource(R.drawable.store_explain_level);
+        }catch (Exception e){
 
+        }
     }
 
     @Override

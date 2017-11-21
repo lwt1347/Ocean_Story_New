@@ -120,7 +120,7 @@ public class Activity_Store extends Activity{
 //        adapter.addItem(new Activity_Store_Item("money", "돈"));
 
 
-        adapter.addItem(new Activity_Store_Item("ruby", 0, 10000000, R.drawable.store_explain_ruby, R.drawable.button_store_buy, 1));
+        adapter.addItem(new Activity_Store_Item("ruby", 0, 5000000, R.drawable.store_explain_ruby, R.drawable.button_store_buy, 1));
 
 
         //수정 사항 : 시작과 동시에 소수점 찍히는거 제거, 스크롤 변경후 숫자 작아지는것
@@ -138,9 +138,9 @@ public class Activity_Store extends Activity{
 
         adapter.addItem(new Activity_Store_Item("drag_damage",  info[3] , (info_Price[3]), R.drawable.store_drag_damage, R.drawable.button_store_buy, 1));
 
-        info_Price[4] = 500;
+        info_Price[4] = 10;
         for(int i=0; i<info[4]-1; i++){
-            info_Price[4] *= 2;
+            info_Price[4] *= 1.5;
         }
 
         adapter.addItem(new Activity_Store_Item("bird",  info[4] , (info_Price[4]), R.drawable.store_bird, R.drawable.button_store_buy, 1));
@@ -430,12 +430,14 @@ public class Activity_Store extends Activity{
 
 
 
-                Activity_Store_Item_View view = null;
-            if(convertView == null){
-                view = new Activity_Store_Item_View(getApplicationContext());
-            }else {
-                view = (Activity_Store_Item_View) convertView;
-            }
+            Activity_Store_Item_View view = null;
+            try{
+
+                if(convertView == null){
+                    view = new Activity_Store_Item_View(getApplicationContext());
+                }else {
+                    view = (Activity_Store_Item_View) convertView;
+                }
 
 
 
@@ -461,10 +463,10 @@ public class Activity_Store extends Activity{
                     public void onClick(View v) {
 
                         Activity_Store_Item item =  (Activity_Store_Item)adapter.getItem(position);
-                 if(item.getName() == "ruby" && 10000000 <= info[1] ){
+                 if(item.getName() == "ruby" && 5000000 <= info[1] ){
 //                     Toast.makeText(getApplicationContext(), "" + item.getName(), Toast.LENGTH_SHORT).show();
                      info[0] += 1;
-                     info[1] -= 10000000;
+                     info[1] -= 5000000;
 
 
 
@@ -522,7 +524,7 @@ public class Activity_Store extends Activity{
                      info[1] -= info_Price[4];  //돈
                      info[4]++;         //기술 레벨
 
-                     info_Price[4]*=2;
+                     info_Price[4]*=1.5;
 
                      money.setText("x "+ df.format(info[1])); //돈 표시
                      item.setCost(info_Price[4]);
@@ -1123,6 +1125,10 @@ public class Activity_Store extends Activity{
 
 
 
+
+            }catch (Exception e){
+                Log.e("@","상점");
+            }
 
             return view;
         }

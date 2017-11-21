@@ -222,7 +222,7 @@ public class Main_Character {
     boolean hit_Flag = false;
     public void set_Hp_Minus(){
         hit_Flag = true;
-//        main_Character_Hp --;
+        main_Character_Hp --;
     }
 
 
