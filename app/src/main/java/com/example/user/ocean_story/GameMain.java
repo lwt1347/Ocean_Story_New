@@ -5484,7 +5484,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                                 }else {
-                                    fish_List.get(j).set_Hp_Minus(20 +  random.nextInt((int)st4));
+                                    skill_Plus_D = 0;
+                                    if(st4 >= 1 ){
+                                        skill_Plus_D = random.nextInt((int) st4);
+                                    }
+                                    fish_List.get(j).set_Hp_Minus(20 +  skill_Plus_D);
+
                                 }
 
 //                                if (skill_Crab_Claws_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Crab_Claws_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
@@ -5533,7 +5538,14 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                             ground_List.get(j).set_Ground_Hp_Minus(1);
                                         }
                                     }else {
-                                        ground_List.get(j).set_Ground_Hp_Minus(20 + random.nextInt((int) st4));
+
+                                        skill_Plus_D = 0;
+                                        if(st4 >= 1 ){
+                                            skill_Plus_D = random.nextInt((int) st4);
+                                        }
+
+                                        ground_List.get(j).set_Ground_Hp_Minus(20 + skill_Plus_D);
+
                                     }
                                 }
 
@@ -5608,7 +5620,14 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                                 }else {
-                                    fish_List.get(j).set_Hp_Minus(30 +  random.nextInt((int)st5));
+
+                                    skill_Plus_D = 0;
+                                    if(st5 >= 1 ){
+                                        skill_Plus_D = random.nextInt((int) st5);
+                                    }
+
+                                    fish_List.get(j).set_Hp_Minus(30 +  skill_Plus_D);
+
                                 }
 
 //                                if (skill_Soycrab_Claws_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Soycrab_Claws_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
@@ -5658,7 +5677,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                             ground_List.get(j).set_Ground_Hp_Minus(1);
                                         }
                                     }else {
-                                        ground_List.get(j).set_Ground_Hp_Minus(30 + random.nextInt((int) st5));
+                                        skill_Plus_D = 0;
+                                        if(st5 >= 1 ){
+                                            skill_Plus_D = random.nextInt((int) st5);
+                                        }
+                                        ground_List.get(j).set_Ground_Hp_Minus(30 + skill_Plus_D);
+
                                     }
                                 }
 
@@ -5733,7 +5757,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                                 }else {
-                                    fish_List.get(j).set_Hp_Minus(80 +  random.nextInt(((int)st10 * 3)));
+                                    skill_Plus_D = 0;
+                                    if(st10 >= 1 ){
+                                        skill_Plus_D = random.nextInt((int) st10* 3);
+                                    }
+                                    fish_List.get(j).set_Hp_Minus(80 + skill_Plus_D);
                                     soundPool.play(sound_Effect[20], pop_Drag, pop_Drag, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                                 }
 
@@ -5792,7 +5820,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                             ground_List.get(j).set_Ground_Hp_Minus(1);
                                         }
                                     }else {
-                                        ground_List.get(j).set_Ground_Hp_Minus(80 + random.nextInt(((int) st10 * 3)));
+                                        skill_Plus_D = 0;
+                                        if(st10 >= 1 ){
+                                            skill_Plus_D = random.nextInt((int) st10* 3);
+                                        }
+                                        ground_List.get(j).set_Ground_Hp_Minus(80 + skill_Plus_D);
                                     }
                                         soundPool.play(sound_Effect[20], pop_Drag, pop_Drag, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
@@ -5908,6 +5940,10 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                             if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                             }else {
+                                skill_Plus_D = 0;
+                                if(mt10 >= 1 ){
+                                    skill_Plus_D = random.nextInt((int) mt10);
+                                }
                                 fish_List.get(j).set_Status_Poison(20 +  random.nextInt((int)mt10));
 //                                break;
                             }
@@ -5956,7 +5992,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                             if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                             }else {
-                                ground_List.get(j).set_Status_Poison(20 +  random.nextInt((int)mt10));
+                                skill_Plus_D = 0;
+                                if(mt10 >= 1 ){
+                                    skill_Plus_D = random.nextInt((int) mt10);
+                                }
+                                ground_List.get(j).set_Status_Poison(20 + skill_Plus_D);
 //                                break;
                             }
 //                            if (skill_poison_cloud_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_poison_cloud_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
@@ -6035,7 +6075,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                                 }else {
-                                    fish_List.get(j).set_Hp_Minus(20 +  random.nextInt((int)ft4));
+                                    skill_Plus_D = 0;
+                                    if(ft4 >= 1 ){
+                                        skill_Plus_D = random.nextInt((int) ft4);
+                                    }
+                                    fish_List.get(j).set_Hp_Minus(20 + skill_Plus_D);
 //                                    break;
                                 }
 //                                if (skill_Earthquake_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Earthquake_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
@@ -6084,7 +6128,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                             ground_List.get(j).set_Ground_Hp_Minus(1);
                                         }
                                     }else {
-                                        ground_List.get(j).set_Ground_Hp_Minus(20 + random.nextInt((int) ft4));
+                                        skill_Plus_D = 0;
+                                        if(ft4 >= 1 ){
+                                            skill_Plus_D = random.nextInt((int) ft4);
+                                        }
+                                        ground_List.get(j).set_Ground_Hp_Minus(20 + skill_Plus_D);
                                     }
 //                                    break;
                                 }
@@ -6161,7 +6209,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                             if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                             }else {
-                                fish_List.get(j).set_Hp_Minus(10 +  random.nextInt((int)ft3));
+                                skill_Plus_D = 0;
+                                if(ft3 >= 1 ){
+                                    skill_Plus_D = random.nextInt((int) ft3);
+                                }
+                                fish_List.get(j).set_Hp_Minus(10 + skill_Plus_D);
                                 skill_Teeth_Mine_List.get(i).set_play_Attack();
                             }
 
@@ -6214,7 +6266,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                         ground_List.get(j).set_Ground_Hp_Minus(1);
                                     }
                                 }else {
-                                    ground_List.get(j).set_Ground_Hp_Minus(10 + random.nextInt((int) ft3));
+                                    skill_Plus_D = 0;
+                                    if(ft3 >= 1 ){
+                                        skill_Plus_D = random.nextInt((int) ft3);
+                                    }
+                                    ground_List.get(j).set_Ground_Hp_Minus(10 + skill_Plus_D);
                                 }
                                     skill_Teeth_Mine_List.get(i).set_play_Attack();
 
@@ -6349,7 +6405,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                                 }else {
-                                    fish_List.get(j).set_Hp_Minus(35  +  random.nextInt((int)ft5));
+                                    skill_Plus_D = 0;
+                                    if(ft5 >= 1 ){
+                                        skill_Plus_D = random.nextInt((int) ft5);
+                                    }
+                                    fish_List.get(j).set_Hp_Minus(35  +  skill_Plus_D);
                                 }
 
 
@@ -6453,7 +6513,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                             ground_List.get(j).set_Ground_Hp_Minus(1);
                                         }
                                     }else {
-                                        ground_List.get(j).set_Ground_Hp_Minus(35 + random.nextInt((int) ft5));
+                                        skill_Plus_D = 0;
+                                        if(ft5 >= 1 ){
+                                            skill_Plus_D = random.nextInt((int) ft5);
+                                        }
+                                        ground_List.get(j).set_Ground_Hp_Minus(35 + skill_Plus_D);
                                     }
                                 }
 
@@ -6708,7 +6772,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                                 }else {
-                                    fish_List.get(j).set_Hp_Minus(35 +  random.nextInt((int)st7));
+                                    skill_Plus_D = 0;
+                                    if(st7 >= 1 ){
+                                        skill_Plus_D = random.nextInt((int) st7);
+                                    }
+                                    fish_List.get(j).set_Hp_Minus(35 + skill_Plus_D);
                                 }
 
 //                                if (skill_Fry_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Fry_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
@@ -6801,7 +6869,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                             ground_List.get(j).set_Ground_Hp_Minus(1);
                                         }
                                     }else {
-                                        ground_List.get(j).set_Ground_Hp_Minus(35 + random.nextInt((int) st7));
+                                        skill_Plus_D = 0;
+                                        if(st7 >= 1 ){
+                                            skill_Plus_D = random.nextInt((int) st7);
+                                        }
+                                        ground_List.get(j).set_Ground_Hp_Minus(35 + skill_Plus_D);
                                     }
                                 }
 
@@ -6875,7 +6947,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                             if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                             }else {
-                                fish_List.get(j).set_Hp_Minus(25 + random.nextInt((int)ft9));
+                                skill_Plus_D = 0;
+                                if(ft9 >= 1 ){
+                                    skill_Plus_D = random.nextInt((int) ft9);
+                                }
+                                fish_List.get(j).set_Hp_Minus(25 + skill_Plus_D);
                                     soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                             }
 
@@ -6927,7 +7003,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                         ground_List.get(j).set_Ground_Hp_Minus(1);
                                     }
                                 }else {
-                                    ground_List.get(j).set_Ground_Hp_Minus(25 + random.nextInt((int) ft9));
+                                    skill_Plus_D = 0;
+                                    if(ft9 >= 1 ){
+                                        skill_Plus_D = random.nextInt((int) ft9);
+                                    }
+                                    ground_List.get(j).set_Ground_Hp_Minus(25 + skill_Plus_D);
                                 }
                                     soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
 
@@ -7009,7 +7089,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                             if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                             }else {
-                                fish_List.get(j).set_Hp_Minus(10 + random.nextInt((int)st9));
+                                skill_Plus_D = 0;
+                                if(st9 >= 1 ){
+                                    skill_Plus_D = random.nextInt((int) st9);
+                                }
+                                fish_List.get(j).set_Hp_Minus(10 + skill_Plus_D);
                                 soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                             }
 
@@ -7066,7 +7150,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                         ground_List.get(j).set_Ground_Hp_Minus(1);
                                     }
                                 }else {
-                                    ground_List.get(j).set_Ground_Hp_Minus(10 + random.nextInt((int) st9));
+                                    skill_Plus_D = 0;
+                                    if(st9 >= 1 ){
+                                        skill_Plus_D = random.nextInt((int) st9);
+                                    }
+                                    ground_List.get(j).set_Ground_Hp_Minus(10 + skill_Plus_D);
                                 }
                                     soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);
 
@@ -7265,7 +7353,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                             if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                             }else {
-                                fish_List.get(j).set_Hp_Minus(10 + random.nextInt((int)st6));
+                                skill_Plus_D = 0;
+                                if(st6 >= 1 ){
+                                    skill_Plus_D = random.nextInt((int) st6);
+                                }
+                                fish_List.get(j).set_Hp_Minus(10 + skill_Plus_D);
                                 soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                                 skill_Thorn2_List.get(i).set_Live();
                             }
@@ -7323,7 +7415,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                             ground_List.get(j).set_Ground_Hp_Minus(1);
                                         }
                                     }else {
-                                        ground_List.get(j).set_Ground_Hp_Minus(10 + random.nextInt((int) ft10));
+                                        skill_Plus_D = 0;
+                                        if(ft10 >= 1 ){
+                                            skill_Plus_D = random.nextInt((int) ft10);
+                                        }
+                                        ground_List.get(j).set_Ground_Hp_Minus(10 + skill_Plus_D);
                                     }
                                         soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                                         skill_Thorn2_List.get(i).set_Live();
@@ -7414,7 +7510,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                             if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                             }else {
-                                fish_List.get(j).set_Hp_Minus(30 + random.nextInt((int)ft7));
+                                skill_Plus_D = 0;
+                                if(ft7 >= 1 ){
+                                    skill_Plus_D = random.nextInt((int) ft7);
+                                }
+                                fish_List.get(j).set_Hp_Minus(30 + skill_Plus_D);
                                 soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                                 skill_Lightning_List.get(i).set_play_Attack();
                             }
@@ -7461,7 +7561,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                                 }else {
-                                    fish_List.get(j).set_Hp_Minus(30 + random.nextInt((int)ft7));
+                                    skill_Plus_D = 0;
+                                    if(ft7 >= 1 ){
+                                        skill_Plus_D = random.nextInt((int) ft7);
+                                    }
+                                    fish_List.get(j).set_Hp_Minus(30 + skill_Plus_D);
                                 }
 
 //                                if(skill_Lightning_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Lightning_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()){
@@ -7555,7 +7659,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                             ground_List.get(j).set_Ground_Hp_Minus(1);
                                         }
                                     }else {
-                                        ground_List.get(j).set_Ground_Hp_Minus(30 + random.nextInt((int) ft7));
+                                        skill_Plus_D = 0;
+                                        if(ft7 >= 1 ){
+                                            skill_Plus_D = random.nextInt((int) ft7);
+                                        }
+                                        ground_List.get(j).set_Ground_Hp_Minus(30 + skill_Plus_D);
                                     }
                                 }
 //                                if(skill_Lightning_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Lightning_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()){
@@ -7632,7 +7740,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                             if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                             }else {
-                                   fish_List.get(j).set_Hp_Minus(50  + (int)ft7 );
+                                skill_Plus_D = 0;
+                                if(ft7 >= 1 ){
+                                    skill_Plus_D = random.nextInt((int) ft7);
+                                }
+                                   fish_List.get(j).set_Hp_Minus(50  + skill_Plus_D);
                                     soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                                     skill_Lightning2_List.get(i).set_play_Attack();
                             }
@@ -7685,7 +7797,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                                 }else {
-                                    fish_List.get(j).set_Hp_Minus(40 + random.nextInt((int)ft8));
+                                    skill_Plus_D = 0;
+                                    if(ft8 >= 1 ){
+                                        skill_Plus_D = random.nextInt((int) ft8);
+                                    }
+                                    fish_List.get(j).set_Hp_Minus(40 + skill_Plus_D);
                                 }
 
 //                                if(skill_Lightning2_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Lightning2_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()){
@@ -7777,7 +7893,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                             ground_List.get(j).set_Ground_Hp_Minus(1);
                                         }
                                     }else {
-                                        ground_List.get(j).set_Ground_Hp_Minus(40 + random.nextInt((int) ft8));
+                                        skill_Plus_D = 0;
+                                        if(ft8 >= 1 ){
+                                            skill_Plus_D = random.nextInt((int) ft8);
+                                        }
+                                        ground_List.get(j).set_Ground_Hp_Minus(40 + skill_Plus_D);
                                     }
                                 }
 
@@ -7898,7 +8018,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                                 }else {
-                                    fish_List.get(j).set_Status_Poison(10 + random.nextInt((int)mt8));
+                                    skill_Plus_D = 0;
+                                    if(mt8 >= 1 ){
+                                        skill_Plus_D = random.nextInt((int) mt8);
+                                    }
+                                    fish_List.get(j).set_Status_Poison(10 + skill_Plus_D);
 
                                 }
 
@@ -7942,7 +8066,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                                 }else {
-                                    ground_List.get(j).set_Status_Poison(10 + random.nextInt((int)mt8));
+                                    skill_Plus_D = 0;
+                                    if(mt8 >= 1 ){
+                                        skill_Plus_D = random.nextInt((int) mt8);
+                                    }
+                                    ground_List.get(j).set_Status_Poison(10 + skill_Plus_D);
 
                                 }
 
@@ -8152,7 +8280,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                                 }else {
-                                    fish_List.get(j).set_Hp_Minus(7 + random.nextInt((int)mt6));
+                                    skill_Plus_D = 0;
+                                    if(mt6 >= 1 ){
+                                        skill_Plus_D = random.nextInt((int) mt6);
+                                    }
+                                    fish_List.get(j).set_Hp_Minus(7 + skill_Plus_D);
                                 }
 
 //                                if (skill_Laser_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Laser_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
@@ -8199,7 +8331,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                             ground_List.get(j).set_Ground_Hp_Minus(1);
                                         }
                                     }else {
-                                        ground_List.get(j).set_Ground_Hp_Minus(7 + random.nextInt((int) mt6));
+                                        skill_Plus_D = 0;
+                                        if(mt6 >= 1 ){
+                                            skill_Plus_D = random.nextInt((int) mt6);
+                                        }
+                                        ground_List.get(j).set_Ground_Hp_Minus(7 + skill_Plus_D);
                                     }
                                 }
 
@@ -15353,8 +15489,8 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
         ruby = setIntent[0];
         money = setIntent[1];
 
-//        money = 1000000000;
-//        ruby = 500;
+        money = 1000000000;
+        ruby = 500;
 
         character_Randmark_Damege = setIntent[2];
         character_Drag_Damege = setIntent[3];
