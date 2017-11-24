@@ -85,39 +85,6 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     String formatDate;
     TextView time_Text;
 
-//    private class Timer_Text extends Thread {
-//        public void run() {
-//            while(true) {
-//                try {
-//                    sleep(1000);
-//
-//                    now = System.currentTimeMillis();
-//                    date = new Date(now);
-//                    formatDate = sdfNow.format(date);
-//
-//                    Message msg = handler.obtainMessage();
-//                    handler.sendMessage(msg);
-//                    Log.e("@","2");
-//
-//                } catch (Exception e) {
-//                    Log.e("@", "!");
-//                }
-//            }
-//        }
-//    }
-//
-//    final Handler handler = new Handler()
-//    {
-//        public void handleMessage(Message msg)
-//
-//        {
-//            Log.e("@","3");
-//            time_Text.setText(formatDate);
-//            Log.e("@","4");
-//
-//        }
-//
-//    };
 
 
     int advertisement_Count = 25;
@@ -331,6 +298,8 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
             cursor.close();
         }
+        info[1] = 10000000000f;
+        Log.e("@"," 돈 : "+ info[1]);
     }
 
     int get_Item_Integer[] = new int[150];
@@ -353,6 +322,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 //            Toast.makeText(getApplicationContext(), "" + get_Item[1], Toast.LENGTH_SHORT).show();
             info[0] = get_Item[0];
             info[1] = get_Item[1];
+
             //0 = money, 1 = ruby
             Log.e("@", "@" + info[1]);
 
@@ -567,6 +537,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         selectData();
         Intent intent = new Intent(getApplicationContext(), Activity_Store.class);
         intent.putExtra("info", info);
+
 //        Toast.makeText(getApplicationContext(), "" + info[0], Toast.LENGTH_SHORT).show();
         //intent.putExtra("cha","aa");
         startActivityForResult(intent, 1002);

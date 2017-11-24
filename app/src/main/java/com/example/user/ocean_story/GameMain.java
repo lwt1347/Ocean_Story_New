@@ -231,47 +231,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
 
 
-
-//    /**
-//     * 기본 물고기 설명 이미지
-//     */
-//    private Bitmap explain_Default_Fish_img[] = new Bitmap[5];
-//    /**
-//     * 드래그 물고기 설명 이미지
-//     */
-//    private Bitmap explain_Drag_Fish_img[] = new Bitmap[5];
-//
-//    /**
-//     * 오징어 설명 이미지
-//     */
-//    private Bitmap explain_Squid_img[] = new Bitmap[5];
-//    /**
-//     * 전기 뱀장어 설명 이미지
-//     */
-//    private Bitmap explain_Ell_img[] = new Bitmap[5];
-//
-//    /**
-//     * 성게 설명 이미지
-//     */
-//    private Bitmap explain_Urchin_img[] = new Bitmap[5];
-//
-//    /**
-//     * 성게 설명 이미지 [공격 중]
-//     */
-//    private Bitmap explain_Urchin_Attack_img[] = new Bitmap[5];
-//
-//    /**
-//     * 달팽이 설명 이미지
-//     */
-//    private Bitmap explain_Snail_img[] = new Bitmap[5];
-//
-//    /**
-//     * 꽃게 설명 이미지
-//     */
-//    private Bitmap explain_Crab_img[] = new Bitmap[5];
-
-
-
     /**
      * 해파리 이미지
      */
@@ -969,7 +928,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
         editor.putInt("vive", vive);
         editor.commit();
 
-        Log.e("@", "es = " + es + ", bs = " + bs);
+//        Log.e("@", "es = " + es + ", bs = " + bs);
 
     }
 
@@ -1064,17 +1023,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
         confirm_Button_card_2 = new GraphicButton(new Rect(0, 0, 0, 0));
         confirm_Button_card_3 = new GraphicButton(new Rect(0, 0, 0, 0));
 
-//    if(main_Character instanceof Main_Character_Fish_Tear1){
-//
-//        explain_Window_Origin_Trilbite.recycle();
-//        explain_Window_Origin_Trilbite = null;
-//    }else if(main_Character instanceof Main_Character_Moulluse_Tear1){
-//        explain_Window_Origin_Squid.recycle();
-//        explain_Window_Origin_Squid = null;
-//    }else if(main_Character instanceof Main_Character_Shellfish_Tear1){
-//        explain_Window_Origin_Crab.recycle();
-//        explain_Window_Origin_Crab = null;
-//    }
     }
 
     //위에꺼랑 같은데 캐릭터 진화창 떴을때 컨펌 위치 바꿔주기 위해서
@@ -1154,7 +1102,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
         infinitymode_Status = false;
         infinitymode_Status_Flag = false;
         Monster_Clean= false;
-        Log.e("@","리스타트");
+//        Log.e("@","리스타트");
         //모든 캐릭터
         for(int i=0; i<fish_List.size(); i++){
             fish_List.get(i).set_Hp_Minus(5000000);
@@ -1192,37 +1140,37 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         //영구 추출 스킬 셋팅
-        Log.e("@","스킬");
+//        Log.e("@","스킬");
         for(int i=0; i<30; i++){
 
             if(i < 10){
                 if(setIntent[39 + i] == 1){
                     skill_Fish_Extract_Nomar[i] = true;
-                    Log.e("@","fish = " + i );
+//                    Log.e("@","fish = " + i );
                 }
             }
             else if(i < 20){
                 if(setIntent[39 + i] == 1){
                     skill_Shellfish_Extract_Nomar[i-10] = true;
-                    Log.e("@","Shellfish = " + (i-10) );
+//                    Log.e("@","Shellfish = " + (i-10) );
                 }
             }
             else if(i < 30){
                 if(setIntent[39 + i] == 1){
                     skill_Mollus_Extract_Nomar[i-20] = true;
-                    Log.e("@","Mollus = " + (i-20) );
+//                    Log.e("@","Mollus = " + (i-20) );
                 }
             }
         }
 
 
-        Log.e("@","skill_Fish_Extract_Nomar[0] = " + skill_Fish_Extract_Nomar[0] );
-        Log.e("@","skill_Fish_Extract_Nomar[1] = " + skill_Fish_Extract_Nomar[1] );
-        Log.e("@","skill_Fish_Extract_Nomar[2] = " + skill_Fish_Extract_Nomar[2] );
-
-        Log.e("@","skill_Shellfish_Extract_Nomar[0] = " + skill_Shellfish_Extract_Nomar[0] );
-        Log.e("@","skill_Shellfish_Extract_Nomar[1] = " + skill_Shellfish_Extract_Nomar[1] );
-        Log.e("@","skill_Shellfish_Extract_Nomar[2] = " + skill_Shellfish_Extract_Nomar[2] );
+//        Log.e("@","skill_Fish_Extract_Nomar[0] = " + skill_Fish_Extract_Nomar[0] );
+//        Log.e("@","skill_Fish_Extract_Nomar[1] = " + skill_Fish_Extract_Nomar[1] );
+//        Log.e("@","skill_Fish_Extract_Nomar[2] = " + skill_Fish_Extract_Nomar[2] );
+//
+//        Log.e("@","skill_Shellfish_Extract_Nomar[0] = " + skill_Shellfish_Extract_Nomar[0] );
+//        Log.e("@","skill_Shellfish_Extract_Nomar[1] = " + skill_Shellfish_Extract_Nomar[1] );
+//        Log.e("@","skill_Shellfish_Extract_Nomar[2] = " + skill_Shellfish_Extract_Nomar[2] );
 
 
 
@@ -1275,7 +1223,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
         Init_Main_Character_Image(_context, main_Character);
         main_Character = new Main_Character_Plankton_1((window_Width/2) - (main_Character_Img[0].getWidth()/2), (window_Height)/2 + convertPixelsToDp(110, _context), window_Width, window_Height, main_Character_Img[0].getWidth(), main_Character_Img[0].getHeight());
 //        game_thread.function_Skill_earthquake_img();
-//        game_thread.function_Skill_Butter_img();
+//        game_thread.function_Skill_Teeth_mine2_img();
 //          main_Character.set_Tear(0);
 
         //재시작 하면 초기화
@@ -1378,7 +1326,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
         stage_Day = timerTask_Stage_Day();
 
 //        mTimer.schedule(fish_Maker, 1000, 8000);
-        mTimer.schedule(stage_Day, 1000, 17000);
+        mTimer.schedule(stage_Day, 1000, 8000);
 
     }
 
@@ -1428,6 +1376,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    boolean st_S = false;
 
         class Game_Thread extends Thread{
 
@@ -1839,136 +1788,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
         }
 
 
-
-        /**
-         * 기본 물고기 설명창
-         */
-//        public void function_Init_Explain_Fish_Default(){
-//            for(int i=0; i<5; i++) {
-//                //물고기 설명창
-//                explain_Default_Fish_img[i] = Init_Explain_Fish_Default(_context, i);
-//            }
-//        }
-//        public void recycle_Init_Explain_Fish_Default(){
-//            for(int i=0; i<5; i++) {
-//                //물고기 설명창
-//                explain_Default_Fish_img[i].recycle();
-//                explain_Default_Fish_img[i] = null;
-//            }
-//        }
-//
-//
-//        /**
-//         * 드래그 물고기 설명창
-//         */
-//        public void function_Init_Explain_Fish_Drag() {
-//            for (int i = 0; i < 5; i++) {
-//                //드래그 물고기 설명
-//                explain_Drag_Fish_img[i] = Init_Explain_Fish_Drag(_context, i);
-//            }
-//        }
-//        public void recycle_Init_Explain_Fish_Drag() {
-//            for (int i = 0; i < 5; i++) {
-//                explain_Drag_Fish_img[i].recycle();
-//                explain_Drag_Fish_img[i] = null;
-//            }
-//        }
-//
-//
-//        /**
-//         * 오징어 설명창
-//         */
-//        public void function_Init_Explain_Squid() {
-//            for (int i = 0; i < 5; i++) {
-//                //오징어 설명
-//                explain_Squid_img[i] = Init_Explain_Squid(_context, i);
-//            }
-//        }
-//        public void recycle_Init_Explain_Squid() {
-//            for (int i = 0; i < 5; i++) {
-//                explain_Squid_img[i].recycle();
-//                explain_Squid_img[i] = null;
-//            }
-//        }
-//
-//
-//
-//        /**
-//         * 전기 뱀장어 설명창
-//         */
-//        public void function_Init_Explain_Ell() {
-//            for (int i = 0; i < 5; i++) {
-//                //전기 뱀장어 설명
-//                explain_Ell_img[i] = Init_Explain_Ell(_context, i);
-//            }
-//        }
-//        public void recycle_Init_Explain_Ell() {
-//            for (int i = 0; i < 5; i++) {
-//                explain_Ell_img[i].recycle();
-//                explain_Ell_img[i] = null;
-//            }
-//        }
-//
-//
-//        /**
-//         * 성게 설명창
-//         */
-//        public void function_Init_Explain_Urchin() {
-//            for (int i = 0; i < 5; i++) {
-//                //성게 설명
-//                explain_Urchin_img[i] = Init_Explain_Urchin(_context, i);
-//                //성게 공격 모드 설명
-//                explain_Urchin_Attack_img[i] = Init_Explain_Urchin_Attack(_context, i);
-//            }
-//        }
-//        public void recycle_Init_Explain_Urchin() {
-//            for (int i = 0; i < 5; i++) {
-//                explain_Urchin_img[i].recycle();
-//                explain_Urchin_img[i]= null;
-//
-//                explain_Urchin_Attack_img[i].recycle();
-//                explain_Urchin_Attack_img[i] = null;
-//            }
-//        }
-//
-//        /**
-//         * 달팽이 설명 창
-//         */
-//        public void function_Init_Explain_Snail() {
-//            for (int i = 0; i < 5; i++) {
-//                //달팽이 설명
-//                explain_Snail_img[i] = Init_Explain_Snail(_context, i);
-//            }
-//        }
-//        public void recycle_Init_Explain_Snail() {
-//
-//
-//
-//
-//            for (int i = 0; i < 5; i++) {
-//                explain_Snail_img[i].recycle();
-//                explain_Snail_img[i] = null;
-//            }
-//        }
-//
-//
-//
-//
-//        /**
-//         * 꽃게 설명창
-//         */
-//        public void function_Init_Explain_Crab() {
-//            for (int i = 0; i < 5; i++) {
-//                //꽃게 설명
-//                explain_Crab_img[i] = Init_Explain_Crab(_context, i);
-//            }
-//        }
-//        public void recycle_Init_Explain_Crab() {
-//            for (int i = 0; i < 5; i++) {
-//                explain_Crab_img[i].recycle();
-//                explain_Crab_img[i] = null;
-//            }
-//        }
 
         /**
          * 진화의창 설명창
@@ -2576,12 +2395,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             skill_Crab_img[3] = image.getBitmap();
 
         }
-        public void recycle_Skill_Crab_img(){
-            for(int i=0; i<4; i++){
-                skill_Crab_img[i].recycle();
-                skill_Crab_img[i] = null;
-            }
-        }
 
 
         ///////////////////////////////////////////////////////////
@@ -2599,12 +2412,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             skill_Soycrab_img[3] = image.getBitmap();
 
         }
-        public void recycle_Skill_Soycrab_img(){
-            for(int i=0; i<4; i++){
-                skill_Soycrab_img[i].recycle();
-                skill_Soycrab_img[i] = null;
-            }
-        }
+
         ///////////////////////////////////////////////////////////
 
         //연체류 티어 6
@@ -2612,10 +2420,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             //레이저
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_laser_1);
             skill_Laser_img = image.getBitmap();
-        }
-        public void recycle_Skill_Laser_img(){
-            skill_Laser_img.recycle();
-            skill_Laser_img = null;
         }
 
         ///////////////////////////////////////////////////////////
@@ -2631,57 +2435,38 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_thorn_4);
             skill_Thorn_img[3] = image.getBitmap();
         }
-        public void recycle_Skill_Thorn_img(){
-            for(int i=0; i<4; i++){
-                skill_Thorn_img[i].recycle();
-                skill_Thorn_img[i] = null;
-            }
-        }
+
         ///////////////////////////////////////////////////////////
 
         //연체류 티어 10
-        public void function_Skill_Poison123_img(){
+        public void function_Skill_Poison123_img() {
             //독구름 소환
-            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_posion_cloud1_1);
+            image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.skill_posion_cloud1_1);
             skill_Poison1_img[0] = image.getBitmap();
-            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_posion_cloud1_2);
+            image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.skill_posion_cloud1_2);
             skill_Poison1_img[1] = image.getBitmap();
-            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_posion_cloud1_3);
+            image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.skill_posion_cloud1_3);
             skill_Poison1_img[2] = image.getBitmap();
-            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_posion_cloud1_4);
+            image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.skill_posion_cloud1_4);
             skill_Poison1_img[3] = image.getBitmap();
 
-            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_posion_cloud2_1);
+            image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.skill_posion_cloud2_1);
             skill_Poison2_img[0] = image.getBitmap();
-            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_posion_cloud2_2);
+            image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.skill_posion_cloud2_2);
             skill_Poison2_img[1] = image.getBitmap();
-            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_posion_cloud2_3);
+            image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.skill_posion_cloud2_3);
             skill_Poison2_img[2] = image.getBitmap();
-            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_posion_cloud2_4);
+            image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.skill_posion_cloud2_4);
             skill_Poison2_img[3] = image.getBitmap();
 
-            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_posion_cloud3_1);
+            image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.skill_posion_cloud3_1);
             skill_Poison3_img[0] = image.getBitmap();
-            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_posion_cloud3_2);
+            image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.skill_posion_cloud3_2);
             skill_Poison3_img[1] = image.getBitmap();
-            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_posion_cloud3_3);
+            image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.skill_posion_cloud3_3);
             skill_Poison3_img[2] = image.getBitmap();
-            image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_posion_cloud3_4);
+            image = (BitmapDrawable) _context.getResources().getDrawable(R.drawable.skill_posion_cloud3_4);
             skill_Poison3_img[3] = image.getBitmap();
-        }
-        public void recycle_Skill_Poison123_img(){
-            for(int i=0; i<4; i++){
-                skill_Poison1_img[i].recycle();
-                skill_Poison1_img[i] = null;
-            }
-            for(int i=0; i<4; i++){
-                skill_Poison2_img[i].recycle();
-                skill_Poison2_img[i] = null;
-            }
-            for(int i=0; i<4; i++){
-                skill_Poison3_img[i].recycle();
-                skill_Poison3_img[i] = null;
-            }
         }
         ///////////////////////////////////////////////////////////
 
@@ -2697,12 +2482,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_earthquake_4);
             skill_earthquake_img[3] = image.getBitmap();
         }
-        public void recycle_Skill_earthquake_img(){
-            for(int i=0; i<4; i++){
-                skill_earthquake_img[i].recycle();
-                skill_earthquake_img[i] = null;
-            }
-        }
+
         ///////////////////////////////////////////////////////////
 
         //물고기 티어 3
@@ -2715,12 +2495,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_teeth_mine_3);
             skill_Teeth_mine_img[2] = image.getBitmap();
         }
-        public void recycle_Skill_Teeth_mine_img(){
-            for(int i=0; i<3; i++){
-                skill_Teeth_mine_img[i].recycle();
-                skill_Teeth_mine_img[i] = null;
-            }
-        }
+
         ///////////////////////////////////////////////////////////
 
         //물고기 티어 5
@@ -2735,12 +2510,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_teeth_mine2_4);
             skill_Teeth_mine2_img[3] = image.getBitmap();
         }
-        public void recycle_Skill_Teeth_mine2_img(){
-            for(int i=0; i<4; i++){
-                skill_Teeth_mine2_img[i].recycle();
-                skill_Teeth_mine2_img[i] = null;
-            }
-        }
+
         ///////////////////////////////////////////////////////////
 
         //물고기 티어 9
@@ -2753,12 +2523,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_sea_snake_3);
             skill_Sea_Snake_img[2] = image.getBitmap();
         }
-        public void recycle_Skill_Sea_Snake_img(){
-            for(int i=0; i<3; i++){
-                skill_Sea_Snake_img[i].recycle();
-                skill_Sea_Snake_img[i] = null;
-            }
-        }
+
         ///////////////////////////////////////////////////////////
 
         //연체류 티어 3
@@ -2768,12 +2533,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_slow_cloud_1);
             skill_Slow_Cloud_img = image.getBitmap();
         }
-        public void recycle_Skill_Slow_Cloud_img(){
 
-            skill_Slow_Cloud_img.recycle();
-            skill_Slow_Cloud_img = null;
-
-        }
         ///////////////////////////////////////////////////////////
 
 
@@ -2790,12 +2550,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_boom_poison_4);
             skill_Boom_Poison_img[3] = image.getBitmap();
         }
-        public void recycle_Skill_Boom_Poison_img(){
-            for(int i=0; i<4; i++){
-                skill_Boom_Poison_img[i].recycle();
-                skill_Boom_Poison_img[i] = null;
-            }
-        }
+
         ///////////////////////////////////////////////////////////
 
 
@@ -2809,12 +2564,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_wave_3);
             skill_Wave_img[2] = image.getBitmap();
         }
-        public void recycle_Skill_Wave_img(){
-            for(int i=0; i<3; i++){
-                skill_Wave_img[i].recycle();
-                skill_Wave_img[i] = null;
-            }
-        }
+
         ///////////////////////////////////////////////////////////
 
         //연체류 티어 9
@@ -2829,12 +2579,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_wall_4);
             skill_wall_img[3] = image.getBitmap();
         }
-        public void recycle_Skill_wall_img(){
-            for(int i=0; i<4; i++){
-                skill_wall_img[i].recycle();
-                skill_wall_img[i] = null;
-            }
-        }
+
         ///////////////////////////////////////////////////////////
 
         //갑각류 티어 6
@@ -2847,12 +2592,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_thorn2_3);
             skill_Thorn2_img[2] = image.getBitmap();
         }
-        public void recycle_Skill_Thorn2_img(){
-            for(int i=0; i<3; i++){
-                skill_Thorn2_img[i].recycle();
-                skill_Thorn2_img[i] = null;
-            }
-        }
+
         ///////////////////////////////////////////////////////////
 
         //물고기 티어 7
@@ -2867,12 +2607,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_lightning_4);
             skill_lightnign_img[3] = image.getBitmap();
         }
-        public void recycle_Skill_lightnign_img(){
-            for(int i=0; i<4; i++){
-                skill_lightnign_img[i].recycle();
-                skill_lightnign_img[i] = null;
-            }
-        }
+
         ///////////////////////////////////////////////////////////
 
         //물고기 티어 8
@@ -2887,12 +2622,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_lightning1_4);
             skill_lightnign1_img[3] = image.getBitmap();
         }
-        public void recycle_Skill_lightnign1_img(){
-            for(int i=0; i<4; i++){
-                skill_lightnign1_img[i].recycle();
-                skill_lightnign1_img[i] = null;
-            }
-        }
+
         ///////////////////////////////////////////////////////////
 
 
@@ -2908,12 +2638,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_stomp_4);
             skill_stomp_img[3] = image.getBitmap();
         }
-        public void recycle_Skill_stomp_img(){
-            for(int i=0; i<4; i++){
-                skill_stomp_img[i].recycle();
-                skill_stomp_img[i] = null;
-            }
-        }
+
 ///////////////////////////////////////////////////////////
 
         //갑각류 티어 7
@@ -2931,12 +2656,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_fry_5);
             skill_fry_img[4] = image.getBitmap();
         }
-        public void recycle_Skill_fry_img(){
-            for(int i=0; i<5; i++){
-                skill_fry_img[i].recycle();
-                skill_fry_img[i] = null;
-            }
-        }
+
 
         ///////////////////////////////////////////////////////////
 
@@ -2950,12 +2670,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_butter_3);
             skill_Butter_img[2] = image.getBitmap();
         }
-        public void recycle_Skill_Butter_img(){
-            for(int i=0; i<3; i++){
-                skill_Butter_img[i].recycle();
-                skill_Butter_img[i] = null;
-            }
-        }
+
         ///////////////////////////////////////////////////////////
 
         //연체류 티어 5
@@ -2966,15 +2681,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             image = (BitmapDrawable)_context.getResources().getDrawable(R.drawable.skill_fork_2);
             skill_Fork_img[1] = image.getBitmap();
         }
-        public void recycle_Skill_Fork_img(){
-            for(int i=0; i<2; i++){
-                skill_Fork_img[i].recycle();
-                skill_Fork_img[i] = null;
-            }
-        }
-
-
-
 
 
         /**
@@ -3331,71 +3037,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             return image.getBitmap();
         }
 
-        /**
-         * 물고기 설명창
-         * */
-//        public Bitmap Init_Explain_Fish_Default(Context context, int num){
-//            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.explain_default_fish_1 + num); //인트형이라 + 1하면 그림 변경됨
-//            return image.getBitmap();
-//        }
-//
-//        /**
-//         * 오징어 설명
-//         */
-//        public Bitmap Init_Explain_Squid(Context context, int num){
-//            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.explain_squid_1 + num); //인트형이라 + 1하면 그림 변경됨
-//            return image.getBitmap();
-//        }
-//
-//        /**
-//         * 전기뱀장어 설명 이미지
-//         */
-//        public Bitmap Init_Explain_Ell(Context context, int num){
-//            image = (BitmapDrawable)context.getResources().getDrawable(R.drawable.explain_ell_1 + num); //인트형이라 + 1하면 그림 변경됨
-//            return image.getBitmap();
-//        }
-//
-//        /**
-//         * 드래그 물고기 설명
-//         */
-//        public Bitmap Init_Explain_Fish_Drag(Context context, int num) {
-//            image = (BitmapDrawable) context.getResources().getDrawable(R.drawable.explain_drag_fish_1 + num); //인트형이라 + 1하면 그림 변경됨
-//            return image.getBitmap();
-//        }
-//
-//        /**
-//         *  성게 설명
-//         */
-//        public Bitmap Init_Explain_Urchin(Context context, int num) {
-//            image = (BitmapDrawable) context.getResources().getDrawable(R.drawable.explain_urchin_1 + num); //인트형이라 + 1하면 그림 변경됨
-//            return image.getBitmap();
-//        }
-//
-//        /**
-//         * 성게 공격 모드 설명
-//         */
-//        public Bitmap Init_Explain_Urchin_Attack(Context context, int num) {
-//            image = (BitmapDrawable) context.getResources().getDrawable(R.drawable.explain_urchin_attack_1 + num); //인트형이라 + 1하면 그림 변경됨
-//            return image.getBitmap();
-//        }
-//
-//        /**
-//         * 달팽이 설명
-//         */
-//        public Bitmap Init_Explain_Snail(Context context, int num) {
-//            image = (BitmapDrawable) context.getResources().getDrawable(R.drawable.explain_snail_1 + num); //인트형이라 + 1하면 그림 변경됨
-//            return image.getBitmap();
-//        }
-//
-//        /**
-//         * 꽃게 설명
-//         */
-//        public Bitmap Init_Explain_Crab(Context context, int num) {
-//            image = (BitmapDrawable) context.getResources().getDrawable(R.drawable.explain_crab_1 + num); //인트형이라 + 1하면 그림 변경됨
-//            return image.getBitmap();
-//        }
-
-
 
         //불가사리 이미지
         public Bitmap Init_Ground_Touch_Starfish_Image(Context context, int num){
@@ -3616,6 +3257,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             stage_Call_Revolution();
             stage_Call_Revolution();
 
+
         }
 
 
@@ -3628,6 +3270,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
         int effect_Background_Two_1_img_Control_Temp = 0;
         LandMark_Damage_View landMark_Damage_View;
         ArrayList<LandMark_Damage_View> landMark_Damage_View_List = new ArrayList<LandMark_Damage_View>();
+
 
 
 
@@ -3736,8 +3379,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                     sent_Item[86] = character_Explain_DB[34];
 
 
-
-
                     intent_Item.putExtra("item", sent_Item); //키 밸류       배열로 하나의 값만 보낸다.
                     ((Activity)_context).setResult(Activity.RESULT_OK, intent_Item);
 
@@ -3795,12 +3436,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 landMark_Damage_View = new LandMark_Damage_View(touchx,touchy);
                                 landMark_Damage_View.set_Damage(character_Randmark_Damege_Temp);
                                 landMark_Damage_View_List.add(landMark_Damage_View);
-                                Log.e("a",ground_List.get(i).get_Ground_Hp() + "");
+//                                Log.e("a",ground_List.get(i).get_Ground_Hp() + "");
                             }
 
                             if(land_Mark_dist_2){
                                 stage_Jump();
-                                Log.e("@", "@ 점프");
+//                                Log.e("@", "@ 점프");
                             }
 
                             if(land_Mark.get_Class_Num() == 0) {
@@ -4364,23 +4005,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                             //달팽이 움직임
                             if (ground_List.get(i) instanceof Ground_Touch_Snail) {
 
-//                    //첫 번째 달팽이 일때
-//                    if (ground_List.get(i).get_First_Test_Object()) {
-//                        draw.draw_Bmp(canvas, explain_Snail_img[ground_List.get(i).get_Draw_Ground_Status()],
-//                                ground_List.get(i).get_Ground_Point_X() - convertPixelsToDp(70, _context),
-//                                ground_List.get(i).get_Ground_Point_Y() - convertPixelsToDp(13, _context));
-//
-//                        //달팽이 hp
-//                        paint_Temp.setTextSize(convertPixelsToDp(15, _context));
-//                        paint_Temp.setColor(Color.RED);
-//                        paint_Temp.setStrokeWidth(4);
-//
-//                        canvas.drawText("" + ground_List.get(i).get_Ground_Hp(),
-//                                ground_List.get(i).get_Ground_Point_X() - convertPixelsToDp(35, _context),
-//                                ground_List.get(i).get_Ground_Point_Y() + convertPixelsToDp(37, _context), paint_Temp);
-//
-//                    }
-
                                 if(ground_List.get(i).get_Class_Num() == 0){
 
                                     if (ground_List.get(i).get_Ground_Hp() == 5) {
@@ -4442,16 +4066,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 }
 
 
-                                //슬로우 이팩트
-//                    if(ground_List.get(i).get_Ground_Speed() <= 0) {
-//                        effect_Slow_img[ground_List.get(i).get_Slow_Effect()] = Bitmap.createScaledBitmap(
-//                                effect_Slow_img[ground_List.get(i).get_Slow_Effect()],
-//                                ground_Touch_Snail_Hp1_img[0].getWidth(),
-//                                ground_Touch_Snail_Hp1_img[0].getHeight(), true);
-//                    }
-
-
-
                             }
 
 
@@ -4487,16 +4101,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     hermit_Ground_Hit_Flag = false;
                                 }
 
-                                //슬로우 이미지
-//                    if(ground_List.get(i).get_Ground_Speed() <= 0) {
-//                        effect_Slow_img[ground_List.get(i).get_Slow_Effect()] = Bitmap.createScaledBitmap(
-//                                effect_Slow_img[ground_List.get(i).get_Slow_Effect()],
-//                                ground_Touch_Hermit_Hp1_img[0].getWidth(),
-//                                ground_Touch_Hermit_Hp1_img[0].getHeight(), true);
-//                    }
-
-
-
 
                             }else if(ground_List.get(i) instanceof Ground_Touch_Starfish){
                                 //불가사리 그리기
@@ -4517,13 +4121,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     starfish_Ground_Hit_Flag = false;
                                 }
 
-                                //슬로우 이미지
-//                     if(ground_List.get(i).get_Ground_Speed() <= 0) {
-//                         effect_Slow_img[ground_List.get(i).get_Slow_Effect()] = Bitmap.createScaledBitmap(
-//                                 effect_Slow_img[ground_List.get(i).get_Slow_Effect()],
-//                                 ground_Touch_Starfish_img[0].getWidth(),
-//                                 ground_Touch_Starfish_img[0].getHeight(), true);
-//                     }
 
                             }else if(ground_List.get(i) instanceof Ground_Touch_Bearbug){
                                 //곰 벌레
@@ -4545,15 +4142,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                                     bearbug_Ground_Hit_Flag = false;
                                 }
-
-
-                                //슬로우 이미지
-//                     if(ground_List.get(i).get_Ground_Speed() <= 0) {
-//                         effect_Slow_img[ground_List.get(i).get_Slow_Effect()] = Bitmap.createScaledBitmap(
-//                                 effect_Slow_img[ground_List.get(i).get_Slow_Effect()],
-//                                 ground_Touch_Bearbug_img[0].getWidth(),
-//                                 ground_Touch_Bearbug_img[0].getHeight(), true);
-//                     }
 
                             }else if(ground_List.get(i) instanceof Ground_Touch_Stingray){
                                 //가오리
@@ -4577,14 +4165,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 }
 
 
-                                //슬로우 이미지
-//                     if(ground_List.get(i).get_Ground_Speed() <= 0) {
-//                         effect_Slow_img[ground_List.get(i).get_Slow_Effect()] = Bitmap.createScaledBitmap(
-//                                 effect_Slow_img[ground_List.get(i).get_Slow_Effect()],
-//                                 ground_Touch_Stingray_img[0].getWidth(),
-//                                 ground_Touch_Stingray_img[0].getHeight(), true);
-//                     }
-
                             }else if(ground_List.get(i) instanceof Ground_Drag_Lobsters){
                                 //가제 그리기
                                 draw.draw_Bmp(canvas, ground_Drag_Lobsters_img[ground_List.get(i).get_Draw_Ground_Status()], ground_List.get(i).get_Ground_Point_X(), ground_List.get(i).get_Ground_Point_Y());
@@ -4600,27 +4180,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                                 ground_List.get(ground_Remove_Temp).get_Ground_Point_X(),
                                                 ground_List.get(ground_Remove_Temp).get_Ground_Point_Y());
                                     }
-//                         if(ground_Hit_Drag){
-//                             //드래그 중일때
-//                             if(!((Ground_Drag_Lobsters)ground_List.get(ground_Remove_Temp)).get_Mode()) {
-//                                 ground_List.get(ground_Remove_Temp).set_Ground_Hp_Minus();
-//                             }
-//                         }else {
-//                             //터치 중일때
-//                             ((Ground_Drag_Lobsters)ground_List.get(ground_Remove_Temp)).set_Mode();
-//                         }
+
 
                                     lobsters_Ground_Hit_Flag = false;
                                 }
 
-
-                                //슬로우 이미지
-//                     if(ground_List.get(i).get_Ground_Speed() <= 0) {
-//                         effect_Slow_img[ground_List.get(i).get_Slow_Effect()] = Bitmap.createScaledBitmap(
-//                                 effect_Slow_img[ground_List.get(i).get_Slow_Effect()],
-//                                 ground_Drag_Lobsters_img[0].getWidth(),
-//                                 ground_Drag_Lobsters_img[0].getHeight(), true);
-//                     }
 
 
 
@@ -4661,23 +4225,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                             //꽃게 또는 조개
                             else if (ground_List.get(i) instanceof Ground_Drag_Crab) {
 
-//                    //첫 번째 꽃게 일때
-//                    if (ground_List.get(i).get_First_Test_Object()) {
-//                        draw.draw_Bmp(canvas, explain_Crab_img[ground_List.get(i).get_Draw_Ground_Status()],
-//                                ground_List.get(i).get_Ground_Point_X() - convertPixelsToDp(78, _context),
-//                                ground_List.get(i).get_Ground_Point_Y() - convertPixelsToDp(30, _context));
-//
-//                        //꽃게 hp
-//                        paint_Temp.setTextSize(convertPixelsToDp(15, _context));
-//                        paint_Temp.setColor(Color.RED);
-//                        paint_Temp.setStrokeWidth(4);
-//
-//                        canvas.drawText("" + ground_List.get(i).get_Ground_Hp(),
-//                                ground_List.get(i).get_Ground_Point_X() - convertPixelsToDp(33, _context),
-//                                ground_List.get(i).get_Ground_Point_Y() + convertPixelsToDp(13, _context), paint_Temp);
-//
-//
-//                    }
 
 
                                 draw.draw_Bmp(canvas, shadow_img[5],  ground_List.get(i).get_Ground_Point_X()  + convertPixelsToDp(4, _context), ground_List.get(i).get_Ground_Point_Y()  + convertPixelsToDp(19, _context) );
@@ -4718,13 +4265,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     crap_Ground_Hit_Flag = false;
                                 }
 
-                                //이미지 크기 재 조정
-//                    if(ground_List.get(i).get_Ground_Speed() <= 0) {
-//                        effect_Slow_img[ground_List.get(i).get_Slow_Effect()] = Bitmap.createScaledBitmap(
-//                                effect_Slow_img[ground_List.get(i).get_Slow_Effect()],
-//                                ground_Drag_Crab_img[0].getWidth(),
-//                                ground_Drag_Crab_img[0].getHeight(), true);
-//                    }
 
 
                             }
@@ -4732,46 +4272,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                             //성게 움직임
                             else if (ground_List.get(i) instanceof Ground_Trap_Urchin) {
-
-
-                                //첫 번째 성게 일때
-//                    if (ground_List.get(i).get_First_Test_Object()) {
-//
-//                        //성게가 150 시간 넘어가면 부활한다.
-//                        if (((Ground_Trap_Urchin) ground_List.get(i)).get_Live_Time() <= 150) {
-//
-//                            draw.draw_Bmp(canvas, explain_Urchin_img[ground_List.get(i).get_Draw_Ground_Status()],
-//                                    ground_List.get(i).get_Ground_Point_X() - convertPixelsToDp(78, _context),
-//                                    ground_List.get(i).get_Ground_Point_Y() - convertPixelsToDp(28, _context));
-//
-//                            // 남은 시간 그리기
-//                            paint_Temp.setTextSize(convertPixelsToDp(15, _context));
-//                            paint_Temp.setColor(Color.RED);
-//                            paint_Temp.setStrokeWidth(4);
-//
-//
-//                            canvas.drawText("" + (150 - ((Ground_Trap_Urchin) ground_List.get(i)).get_Live_Time()),
-//                                    ground_List.get(i).get_Ground_Point_X() - convertPixelsToDp(40, _context),
-//                                    ground_List.get(i).get_Ground_Point_Y() + convertPixelsToDp(30, _context), paint_Temp);
-//                        } else { //성게가 공격 모드일때.
-//                            draw.draw_Bmp(canvas, explain_Urchin_Attack_img[ground_List.get(i).get_Draw_Ground_Status()],
-//                                    ground_List.get(i).get_Ground_Point_X() - convertPixelsToDp(78, _context),
-//                                    ground_List.get(i).get_Ground_Point_Y() - convertPixelsToDp(28, _context));
-//
-//                            // 남은 시간 그리기
-//                            paint_Temp.setTextSize(convertPixelsToDp(15, _context));
-//                            paint_Temp.setColor(Color.RED);
-//                            paint_Temp.setStrokeWidth(4);
-//
-//
-//                            canvas.drawText("" + (300 - ((Ground_Trap_Urchin) ground_List.get(i)).get_Live_Time()),
-//                                    ground_List.get(i).get_Ground_Point_X() - convertPixelsToDp(40, _context),
-//                                    ground_List.get(i).get_Ground_Point_Y() + convertPixelsToDp(30, _context), paint_Temp);
-//                        }
-//
-//
-//                    }
-
 
                                 //성게가 공격 모드인가 아닌가.
                                 if (((Ground_Trap_Urchin) ground_List.get(i)).get_Urchin_Attack_Mode()) {
@@ -4796,15 +4296,15 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                                     //성게가 공격 모드 일때, 게딱지가 아닐때
                                     if(((Ground_Trap_Urchin)ground_List.get(ground_Remove_Temp)).get_Urchin_Attack_Mode() && !(main_Character instanceof Main_Character_Shellfish_Tear3)  ){
-                                        Log.e("@"," 성게1 : " + skill_Shellfish_Extract_Nomar[1]);
-                                        Log.e("@"," 성게2 : " + skill_Shellfish_Extract_Nomar[2]);
-                                        Log.e("@"," 성게3 : " + skill_Shellfish_Extract_Nomar[3]);
+//                                        Log.e("@"," 성게1 : " + skill_Shellfish_Extract_Nomar[1]);
+//                                        Log.e("@"," 성게2 : " + skill_Shellfish_Extract_Nomar[2]);
+//                                        Log.e("@"," 성게3 : " + skill_Shellfish_Extract_Nomar[3]);
                                         if(!(skill_Shellfish_Extract_Nomar[2])) {
                                             if (random.nextInt(100) > urchinresistance) {
                                                 //get_Urchin_Attack_Mode()
                                                 main_Character.set_Hp_Minus();
                                                 gameActivity.set_Vibrator();
-                                                Log.e("@", "@3" + ground_List.get(i).getClass());
+//                                                Log.e("@", "@3" + ground_List.get(i).getClass());
                                             }
                                         }
                                     }
@@ -4927,24 +4427,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 /**
                                  * 물고기 설명 그림
                                  */
-                                //                if ((fish_List.get(i)).get_First_Test_Object()) { //첫 번째 물고기일때
-                                //
-                                //                    draw.draw_Bmp(canvas, explain_Default_Fish_img[fish_List.get(i).get_Draw_Fish_Status()],
-                                //                            fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(65, _context),
-                                //                            fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(20, _context));
-                                //
-                                //                    // 남은 hp 그리기
-                                //                    paint_Temp.setTextSize(convertPixelsToDp(15, _context));
-                                //                    paint_Temp.setColor(Color.RED);
-                                //                    paint_Temp.setStrokeWidth(4);
-                                //                    canvas.drawText("" + fish_List.get(i).get_Fish_Hp(),
-                                //                            fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(25, _context),
-                                //                            fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(47, _context), paint_Temp);
-                                //
-                                //                }
-
-
-
 
                                 /**
                                  *  이미지 회전
@@ -5042,15 +4524,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                  */
                             } else if (fish_List.get(i) instanceof Fish_Touch_Squid) {
 
-                                //                if ((fish_List.get(i)).get_First_Test_Object()) { //첫 번째 오징어 일때
-                                //
-                                //                    draw.draw_Bmp(canvas, explain_Squid_img[fish_List.get(i).get_Draw_Fish_Status()],
-                                //                            fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(0, _context),
-                                //                            fish_List.get(i).get_Fish_Point_Y());//- convertPixelsToDp(100, _context));
-                                //
-                                //                }
-
-
                                 //그림자 그리기
                                 draw.draw_Bmp(canvas, shadow_img[4], fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(10, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(45, _context));
 
@@ -5078,19 +4551,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 /**
                                  * 드래그 물고기 설명 그림
                                  */
-                                //                if ((fish_List.get(i)).get_First_Test_Object()) { //첫 번째 물고기일때
-                                //
-                                //                    draw.draw_Bmp(canvas, explain_Drag_Fish_img[fish_List.get(i).get_Draw_Fish_Status()],
-                                //                            fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(85, _context),
-                                //                            fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(20, _context));
-                                //
-                                //                    // 남은 hp 그리기
-                                //                    paint_Temp.setTextSize(convertPixelsToDp(15, _context));
-                                //                    paint_Temp.setColor(Color.RED);
-                                //                    paint_Temp.setStrokeWidth(4);
-                                //                    canvas.drawText("" + fish_List.get(i).get_Fish_Hp(), fish_List.get(i).get_Fish_Point_X() - convertPixelsToDp(43, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(57, _context), paint_Temp);
-                                //
-                                //                }
+
 
                                 //그림자 그리기
                                 temp_Shadow_img = draw.rotate_Image(shadow_img[3], -fish_List.get(i).get_Fish_Angle());
@@ -5295,13 +4756,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 /**
                                  * 전기 뱀장어 그리기
                                  */
-                                //                if ((fish_List.get(i)).get_First_Test_Object()) { //첫 번째 전기 뱀장어 일때
-                                //
-                                //                    draw.draw_Bmp(canvas, explain_Ell_img[fish_List.get(i).get_Draw_Fish_Status()],
-                                //                            fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(0, _context),
-                                //                            fish_List.get(i).get_Fish_Point_Y());//- convertPixelsToDp(100, _context));
-                                //
-                                //                }
+
 
                                 //그림자 그리기
                                 draw.draw_Bmp(canvas, shadow_img[4], fish_List.get(i).get_Fish_Point_X() + convertPixelsToDp(15, _context), fish_List.get(i).get_Fish_Point_Y() + convertPixelsToDp(45, _context));
@@ -5427,15 +4882,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                         fish_List.get(i).get_Fish_Point_Y()); //- convertPixelsToDp(13, _context));
 
 
-//                        else {
-//                            draw.draw_Bmp(canvas, effect_Poison_img[fish_List.get(i).get_Status_Poison_AttacK()], ///중독된 물고기 hp 감속과 동시에 이미지 표현
-//                                    fish_List.get(i).get_Fish_Point_X(),
-//                                    fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(13, _context));
-//                        }
-
-//                        draw.draw_Bmp(canvas, effect_Poison_img[0],
-//                                fish_List.get(i).get_Fish_Point_X(),
-//                                fish_List.get(i).get_Fish_Point_Y() - convertPixelsToDp(13, _context));
                             }
 
 
@@ -5492,23 +4938,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                                 }
 
-//                                if (skill_Crab_Claws_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Crab_Claws_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Crab_Claws_List.get(i).get_Y_Point()
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Crab_Claws_List.get(i).get_Y_Point() + skill_Crab_img[0].getHeight()) {
-//                                        fish_List.get(j).set_Hp_Minus(20 +  random.nextInt((int)st4));
-//                                    }
-//                                } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Crab_Claws_List.get(i).get_X_Point() + skill_Crab_img[0].getWidth()
-//                                        && fish_List.get(j).get_Fish_Point_X() >= skill_Crab_Claws_List.get(i).get_X_Point()
-//                                        ) {
-//
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Crab_Claws_List.get(i).get_Y_Point()
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Crab_Claws_List.get(i).get_Y_Point() + skill_Crab_img[0].getHeight()) {
-//                                        fish_List.get(j).set_Hp_Minus(20 +  random.nextInt((int)st4));
-//                                    }
-//                                }
-
-
 
                             }
 
@@ -5549,24 +4978,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     }
                                 }
 
-//                                if (skill_Crab_Claws_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Crab_Claws_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Crab_Claws_List.get(i).get_Y_Point()
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Crab_Claws_List.get(i).get_Y_Point() + skill_Crab_img[0].getHeight()) {
-//                                        ground_List.get(j).set_Ground_Hp_Minus(20 +  random.nextInt((int)st4));
-//
-//                                    }
-//                                } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Crab_Claws_List.get(i).get_X_Point() + skill_Crab_img[0].getWidth()
-//                                        && ground_List.get(j).get_Ground_Point_X() >= skill_Crab_Claws_List.get(i).get_X_Point()
-//                                        ) {
-//
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Crab_Claws_List.get(i).get_Y_Point()
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Crab_Claws_List.get(i).get_Y_Point() + skill_Crab_img[0].getHeight()) {
-//
-//                                        ground_List.get(j).set_Ground_Hp_Minus(20 +  random.nextInt((int)st4));
-//
-//                                    }
-//                                }
 
 
                             }
@@ -5630,25 +5041,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                                 }
 
-//                                if (skill_Soycrab_Claws_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Soycrab_Claws_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Soycrab_Claws_List.get(i).get_Y_Point()
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Soycrab_Claws_List.get(i).get_Y_Point() + skill_Soycrab_img[0].getHeight()) {
-//                                        fish_List.get(j).set_Hp_Minus(30 +  random.nextInt((int)st5));
-//
-//                                    }
-//                                } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Soycrab_Claws_List.get(i).get_X_Point() + skill_Soycrab_img[0].getWidth()
-//                                        && fish_List.get(j).get_Fish_Point_X() >= skill_Soycrab_Claws_List.get(i).get_X_Point()
-//                                        ) {
-//
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Soycrab_Claws_List.get(i).get_Y_Point()
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Soycrab_Claws_List.get(i).get_Y_Point() + skill_Soycrab_img[0].getHeight()) {
-//
-//                                        fish_List.get(j).set_Hp_Minus(30 +  random.nextInt((int)st5));
-//
-//                                    }
-//                                }
-
 
                             }
                             for(int j=0; j<ground_List.size(); j++){
@@ -5686,24 +5078,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     }
                                 }
 
-//                                if (skill_Soycrab_Claws_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Soycrab_Claws_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Soycrab_Claws_List.get(i).get_Y_Point()
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Soycrab_Claws_List.get(i).get_Y_Point() + skill_Soycrab_img[0].getHeight()) {
-//                                        ground_List.get(j).set_Ground_Hp_Minus(30 +  random.nextInt((int)st5));
-//
-//                                    }
-//                                } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Soycrab_Claws_List.get(i).get_X_Point() + skill_Soycrab_img[0].getWidth()
-//                                        && ground_List.get(j).get_Ground_Point_X() >= skill_Soycrab_Claws_List.get(i).get_X_Point()
-//                                        ) {
-//
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Soycrab_Claws_List.get(i).get_Y_Point()
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Soycrab_Claws_List.get(i).get_Y_Point() + skill_Soycrab_img[0].getHeight()) {
-//
-//                                        ground_List.get(j).set_Ground_Hp_Minus(30 +  random.nextInt((int)st5));
-//
-//                                    }
-//                                }
 
                             }
 
@@ -5766,31 +5140,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 }
 
 
-//                                if (skill_Stomp_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Stomp_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Stomp_List.get(i).get_Y_Point()
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Stomp_List.get(i).get_Y_Point() + skill_stomp_img[0].getHeight()) {
-//                                        fish_List.get(j).set_Hp_Minus(80 +  random.nextInt(((int)st10 * 3)));
-//                                        soundPool.play(sound_Effect[20], pop_Drag, pop_Drag, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//                                        gameActivity.set_Vibrator();
-//
-//                                    }
-//                                } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Stomp_List.get(i).get_X_Point() + skill_stomp_img[0].getWidth()
-//                                        && fish_List.get(j).get_Fish_Point_X() >= skill_Stomp_List.get(i).get_X_Point()
-//                                        ) {
-//
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Stomp_List.get(i).get_Y_Point()
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Stomp_List.get(i).get_Y_Point() + skill_stomp_img[0].getHeight()) {
-//
-//                                        fish_List.get(j).set_Hp_Minus(80 +  random.nextInt(((int)st10 * 3)));
-//                                        soundPool.play(sound_Effect[20], pop_Drag, pop_Drag, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//                                        gameActivity.set_Vibrator();
-//                                    }
-//                                }
-
-
-//
-
                             }
 
 
@@ -5830,27 +5179,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
 //                                    gameActivity.set_Vibrator();
                                 }
-
-//                                if (skill_Stomp_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Stomp_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Stomp_List.get(i).get_Y_Point()
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Stomp_List.get(i).get_Y_Point() + skill_stomp_img[0].getHeight()) {
-//                                        ground_List.get(j).set_Ground_Hp_Minus(80 +  random.nextInt(((int)st10 * 3)));
-//                                        soundPool.play(sound_Effect[20], pop_Drag, pop_Drag, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//                                        gameActivity.set_Vibrator();
-//                                    }
-//                                } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Stomp_List.get(i).get_X_Point() + skill_stomp_img[0].getWidth()
-//                                        && ground_List.get(j).get_Ground_Point_X() >= skill_Stomp_List.get(i).get_X_Point()
-//                                        ) {
-//
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Stomp_List.get(i).get_Y_Point()
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Stomp_List.get(i).get_Y_Point() + skill_stomp_img[0].getHeight()) {
-//
-//                                        ground_List.get(j).set_Ground_Hp_Minus(80 +  random.nextInt(((int)st10 * 3)));
-//                                        soundPool.play(sound_Effect[20], pop_Drag, pop_Drag, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//                                        gameActivity.set_Vibrator();
-//                                    }
-//                                }
 
 //
                             }
@@ -5948,25 +5276,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 //                                break;
                             }
 
-//                            if (skill_poison_cloud_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_poison_cloud_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_poison_cloud_List.get(i).get_Y_Point()
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_poison_cloud_List.get(i).get_Y_Point() + pop_Temp_img.getHeight()) {
-//                                    fish_List.get(j).set_Status_Poison(20 +  random.nextInt((int)mt10));
-//
-//                                }
-//                            } else if (fish_List.get(j).get_Fish_Point_X() <= skill_poison_cloud_List.get(i).get_X_Point() + pop_Temp_img.getWidth()
-//                                    && fish_List.get(j).get_Fish_Point_X() >= skill_poison_cloud_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_poison_cloud_List.get(i).get_Y_Point()
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_poison_cloud_List.get(i).get_Y_Point() + pop_Temp_img.getHeight()) {
-//
-//                                    fish_List.get(j).set_Status_Poison(20 +  random.nextInt((int)mt10));
-//
-//                                }
-//                            }
-
 
                         }
 
@@ -5999,24 +5308,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 ground_List.get(j).set_Status_Poison(20 + skill_Plus_D);
 //                                break;
                             }
-//                            if (skill_poison_cloud_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_poison_cloud_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_poison_cloud_List.get(i).get_Y_Point()
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_poison_cloud_List.get(i).get_Y_Point() + pop_Temp_img.getHeight()) {
-//                                    ground_List.get(j).set_Status_Poison(20 +  random.nextInt((int)mt10));
-//
-//                                }
-//                            } else if (ground_List.get(j).get_Ground_Point_X() <= skill_poison_cloud_List.get(i).get_X_Point() + pop_Temp_img.getWidth()
-//                                    && ground_List.get(j).get_Ground_Point_X() >= skill_poison_cloud_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_poison_cloud_List.get(i).get_Y_Point()
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_poison_cloud_List.get(i).get_Y_Point() + pop_Temp_img.getHeight()) {
-//
-//                                    ground_List.get(j).set_Status_Poison(20 +  random.nextInt((int)mt10));
-//
-//                                }
-//                            }
+
 
 
                         }
@@ -6082,24 +5374,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     fish_List.get(j).set_Hp_Minus(20 + skill_Plus_D);
 //                                    break;
                                 }
-//                                if (skill_Earthquake_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Earthquake_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Earthquake_List.get(i).get_Y_Point()
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Earthquake_List.get(i).get_Y_Point() + skill_earthquake_img[0].getHeight()) {
-//                                        fish_List.get(j).set_Hp_Minus(20 +  random.nextInt((int)ft4));
-//
-//                                    }
-//                                } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Earthquake_List.get(i).get_X_Point() + skill_earthquake_img[0].getWidth()
-//                                        && fish_List.get(j).get_Fish_Point_X() >= skill_Earthquake_List.get(i).get_X_Point()
-//                                        ) {
-//
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Earthquake_List.get(i).get_Y_Point()
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Earthquake_List.get(i).get_Y_Point() + skill_earthquake_img[0].getHeight()) {
-//
-//                                        fish_List.get(j).set_Hp_Minus(20 +  random.nextInt((int)ft4));
-//
-//                                    }
-//                                }
+
                             }
 
 
@@ -6136,25 +5411,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     }
 //                                    break;
                                 }
-//
-//                                if (skill_Earthquake_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Earthquake_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Earthquake_List.get(i).get_Y_Point()
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Earthquake_List.get(i).get_Y_Point() + skill_earthquake_img[0].getHeight()) {
-//                                        ground_List.get(j).set_Ground_Hp_Minus(20 +  random.nextInt((int)ft4));
-//
-//                                    }
-//                                } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Earthquake_List.get(i).get_X_Point() + skill_earthquake_img[0].getWidth()
-//                                        && ground_List.get(j).get_Ground_Point_X() >= skill_Earthquake_List.get(i).get_X_Point()
-//                                        ) {
-//
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Earthquake_List.get(i).get_Y_Point()
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Earthquake_List.get(i).get_Y_Point() + skill_earthquake_img[0].getHeight()) {
-//
-//                                        ground_List.get(j).set_Ground_Hp_Minus(20 +  random.nextInt((int)ft4));
-//
-//                                    }
-//                                }
+
                             }
 
 
@@ -6182,6 +5439,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                 try{
 
                     //이빨 지뢰
+                    st_S = true;
                     for(int i=0; i< skill_Teeth_Mine_List.size(); i++){
 
 
@@ -6215,28 +5473,14 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 }
                                 fish_List.get(j).set_Hp_Minus(10 + skill_Plus_D);
                                 skill_Teeth_Mine_List.get(i).set_play_Attack();
+
+                                if(st_S){
+                                    soundPool.play(sound_Effect[32], pop_Drag, pop_Drag, 0, 0, 1.0F);   //버터
+                                    st_S = false;
+                                }
                             }
 
-//                            if (skill_Teeth_Mine_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Teeth_Mine_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Teeth_Mine_List.get(i).get_Y_Point() + convertPixelsToDp(35, _context)
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Teeth_Mine_List.get(i).get_Y_Point() + skill_Teeth_mine_img[0].getHeight()) {
-//                                    fish_List.get(j).set_Hp_Minus(10 +  random.nextInt((int)ft3));
-//                                    skill_Teeth_Mine_List.get(i).set_play_Attack();
-//                                    break;
-//                                }
-//                            } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Teeth_Mine_List.get(i).get_X_Point() + skill_Teeth_mine_img[0].getWidth()
-//                                    && fish_List.get(j).get_Fish_Point_X() >= skill_Teeth_Mine_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Teeth_Mine_List.get(i).get_Y_Point() + convertPixelsToDp(35, _context)
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Teeth_Mine_List.get(i).get_Y_Point() + skill_Teeth_mine_img[0].getHeight()) {
-//
-//                                    fish_List.get(j).set_Hp_Minus(10 +  random.nextInt((int)ft3));
-//                                    skill_Teeth_Mine_List.get(i).set_play_Attack();
-//                                    break;
-//                                }
-//                            }
+
                         }
 
                         for (int j = 0; j < ground_List.size(); j++) {
@@ -6271,31 +5515,17 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                         skill_Plus_D = random.nextInt((int) ft3);
                                     }
                                     ground_List.get(j).set_Ground_Hp_Minus(10 + skill_Plus_D);
+
+                                    if(st_S){
+                                        soundPool.play(sound_Effect[32], pop_Drag, pop_Drag, 0, 0, 1.0F);
+                                        st_S = false;
+                                    }
                                 }
                                     skill_Teeth_Mine_List.get(i).set_play_Attack();
 
-                                break;
+//                                break;
                             }
-//                            if (skill_Teeth_Mine_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Teeth_Mine_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Teeth_Mine_List.get(i).get_Y_Point() + convertPixelsToDp(35, _context)
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Teeth_Mine_List.get(i).get_Y_Point() + skill_Teeth_mine_img[0].getHeight()) {
-//
-//                                    ground_List.get(j).set_Ground_Hp_Minus(10 +  random.nextInt((int)ft3));
-//                                    skill_Teeth_Mine_List.get(i).set_play_Attack();
-//                                    break;
-//                                }
-//                            } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Teeth_Mine_List.get(i).get_X_Point() + skill_Teeth_mine_img[0].getWidth()
-//                                    && ground_List.get(j).get_Ground_Point_X() >= skill_Teeth_Mine_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Teeth_Mine_List.get(i).get_Y_Point() + convertPixelsToDp(35, _context)
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Teeth_Mine_List.get(i).get_Y_Point() + skill_Teeth_mine_img[0].getHeight()) {
-//
-//                                    ground_List.get(j).set_Ground_Hp_Minus(10 +  random.nextInt((int)ft3));
-//                                    skill_Teeth_Mine_List.get(i).set_play_Attack();
-//                                    break;
-//                                }
+
 //                            }
 
 
@@ -6324,7 +5554,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                 }
 
                 try{
-
+                    st_S = true;
                     //이빨 지뢰2
                     for(int i=0; i<skill_Teeth_Mine2_List.size(); i++){
 
@@ -6359,32 +5589,26 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                             if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                             }else {
+                                if(st_S){
+                                    soundPool.play(sound_Effect[33], pop_Drag, pop_Drag, 0, 0, 1.0F);   //버터
+                                    st_S = false;
+                                }
                                 skill_Teeth_Mine2_List.get(i).set_play_Attack();
                                 break;
                             }
 
-//                            if (skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(15, _context) >= fish_List.get(j).get_Fish_Point_X() && skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(15, _context) <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Teeth_Mine2_List.get(i).get_Y_Point() + convertPixelsToDp(15, _context)
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Teeth_Mine2_List.get(i).get_Y_Point() + skill_Teeth_mine2_img[0].getHeight()) {
-//
-//                                    skill_Teeth_Mine2_List.get(i).set_play_Attack();
-//                                    break;
-//                                }
-//                            } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(15, _context) + skill_Teeth_mine2_img[0].getWidth()
-//                                    && fish_List.get(j).get_Fish_Point_X() >= skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(15, _context)
-//                                    ) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Teeth_Mine2_List.get(i).get_Y_Point() + convertPixelsToDp(15, _context)
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Teeth_Mine2_List.get(i).get_Y_Point() + skill_Teeth_mine2_img[0].getHeight()) {
-//
-//
-//                                    skill_Teeth_Mine2_List.get(i).set_play_Attack();
-//                                    break;
+
 //                                }
 //                            }
                         }
                         if(skill_Teeth_Mine2_List.get(i).get_Play_Attack()){
+
+
+
+
+
+
+
                             for (int j = 0; j < fish_List.size(); j++) {
                                 if(!fish_List.get(j).get_Visible_Fish_Flag()){
                                     continue;
@@ -6412,25 +5636,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     fish_List.get(j).set_Hp_Minus(35  +  skill_Plus_D);
                                 }
 
-
-//                                if (skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(75, _context) >= fish_List.get(j).get_Fish_Point_X() && skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(75, _context) <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Teeth_Mine2_List.get(i).get_Y_Point()
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Teeth_Mine2_List.get(i).get_Y_Point() + skill_Teeth_mine2_img[3].getHeight()) {
-//                                        fish_List.get(j).set_Hp_Minus(35  +  random.nextInt((int)ft5));
-//
-//                                    }
-//                                } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(75, _context) + skill_Teeth_mine2_img[3].getWidth()
-//                                        && fish_List.get(j).get_Fish_Point_X() >= skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(75, _context)
-//                                        ) {
-//
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Teeth_Mine2_List.get(i).get_Y_Point()
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Teeth_Mine2_List.get(i).get_Y_Point() + skill_Teeth_mine2_img[3].getHeight()) {
-//
-//                                        fish_List.get(j).set_Hp_Minus(35  +  random.nextInt((int)ft5));
-//
-//                                    }
-//                                }
 
 
 
@@ -6461,35 +5666,24 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                             if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                             }else {
+                                if(st_S){
+                                    soundPool.play(sound_Effect[33], pop_Drag, pop_Drag, 0, 0, 1.0F);   //버터
+                                    st_S = false;
+                                }
                                 skill_Teeth_Mine2_List.get(i).set_play_Attack();
                                 break;
                             }
 
-//                            if (skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(15, _context) >= ground_List.get(j).get_Ground_Point_X() && skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(15, _context) <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Teeth_Mine2_List.get(i).get_Y_Point() + convertPixelsToDp(15, _context)
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Teeth_Mine2_List.get(i).get_Y_Point() + skill_Teeth_mine2_img[0].getHeight()) {
-//
-//                                    skill_Teeth_Mine2_List.get(i).set_play_Attack();
-//                                    break;
-//                                }
-//                            } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(15, _context) + skill_Teeth_mine2_img[0].getWidth()
-//                                    && ground_List.get(j).get_Ground_Point_X() >= skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(15, _context)
-//                                    ) {
-//
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Teeth_Mine2_List.get(i).get_Y_Point() + convertPixelsToDp(15, _context)
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Teeth_Mine2_List.get(i).get_Y_Point() + skill_Teeth_mine2_img[0].getHeight()) {
-//
-//
-//                                    skill_Teeth_Mine2_List.get(i).set_play_Attack();
-//                                    break;
-//                                }
-//                            }
+
                         }
                         if(skill_Teeth_Mine2_List.get(i).get_Play_Attack()){
+
+
+
+
                             for (int j = 0; j < ground_List.size(); j++) {
 
-                                if(!ground_List.get(j).get_Visible_Ground_Flag()){
+                                if (!ground_List.get(j).get_Visible_Ground_Flag()) {
                                     continue;
                                 }
 
@@ -6504,17 +5698,16 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 f_y_h = ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size();
 
 
+                                if ((s_x > f_x_w) || (s_x_w < f_x) || (s_y > f_y_h) || (s_y_h < f_y)) {
 
-                                if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
-
-                                }else {
-                                    if((ground_List.get(j) instanceof Ground_Touch_Hermit)) {
-                                        if(!((Ground_Touch_Hermit)ground_List.get(j)).get_Immortal_Mode()) {
+                                } else {
+                                    if ((ground_List.get(j) instanceof Ground_Touch_Hermit)) {
+                                        if (!((Ground_Touch_Hermit) ground_List.get(j)).get_Immortal_Mode()) {
                                             ground_List.get(j).set_Ground_Hp_Minus(1);
                                         }
-                                    }else {
+                                    } else {
                                         skill_Plus_D = 0;
-                                        if(ft5 >= 1 ){
+                                        if (ft5 >= 1) {
                                             skill_Plus_D = random.nextInt((int) ft5);
                                         }
                                         ground_List.get(j).set_Ground_Hp_Minus(35 + skill_Plus_D);
@@ -6522,24 +5715,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 }
 
 
-//                                if (skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(75, _context) >= ground_List.get(j).get_Ground_Point_X() && skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(75, _context) <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Teeth_Mine2_List.get(i).get_Y_Point()
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Teeth_Mine2_List.get(i).get_Y_Point() + skill_Teeth_mine2_img[3].getHeight()) {
-//                                        ground_List.get(j).set_Ground_Hp_Minus(35  +  random.nextInt((int)ft5));
-//
-//                                    }
-//                                } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(75, _context) + skill_Teeth_mine2_img[3].getWidth()
-//                                        && ground_List.get(j).get_Ground_Point_X() >= skill_Teeth_Mine2_List.get(i).get_X_Point()- convertPixelsToDp(75, _context)
-//                                        ) {
-//
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Teeth_Mine2_List.get(i).get_Y_Point()
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Teeth_Mine2_List.get(i).get_Y_Point() + skill_Teeth_mine2_img[3].getHeight()) {
-//
-//                                        ground_List.get(j).set_Ground_Hp_Minus(35  +  random.nextInt((int)ft5));
-//
-//                                    }
-//                                }
                             }
                         }
 
@@ -6601,24 +5776,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                             }
 
 
-//                            if (skill_Butter_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Butter_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Butter_List.get(i).get_Y_Point()
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Butter_List.get(i).get_Y_Point() + skill_Butter_img[0].getHeight()) {
-//                                    skill_Butter_List.get(i).set_play_Attack();
-//                                    fish_List.get(j).set_Fish_Speed(0);
-//                                }
-//                            } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Butter_List.get(i).get_X_Point() + skill_Butter_img[0].getWidth()
-//                                    && fish_List.get(j).get_Fish_Point_X() >= skill_Butter_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Butter_List.get(i).get_Y_Point()
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Butter_List.get(i).get_Y_Point() + skill_Butter_img[0].getHeight()) {
-//
-//                                    skill_Butter_List.get(i).set_play_Attack();
-//                                    fish_List.get(j).set_Fish_Speed(0);
-//                                }
-//                            }
 
 
 
@@ -6652,22 +5809,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
 
 
-//                            if (skill_Butter_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Butter_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Butter_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context)
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Butter_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Butter_img[0].getHeight()) {
-//                                    skill_Butter_List.get(i).set_play_Attack();
-//                                    ground_List.get(j).set_Ground_Speed(0);
-//                                }
-//                            } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Butter_List.get(i).get_X_Point() + skill_Butter_img[0].getWidth()
-//                                    && ground_List.get(j).get_Ground_Point_X() >= skill_Butter_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Butter_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context)
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Butter_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Butter_img[0].getHeight()) {
-//                                    skill_Butter_List.get(i).set_play_Attack();
-//                                    ground_List.get(j).set_Ground_Speed(0);
-//                                }
-//                            }
 
                         }
 
@@ -6732,22 +5873,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 skill_Fry_List.get(i).set_play_Attack();
                             }
 
-//                            if (skill_Fry_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Fry_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Fry_List.get(i).get_Y_Point()
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Fry_List.get(i).get_Y_Point() + skill_fry_img[0].getHeight()) {
-//                                    skill_Fry_List.get(i).set_play_Attack();
-//                                }
-//                            } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Fry_List.get(i).get_X_Point() + skill_fry_img[0].getWidth()
-//                                    && fish_List.get(j).get_Fish_Point_X() >= skill_Fry_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Fry_List.get(i).get_Y_Point()
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Fry_List.get(i).get_Y_Point() + skill_fry_img[0].getHeight()) {
-//
-//                                    skill_Fry_List.get(i).set_play_Attack();
-//                                }
-//                            }
+
                         }
 
                         if(skill_Fry_List.get(i).get_Play_Attack()) {
@@ -6779,23 +5905,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     fish_List.get(j).set_Hp_Minus(35 + skill_Plus_D);
                                 }
 
-//                                if (skill_Fry_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Fry_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Fry_List.get(i).get_Y_Point()
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Fry_List.get(i).get_Y_Point() + skill_fry_img[3].getHeight()) {
-//                                        fish_List.get(j).set_Hp_Minus(35 +  random.nextInt((int)st7));
-//
-//                                    }
-//                                } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Fry_List.get(i).get_X_Point() + skill_fry_img[3].getWidth()
-//                                        && fish_List.get(j).get_Fish_Point_X() >= skill_Fry_List.get(i).get_X_Point()
-//                                        ) {
-//
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Fry_List.get(i).get_Y_Point()
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Fry_List.get(i).get_Y_Point() + skill_fry_img[3].getHeight()) {
-//                                        fish_List.get(j).set_Hp_Minus(35 +  random.nextInt((int)st7));
-//
-//                                    }
-//                                }
+
                             }
                         }
 
@@ -6825,20 +5935,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 skill_Fry_List.get(i).set_play_Attack();
                             }
 
-//                            if (skill_Fry_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Fry_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Fry_List.get(i).get_Y_Point()
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Fry_List.get(i).get_Y_Point() + skill_fry_img[0].getHeight()) {
-//                                    skill_Fry_List.get(i).set_play_Attack();
-//                                }
-//                            } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Fry_List.get(i).get_X_Point() + skill_fry_img[0].getWidth()
-//                                    && ground_List.get(j).get_Ground_Point_X() >= skill_Fry_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Fry_List.get(i).get_Y_Point()
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Fry_List.get(i).get_Y_Point() + skill_fry_img[0].getHeight()) {
-//                                    skill_Fry_List.get(i).set_play_Attack();
-//                                }
-//                            }
+
                         }
 
                         if(skill_Fry_List.get(i).get_Play_Attack()) {
@@ -6877,22 +5974,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     }
                                 }
 
-//                                if (skill_Fry_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Fry_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Fry_List.get(i).get_Y_Point()
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Fry_List.get(i).get_Y_Point() + skill_fry_img[3].getHeight()) {
-//                                        ground_List.get(j).set_Ground_Hp_Minus(35 +  random.nextInt((int)st7));
-//
-//                                    }
-//                                } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Fry_List.get(i).get_X_Point() + skill_fry_img[3].getWidth()
-//                                        && ground_List.get(j).get_Ground_Point_X() >= skill_Fry_List.get(i).get_X_Point()
-//                                        ) {
-//
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Fry_List.get(i).get_Y_Point()
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Fry_List.get(i).get_Y_Point() + skill_fry_img[3].getHeight()) {
-//                                        ground_List.get(j).set_Ground_Hp_Minus(35 +  random.nextInt((int)st7));
-//
-//                                    }
-//                                }
+
                             }
                         }
 
@@ -6955,23 +6037,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                             }
 
-//                            if (skill_Sea_Snake_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Sea_Snake_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Sea_Snake_List.get(i).get_Y_Point() + convertPixelsToDp(30, _context)
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Sea_Snake_img[0].getHeight()) {
-//                                    fish_List.get(j).set_Hp_Minus(25 + random.nextInt((int)ft9));
-//                                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//
-//                                }
-//                            } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Sea_Snake_List.get(i).get_X_Point() + skill_Sea_Snake_img[0].getWidth()
-//                                    && fish_List.get(j).get_Fish_Point_X() >= skill_Sea_Snake_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context)
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Sea_Snake_img[0].getHeight()) {
-//                                    fish_List.get(j).set_Hp_Minus(25 + random.nextInt((int)ft9));
-//                                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//                                }
-//                            }
+
 
 
 
@@ -7013,22 +6079,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                             }
 
-//                            if (skill_Sea_Snake_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Sea_Snake_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context)
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Sea_Snake_img[0].getHeight()) {
-//                                    ground_List.get(j).set_Ground_Hp_Minus(25 + random.nextInt((int)ft9));
-//                                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//                                }
-//                            } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Sea_Snake_List.get(i).get_X_Point() + skill_Sea_Snake_img[0].getWidth()
-//                                    && ground_List.get(j).get_Ground_Point_X() >= skill_Sea_Snake_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context)
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Sea_Snake_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Sea_Snake_img[0].getHeight()) {
-//                                    ground_List.get(j).set_Ground_Hp_Minus(25 + random.nextInt((int)ft9));
-//                                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//                                }
-//                            }
+
 
                         }
 
@@ -7097,26 +6148,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
                             }
 
-//                            if (skill_Wave_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Wave_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Wave_List.get(i).get_Y_Point()
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Wave_List.get(i).get_Y_Point() + skill_wall_img[0].getHeight()) {
-//                                    fish_List.get(j).set_Hp_Minus(10 + random.nextInt((int)st9));
-//                                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//
-//                                }
-//                            } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Wave_List.get(i).get_X_Point() + skill_wall_img[0].getWidth()
-//                                    && fish_List.get(j).get_Fish_Point_X() >= skill_Wave_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Wave_List.get(i).get_Y_Point()
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Wave_List.get(i).get_Y_Point() + skill_wall_img[0].getHeight()) {
-//
-//                                    fish_List.get(j).set_Hp_Minus(10 + random.nextInt((int)st9));
-//                                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//
-//                                }
-//                            }
 
 
 
@@ -7159,27 +6190,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);
 
                             }
-
-//                            if (skill_Wave_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Wave_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Wave_List.get(i).get_Y_Point()
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Wave_List.get(i).get_Y_Point() + skill_earthquake_img[0].getHeight()) {
-//                                    ground_List.get(j).set_Ground_Hp_Minus(10+ random.nextInt((int)st9));
-//                                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//
-//                                }
-//                            } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Wave_List.get(i).get_X_Point() + skill_earthquake_img[0].getWidth()
-//                                    && ground_List.get(j).get_Ground_Point_X() >= skill_Wave_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Wave_List.get(i).get_Y_Point()
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Wave_List.get(i).get_Y_Point() + skill_earthquake_img[0].getHeight()) {
-//
-//                                    ground_List.get(j).set_Ground_Hp_Minus(10 + random.nextInt((int)st9));
-//                                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//
-//                                }
-//                            }
 
 
 
@@ -7237,24 +6247,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 //                                break;
                             }
 
-//                            if (skill_Wall_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Wall_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() >= skill_Wall_List.get(i).get_Y_Point()
-//                                        && fish_List.get(j).get_Fish_Point_Y() <= skill_Wall_List.get(i).get_Y_Point() + skill_wall_img[3].getHeight()) {
-//                                    fish_List.get(j).set_Fish_Speed(0);
-//
-//                                }
-//                            } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Wall_List.get(i).get_X_Point() + skill_wall_img[3].getWidth()
-//                                    && fish_List.get(j).get_Fish_Point_X() >= skill_Wall_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() >= skill_Wall_List.get(i).get_Y_Point()
-//                                        && fish_List.get(j).get_Fish_Point_Y()<= skill_Wall_List.get(i).get_Y_Point() + skill_wall_img[3].getHeight()) {
-//
-//                                    fish_List.get(j).set_Fish_Speed(0);
-//
-//                                }
-//                            }
 
                         }
                         for(int j=0; j<ground_List.size(); j++){
@@ -7282,24 +6274,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 //                                break;
                             }
 
-//                            if (skill_Wall_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Wall_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//
-//                                if (ground_List.get(j).get_Ground_Point_Y()>= skill_Wall_List.get(i).get_Y_Point()
-//                                        && ground_List.get(j).get_Ground_Point_Y()<= skill_Wall_List.get(i).get_Y_Point() + skill_wall_img[3].getHeight()) {
-//                                    ground_List.get(j).set_Ground_Speed(0);
-//
-//                                }
-//                            } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Wall_List.get(i).get_X_Point() + skill_wall_img[3].getWidth()
-//                                    && ground_List.get(j).get_Ground_Point_X() >= skill_Wall_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (ground_List.get(j).get_Ground_Point_Y() >= skill_Wall_List.get(i).get_Y_Point()
-//                                        && ground_List.get(j).get_Ground_Point_Y() <= skill_Wall_List.get(i).get_Y_Point() + skill_wall_img[3].getHeight()) {
-//
-//                                    ground_List.get(j).set_Ground_Speed(0);
-//
-//                                }
-//                            }
 
                         }
 
@@ -7362,25 +6336,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 skill_Thorn2_List.get(i).set_Live();
                             }
 
-//                            if(skill_Thorn2_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Thorn2_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size() + convertPixelsToDp(10, _context)){
-//                                if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Thorn2_List.get(i).get_Y_Point() && skill_Thorn2_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()+ convertPixelsToDp(10, _context)){
-//
-//                                    fish_List.get(j).set_Hp_Minus(10 + random.nextInt((int)st6));
-//                                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//                                    skill_Thorn2_List.get(i).set_Live();
-//
-//                                }
-//                            }else if(fish_List.get(j).get_Fish_Point_X() <= skill_Thorn2_List.get(i).get_X_Point() + skill_Thorn2_img[0].getWidth() + convertPixelsToDp(10, _context)
-//                                    && skill_Thorn2_List.get(i).get_X_Point() + skill_Thorn2_img[0].getWidth()  <= fish_List.get(j).get_Fish_Point_X()
-//                                    ){
-//
-//                                if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Thorn2_List.get(i).get_Y_Point() && skill_Thorn2_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()+ convertPixelsToDp(10, _context)){
-//                                    fish_List.get(j).set_Hp_Minus(10 + random.nextInt((int)st6));
-//                                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//                                    skill_Thorn2_List.get(i).set_Live();
-//
-//                                }
-//                            }
                         }
 
                         for(int j=0; j<ground_List.size(); j++){
@@ -7425,24 +6380,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                         skill_Thorn2_List.get(i).set_Live();
                                 }
 
-//                                if (skill_Thorn2_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Thorn2_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size() + convertPixelsToDp(10, _context)) {
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Thorn2_List.get(i).get_Y_Point() && skill_Thorn2_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()+ convertPixelsToDp(10, _context)) {
-//                                        ground_List.get(j).set_Ground_Hp_Minus(10 + random.nextInt((int)ft10));
-//                                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//                                        skill_Thorn2_List.get(i).set_Live();
-//
-//                                    }
-//                                } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Thorn2_List.get(i).get_X_Point() + skill_Thorn2_img[0].getWidth() + convertPixelsToDp(10, _context)
-//                                        && skill_Thorn2_List.get(i).get_X_Point() + skill_Thorn2_img[0].getWidth() <= ground_List.get(j).get_Ground_Point_X()
-//                                        ) {
-//
-//                                    if (ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Height_Size() >= skill_Thorn2_List.get(i).get_Y_Point() && skill_Thorn2_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()+ convertPixelsToDp(10, _context)) {
-//                                        ground_List.get(j).set_Ground_Hp_Minus(10 + random.nextInt((int)ft10));
-//                                        soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//                                        skill_Thorn2_List.get(i).set_Live();
-//
-//                                    }
-//                                }
+
 
 
                             }
@@ -7519,22 +6457,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 skill_Lightning_List.get(i).set_play_Attack();
                             }
 
-//                            if(skill_Lightning_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Lightning_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()){
-//                                if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning_List.get(i).get_Y_Point() && skill_Lightning_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
-//                                    fish_List.get(j).set_Hp_Minus(30 + random.nextInt((int)ft7));
-//                                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//                                    skill_Lightning_List.get(i).set_play_Attack();
-//                                }
-//                            }else if(fish_List.get(j).get_Fish_Point_X() <= skill_Lightning_List.get(i).get_X_Point() + skill_lightnign_img[0].getWidth()
-//                                    && skill_Lightning_List.get(i).get_X_Point() + skill_lightnign_img[0].getWidth()  <= fish_List.get(j).get_Fish_Point_X()
-//                                    ){
-//
-//                                if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning_List.get(i).get_Y_Point() && skill_Lightning_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
-//                                    fish_List.get(j).set_Hp_Minus(30 + random.nextInt((int)ft7));
-//                                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//                                    skill_Lightning_List.get(i).set_play_Attack();
-//                                }
-//                            }
+
 
                         }
 
@@ -7568,18 +6491,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     fish_List.get(j).set_Hp_Minus(30 + skill_Plus_D);
                                 }
 
-//                                if(skill_Lightning_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Lightning_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()){
-//                                    if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning_List.get(i).get_Y_Point() && skill_Lightning_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
-//                                        fish_List.get(j).set_Hp_Minus(30 + random.nextInt((int)ft7));
-//                                    }
-//                                }else if(fish_List.get(j).get_Fish_Point_X() <= skill_Lightning_List.get(i).get_X_Point() + skill_lightnign_img[0].getWidth()
-//                                        && skill_Lightning_List.get(i).get_X_Point() + skill_lightnign_img[0].getWidth()  <= fish_List.get(j).get_Fish_Point_X()
-//                                        ){
-//
-//                                    if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning_List.get(i).get_Y_Point() && skill_Lightning_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
-//                                        fish_List.get(j).set_Hp_Minus(30 + random.nextInt((int)ft7));
-//                                    }
-//                                }
 
 //
                             }
@@ -7612,18 +6523,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 skill_Lightning_List.get(i).set_play_Attack();
                             }
 
-//                            if(skill_Lightning_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Lightning_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()){
-//                                    if(ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Lightning_List.get(i).get_Y_Point() && skill_Lightning_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()){
-//                                        skill_Lightning_List.get(i).set_play_Attack();
-//                                    }
-//                                }else if(ground_List.get(j).get_Ground_Point_X() <= skill_Lightning_List.get(i).get_X_Point() + skill_lightnign_img[0].getWidth()
-//                                        && skill_Lightning_List.get(i).get_X_Point() + skill_lightnign_img[0].getWidth()  <= ground_List.get(j).get_Ground_Point_Y()
-//                                        ){
-//
-//                                    if(ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Lightning_List.get(i).get_Y_Point() && skill_Lightning_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()){
-//                                        skill_Lightning_List.get(i).set_play_Attack();
-//                                    }
-//                                }
+
 
 
 
@@ -7666,19 +6566,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                         ground_List.get(j).set_Ground_Hp_Minus(30 + skill_Plus_D);
                                     }
                                 }
-//                                if(skill_Lightning_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Lightning_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()){
-//                                    if(ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Lightning_List.get(i).get_Y_Point() && skill_Lightning_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()){
-//                                        ground_List.get(j).set_Ground_Hp_Minus(30 + random.nextInt((int)ft7));
-//                                    }
-//                                }else if(ground_List.get(j).get_Ground_Point_X() <= skill_Lightning_List.get(i).get_X_Point() + skill_lightnign_img[0].getWidth()
-//                                        && skill_Lightning_List.get(i).get_X_Point() + skill_lightnign_img[0].getWidth()  <= ground_List.get(j).get_Ground_Point_Y()
-//                                        ){
-//
-//                                    if(ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Lightning_List.get(i).get_Y_Point() && skill_Lightning_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()){
-//                                        ground_List.get(j).set_Ground_Hp_Minus(30 + random.nextInt((int)ft7));
-//                                    }
-//                                }
-//
+
                             }
                         }
 
@@ -7749,28 +6637,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     skill_Lightning2_List.get(i).set_play_Attack();
                             }
 
-//                            if(skill_Lightning2_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X()
-//                                    && skill_Lightning2_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()){
-//
-//                                if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning2_List.get(i).get_Y_Point()
-//                                        && skill_Lightning2_List.get(i).get_Y_Point() + skill_lightnign1_img[0].getHeight() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
-//
-//                                    fish_List.get(j).set_Hp_Minus(50  + (int)ft7 );
-//                                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//                                    skill_Lightning2_List.get(i).set_play_Attack();
-//
-//                                }
-//
-//                            }else if(fish_List.get(j).get_Fish_Point_X() <= skill_Lightning2_List.get(i).get_X_Point() + skill_lightnign1_img[0].getWidth()
-//                                    && skill_Lightning2_List.get(i).get_X_Point() + skill_lightnign1_img[0].getWidth()  <= fish_List.get(j).get_Fish_Point_X()
-//                                    ){
-//
-//                                if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning2_List.get(i).get_Y_Point() && skill_Lightning2_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
-//                                    fish_List.get(j).set_Hp_Minus(50 + (int)ft7);
-//                                    soundPool.play(sound_Effect[random.nextInt(2)], pop_Touch, pop_Touch, 0, 0, 1.0F);   //달팽이 기본 팝 사운드
-//                                    skill_Lightning2_List.get(i).set_play_Attack();
-//                                }
-//                            }
+
 
                         }
 
@@ -7804,20 +6671,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     fish_List.get(j).set_Hp_Minus(40 + skill_Plus_D);
                                 }
 
-//                                if(skill_Lightning2_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Lightning2_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()){
-//                                    if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning2_List.get(i).get_Y_Point() && skill_Lightning2_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
-//                                        fish_List.get(j).set_Hp_Minus(40 + random.nextInt((int)ft8));
-//                                    }
-//                                }else if(fish_List.get(j).get_Fish_Point_X() <= skill_Lightning2_List.get(i).get_X_Point() + skill_lightnign1_img[3].getWidth()
-//                                        && skill_Lightning2_List.get(i).get_X_Point() + skill_lightnign1_img[3].getWidth()  <= fish_List.get(j).get_Fish_Point_X()
-//                                        ){
-//
-//                                    if(fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Lightning2_List.get(i).get_Y_Point() && skill_Lightning2_List.get(i).get_Y_Point() <= fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size()){
-//                                        fish_List.get(j).set_Hp_Minus(40 + random.nextInt((int)ft8));
-//                                    }
-//                                }
-
-//
                             }
                         }
 
@@ -7847,19 +6700,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                             }else {
                                 skill_Lightning2_List.get(i).set_play_Attack();
                             }
-
-//                                if(skill_Lightning2_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Lightning2_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()){
-//                                    if(ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Lightning2_List.get(i).get_Y_Point() && skill_Lightning2_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()){
-//                                        skill_Lightning2_List.get(i).set_play_Attack();
-//                                    }
-//                                }else if(ground_List.get(j).get_Ground_Point_X() <= skill_Lightning2_List.get(i).get_X_Point() + skill_lightnign1_img[0].getWidth()
-//                                        && skill_Lightning2_List.get(i).get_X_Point() + skill_lightnign1_img[0].getWidth()  <= ground_List.get(j).get_Ground_Point_Y()
-//                                        ){
-//
-//                                    if(ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Lightning2_List.get(i).get_Y_Point() && skill_Lightning2_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()){
-//                                        skill_Lightning2_List.get(i).set_play_Attack();
-//                                    }
-//                                }
 
                         }
 
@@ -7901,19 +6741,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     }
                                 }
 
-//                                if(skill_Lightning2_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Lightning2_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()){
-//                                    if(ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Lightning2_List.get(i).get_Y_Point() && skill_Lightning2_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()){
-//                                        ground_List.get(j).set_Ground_Hp_Minus(40 + random.nextInt((int)ft8));
-//                                    }
-//                                }else if(ground_List.get(j).get_Ground_Point_X() <= skill_Lightning2_List.get(i).get_X_Point() + skill_lightnign1_img[3].getWidth()
-//                                        && skill_Lightning2_List.get(i).get_X_Point() + skill_lightnign1_img[3].getWidth()  <= ground_List.get(j).get_Ground_Point_Y()
-//                                        ){
-//
-//                                    if(ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Lightning2_List.get(i).get_Y_Point() && skill_Lightning2_List.get(i).get_Y_Point() <= ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size()){
-//                                        ground_List.get(j).set_Ground_Hp_Minus(40 + random.nextInt((int)ft8));
-//                                    }
-//                                }
-//
                             }
                         }
 
@@ -8026,23 +6853,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                                 }
 
-//                                if (skill_Boom_Poison_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Boom_Poison_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Boom_Poison_List.get(i).get_Y_Point()
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Boom_Poison_List.get(i).get_Y_Point() + skill_Boom_Poison_img[3].getHeight()) {
-//                                        fish_List.get(j).set_Status_Poison(10 + random.nextInt((int)mt8));
-//
-//                                    }
-//                                } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Boom_Poison_List.get(i).get_X_Point() + skill_Boom_Poison_img[3].getWidth()
-//                                        && fish_List.get(j).get_Fish_Point_X() >= skill_Boom_Poison_List.get(i).get_X_Point()
-//                                        ) {
-//
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Boom_Poison_List.get(i).get_Y_Point()
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Boom_Poison_List.get(i).get_Y_Point() + skill_Boom_Poison_img[3].getHeight()) {
-//
-//                                        fish_List.get(j).set_Status_Poison(10 + random.nextInt((int)mt8));
-//                                    }
-//                                }
+
                             }
 
                             for(int j=0; j<ground_List.size(); j++){
@@ -8074,24 +6885,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                                 }
 
-//                                if (skill_Boom_Poison_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Boom_Poison_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Boom_Poison_List.get(i).get_Y_Point()
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Boom_Poison_List.get(i).get_Y_Point() + skill_Boom_Poison_img[3].getHeight()) {
-//                                        ground_List.get(j).set_Status_Poison(10 + random.nextInt((int)mt8));
-//
-//                                    }
-//                                } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Boom_Poison_List.get(i).get_X_Point() + skill_Boom_Poison_img[3].getWidth()
-//                                        && ground_List.get(j).get_Ground_Point_X() >= skill_Boom_Poison_List.get(i).get_X_Point()
-//                                        ) {
-//
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Boom_Poison_List.get(i).get_Y_Point()
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Boom_Poison_List.get(i).get_Y_Point() + skill_Boom_Poison_img[3].getHeight()) {
-//
-//                                        ground_List.get(j).set_Status_Poison(10 + random.nextInt((int)mt8));
-//
-//                                    }
-//                                }
                             }
                         }
 
@@ -8160,28 +6953,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                             }
 
-//                            if (skill_Slow_Cloud_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Slow_Cloud_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Slow_Cloud_List.get(i).get_Y_Point()
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Slow_Cloud_List.get(i).get_Y_Point() + skill_Slow_Cloud_img.getHeight()) {
-//                                    fish_List.get(j).set_Fish_Speed(1);
-//
-//                                }
-//                            } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Slow_Cloud_List.get(i).get_X_Point() + skill_Slow_Cloud_img.getWidth()
-//                                    && fish_List.get(j).get_Fish_Point_X() >= skill_Slow_Cloud_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Slow_Cloud_List.get(i).get_Y_Point()
-//                                        && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Slow_Cloud_List.get(i).get_Y_Point() + skill_Slow_Cloud_img.getHeight()) {
-//
-//                                    fish_List.get(j).set_Fish_Speed(1);
-//
-//                                }
-//                            }
-
-
-
-
                         }
                         for(int j=0; j<ground_List.size(); j++){
 
@@ -8208,24 +6979,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                             }
 
-//                            if (skill_Slow_Cloud_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Slow_Cloud_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Slow_Cloud_List.get(i).get_Y_Point()
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Slow_Cloud_List.get(i).get_Y_Point() + skill_Slow_Cloud_img.getHeight()) {
-//                                    ground_List.get(j).set_Ground_Speed(1);
-//
-//                                }
-//                            } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Slow_Cloud_List.get(i).get_X_Point() + skill_Slow_Cloud_img.getWidth()
-//                                    && ground_List.get(j).get_Ground_Point_X() >= skill_Slow_Cloud_List.get(i).get_X_Point()
-//                                    ) {
-//
-//                                if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Slow_Cloud_List.get(i).get_Y_Point()
-//                                        && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Slow_Cloud_List.get(i).get_Y_Point() + skill_Slow_Cloud_img.getHeight()) {
-//
-//                                    ground_List.get(j).set_Ground_Speed(1);
-//
-//                                }
-//                            }
+
 
 
                         }
@@ -8287,20 +7041,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     fish_List.get(j).set_Hp_Minus(7 + skill_Plus_D);
                                 }
 
-//                                if (skill_Laser_List.get(i).get_X_Point() >= fish_List.get(j).get_Fish_Point_X() && skill_Laser_List.get(i).get_X_Point() <= fish_List.get(j).get_Fish_Point_X() + fish_List.get(j).get_Width_Size()) {
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Laser_List.get(i).get_Y_Point() + convertPixelsToDp(30, _context)
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Laser_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Laser_img.getHeight()) {
-//                                        fish_List.get(j).set_Hp_Minus(7 + random.nextInt((int)mt6));
-//                                    }
-//                                } else if (fish_List.get(j).get_Fish_Point_X() <= skill_Laser_List.get(i).get_X_Point() + skill_Laser_img.getWidth()
-//                                        && fish_List.get(j).get_Fish_Point_X() >= skill_Laser_List.get(i).get_X_Point()
-//                                        ) {
-//
-//                                    if (fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() >= skill_Laser_List.get(i).get_Y_Point() + convertPixelsToDp(30, _context)
-//                                            && fish_List.get(j).get_Fish_Point_Y() + fish_List.get(j).get_Height_Size() <= skill_Laser_List.get(i).get_Y_Point() + convertPixelsToDp(30, _context) + skill_Laser_img.getHeight()) {
-//                                        fish_List.get(j).set_Hp_Minus(7 + random.nextInt((int)mt6));
-//                                    }
-//                                }
+
 
 
                             }
@@ -8326,33 +7067,18 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 if((s_x > f_x_w) || (s_x_w<f_x) || (s_y>f_y_h) || (s_y_h < f_y)){
 
                                 }else {
-                                    if((ground_List.get(j) instanceof Ground_Touch_Hermit)) {
-                                        if(!((Ground_Touch_Hermit)ground_List.get(j)).get_Immortal_Mode()) {
+                                    if ((ground_List.get(j) instanceof Ground_Touch_Hermit)) {
+                                        if (!((Ground_Touch_Hermit) ground_List.get(j)).get_Immortal_Mode()) {
                                             ground_List.get(j).set_Ground_Hp_Minus(1);
                                         }
-                                    }else {
+                                    } else {
                                         skill_Plus_D = 0;
-                                        if(mt6 >= 1 ){
+                                        if (mt6 >= 1) {
                                             skill_Plus_D = random.nextInt((int) mt6);
                                         }
                                         ground_List.get(j).set_Ground_Hp_Minus(7 + skill_Plus_D);
                                     }
                                 }
-
-//                                if (skill_Laser_List.get(i).get_X_Point() >= ground_List.get(j).get_Ground_Point_X() && skill_Laser_List.get(i).get_X_Point() <= ground_List.get(j).get_Ground_Point_X() + ground_List.get(j).get_Width_Size()) {
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Laser_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context)
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Laser_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Laser_img.getHeight()) {
-//                                        ground_List.get(j).set_Ground_Hp_Minus(7 + random.nextInt((int)mt6));
-//                                    }
-//                                } else if (ground_List.get(j).get_Ground_Point_X() <= skill_Laser_List.get(i).get_X_Point() + skill_Laser_img.getWidth()
-//                                        && ground_List.get(j).get_Ground_Point_X() >= skill_Laser_List.get(i).get_X_Point()
-//                                        ) {
-//
-//                                    if (ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() >= skill_Laser_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context)
-//                                            && ground_List.get(j).get_Ground_Point_Y() + ground_List.get(j).get_Height_Size() <= skill_Laser_List.get(i).get_Y_Point()+ convertPixelsToDp(30, _context) + skill_Laser_img.getHeight()) {
-//                                        ground_List.get(j).set_Ground_Hp_Minus(7 + random.nextInt((int)mt6));
-//                                    }
-//                                }
 
 
 
@@ -8567,46 +7293,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                     if(day_Count_View < 30) {
                         //날짜 표기법
-//                score_Text_Size = convertPixelsToDp(70, _context);
-//                paint_Temp.setTextSize(score_Text_Size);
-//
-//
-//                paint_Temp.setStyle(Paint.Style.FILL);
-//                paint_Temp.setStrokeWidth(convertPixelsToDp(3, _context));
-//
-//                paint_Temp.setColor(Color.WHITE);
-//                canvas.drawText("Day", window_Width / 2 - convertPixelsToDp(60, _context), window_Height / 3, paint_Temp);
-//
-//                paint_Temp.setStyle(Paint.Style.STROKE);
-//                paint_Temp.setStrokeWidth(convertPixelsToDp(3, _context));
-//
-//                paint_Temp.setColor(Color.BLACK);
-//                canvas.drawText("Day", window_Width / 2 - convertPixelsToDp(60, _context), window_Height / 3, paint_Temp);
-//                draw.draw_Bmp(canvas, effect_Stage_Day_img,
-//                        window_Width / 2 - convertPixelsToDp(75, _context),
-//                        window_Height / 3 - convertPixelsToDp(55, _context));
-//
-//
-//                if (day_Count < 10) {
-//                    tempInt = 12;
-//                } else if (day_Count < 100) {
-//                    tempInt = 24;
-//                } else {
-//                    tempInt = 36;
-//                }
-//                score_Text_Size = convertPixelsToDp(50, _context);
-//                paint_Temp.setTextSize(score_Text_Size);
-//
-//                paint_Temp.setStyle(Paint.Style.FILL);
-//                paint_Temp.setStrokeWidth(convertPixelsToDp(3, _context));
-//                paint_Temp.setColor(Color.WHITE);
-//                canvas.drawText(day_Count + "", window_Width / 2 - convertPixelsToDp(tempInt, _context), window_Height / 3 + convertPixelsToDp(60, _context), paint_Temp);
-//
-//                paint_Temp.setStyle(Paint.Style.STROKE);
-//                paint_Temp.setStrokeWidth(convertPixelsToDp(2, _context));
-//                paint_Temp.setColor(Color.BLACK);
-//                canvas.drawText(day_Count + "", window_Width / 2 - convertPixelsToDp(tempInt, _context), window_Height / 3 + convertPixelsToDp(60, _context), paint_Temp);
-//                paint_Temp.setStyle(Paint.Style.FILL);
                     }
 
                     day_Count_View++;
@@ -8777,12 +7463,12 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                         if(revolution_Flag && !pause_State) {
 
-                            Log.e("a","@@@");
+//                            Log.e("a","@@@");
                             home_Revolution_Flag = true;
 //                            revolution_Flag -> 돌아오면 false 로 바뀜
 
                             stage_Call_Revolution();
-                            Log.e("@","@ 진화의 버튼 눌러짐");
+//                            Log.e("@","@ 진화의 버튼 눌러짐");
 
                             draw.draw_Bmp(canvas, explain_Window_Revoluition,
                                     window_Width / 2 - convertPixelsToDp(120, _context),
@@ -9264,7 +7950,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 //    long time_Sleep = 0;
 
 
-
+boolean bg_Set = false;
 
         public synchronized void run() {
 
@@ -9292,11 +7978,19 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                         //화면 껏다 키면 일시정지 창
                         isScreen = km.inKeyguardRestrictedInputMode();
+
                         if (isScreen) {
+                            Log.e("화면끄기","화면끄기");
+
+                            background_Sound.pause();
+                            bg_Set = true;
 //                        Log.e("@","!@#!#!@#!#!@#");
                             gameActivity.pause();
                         } else {
-
+                            if(bg_Set){
+                                background_Sound.start();
+                            }
+                            bg_Set = false;
                         }
 
 
@@ -9887,7 +8581,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
             fish_List.get(select_Fish_Num).set_Fish_Hp(400000);
             ((Fish_Monster)fish_List.get(select_Fish_Num)).set_Position();
-            Log.e("@","몬스타~!!!!!!!!!!!!!!!!!!!!! " + day_Count);
+//            Log.e("@","몬스타~!!!!!!!!!!!!!!!!!!!!! " + day_Count);
 
 
         }
@@ -11747,25 +10441,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
 
             }
-//
-//              else if(ground_List.get(i) instanceof Ground_Touch_Bearbug){ //곰벌레 무빙
-//                ((Ground_Touch_Bearbug)ground_List.get(i)).ground_Object_Move();
-//            }
-//            else if(ground_List.get(i) instanceof Ground_Touch_Hermit){ //소라게
-//                ((Ground_Touch_Hermit)ground_List.get(i)).ground_Object_Move();
-//            }
-//            else if(ground_List.get(i) instanceof Ground_Touch_Crocodile){ //악어
-//                ((Ground_Touch_Crocodile)ground_List.get(i)).ground_Object_Move();
-//            }
-//            else if(ground_List.get(i) instanceof Ground_Drag_Crab){   //꽃게 무빙 함수
-//                ((Ground_Drag_Crab) ground_List.get(i)).ground_Object_Move();
-//            }else if(ground_List.get(i) instanceof Ground_Drag_Wave){   //파도 무빙 함수
-//                ((Ground_Drag_Wave) ground_List.get(i)).ground_Object_Move();
-//            }else if(ground_List.get(i) instanceof Ground_Trap_Urchin){
-//                ((Ground_Trap_Urchin) ground_List.get(i)).ground_Object_Move();
-//            }else if(ground_List.get(i) instanceof Ground_Touch_Stingray){
-//                ((Ground_Touch_Stingray) ground_List.get(i)).ground_Object_Move();
-//            }
+
 
 
         }
@@ -11875,21 +10551,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
 
 
-                    //첫 번째 물고기 삭제 되면 비트맵 리 사이클, 기본 물고기
-//                if(fish_List.get(i).get_First_Test_Object() && fish_List.get(i).get_Fish_Class() == 1 && fish_List.get(i) instanceof Fish_Touch_Default && fish_List.get(i).get_Class_Num() == 0){
-//                    game_thread.recycle_Init_Explain_Fish_Default();
-//                }
-//                //첫 번째 물고기 삭제 되면 비트맵 리 사이클, 오징어
-//                else if(fish_List.get(i).get_First_Test_Object() && fish_List.get(i).get_Fish_Class() == 1 && fish_List.get(i) instanceof Fish_Touch_Squid){
-//                    game_thread.recycle_Init_Explain_Squid();
-//                }//첫 번째 물고기 삭제 되면 비트맵 리 사이클, 전기 뱀장어
-//                else if(fish_List.get(i).get_First_Test_Object() && fish_List.get(i).get_Fish_Class() == 1 && fish_List.get(i) instanceof Fish_Touch_Ell){
-//                    game_thread.recycle_Init_Explain_Ell();
-//                }else //메모리 관리 기법 [드래그 물고기]
-//                    if(fish_List.get(i).get_Fish_Class() == 2 && fish_List.get(i).get_First_Test_Object() ) {
-//                        game_thread.recycle_Init_Explain_Fish_Drag();
-//                    }
-
 //                fish_List.remove(i);
                     default_Fish_Alive(i);
 
@@ -11911,23 +10572,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                         main_Character.set_Hp_Minus();
                         gameActivity.set_Vibrator();
                     }
-
-
-                    //첫 번째 물고기 삭제 되면 비트맵 리 사이클, 기본 물고기
-//                if(fish_List.get(i).get_First_Test_Object() && fish_List.get(i).get_Fish_Class() == 1 && fish_List.get(i) instanceof Fish_Touch_Default && fish_List.get(i).get_Class_Num() == 0){
-//                    game_thread.recycle_Init_Explain_Fish_Default();
-//                }
-//                //첫 번째 물고기 삭제 되면 비트맵 리 사이클, 오징어
-//                else if(fish_List.get(i).get_First_Test_Object() && fish_List.get(i).get_Fish_Class() == 1 && fish_List.get(i) instanceof Fish_Touch_Squid){
-//                    game_thread.recycle_Init_Explain_Squid();
-//                }//첫 번째 물고기 삭제 되면 비트맵 리 사이클, 전기 뱀장어
-//                else if(fish_List.get(i).get_First_Test_Object() && fish_List.get(i).get_Fish_Class() == 1 && fish_List.get(i) instanceof Fish_Touch_Ell){
-//                    game_thread.recycle_Init_Explain_Ell();
-//                }else //메모리 관리 기법 [드래그 물고기]
-//                    if(fish_List.get(i).get_Fish_Class() == 2 && fish_List.get(i).get_First_Test_Object() ) {
-//                        game_thread.recycle_Init_Explain_Fish_Drag();
-//                    }
-
 
 //                fish_List.remove(i);
 
@@ -11964,34 +10608,20 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
 
 
-//                //메모리 관리 기법 [달팽이]
-//                if(ground_List.get(i).get_Ground_Class() == 1 && ground_List.get(i).get_First_Test_Object() && ground_List.get(i).get_Class_Num() == 0) {
-//
-//                    game_thread.recycle_Init_Explain_Snail();
-//                }
-//                //비트맵 메모리 관리 기법 [성게]
-//                else if(ground_List.get(i).get_First_Test_Object() && ground_List.get(i).get_Ground_Class() == 10) {
-//                    game_thread.recycle_Init_Explain_Urchin();
-//                }
-//                else //메모리 관리 기법 [꽃게]
-//                    if(ground_List.get(i).get_Ground_Class() == 2 && ground_List.get(i).get_First_Test_Object()) {
-//                        game_thread.recycle_Init_Explain_Crab();
-//                    }
-//                    else
                     if(ground_List.get(i).get_Ground_Class() == 11 && ground_List.get(i).get_Class_Num() == 0){
-                        game_thread.recycle_Land_Mark_1();    Log.e("aaaa", "1");
+                        game_thread.recycle_Land_Mark_1();    //Log.e("aaaa", "1");
                     }else if(ground_List.get(i).get_Ground_Class() == 11 && ground_List.get(i).get_Class_Num() == 1){
-                        game_thread.recycle_Land_Mark_2();    Log.e("aaaa", "2");
+                        game_thread.recycle_Land_Mark_2();    //Log.e("aaaa", "2");
                     }else if(ground_List.get(i).get_Ground_Class() == 11 && ground_List.get(i).get_Class_Num() == 2){
-                        game_thread.recycle_Land_Mark_3();    Log.e("aaaa", "3");
+                        game_thread.recycle_Land_Mark_3();    //Log.e("aaaa", "3");
                     }else if(ground_List.get(i).get_Ground_Class() == 11 && ground_List.get(i).get_Class_Num() == 3){
-                        game_thread.recycle_Land_Mark_4();    Log.e("aaaa", "4");
+                        game_thread.recycle_Land_Mark_4();    //Log.e("aaaa", "4");
                     }else if(ground_List.get(i).get_Ground_Class() == 11 && ground_List.get(i).get_Class_Num() == 4){
-                        game_thread.recycle_Land_Mark_5();    Log.e("aaaa", "5");
+                        game_thread.recycle_Land_Mark_5();    //Log.e("aaaa", "5");
                     }else if(ground_List.get(i).get_Ground_Class() == 11 && ground_List.get(i).get_Class_Num() == 5){
-                        game_thread.recycle_Land_Mark_6();    Log.e("aaaa", "5");
+                        game_thread.recycle_Land_Mark_6();    //Log.e("aaaa", "5");
                     }else if(ground_List.get(i).get_Ground_Class() == 11 && ground_List.get(i).get_Class_Num() == 6){
-                        game_thread.recycle_Land_Mark_7();    Log.e("aaaa", "6");
+                        game_thread.recycle_Land_Mark_7();    //Log.e("aaaa", "6");
                     }
 
 
@@ -12017,26 +10647,11 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                 if(ground_List.get(i).get_Ground_Point_Y() >= getHeight() - 30){
 
 
-//                //메모리 관리 기법 [달팽이]
-//                if(ground_List.get(i).get_Ground_Class() == 1 && ground_List.get(i).get_First_Test_Object() && ground_List.get(i).get_Class_Num() == 0) {
-//                    game_thread.recycle_Init_Explain_Snail();
-//                }
-//                //비트맵 메모리 관리 기법 [성게]
-//                else if(ground_List.get(i).get_First_Test_Object() && ground_List.get(i).get_Ground_Class() == 10) {
-//                    game_thread.recycle_Init_Explain_Urchin();
-//                }
-//                else //메모리 관리 기법 [꽃게]
-//                    if(ground_List.get(i).get_Ground_Class() == 2 && ground_List.get(i).get_First_Test_Object()) {
-//                        game_thread.recycle_Init_Explain_Crab();
-//                    }
-
-
-//                ground_List.remove(i);
                     default_Ground_Alive(i);
 
 
                     //그라운드 생명체 y축 넘어가면 hp 감소
-                    Log.e("@","@2" + ground_List.get(i).getClass());
+//                    Log.e("@","@2" + ground_List.get(i).getClass());
                     main_Character.set_Hp_Minus();
                     gameActivity.set_Vibrator();
                     break;
@@ -13051,7 +11666,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                         ground_Remove_Temp = i;
 
-                        Log.e("e","성게");
+//                        Log.e("e","성게");
 
 
                         effect_Temp = effect_Black_img[4];
@@ -13305,7 +11920,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
             //진화 경험치
             revolution_Flag = true;
-            Log.e("@@","!@#!@#!@#@!#");
+//            Log.e("@@","!@#!@#!@#@!#");
 
         }
 
@@ -13544,7 +12159,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                         } else if(confirm_Button_2.touch(touchx, touchy) && extraction_Button_Flag){
                             //추출 버튼 눌렀을때
-                            Log.e("@","추출");
+//                            Log.e("@","추출");
 
 
 
@@ -13588,7 +12203,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                             button_Init_Confirm_Or_Extraction();
 
                         }else if(confirm_Button_3.touch(touchx, touchy)){
-                            Log.e("@","@@버튼 눌림");
+//                            Log.e("@","@@버튼 눌림");
                             confirm_Button_3 = new GraphicButton(new Rect(0, 0, 0, 0));
                         }
 
@@ -13599,7 +12214,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
 
                                     //추출의 일반 추출 클릭
-                                    Log.e("@", "일반추출");
+//                                    Log.e("@", "일반추출");
                                     //일반 추출, 영구추출, 캔슬 버튼 제거
                                     button_Init_Confirm_Or_Extraction_123();
 
@@ -13638,7 +12253,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                 ruby -= main_Character.get_Tear() * 10;
 
                                 //추출의 일반 추출 클릭
-                                Log.e("@", "영구추출");
+//                                Log.e("@", "영구추출");
                                 //일반 추출, 영구추출, 캔슬 버튼 제거
                                 button_Init_Confirm_Or_Extraction_123();
 
@@ -13673,7 +12288,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
 
                             //추출의 일반 추출 클릭
-                            Log.e("@","캔슬");
+//                            Log.e("@","캔슬");
                             //일반 추출, 영구추출, 캔슬 버튼 제거
                             button_Init_Confirm_Or_Extraction_123();
 
@@ -13698,7 +12313,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
                             if((main_Character.get_Tear() == 0)){
 
-                                Log.e("a","asdasdsad@@@");
+//                                Log.e("a","asdasdsad@@@");
 
                                 //메모리 관리 기법
 
@@ -13731,7 +12346,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                                     character_Explain_DB[1] = 1;
 
                                 }
-                                Log.e("a","asdasdsad###");
+//                                Log.e("a","asdasdsad###");
 
                                 main_Character.set_Tear(1);
                             }
@@ -14739,7 +13354,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
             if((main_Character.get_Tear() == 0)){
 
-            Log.e("a","asdasdsad@@@");
+//            Log.e("a","asdasdsad@@@");
 
             //메모리 관리 기법
 
@@ -14771,7 +13386,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             character_Explain_DB[1] = 1;
 
             }
-            Log.e("a","asdasdsad###");
+//            Log.e("a","asdasdsad###");
 
             main_Character.set_Tear(1);
             }
@@ -15476,20 +14091,20 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder) {
 
         //Log.i("[뷰]", "구성");
-        Log.e("surfaceCreated","surfaceCreated");
+//        Log.e("surfaceCreated","surfaceCreated");
 
         Intent intent = ((Activity)_context).getIntent();
         setIntent = intent.getDoubleArrayExtra("set");
 
 
-        Log.e("surfaceCreated","1");
+//        Log.e("surfaceCreated","1");
 
 
 
         ruby = setIntent[0];
         money = setIntent[1];
 
-        money = 1000000000;
+        money = 10000000000f;
         ruby = 500;
 
         character_Randmark_Damege = setIntent[2];
@@ -15537,7 +14152,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
         mtb9 = setIntent[67];
         mtb10 = setIntent[68];
 
-        Log.e("surfaceCreated","2");
+//        Log.e("surfaceCreated","2");
 
         //몬스터 설명창
         //몬스터 설명창
@@ -15547,7 +14162,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 //            Log.e("@", "setIntent = " + monster_Explain_Db[monster_Explain_Db_Temp] + " , " + monster_Explain_Db_Temp);
             monster_Explain_Db_Temp++;
         }
-        Log.e("surfaceCreated","3");
+//        Log.e("surfaceCreated","3");
 //        for(int i=0; i<setIntent.length; i++){
 //            Log.e("a",setIntent[i] + "@" + i);
 //        }
@@ -15557,15 +14172,15 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             character_Explain_DB[character_Explain_DB_Temp] = (int)setIntent[i];
             character_Explain_DB_Temp++;
         }
-        Log.e("surfaceCreated","4");
+//        Log.e("surfaceCreated","4");
 //
 //        money = 100;
 
-//        soundPool.release();
-        Log.e("surfaceCreated","5");
+        soundPool.release();
+//        Log.e("surfaceCreated","5");
 
-        soundPool = new SoundPool(35, AudioManager.STREAM_ALARM, 0); //사운드 앞에 1은 하나만 가져다 놓겠다는 뜻. 나중에 추가 요망
-        Log.e("surfaceCreated","6");
+        soundPool = new SoundPool(40, AudioManager.STREAM_ALARM, 0); //사운드 앞에 1은 하나만 가져다 놓겠다는 뜻. 나중에 추가 요망
+//        Log.e("surfaceCreated","6");
 
         //소리 로드
         sound_Effect[0] = soundPool.load(_context, R.raw.fish_default_sound_1, 1);      //팝1
@@ -15613,6 +14228,10 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
         sound_Effect[30] = soundPool.load(_context, R.raw.thunder_2, 1);     //번개2
         sound_Effect[31] = soundPool.load(_context, R.raw.earthquake, 1);     //지진
 
+        sound_Effect[32] = soundPool.load(_context, R.raw.teeth1, 1);     //이빨 지뢰1
+        sound_Effect[33] = soundPool.load(_context, R.raw.teeth2, 1);     //이빨 지뢰2
+
+
 
         sound_Effect[49] = soundPool.load(_context, R.raw.background_music_1, 1);     ///배경음
 
@@ -15645,7 +14264,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
                 + ", ce21 = '" + ce21 + "'"+ ", ce22 = '" + ce22 + "'"+ ", ce23 = '" + ce23 + "'"+ ", ce24 = '" + ce24 + "'"+ ", ce25 = '" + ce25 + "'"+ ", ce26 = '" + ce26 + "'"+ ", ce27 = '" + ce27 + "'"+ ", ce28 = '" + ce28 + "'"+ ", ce29 = '" + ce29 + "'"+ ", ce30 = '" + ce30 + "'"
                 + ", ce31 = '" + ce31 + "'"+ ", ce32 = '" + ce32 + "'"+ ", ce33 = '" + ce33 + "'"+ ", ce34 = '" + ce34 + "'"+ ", ce35 = '" + ce35 + "'";
 
-        Log.e("@","ruby = " + ruby);
+//        Log.e("@","ruby = " + ruby);
         MainActivity.database.execSQL(sql);
 
     }
@@ -15687,7 +14306,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
-        Log.e("[뷰]", "교체");
+//        Log.e("[뷰]", "교체");
 
 
 
@@ -15704,7 +14323,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 //            background_Sound.setVolume(0.5f,0.5f);
             background_Sound.start();
 
-            Log.e("@@@@@@@@","@@@@@@@@@@@@@@@@qor");
+//            Log.e("@@@@@@@@","@@@@@@@@@@@@@@@@qor");
 
             game_thread.function_Skill_Crab_img();
             game_thread.function_Skill_Soycrab_img();
@@ -15782,7 +14401,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 
         SharedPreferences pref = _context.getSharedPreferences("pref", Activity.MODE_APPEND);
         if(pref != null){
-            Log.e("a","!");
+//            Log.e("a","!");
             best_Point = Double.parseDouble(pref.getString("score", "0"));
 
 
@@ -15811,7 +14430,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             }
 
 
-            Log.e("day", "day! = " + day_Count);
+//            Log.e("day", "day! = " + day_Count);
 
             //플랑크 클래스   100000001
             //물고기 클래스   100000100
@@ -16111,16 +14730,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
         mTimer = new Timer();
 
 
-//        if(game_thread.getState() == Thread.State.TERMINATED) {
-//            game_thread = new Game_Thread(/*holder*/);  //쓰레드가 홈버튼을 누름으로 인해 파괴 된다면 다시 생성
-//            game_thread.start(); //게임
-//            Log.e("surfaceChanged true","surfaceChanged true");
-//        }else {
-//            Log.e("surfaceChanged else","surfaceChanged else");
-//            game_thread.start();
-//            //gameMainThread.start();
-//        }
-
         m_Run_True();
 
 
@@ -16148,15 +14757,6 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
     }
 
 
-    //물고기 생성 타이머 테스크
-//    public TimerTask timerTask_FishMaker(){
-//        TimerTask fish_Maker = new TimerTask(){
-//            public void run() {
-////                stage_Call();
-//            }
-//        };
-//        return fish_Maker;
-//    }
 
     //진화 할때 스테이지 시작
     public void stage_Call_Revolution(){
@@ -16229,9 +14829,9 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
         }
 
 
-        Log.e("[뷰]", "파괴@@@@@@@@@@@@@2");
+//        Log.e("[뷰]", "파괴@@@@@@@@@@@@@2");
 
-//        soundPool.release();
+        soundPool.release();
         distroy_Run = false;
         m_Run_False();
         ///값 저장
@@ -16241,7 +14841,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 //            editor.putInt("best", Score);
 
 
-        Log.e("day", "day = " + day_Count);
+//        Log.e("day", "day = " + day_Count);
         editor.putInt("day_Count", day_Count);
         editor.putInt("pref_Class", main_Character.get_Pref());
         if(main_Character.get_Hp() <= 1){
@@ -16261,9 +14861,9 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
 //        editor.putInt("money", money);
 
 
-        Log.e("a",Score + "");
+//        Log.e("a",Score + "");
         editor.commit();
-        Log.e("day", "$ = " + day_Count);
+//        Log.e("day", "$ = " + day_Count);
 
 
         }catch(Exception e){
@@ -16276,7 +14876,7 @@ public class GameMain extends SurfaceView implements SurfaceHolder.Callback {
             Log.e("function", "function_Map_Monster_Recycle_Bitmap");
         }
         try{
-            Log.e("surfaceDestroyed","surfaceDestroyed");
+//            Log.e("surfaceDestroyed","surfaceDestroyed");
 //            타이머 파괴
 //            fish_Maker.cancel();
             stage_Day.cancel();

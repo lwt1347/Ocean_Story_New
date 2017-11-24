@@ -433,7 +433,7 @@ public class GameActivity extends AppCompatActivity {
     public void onButtonNextStage(View view){
 //게임 진화창이 떴을때 눌리면 안된다.
         if(gameMain.get_m_Run()) {
-            Toast.makeText(getApplicationContext(), "넥스트 스테이지", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "넥스트 스테이지", Toast.LENGTH_SHORT).show();
             gameMain.next_Stage_Call();
 
             button_NextStage.setBackgroundResource(R.drawable.next_button_2);

@@ -106,8 +106,8 @@ public class Activity_Store extends Activity{
         database = openOrCreateDatabase("oceanstory1.db", MODE_PRIVATE, null);
 
 
-
-        money.setText("x " + df.format(info[1]));
+        String stringdouble = df.format(info[1]);
+        money.setText("x " + stringdouble);
         ruby.setText("x " + df.format(info[0]));
 
         listView = (ListView) findViewById(R.id.listView);
