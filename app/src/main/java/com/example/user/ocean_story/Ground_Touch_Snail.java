@@ -75,12 +75,12 @@ public class Ground_Touch_Snail extends Ground_Default_Body {
 
         if(class_Num == 1){ // 중간 보스 일때
             pregnant_Time++;
-            if(pregnant_Time > 75){
+            if(pregnant_Time > 100){
                 pregnant_Flag = true;
             }
         }else if(class_Num == 2){   //보스 일떄
             pregnant_Time++;
-            if(pregnant_Time > 150){
+            if(pregnant_Time > 200){
                 pregnant_Flag = true;
             }
         }

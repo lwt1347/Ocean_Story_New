@@ -140,7 +140,7 @@ public class Activity_Store extends Activity{
 
         info_Price[4] = 10;
         for(int i=0; i<info[4]-1; i++){
-            info_Price[4] *= 1.5;
+            info_Price[4] *= 1.3;
         }
 
         adapter.addItem(new Activity_Store_Item("bird",  info[4] , (info_Price[4]), R.drawable.store_bird, R.drawable.button_store_buy, 1));
@@ -474,6 +474,8 @@ public class Activity_Store extends Activity{
                      ruby.setText("x " + df.format(info[0]));
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ruby = '"+ info[0] +"'";
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      database.execSQL(sql);
                      buy_Flag = true;
                  }else if(item.getName() == "structure_damage" && info_Price[2] <= info[1]){
@@ -482,7 +484,7 @@ public class Activity_Store extends Activity{
                      info[2]++;         //기술 레벨
 
                      info_Price[2]*=1.01;
-
+//                     info[2] = 2000;
                      money.setText("x "+ df.format(info[1])); //돈 표시
                      item.setCost(info_Price[2]);
                      item.setLever();
@@ -496,6 +498,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', structuredamage = '"+ info[2] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "drag_damage" && info_Price[3] <= info[1]){
 
@@ -516,6 +520,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', dragdamage = '"+ info[3] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
 
                  }else if(item.getName() == "bird" && info_Price[4] <= info[1]){
@@ -524,7 +530,7 @@ public class Activity_Store extends Activity{
                      info[1] -= info_Price[4];  //돈
                      info[4]++;         //기술 레벨
 
-                     info_Price[4]*=1.5;
+                     info_Price[4]*=1.3;
 
                      money.setText("x "+ df.format(info[1])); //돈 표시
                      item.setCost(info_Price[4]);
@@ -537,6 +543,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', bird = '"+ info[4] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
 
                  }else if(item.getName() == "urchin_resistance" && info_Price[5] <= info[1]){
@@ -556,6 +564,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', urchinresistance = '"+ info[5] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                  }else if(item.getName() == "lightning_resistance" && info_Price[6] <= info[1]){
 
@@ -574,6 +584,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', lightningresistance = '"+ info[6] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "crocodile_resistance" && info_Price[7] <= info[1]){
 
@@ -592,6 +604,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', crocodileresistance = '"+ info[7] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
 
                 }else if(item.getName() == "steel" && info_Price[8] <= info[1]){
@@ -611,6 +625,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', steel = '"+ info[8] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
 
                  }else if(item.getName() == "ft1"){
@@ -633,6 +649,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft2 = '"+ info[10] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "ft3"  && info_Price[11] <= info[1]){
 
@@ -651,6 +669,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft3 = '"+ info[11] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "ft4"  && info_Price[12] <= info[1]){
 
@@ -669,6 +689,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft4 = '"+ info[12] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "ft5"  && info_Price[13] <= info[1]){
 
@@ -687,6 +709,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft5 = '"+ info[13] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "ft6"  && info_Price[14] <= info[1]){
 
@@ -705,6 +729,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft6 = '"+ info[14] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "ft7"  && info_Price[15] <= info[1]){
 
@@ -723,6 +749,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft7 = '"+ info[15] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "ft8"  && info_Price[16] <= info[1]){
 
@@ -741,6 +769,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft8 = '"+ info[16] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "ft9"  && info_Price[17] <= info[1]){
 
@@ -759,6 +789,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft9 = '"+ info[17] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "ft10"  && info_Price[18] <= info[1]){
 
@@ -777,6 +809,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', ft10 = '"+ info[18] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "st1"){
 
@@ -797,6 +831,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st2 = '"+ info[20] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "st3"  && info_Price[21] <= info[1]){
 
@@ -815,6 +851,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st3 = '"+ info[21] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "st4"  && info_Price[22] <= info[1]){
 
@@ -833,6 +871,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st4 = '"+ info[22] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "st5"  && info_Price[23] <= info[1]){
 
@@ -851,6 +891,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st5 = '"+ info[23] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "st6"  && info_Price[24] <= info[1]){
 
@@ -869,6 +911,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st6 = '"+ info[24] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "st7" && info_Price[25] <= info[1]){
 
@@ -887,6 +931,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st7 = '"+ info[25] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "st8" && info_Price[26] <= info[1]){
 
@@ -905,6 +951,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st8 = '"+ info[26] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                  }else if(item.getName() == "st9" && info_Price[27] <= info[1]){
 
@@ -923,6 +971,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st9 = '"+ info[27] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "st10" && info_Price[28] <= info[1]){
 
@@ -941,6 +991,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', st10 = '"+ info[28] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "mt1"){
 
@@ -963,6 +1015,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt3 = '"+ info[31] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "mt4" && info_Price[32] <= info[1]){
 
@@ -981,6 +1035,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt4 = '"+ info[32] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "mt5" && info_Price[33] <= info[1]){
 
@@ -999,6 +1055,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt5 = '"+ info[33] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "mt6" && info_Price[34] <= info[1]){
 
@@ -1017,6 +1075,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt6 = '"+ info[34] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "mt7" && info_Price[35] <= info[1]){
 
@@ -1035,6 +1095,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt7 = '"+ info[35] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "mt8" && info_Price[36] <= info[1]){
 
@@ -1053,6 +1115,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt8 = '"+ info[36] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "mt9" && info_Price[37] <= info[1]){
 
@@ -1071,6 +1135,8 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt9 = '"+ info[37] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }else if(item.getName() == "mt10" && info_Price[38] <= info[1]){
                      info[1] -= info_Price[38];  //돈
@@ -1088,9 +1154,13 @@ public class Activity_Store extends Activity{
 
                      String sql = "UPDATE maincharacterinfo SET money = '"+ info[1] +"', mt10 = '"+ info[38] +"'";
                      database.execSQL(sql);
+                     editor.putString("realmoney", String.valueOf(info[1]));
+                     editor.commit();
                      buy_Flag = true;
                 }
 
+                editor.putString("realmoney", String.valueOf(info[1]));
+                editor.commit();
 
                 if(buy_Flag){
 
@@ -1166,6 +1236,8 @@ public class Activity_Store extends Activity{
             }else if(vol == 0){
                 sound = 0.0f;
             }
+
+            sound = sound/5;
 
             editor.putInt("es", vol_E);
             editor.putInt("bs", vol_E);

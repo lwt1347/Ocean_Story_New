@@ -38,13 +38,13 @@ public class LandMark_Damage_View {
             point_x -= 3;
         }
 
-        point_y-=7;
+        point_y-=14;
 
-        if(change_Time == 7){
+        if(change_Time == 3){
             change_Flag = !change_Flag;
             change_Time = 0;
         }
-        if(live_Time == 14){
+        if(live_Time == 5){
             live_Flag = true;
         }
 

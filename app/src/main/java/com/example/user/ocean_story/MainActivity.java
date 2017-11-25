@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     int day_1 = 0;
     int day_2 = 0;
 
+    String real_money = "0";
+
     boolean advertisement_Count_Flag = true;
 
     @Override
@@ -108,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
         day_1 = pref.getInt("day_1",0);
         day_2 = 0;//현재
+
+        real_money = pref.getString("realmoney","0");
 
         now = System.currentTimeMillis();
         date = new Date(now);
@@ -290,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             cursor.moveToNext();
             //37 -> 67 -> 87 -> 112 -> 122
             for(int i=0; i<122; i++){
-                info[i] = cursor.getInt(i);
+                info[i] = cursor.getDouble(i);
 
             }
 //            Toast.makeText(getApplicationContext(), "" + "db 값" + info[1], Toast.LENGTH_SHORT).show();
@@ -298,8 +302,9 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
             cursor.close();
         }
-        info[1] = 10000000000f;
-        Log.e("@"," 돈 : "+ info[1]);
+        info[1] = Double.parseDouble(real_money);
+        Log.e("@","돈 : " + info[1]);
+
     }
 
     int get_Item_Integer[] = new int[150];
@@ -309,7 +314,12 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 
+
     try {
+        real_money = pref.getString("realmoney","0");
+        info[1] = Double.parseDouble(real_money);
+        Log.e("@"," 돈ㄷ = " + info[1]);
+
         // 넘어갔던 화면에서 되돌아 왔을 때
         if (resultCode == RESULT_OK) { // 정상 반환일 경우에만 동작하겠다
             Log.e("정상 반환","정상 반환");
@@ -321,7 +331,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 //            Toast.makeText(getApplicationContext(), "" + get_Item[0], Toast.LENGTH_SHORT).show();
 //            Toast.makeText(getApplicationContext(), "" + get_Item[1], Toast.LENGTH_SHORT).show();
             info[0] = get_Item[0];
-            info[1] = get_Item[1];
+//            info[1] = get_Item[1];
+            real_money = pref.getString("realmoney","0");
+            info[1] = Double.parseDouble(real_money);
+
 
             //0 = money, 1 = ruby
             Log.e("@", "@" + info[1]);
@@ -343,6 +356,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             for(int i=0; i< 87; i++){
                 get_Item_Integer[i] = (int)get_Item[i];
             }
+
 
 //            String sql = "UPDATE maincharacterinfo SET money = '" + get_Item[1] + "', ruby = '" + get_Item_Integer[0] + "'"
 //+ "', ftb1 = '" + get_Item_Integer[2] + "'" + "', ftb2 = '" + get_Item_Integer[3] + "'" + "', ftb3 = '" + get_Item_Integer[4] + "'" + "', ftb4 = '" + get_Item_Integer[5] + "'" + "', ftb5 = '" + get_Item_Integer[6] + "'" + "', ftb6 = '" + get_Item_Integer[7] + "'" + "', ftb7 = '" + get_Item_Integer[8] + "'" + "', ftb8 = '" + get_Item_Integer[9] + "'"+ "', ftb9 = '" + get_Item_Integer[10] + "'"+ "', ftb10 = '" + get_Item_Integer[11] + "'"
@@ -418,6 +432,9 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         }else if(vol == 0){
             sound = 0.0f;
         }
+
+        sound = sound/5;
+
         vol_E = vol;
         vol_B = bs;
         editor.putInt("es", vol_E);
@@ -533,8 +550,13 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     /**
      * 상점 가기
      */
+    double setIntent[] = new double[100];
     public void onButtonStore(View view){
         selectData();
+
+        real_money = pref.getString("realmoney","0");
+        info[1] = Double.parseDouble(real_money);
+
         Intent intent = new Intent(getApplicationContext(), Activity_Store.class);
         intent.putExtra("info", info);
 
