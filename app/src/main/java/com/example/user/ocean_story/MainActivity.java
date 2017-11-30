@@ -31,12 +31,16 @@ import android.widget.Toast;
 import static android.R.attr.key;
 
 import com.firebase.client.Firebase;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -71,7 +75,8 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
     private void loadRewardedVideoAd() {
         mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
-                new AdRequest.Builder().addTestDevice("3079D7D2B9C6AB20E98F623393188D67").build());
+//                new AdRequest.Builder().addTestDevice("3079D7D2B9C6AB20E98F623393188D67").build());
+                new AdRequest.Builder().build());
     }
 
     // 현재시간을 msec 으로 구한다.
@@ -94,12 +99,21 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     String real_money = "0";
 
     boolean advertisement_Count_Flag = true;
+    RelativeLayout layout;
 
+    Button button1;
+    Button button2;
+    Button button3;
+    Button button4;
+    TextView textView1;
+    TextView textView2;
+    com.google.android.gms.ads.AdView adView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
+        setFullAd();
 
 //        ad = (AudioManager)getSystemService(AUDIO_SERVICE);
         //음향
@@ -144,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         time_Text = (TextView)findViewById(R.id.text_Time);
 //        Timer_Text timer_text = new Timer_Text();
 //        timer_text.start();
-        time_Text.setText("오늘 남은 횟수 : " + advertisement_Count);
+        time_Text.setText("오늘 남은 횟수 : " + advertisement_Count + "\n 데이터 발생 주의!!!\n[wi-fi 권장]");
 
 
 
@@ -154,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             //배너 광고 띄우기
             Firebase.setAndroidContext(this);
             AdView mAdView = (AdView) findViewById(R.id.adView);
-            AdRequest adRequest = new AdRequest.Builder().addTestDevice("3079D7D2B9C6AB20E98F623393188D67").build();
+            AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
 
             MultiDex.install(this);
@@ -186,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         //메모리 관리
-        RelativeLayout layout = (RelativeLayout)findViewById(R.id.activity_main);
+        layout = (RelativeLayout)findViewById(R.id.activity_main);
         layout.setBackgroundDrawable(new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.background_start)));
 
 
@@ -202,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             dbset = dbSetFirst.getInt("dbSetFirst", -1);
         }
         dbset++;
+        advertise_Count = dbset;
         ///값 저장
         SharedPreferences.Editor editor = dbSetFirst.edit();
         editor.putInt("dbSetFirst", dbset);
@@ -384,6 +399,22 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             selectData();
 
 
+            button1 = (Button)findViewById(R.id.button_game_start);
+            button2 = (Button)findViewById(R.id.button_store);
+            button3 = (Button)findViewById(R.id.button_diction);
+            button4 = (Button)findViewById(R.id.button_getruby);
+            textView1 = (TextView)findViewById(R.id.textView5);
+            textView2 = (TextView)findViewById(R.id.text_Time);
+            adView = (com.google.android.gms.ads.AdView)findViewById(R.id.adView);
+
+            layout.setBackgroundDrawable(new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.background_start)));
+            button1.setVisibility(View.VISIBLE);
+            button2.setVisibility(View.VISIBLE);
+            button3.setVisibility(View.VISIBLE);
+            button4.setVisibility(View.VISIBLE);
+            textView1.setVisibility(View.VISIBLE);
+            textView2.setVisibility(View.VISIBLE);
+            adView.setVisibility(View.VISIBLE);
 
         }
     }catch (Exception e){
@@ -489,23 +520,103 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     /**
      * Game_Start 버튼 클릭 이벤트
      */
+    int advertise_Count = 0;
     public void onButtonGame_StartClicked(View view){
         //게임 시작 버튼을 눌렀을때 셋팅 정보를 넘긴다.
         //게임화면 시작
+        button1 = (Button)findViewById(R.id.button_game_start);
+        button2 = (Button)findViewById(R.id.button_store);
+        button3 = (Button)findViewById(R.id.button_diction);
+        button4 = (Button)findViewById(R.id.button_getruby);
+        textView1 = (TextView)findViewById(R.id.textView5);
+        textView2 = (TextView)findViewById(R.id.text_Time);
+        adView = (com.google.android.gms.ads.AdView)findViewById(R.id.adView);
 
-        soundPool.play(sound_Effect[0], sound, sound, 0, 0, 1.0F);   //성공
+        layout.setBackgroundDrawable(new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.background_lode)));
+        button1.setVisibility(View.INVISIBLE);
+        button2.setVisibility(View.INVISIBLE);
+        button3.setVisibility(View.INVISIBLE);
+        button4.setVisibility(View.INVISIBLE);
+        textView1.setVisibility(View.INVISIBLE);
+        textView2.setVisibility(View.INVISIBLE);
+        adView.setVisibility(View.INVISIBLE);
 
-        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+        if(advertise_Count == 0 || advertise_Count%5 != 0 ){
 
-        selectData();
+            soundPool.play(sound_Effect[0], sound, sound, 0, 0, 1.0F);   //성공
 
-//        Toast.makeText(getApplicationContext(), "" + "db 값 던지기" + info[1], Toast.LENGTH_SHORT).show();
-        intent.putExtra("set", info);
+            Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 
+            selectData();
 
-        startActivityForResult(intent, 1001);
+//          Toast.makeText(getApplicationContext(), "" + "db 값 던지기" + info[1], Toast.LENGTH_SHORT).show();
+            intent.putExtra("set", info);
+
+            startActivityForResult(intent, 1001);
+//            setFullAd();
+        }else {
+
+            displayAD();
+            soundPool.play(sound_Effect[0], sound, sound, 0, 0, 1.0F);   //성공
+
+        }
+
+        advertise_Count++;
+
+        Log.e("@",advertise_Count + " @");
+
+//        soundPool.play(sound_Effect[0], sound, sound, 0, 0, 1.0F);   //성공
+//
+//        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+//
+//        selectData();
+//
+////        Toast.makeText(getApplicationContext(), "" + "db 값 던지기" + info[1], Toast.LENGTH_SHORT).show();
+//        intent.putExtra("set", info);
+//
+//
+//        startActivityForResult(intent, 1001);
 
     }
+
+    private InterstitialAd interstitialAd;
+//addTestDevice("3079D7D2B9C6AB20E98F623393188D67")
+    private void setFullAd(){
+        interstitialAd = new InterstitialAd(this); //새 광고를 만듭니다.
+        interstitialAd.setAdUnitId(getResources().getString(R.string.ad_unit_id)); //이전에 String에 저장해 두었던 광고 ID를 전면 광고에 설정합니다.
+        AdRequest adRequest1 = new AdRequest.Builder().build(); //새 광고요청
+        interstitialAd.loadAd(adRequest1); //요청한 광고를 load 합니다.
+        interstitialAd.setAdListener(new AdListener() { //전면 광고의 상태를 확인하는 리스너 등록
+
+            @Override
+            public void onAdClosed() { //전면 광고가 열린 뒤에 닫혔을 때
+                AdRequest adRequest1 = new AdRequest.Builder().build();  //새 광고요청
+                interstitialAd.loadAd(adRequest1); //요청한 광고를 load 합니다.
+
+                soundPool.play(sound_Effect[0], sound, sound, 0, 0, 1.0F);   //성공
+
+                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+
+                selectData();
+
+//        Toast.makeText(getApplicationContext(), "" + "db 값 던지기" + info[1], Toast.LENGTH_SHORT).show();
+                intent.putExtra("set", info);
+
+                startActivityForResult(intent, 1001);
+
+            }
+        });
+    }
+
+    public void displayAD(){
+        if(interstitialAd.isLoaded()) { //광고가 로드 되었을 시
+            interstitialAd.show(); //보여준다
+        }
+    }
+
+
+
+
 
 
     /**
@@ -740,6 +851,5 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
 
 }
-
 
 

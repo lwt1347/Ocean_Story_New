@@ -77,6 +77,9 @@ public class Activity_Store extends Activity{
         editor = pref.edit();
 
         vol_E = pref.getInt("es",0);
+        vol_B = pref.getInt("bs",0);
+
+        Log.e("@소리"," 소리 = " + vol_E);
         set_Sound(vol_E);
 
 
@@ -483,11 +486,15 @@ public class Activity_Store extends Activity{
                      info[1] -= info_Price[2];  //돈
                      info[2]++;         //기술 레벨
 
+//                     info[2] = 10000;
+
                      info_Price[2]*=1.01;
 //                     info[2] = 2000;
                      money.setText("x "+ df.format(info[1])); //돈 표시
                      item.setCost(info_Price[2]);
                      item.setLever();
+
+
 
 //                     view.setText("Lv: " + item.getLever() + ", 가격 : " + item.getCost());
 //                     f.format(Double.valueOf(String.format("%.0f",info_Price[2])).doubleValue()
@@ -1211,6 +1218,7 @@ public class Activity_Store extends Activity{
          */
         public float sound = 0.0f;
         int vol_E = 0;
+        int vol_B = 0;
         public void set_Sound(int vol){
 
             if(vol == 10){
@@ -1240,7 +1248,7 @@ public class Activity_Store extends Activity{
             sound = sound/5;
 
             editor.putInt("es", vol_E);
-            editor.putInt("bs", vol_E);
+            editor.putInt("bs", vol_B);
 
             editor.commit();
 

@@ -78,7 +78,8 @@ public class Ground_Drag_Lobsters extends Ground_Default_Body{
                 ground_Draw_Status = 12;
             }
 
-            if(random.nextInt(100) < 2){
+
+            if(random.nextInt(100) < 1){
                 touch_Or_Drag = true;
             }
 
