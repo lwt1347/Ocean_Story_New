@@ -8,7 +8,7 @@
     >
 
 
-    <com.example.user.ocean_story.GameMain
+    <com.plank.user.ocean_story.GameMain
     android:id="@+id/GameMainView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
